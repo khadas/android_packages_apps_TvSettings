@@ -48,6 +48,7 @@
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.settings.SETTINGS" />
                 <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
             <!-- Intent filter used to display this activity as a settings
