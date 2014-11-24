@@ -53,6 +53,22 @@ public class DisplayBrowseInfo extends BrowseInfoBase {
     void init() {
         mRow.clear();
 
+        if (SettingsConstant.needDroidlogicMboxFeature(mContext)) {
+            mRow.add(new MenuItem.Builder().id(mNextItemId++)
+                    .title(mContext.getString(R.string.device_outputmode))
+                    .imageResourceId(mContext, R.drawable.ic_settings_display)
+                    .intent(getIntent(SettingsConstant.PACKAGE,
+                            SettingsConstant.PACKAGE + ".device.display.outputmode.OutputmodeActivity"))
+                    .build());
+
+            mRow.add(new MenuItem.Builder().id(mNextItemId++)
+                    .title(mContext.getString(R.string.device_position))
+                    .imageResourceId(mContext, R.drawable.ic_settings_overscan)
+                    .intent(getIntent(SettingsConstant.PACKAGE,
+                            SettingsConstant.PACKAGE + ".device.display.position.DisplayPositionActivity"))
+                    .build());
+        }
+
         mRow.add(new MenuItem.Builder().id(mNextItemId++)
                 .title(mContext.getString(R.string.device_daydream))
                 .imageResourceId(mContext, R.drawable.ic_settings_daydream)
@@ -69,10 +85,12 @@ public class DisplayBrowseInfo extends BrowseInfoBase {
                     .build());
         }
 
-        mRow.add(new MenuItem.Builder().id(mNextItemId++)
+        if (!SettingsConstant.needDroidlogicMboxFeature(mContext)) {
+            mRow.add(new MenuItem.Builder().id(mNextItemId++)
                 .title(mContext.getString(R.string.device_calibration))
                 .imageResourceId(mContext, R.drawable.ic_settings_overscan)
                 .intent(new Intent("com.google.android.athome.overscan.CALIBRATE")).build());
+        }
     }
 
     private Intent getIntent(String targetPackage, String targetClass) {

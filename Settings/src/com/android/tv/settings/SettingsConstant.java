@@ -16,10 +16,18 @@
 
 package com.android.tv.settings;
 
+import android.content.Context;
+import com.droidlogic.app.SystemControlManager;
+
 /**
  * Settings related constants
  */
 public class SettingsConstant {
 
     public static String PACKAGE = "com.android.tv.settings";
+
+    public static boolean needDroidlogicMboxFeature(Context context){
+        SystemControlManager sm = new SystemControlManager(context);
+        return sm.getPropertyBoolean("ro.platform.has.mbxuimode", false);
+    }
 }

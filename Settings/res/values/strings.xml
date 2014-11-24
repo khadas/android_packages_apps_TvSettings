@@ -92,6 +92,14 @@
     <string name="device_daydream">Daydream</string>
     <!-- Preference which changes display settings. [CHAR LIMIT=50] -->
     <string name="device_display">Display</string>
+    <string name="device_outputmode">Screen resolution</string>
+    <string name="device_outputmode_auto">auto switch to best resolution</string>
+    <string name="device_outputmode_auto_open">open</string>
+    <string name="device_outputmode_auto_close">close</string>
+    <string name="device_position">Screen position</string>
+    <string name="device_position_zoomout">zoom out screen</string>
+    <string name="device_position_zoomin">zoom in screen</string>
+    <string name="device_position_description">current scaling is</string>
     <!-- Preference and title which changes system sounds settings. [CHAR LIMIT=50] -->
     <string name="device_sound_effects">System sounds</string>
     <!-- Preference which manages apps. [CHAR LIMIT=50] -->

@@ -50,6 +50,14 @@
     <string name="connectivity_ethernet" msgid="2182407318634700320">"有线网络"</string>
     <string name="device_daydream" msgid="4933581408059561077">"互动屏保"</string>
     <string name="device_display" msgid="101455384386372747">"显示"</string>
+    <string name="device_outputmode" msgid="101455384386372748">"屏幕分辨率"</string>
+    <string name="device_position">屏幕缩放</string>
+    <string name="device_outputmode_auto">自动切换到最佳分辨率</string>
+    <string name="device_outputmode_auto_open">开启</string>
+    <string name="device_outputmode_auto_close">关闭</string>
+    <string name="device_position_zoomout">缩小屏幕</string>
+    <string name="device_position_zoomin">放大屏幕</string>
+    <string name="device_position_description">当前缩放比例是</string>
     <string name="device_sound_effects" msgid="7793281745920228622">"系统声音"</string>
     <string name="device_apps" msgid="9180435229638772838">"应用"</string>
     <string name="device_storage_reset" msgid="1425978936501134425">"存储空间和恢复出厂设置"</string>
