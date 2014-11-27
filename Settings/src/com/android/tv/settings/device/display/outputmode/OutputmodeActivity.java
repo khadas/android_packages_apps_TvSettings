@@ -71,15 +71,17 @@ public class OutputmodeActivity extends DialogActivity implements ActionAdapter.
         ArrayList<String> outputmodeTitleList = mOutputUiManager.getOutputmodeTitleList();
         ArrayList<String> outputmodeValueList = mOutputUiManager.getOutputmodeValueList();
 
-        String best_resolution_description;
-        if (mOutputUiManager.isBestOutputmode()) {
-            best_resolution_description = getString(R.string.device_outputmode_auto_open);
-        } else{
-            best_resolution_description = getString(R.string.device_outputmode_auto_close);
+        if (mOutputUiManager.getUiMode().equals(mOutputUiManager.HDMI_MODE)) {
+            String best_resolution_description;
+            if (mOutputUiManager.isBestOutputmode()) {
+                best_resolution_description = getString(R.string.device_outputmode_auto_open);
+            } else{
+                best_resolution_description = getString(R.string.device_outputmode_auto_close);
+            }
+            actions.add(new Action.Builder().key(BEST_RESOLUTION)
+                .title("        " + getString(R.string.device_outputmode_auto))
+                .description("                " + best_resolution_description).build());
         }
-        actions.add(new Action.Builder().key(BEST_RESOLUTION)
-            .title("        " + getString(R.string.device_outputmode_auto))
-            .description("                " + best_resolution_description).build());
 
         for (int i = 0; i < outputmodeTitleList.size(); i++) {
             if (i == mOutputUiManager.getCurrentModeIndex()) {

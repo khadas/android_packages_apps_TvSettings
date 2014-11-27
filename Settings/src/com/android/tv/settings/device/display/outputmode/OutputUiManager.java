@@ -35,52 +35,57 @@ import android.content.IntentFilter;
 import android.os.UserHandle ;
 
 public class OutputUiManager {
-    private static final String TAG = "OutPutModeManager";
+    private static final String TAG = "OutputUiManager";
     private static boolean DEBUG = false;
-    private static Context mContext = null;
 
     private static final String[] HDMI_LIST = {"1080p","1080p50hz","1080p24hz","720p","720p50hz","4k2k24hz","4k2k25hz","4k2k30hz","4k2ksmpte","576p","480p","1080i","1080i50hz","576i","480i"};
     private static final String[] HDMI_TITLE = {"1080p-60hz","1080p-50hz","1080p-24hz","720p-60hz","720p-50hz","4k2k-24hz","4k2k-25hz","4k2k-30hz","4k2k-smpte","576p-50hz","480p-60hz","1080i-60hz","1080i-50hz","576i-50hz","480i-60hz" };
-    private static String[] ALL_HDMI_MODE_VALUE_LIST;
-    private static String[] ALL_HDMI_MODE_TITLE_LIST;
     private static final String[] CVBS_MODE_VALUE_LIST = {"480cvbs","576cvbs"};
     private static final String[] CVBS_MODE_TITLE_LIST = {"480 CVBS","576 CVBS"};
-    private static final String HDMI_MODE_PROP = "ubootenv.var.hdmimode";
-    private static final String COMMON_MODE_PROP = "ubootenv.var.outputmode";
-    private final static String DISPLAY_MODE_SYSFS = "/sys/class/display/mode";
-
-    //=== hdmi + cvbs dual
-    private final static String DISPLAY_MODE_SYSFS_DUAL = "/sys/class/display2/mode";
-    private final static String HDMI_CVBS_DUAL = "ro.platform.has.cvbsmode";
+    private static String[] ALL_HDMI_MODE_VALUE_LIST;
+    private static String[] ALL_HDMI_MODE_TITLE_LIST;
 
     private ArrayList<String> mTitleList = null;
     private ArrayList<String> mValueList = null;
     private ArrayList<String> mSupportList = null;
 
-    private static SystemControlManager sw;
-    private static OutputModeManager mom;
+    private SystemControlManager sw;
+    private OutputModeManager mom;
+    private Context mContext;
 
     private static String mUiMode;
+    public static final String CVBS_MODE = "cvbs";
+    public static final String HDMI_MODE = "hdmi";
 
     public OutputUiManager(Context context){
         mContext = context;
-        mUiMode = "hdmi";
         sw = new SystemControlManager(mContext);
         mom = new OutputModeManager(mContext);
 
+        mUiMode = getUiMode();
         mTitleList = new ArrayList<String>();
         mValueList = new ArrayList<String>();
         initModeValues(mUiMode);
     }
 
+    public String getUiMode(){
+        String currentMode = sw.readSysFs(mom.DISPLAY_MODE).replaceAll("\n","");
+        if (currentMode.contains(CVBS_MODE)) {
+            mUiMode = CVBS_MODE;
+        } else {
+            mUiMode = HDMI_MODE;
+        }
+        return mUiMode;
+    }
+
     public int getCurrentModeIndex(){
-         String currentHdmiMode = sw.readSysFs(DISPLAY_MODE_SYSFS).replaceAll("\n","");
+         String currentMode = sw.readSysFs(mom.DISPLAY_MODE).replaceAll("\n","");
          for (int i=0 ; i < mValueList.size();i++) {
-             if (currentHdmiMode.equals(mValueList.get(i))) {
+             if (currentMode.equals(mValueList.get(i))) {
                 return i ;
              }
          }
-         if (mUiMode.equals("hdmi")) {
+         if (mUiMode.equals(HDMI_MODE)) {
             return 4;
          }else{
             return 0;
@@ -94,16 +99,14 @@ public class OutputUiManager {
 
         filterOutputMode();
 
-        if (mode.equalsIgnoreCase("hdmi")) {
-            mUiMode = "hdmi";
+        if (mode.equalsIgnoreCase(HDMI_MODE)) {
             for (int i=0 ; i< ALL_HDMI_MODE_VALUE_LIST.length; i++) {
                 if (ALL_HDMI_MODE_TITLE_LIST[i] != null && ALL_HDMI_MODE_TITLE_LIST[i].length() != 0) {
                     mTitleList.add(ALL_HDMI_MODE_TITLE_LIST[i]);
                     mValueList.add(ALL_HDMI_MODE_VALUE_LIST[i]);
                 }
             }
-        }else if (mode.equalsIgnoreCase("cvbs")) {
-            mUiMode = "cvbs";
+        }else if (mode.equalsIgnoreCase(CVBS_MODE)) {
             for (int i = 0 ; i< CVBS_MODE_VALUE_LIST.length; i++) {
                 mTitleList.add(CVBS_MODE_VALUE_LIST[i]);
             }
@@ -113,10 +116,10 @@ public class OutputUiManager {
         }
     }
 
-    public static String getCurrentOutPutModeTitle(int type) {
-        String currentHdmiMode = sw.readSysFs(DISPLAY_MODE_SYSFS).replaceAll("\n", "");
+    public String getCurrentOutPutModeTitle(int type) {
+        String currentHdmiMode = sw.readSysFs(mom.DISPLAY_MODE).replaceAll("\n", "");
         if (type == 0) {  // cvbs
-        if (currentHdmiMode.contains("cvbs")) {
+        if (currentHdmiMode.contains(CVBS_MODE)) {
             for (int i=0 ; i < CVBS_MODE_VALUE_LIST.length ; i++) {
                 if (currentHdmiMode.equals(CVBS_MODE_VALUE_LIST[i])) {
                     return CVBS_MODE_TITLE_LIST[i] ;
@@ -170,10 +173,6 @@ public class OutputUiManager {
 
     public boolean isHDMIPlugged() {
         return mom.isHDMIPlugged();
-    }
-
-    public boolean isHdmiCvbsDual() {
-        return sw.getPropertyBoolean("ro.platform.has.cvbsmode", false);
     }
 
     public boolean ifModeIsSetting() {
