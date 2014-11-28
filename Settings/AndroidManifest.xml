@@ -224,6 +224,14 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".device.sound.systemsound.SystemSoundActivity"
+            android:configChanges="keyboard|keyboardHidden|navigation"
+            android:exported="true" />
+        <activity
+            android:name=".device.sound.digitalsound.DigitalSoundActivity"
+            android:configChanges="keyboard|keyboardHidden|navigation"
+            android:exported="true" />
+        <activity
             android:name=".device.display.DisplayActivity"
             android:configChanges="keyboard|keyboardHidden|navigation"
             android:exported="true" >
