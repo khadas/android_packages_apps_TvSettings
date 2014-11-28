@@ -58,7 +58,13 @@
     <string name="device_position_zoomout">縮小熒幕</string>
     <string name="device_position_zoomin">放大熒幕</string>
     <string name="device_position_description">當前縮放比例是</string>
+    <string name="device_sound">聲音設置</string>
     <string name="device_sound_effects" msgid="7793281745920228622">"系統音效"</string>
+    <string name="device_sound_digital">數字音效</string>
+    <string name="device_sound_digital_auto">自適應</string>
+    <string name="device_sound_digital_pcm">PCM</string>
+    <string name="device_sound_digital_hdmi">HDMI</string>
+    <string name="device_sound_digital_spdif">SPDIF</string>
     <string name="device_apps" msgid="9180435229638772838">"應用程式"</string>
     <string name="device_storage_reset" msgid="1425978936501134425">"儲存空間與重設"</string>
     <string name="device_storage" msgid="5536683600091277826">"儲存空間"</string>

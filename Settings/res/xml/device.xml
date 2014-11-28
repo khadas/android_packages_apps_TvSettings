@@ -40,7 +40,7 @@
     <Preference
         android:icon="@drawable/ic_settings_sound_on"
         android:key="sound_effects"
-        android:title="@string/device_sound_effects" >
+        android:title="@string/device_sound" >
         <intent
             android:targetClass="com.android.tv.settings.device.sound.SoundActivity"
             android:targetPackage="com.android.tv.settings" />
