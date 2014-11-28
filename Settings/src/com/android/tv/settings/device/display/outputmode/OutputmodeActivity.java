@@ -74,9 +74,9 @@ public class OutputmodeActivity extends DialogActivity implements ActionAdapter.
         if (mOutputUiManager.getUiMode().equals(mOutputUiManager.HDMI_MODE)) {
             String best_resolution_description;
             if (mOutputUiManager.isBestOutputmode()) {
-                best_resolution_description = getString(R.string.device_outputmode_auto_open);
+                best_resolution_description = getString(R.string.captions_display_on);
             } else{
-                best_resolution_description = getString(R.string.device_outputmode_auto_close);
+                best_resolution_description = getString(R.string.captions_display_off);
             }
             actions.add(new Action.Builder().key(BEST_RESOLUTION)
                 .title("        " + getString(R.string.device_outputmode_auto))
@@ -86,11 +86,11 @@ public class OutputmodeActivity extends DialogActivity implements ActionAdapter.
         for (int i = 0; i < outputmodeTitleList.size(); i++) {
             if (i == mOutputUiManager.getCurrentModeIndex()) {
                 actions.add(new Action.Builder().key(outputmodeValueList.get(i))
-                    .title("      " + outputmodeTitleList.get(i))
-                    .drawableResource(R.drawable.ic_settings_display).build());
+                    .title("        " + outputmodeTitleList.get(i))
+                    .checked(true).build());
             }else {
                 actions.add(new Action.Builder().key(outputmodeValueList.get(i))
-                    .title("               " + outputmodeTitleList.get(i))
+                    .title("        " + outputmodeTitleList.get(i))
                     .description("").build());
             }
         }
