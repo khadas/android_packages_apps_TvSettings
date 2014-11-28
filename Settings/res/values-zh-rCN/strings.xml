@@ -53,8 +53,6 @@
     <string name="device_outputmode" msgid="101455384386372748">"屏幕分辨率"</string>
     <string name="device_position">屏幕缩放</string>
     <string name="device_outputmode_auto">自动切换到最佳分辨率</string>
-    <string name="device_outputmode_auto_open">开启</string>
-    <string name="device_outputmode_auto_close">关闭</string>
     <string name="device_position_zoomout">缩小屏幕</string>
     <string name="device_position_zoomin">放大屏幕</string>
     <string name="device_position_description">当前缩放比例是</string>

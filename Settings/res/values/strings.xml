@@ -94,8 +94,6 @@
     <string name="device_display">Display</string>
     <string name="device_outputmode">Screen resolution</string>
     <string name="device_outputmode_auto">auto switch to best resolution</string>
-    <string name="device_outputmode_auto_open">open</string>
-    <string name="device_outputmode_auto_close">close</string>
     <string name="device_position">Screen position</string>
     <string name="device_position_zoomout">zoom out screen</string>
     <string name="device_position_zoomin">zoom in screen</string>
