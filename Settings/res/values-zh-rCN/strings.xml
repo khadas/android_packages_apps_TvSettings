@@ -572,4 +572,8 @@
     <string name="pin_button_cancel" msgid="5541414789309863965">"取消"</string>
     <string name="pin_toast_wrong" msgid="4628358195224633248">"PIN码错误，请重试"</string>
     <string name="pin_toast_not_match" msgid="5886041789737632996">"PIN码不匹配，请重试"</string>
+
+    <!-- For Tvsetting external-->
+    <string name="title_wifi_device">Wi-Fi 设备</string>
+    <string name="title_wifi_should_open_first">请开启wifi设备</string>
 </resources>

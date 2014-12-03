@@ -572,4 +572,8 @@
     <string name="pin_button_cancel" msgid="5541414789309863965">"取消"</string>
     <string name="pin_toast_wrong" msgid="4628358195224633248">"PIN 錯誤，請再試一次"</string>
     <string name="pin_toast_not_match" msgid="5886041789737632996">"PIN 不符，請再試一次"</string>
+
+    <!-- For Tvsetting external-->
+    <string name="title_wifi_device">Wi-Fi 設備</string>
+    <string name="title_wifi_should_open_first">請開啓wifi設備</string>
 </resources>

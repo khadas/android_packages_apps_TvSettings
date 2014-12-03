@@ -477,8 +477,23 @@ public class NetworkActivity extends SettingsLayoutActivity implements
                     isConnected = false;
                 }
             } else {
-                layout.add(new Action.Builder(mRes, 0)
-                       .title(R.string.title_wifi_no_networks_available).build());
+                if (wifiDevSwitchEnable) {
+                    if (getWifiDevEnable()) {
+                        layout.add(new Action.Builder(mRes, 0)
+                           .title(R.string.title_wifi_no_networks_available).build());
+                    }
+                    else {
+                        layout.add(new Action.Builder(mRes, 0)
+                           .title(R.string.title_wifi_should_open_first).build());
+                    }
+                }
+                else {
+                    if (!getWifiDevEnable()) {
+                        setWifiDevEnable(true);
+                    }
+                    layout.add(new Action.Builder(mRes, 0)
+                           .title(R.string.title_wifi_no_networks_available).build());
+                }
             }
             return layout;
         }
@@ -487,6 +502,89 @@ public class NetworkActivity extends SettingsLayoutActivity implements
     private final WifiListLayout mWifiShortListLayout = new WifiListLayout(true);
 
     private final WifiListLayout mWifiAllListLayout = new WifiListLayout(false);
+
+    //add for wifi device switch 20141203
+    private static final boolean wifiDevSwitchEnable = true;
+    private static final int ACTION_WIFI_SWITCH = 0xF0;
+    private static final String KEY_ON_OFF = "on_off";
+    private static final int DISABLED = 0;
+    private static final int ENABLED = 1;
+    private WifiManager mWifiManager = null;
+
+    private LayoutGetter getOnOffLayout(final int action) {
+        return new LayoutGetter() {
+            @Override
+            public Layout get() {
+                Bundle on = new Bundle();
+                on.putBoolean(KEY_ON_OFF, true);
+                Bundle off = new Bundle();
+                off.putBoolean(KEY_ON_OFF, false);
+
+                Layout layout = new Layout()
+                            .add(new Action.Builder(mRes, action)
+                                    .title(R.string.on)
+                                    .data(on)
+                                    .checked(getWifiDevEnable() == true)
+                                    .build())
+                            .add(new Action.Builder(mRes, action)
+                                    .title(R.string.off)
+                                    .data(off)
+                                    .checked(getWifiDevEnable() == false)
+                                    .build());
+
+                return layout;
+            }
+        };
+    }
+
+    StringGetter mWifiStateDescription = new StringGetter() {
+        private boolean lastWifiState;
+        @Override
+        public String get() {
+            lastWifiState = getWifiDevEnable();
+            int resId = lastWifiState ? R.string.on : R.string.off;
+            return mRes.getString(resId);
+        }
+        @Override
+        public void refreshView() {
+            if (getWifiDevEnable() != lastWifiState) {
+                super.refreshView();
+            }
+        }
+    };
+
+    private boolean getWifiDevEnable() {
+        boolean ret = false;
+        int wifiState = getWifiState();
+        if ((wifiState == WifiManager.WIFI_STATE_ENABLING) ||
+            (wifiState == WifiManager.WIFI_STATE_ENABLED)) {
+            ret = true;
+        }
+        return ret;
+    }
+
+    private int getWifiState() {
+        if (mWifiManager == null) {
+            mWifiManager = (WifiManager) mContext.getSystemService(Context.WIFI_SERVICE);
+        }
+        return mWifiManager.getWifiState();
+    }
+
+    private void setWifiDevEnable(boolean enable) {
+        int wifiState = getWifiState();
+        if (enable && ((wifiState != WifiManager.WIFI_STATE_ENABLING) ||
+                    (wifiState != WifiManager.WIFI_STATE_ENABLED))) {
+            mWifiManager.setWifiEnabled(true);
+        }
+        else if(!enable && ((wifiState != WifiManager.WIFI_STATE_DISABLING) ||
+                        (wifiState != WifiManager.WIFI_STATE_DISABLED))) {
+            mWifiManager.setWifiEnabled(false);
+        }
+        else {
+            Log.i(TAG,"[setWifiDevEnable] wifiState:" + wifiState);
+        }
+    }
+    //end add
 
     @Override
     public Layout createLayout() {
@@ -510,6 +608,11 @@ public class NetworkActivity extends SettingsLayoutActivity implements
                                 .build()
                             .add(mWifiAllListLayout)
                         )
+                        .add(new Header.Builder(mRes)
+                            .title(R.string.title_wifi_device)
+                            .description(mWifiStateDescription)
+                            .build()
+                            .add(getOnOffLayout(ACTION_WIFI_SWITCH)))
                         .add(new Static.Builder(mRes)
                                 .title(R.string.wifi_setting_header_other_options)
                                 .build())
@@ -587,6 +690,16 @@ public class NetworkActivity extends SettingsLayoutActivity implements
                 int networkId = WifiConfiguration.INVALID_NETWORK_ID;
                 startActivityForResult(EditIpSettingsActivity.createIntent(this, networkId),
                         REQUEST_CODE_ADVANCED_OPTIONS);
+                break;
+            }
+            case ACTION_WIFI_SWITCH: {
+                if (getWifiDevEnable()) {
+                    setWifiDevEnable(false);
+                }
+                else {
+                    setWifiDevEnable(true);
+                }
+                goBackToTitle(mRes.getString(R.string.connectivity_wifi));
                 break;
             }
         }

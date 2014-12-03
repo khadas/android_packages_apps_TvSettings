@@ -1283,4 +1283,8 @@
     <!-- Toast message when an user couldn't pass the PIN confirmation. [CHAR LIMIT=128] -->
     <string name="pin_toast_not_match">Try again, PIN doesn\'t match</string>
 
+    <!-- For Tvsetting external-->
+    <string name="title_wifi_device">Wi-Fi device</string>
+    <string name="title_wifi_should_open_first">Please turn on Wi-Fi</string>
+
 </resources>
