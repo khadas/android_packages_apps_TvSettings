@@ -340,6 +340,10 @@ public class InputPairer {
             Log.d(TAG, "Bluetooth not enabled, delaying startup.");
             mHandler.removeCallbacks(mStartRunnable);
             mHandler.postDelayed(mStartRunnable, 1000);
+            if ((BluetoothAdapter.getDefaultAdapter().getState() != BluetoothAdapter.STATE_ON)
+                && (BluetoothAdapter.getDefaultAdapter().getState() != BluetoothAdapter.STATE_TURNING_ON)) {
+                BluetoothAdapter.getDefaultAdapter().enable();
+            }
             return;
         }
 
