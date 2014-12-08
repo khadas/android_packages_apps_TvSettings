@@ -17,9 +17,11 @@
 package com.android.tv.settings.connectivity;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.content.IntentFilter;
 import android.net.IpConfiguration;
 import android.net.IpConfiguration.IpAssignment;
 import android.net.IpConfiguration.ProxySettings;
@@ -33,7 +35,6 @@ import android.os.SystemClock;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Pair;
-
 import com.android.tv.settings.dialog.SettingsLayoutActivity;
 import com.android.tv.settings.dialog.Layout;
 import com.android.tv.settings.dialog.Layout.Header;
@@ -70,12 +71,17 @@ public class NetworkActivity extends SettingsLayoutActivity implements
         mConnectivityListener = new ConnectivityListener(this, this);
         mConnectivityListener.start();
         super.onCreate(savedInstanceState);
+
+        //add for wifi device switch
+        mIntentFilter = new IntentFilter(WifiManager.WIFI_STATE_CHANGED_ACTION);
+        mContext.registerReceiver(mReceiver, mIntentFilter);
     }
 
     @Override
     protected void onDestroy(){
         super.onDestroy();
         mConnectivityListener.stop();
+        mContext.unregisterReceiver(mReceiver);
     }
 
     @Override
@@ -510,6 +516,20 @@ public class NetworkActivity extends SettingsLayoutActivity implements
     private static final int DISABLED = 0;
     private static final int ENABLED = 1;
     private WifiManager mWifiManager = null;
+    private IntentFilter mIntentFilter;
+
+    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (WifiManager.WIFI_STATE_CHANGED_ACTION.equals(action)) {
+                int state = intent.getIntExtra(WifiManager.EXTRA_WIFI_STATE, WifiManager.WIFI_STATE_UNKNOWN);
+                if ((state == WifiManager.WIFI_STATE_ENABLED) || (state == WifiManager.WIFI_STATE_DISABLED)) {
+                    goBackToTitle(mRes.getString(R.string.connectivity_wifi));
+                }
+            }
+        }
+    };
 
     private LayoutGetter getOnOffLayout(final int action) {
         return new LayoutGetter() {
@@ -699,7 +719,6 @@ public class NetworkActivity extends SettingsLayoutActivity implements
                 else {
                     setWifiDevEnable(true);
                 }
-                goBackToTitle(mRes.getString(R.string.connectivity_wifi));
                 break;
             }
         }
