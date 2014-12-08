@@ -1655,6 +1655,17 @@ public final class ScrollAdapterView extends AdapterView<Adapter> {
         return super.onKeyUp(keyCode, event);
     }
 
+    @Override
+    public boolean onGenericMotionEvent(MotionEvent event) {
+        int step = (int)event.getAxisValue(MotionEvent.AXIS_VSCROLL);
+        if (step > 1) {
+            handleArrowKey(View.FOCUS_UP, 0, false, false);
+        } else if (step < -1) {
+            handleArrowKey(View.FOCUS_DOWN, 0, false, false);
+        }
+        return true;
+    }
+
     /**
      * Scroll to next/last expandable view.
      * @param direction The direction corresponding to the arrow key that was pressed
