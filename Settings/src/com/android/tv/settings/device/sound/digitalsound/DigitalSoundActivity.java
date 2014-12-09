@@ -37,11 +37,6 @@ public class DigitalSoundActivity extends Activity implements Action.Listener {
     private static final String ACTION_SOUND_HDMI = "sound_hdmi";
     private static final String ACTION_SOUND_SPDIF = "sound_spdif";
 
-    private static final int IS_AUTO  = 0x10;
-    private static final int IS_PCM   = 0x01;
-    private static final int IS_HDMI  = 0x02;
-    private static final int IS_SPDIF = 0x04;
-
     private static OutputModeManager mom;
     private DialogFragment mDialogFragment;
 
@@ -60,18 +55,18 @@ public class DigitalSoundActivity extends Activity implements Action.Listener {
     }
 
     private ArrayList<Action> getActions() {
-        int updateMode = IS_AUTO;
+        int updateMode = OutputModeManager.IS_AUTO;
         String mode = getDigitalSoundMode();
         boolean isAuto = isDigitalSoundAuto();
         if (isAuto) {
-            updateMode = IS_AUTO;
+            updateMode = OutputModeManager.IS_AUTO;
         }else{
-            if (mode.contains("Pcm")) {
-                updateMode = IS_PCM;
-            }else if (mode.contains("Hdmi")) {
-                updateMode = IS_HDMI;
-            }else if (mode.contains("Spdif")) {
-                updateMode = IS_SPDIF;
+            if (mode.contains(OutputModeManager.PCM)) {
+                updateMode = OutputModeManager.IS_PCM;
+            }else if (mode.contains(OutputModeManager.HDMI)) {
+                updateMode = OutputModeManager.IS_HDMI;
+            }else if (mode.contains(OutputModeManager.SPDIF)) {
+                updateMode = OutputModeManager.IS_SPDIF;
             }
         }
         return updateActions(updateMode);
@@ -79,36 +74,37 @@ public class DigitalSoundActivity extends Activity implements Action.Listener {
 
     @Override
     public void onActionClicked(Action action) {
-        int updateMode = IS_AUTO;
+        int updateMode = OutputModeManager.IS_AUTO;
         if (ACTION_SOUND_AUTO.equals(action.getKey())) {
             autoSwitchDigitalSound();
-            updateMode = IS_AUTO;
+            updateMode = OutputModeManager.IS_AUTO;
         } else if (ACTION_SOUND_PCM.equals(action.getKey())) {
-            setDigitalSoundMode(IS_PCM);
-            updateMode = IS_PCM;
+            setDigitalSoundMode(OutputModeManager.IS_PCM);
+            updateMode = OutputModeManager.IS_PCM;
         } else if (ACTION_SOUND_HDMI.equals(action.getKey())) {
-            setDigitalSoundMode(IS_HDMI);
-            updateMode = IS_HDMI;
+            setDigitalSoundMode(OutputModeManager.IS_HDMI);
+            updateMode = OutputModeManager.IS_HDMI;
         } else if (ACTION_SOUND_SPDIF.equals(action.getKey())) {
-            setDigitalSoundMode(IS_SPDIF);
-            updateMode = IS_SPDIF;
+            setDigitalSoundMode(OutputModeManager.IS_SPDIF);
+            updateMode = OutputModeManager.IS_SPDIF;
         }
         mDialogFragment.setActions(updateActions(updateMode));
     }
 
     private ArrayList<Action> updateActions(int mode) {
-        String AutoMode = "off";
-        if (mode == IS_AUTO) {
+        String AutoMode = getString(R.string.device_sound_digital_auto_off);
+        if (mode == OutputModeManager.IS_AUTO) {
             AutoMode = getDigitalSoundMode();
         }
         ArrayList<Action> actions = new ArrayList<Action>();
         switch (mode) {
-            case IS_AUTO:
+            case OutputModeManager.IS_AUTO:
                 actions.add(new Action.Builder()
                     .key(ACTION_SOUND_AUTO)
                     .title(getString(R.string.device_sound_digital_auto))
                     .description(AutoMode)
-                    .drawableResource(R.drawable.ic_settings_sound_on)
+                    .checked(true)
+                    .checkSetId(1)
                     .build());
                 actions.add(new Action.Builder()
                     .key(ACTION_SOUND_PCM)
@@ -123,7 +119,7 @@ public class DigitalSoundActivity extends Activity implements Action.Listener {
                     .title(getString(R.string.device_sound_digital_spdif))
                     .build());
                 break;
-            case IS_PCM:
+            case OutputModeManager.IS_PCM:
                 actions.add(new Action.Builder()
                     .key(ACTION_SOUND_AUTO)
                     .title(getString(R.string.device_sound_digital_auto))
@@ -132,7 +128,8 @@ public class DigitalSoundActivity extends Activity implements Action.Listener {
                 actions.add(new Action.Builder()
                     .key(ACTION_SOUND_PCM)
                     .title(getString(R.string.device_sound_digital_pcm))
-                    .drawableResource(R.drawable.ic_settings_sound_on)
+                    .checked(true)
+                    .checkSetId(1)
                     .build());
                 actions.add(new Action.Builder()
                     .key(ACTION_SOUND_HDMI)
@@ -143,7 +140,7 @@ public class DigitalSoundActivity extends Activity implements Action.Listener {
                     .title(getString(R.string.device_sound_digital_spdif))
                     .build());
                 break;
-            case IS_HDMI:
+            case OutputModeManager.IS_HDMI:
                 actions.add(new Action.Builder()
                     .key(ACTION_SOUND_AUTO)
                     .title(getString(R.string.device_sound_digital_auto))
@@ -156,14 +153,15 @@ public class DigitalSoundActivity extends Activity implements Action.Listener {
                 actions.add(new Action.Builder()
                     .key(ACTION_SOUND_HDMI)
                     .title(getString(R.string.device_sound_digital_hdmi))
-                    .drawableResource(R.drawable.ic_settings_sound_on)
+                    .checked(true)
+                    .checkSetId(1)
                     .build());
                 actions.add(new Action.Builder()
                     .key(ACTION_SOUND_SPDIF)
                     .title(getString(R.string.device_sound_digital_spdif))
                     .build());
                 break;
-            case IS_SPDIF:
+            case OutputModeManager.IS_SPDIF:
                 actions.add(new Action.Builder()
                     .key(ACTION_SOUND_AUTO)
                     .title(getString(R.string.device_sound_digital_auto))
@@ -180,7 +178,8 @@ public class DigitalSoundActivity extends Activity implements Action.Listener {
                 actions.add(new Action.Builder()
                     .key(ACTION_SOUND_SPDIF)
                     .title(getString(R.string.device_sound_digital_spdif))
-                    .drawableResource(R.drawable.ic_settings_sound_on)
+                    .checked(true)
+                    .checkSetId(1)
                     .build());
                 break;
         }
@@ -188,20 +187,20 @@ public class DigitalSoundActivity extends Activity implements Action.Listener {
     }
 
     public boolean isDigitalSoundAuto(){
-        return (getDigitalVoiceMode() & IS_AUTO) == IS_AUTO;
+        return (getDigitalVoiceMode() & OutputModeManager.IS_AUTO) == OutputModeManager.IS_AUTO;
     }
 
     public String getDigitalSoundMode(){
-        String mode = "Pcm";
+        String mode = OutputModeManager.PCM;
         switch (getDigitalVoiceMode() & 0x0f) {
-            case IS_PCM:
-                mode = "Pcm";
+            case OutputModeManager.IS_PCM:
+                mode = OutputModeManager.PCM;
                 break;
-            case IS_HDMI:
-                mode = "Hdmi";
+            case OutputModeManager.IS_HDMI:
+                mode = OutputModeManager.HDMI;
                 break;
-            case IS_SPDIF:
-                mode = "Spdif";
+            case OutputModeManager.IS_SPDIF:
+                mode = OutputModeManager.SPDIF;
                 break;
         }
         return mode;
@@ -216,16 +215,16 @@ public class DigitalSoundActivity extends Activity implements Action.Listener {
     }
 
     private void setDigitalSoundMode(int mode){
-        String value = "PCM";
+        String value = OutputModeManager.PCM;
         switch (mode) {
-            case IS_PCM:
-                value = "PCM";
+            case OutputModeManager.IS_PCM:
+                value = OutputModeManager.PCM;
                 break;
-            case IS_HDMI:
-                value = "HDMI passthrough";
+            case OutputModeManager.IS_HDMI:
+                value = OutputModeManager.HDMI_RAW;
                 break;
-            case IS_SPDIF:
-                value = "SPDIF passthrough";
+            case OutputModeManager.IS_SPDIF:
+                value = OutputModeManager.SPDIF_RAW;
                 break;
         }
         mom.setDigitalVoiceValue(value);

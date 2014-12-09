@@ -60,6 +60,7 @@
     <string name="device_sound_effects" msgid="7793281745920228622">"系统声音"</string>
     <string name="device_sound_digital">数字音效</string>
     <string name="device_sound_digital_auto">自适应</string>
+    <string name="device_sound_digital_auto_off">关闭</string>
     <string name="device_sound_digital_pcm">PCM</string>
     <string name="device_sound_digital_hdmi">HDMI</string>
     <string name="device_sound_digital_spdif">SPDIF</string>
