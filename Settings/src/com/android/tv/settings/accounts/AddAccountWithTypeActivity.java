@@ -17,7 +17,9 @@
 package com.android.tv.settings.accounts;
 
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.pm.ResolveInfo;
 import android.os.Bundle;
 import android.accounts.AccountManager;
 import android.accounts.AccountManagerCallback;
@@ -25,6 +27,7 @@ import android.accounts.AccountManagerFuture;
 import android.accounts.AuthenticatorException;
 import android.accounts.OperationCanceledException;
 import java.io.IOException;
+import java.util.List;
 import android.util.Log;
 
 public class AddAccountWithTypeActivity extends Activity {
@@ -107,6 +110,13 @@ public class AddAccountWithTypeActivity extends Activity {
     private void startAccountTypePicker() {
         mLaunchAccountTypePicker = true;
         Intent i = new Intent(CHOOSE_ACCOUNT_TYPE_ACTION);
+        List<ResolveInfo> apps = this.getPackageManager().queryIntentActivities(i, 0);
+        if (apps == null ||apps.size() <= 0) {
+            i = new Intent(Intent.ACTION_MAIN);
+            i.setComponent(new ComponentName("com.android.settings","com.android.settings.SubSettings"));
+            i.putExtra(":settings:show_fragment", "com.android.settings.accounts.AccountSettings");
+            i.putExtra(":settings:show_fragment_title", "Accounts");
+        }
         startActivityForResult(i, REQUEST_CHOOSE_ACCOUNT_TYPE);
     }
 

@@ -23,6 +23,7 @@ import android.bluetooth.BluetoothDevice;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ResolveInfo;
 import android.content.res.TypedArray;
 import android.content.res.XmlResourceParser;
 import android.media.tv.TvInputInfo;
@@ -58,6 +59,7 @@ import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -164,6 +166,9 @@ public class BrowseInfo extends BrowseInfoBase {
     private static final String PREF_KEY_WIFI = "wifi";
     private static final String PREF_KEY_DEVELOPER = "developer";
     private static final String PREF_KEY_INPUTS = "inputs";
+    private static final String PREF_KEY_CAST = "cast";
+    private static final String PREF_KEY_SEARCH = "search";
+    private static final String PREF_KEY_SPEECH = "speech";
 
     private final Context mContext;
     private final AuthenticatorHelper mAuthenticatorHelper;
@@ -289,15 +294,24 @@ public class BrowseInfo extends BrowseInfoBase {
                 addAccounts(mRow);
             } else if ((!key.equals(PREF_KEY_DEVELOPER) || mDeveloperEnabled)
                     && (!key.equals(PREF_KEY_INPUTS) || mInputSettingNeeded)) {
+                Intent intent = getIntent(parser, attrs, mHeaderId);
                 MenuItem.TextGetter descriptionGetter = getDescriptionTextGetterFromKey(key);
                 MenuItem.UriGetter uriGetter = getIconUriGetterFromKey(key);
                 MenuItem.Builder builder = new MenuItem.Builder().id(mNextItemId++).title(title)
                         .descriptionGetter(descriptionGetter)
-                        .intent(getIntent(parser, attrs, mHeaderId));
+                        .intent(intent);
                 if(uriGetter == null) {
                     builder.imageResourceId(mContext, iconRes);
                 } else {
                     builder.imageUriGetter(uriGetter);
+                }
+                if (key.equals(PREF_KEY_CAST) || key.equals(PREF_KEY_SEARCH) || key.equals(PREF_KEY_SPEECH)) {
+                    if (intent != null) {
+                        List<ResolveInfo> apps = context.getPackageManager().queryIntentActivities(intent, 0);
+                        if (apps == null ||apps.size() <= 0) {
+                            return;//skip add item to TvSettings prefrence
+                        }
+                    }
                 }
                 if (key.equals(PREF_KEY_WIFI)) {
                     mWifiItem = builder.build();
