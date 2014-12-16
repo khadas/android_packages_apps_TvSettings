@@ -426,6 +426,16 @@ public class BrowseInfo extends BrowseInfoBase {
                 .title(mContext.getString(R.string.accessories_add))
                 .imageResourceId(mContext, R.drawable.ic_settings_bluetooth)
                 .intent(i).build());
+
+        // Add new accessory activity icon
+        ComponentName componentNameRC = new ComponentName("com.android.tv.settings",
+                "com.android.tv.settings.accessories.RemoteControlSetActivity");
+        Intent iRC = new Intent().setComponent(componentNameRC );
+        iRC.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+        row.add(new MenuItem.Builder().id(mNextItemId++)
+                .title(mContext.getString(R.string.accessories_remote))
+                .imageResourceId(mContext, R.drawable.ic_settings_remote)
+                .intent(iRC).build());
     }
 
     private Intent getIntent(XmlResourceParser parser, AttributeSet attrs, int headerId)
