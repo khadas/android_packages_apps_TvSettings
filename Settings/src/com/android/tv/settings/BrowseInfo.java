@@ -78,6 +78,8 @@ public class BrowseInfo extends BrowseInfoBase {
 
     private static final String ETHERNET_PREFERENCE_KEY = "ethernet";
 
+    private static final boolean useDefaultSetting = true;
+
     interface XmlReaderListener {
         void handleRequestedNode(Context context, XmlResourceParser parser, AttributeSet attrs)
                 throws org.xmlpull.v1.XmlPullParserException, IOException;
@@ -422,6 +424,15 @@ public class BrowseInfo extends BrowseInfoBase {
                 "com.android.tv.settings.accessories.AddAccessoryActivity");
         Intent i = new Intent().setComponent(componentName);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+
+        //use default bluetooth setting
+        if (useDefaultSetting) {
+            i = new Intent(Intent.ACTION_MAIN);
+            i.setComponent(new ComponentName("com.android.settings","com.android.settings.SubSettings"));
+            i.putExtra(":settings:show_fragment", "com.android.settings.bluetooth.BluetoothSettings");
+            i.putExtra(":settings:show_fragment_title", "Bluetooth");
+        }
+
         row.add(new MenuItem.Builder().id(mNextItemId++)
                 .title(mContext.getString(R.string.accessories_add))
                 .imageResourceId(mContext, R.drawable.ic_settings_bluetooth)
