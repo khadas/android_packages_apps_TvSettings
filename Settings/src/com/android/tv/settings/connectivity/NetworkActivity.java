@@ -31,6 +31,7 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.os.SystemClock;
 import android.text.TextUtils;
 import android.util.Log;
@@ -59,7 +60,7 @@ public class NetworkActivity extends SettingsLayoutActivity implements
     private static final boolean DEBUG = false;
     private static final String TAG = "NetworkActivity";
     private static final int REQUEST_CODE_ADVANCED_OPTIONS = 1;
-    private static final int WIFI_REFRESH_INTERVAL_CAP_MILLIS = 15 * 1000;
+    private static final int WIFI_REFRESH_INTERVAL_CAP_MILLIS = 5 * 1000;//15 * 1000; wxl reduce wait time for wifi ap refreshing
 
     private ConnectivityListener mConnectivityListener;
     private Resources mRes;
@@ -515,6 +516,8 @@ public class NetworkActivity extends SettingsLayoutActivity implements
     private static final String KEY_ON_OFF = "on_off";
     private static final int DISABLED = 0;
     private static final int ENABLED = 1;
+    private static final int MSG_WIFI_ON = 0xE0;
+    private static final int MSG_WIFI_OFF = 0xE1;
     private WifiManager mWifiManager = null;
     private IntentFilter mIntentFilter;
 
@@ -525,11 +528,44 @@ public class NetworkActivity extends SettingsLayoutActivity implements
             if (WifiManager.WIFI_STATE_CHANGED_ACTION.equals(action)) {
                 int state = intent.getIntExtra(WifiManager.EXTRA_WIFI_STATE, WifiManager.WIFI_STATE_UNKNOWN);
                 if ((state == WifiManager.WIFI_STATE_ENABLED) || (state == WifiManager.WIFI_STATE_DISABLED)) {
-                    goBackToTitle(mRes.getString(R.string.connectivity_wifi));
+                    mWifiStateDescription.refreshView();
+                    mWifiShortListLayout.onWifiListInvalidated();
+                    mWifiAllListLayout.onWifiListInvalidated();
                 }
             }
         }
     };
+
+    private Handler mDevHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case MSG_WIFI_ON:
+                    setWifiDevEnable(true);
+                    break;
+                case MSG_WIFI_OFF:
+                    setWifiDevEnable(false);
+                    break;
+                default:
+                    Log.e(TAG,"[handleMessage]error msg.what:"+msg.what);
+                    break;
+            }
+        }
+    };
+
+    private void sendWifiOnMsg() {
+         if (mDevHandler != null) {
+            Message msg = mDevHandler.obtainMessage(MSG_WIFI_ON);
+            mDevHandler.sendMessage(msg);
+        }
+    }
+
+    private void sendWifiOffMsg() {
+         if (mDevHandler != null) {
+            Message msg = mDevHandler.obtainMessage(MSG_WIFI_OFF);
+            mDevHandler.sendMessage(msg);
+        }
+    }
 
     private LayoutGetter getOnOffLayout(final int action) {
         return new LayoutGetter() {
@@ -714,11 +750,12 @@ public class NetworkActivity extends SettingsLayoutActivity implements
             }
             case ACTION_WIFI_SWITCH: {
                 if (getWifiDevEnable()) {
-                    setWifiDevEnable(false);
+                    sendWifiOffMsg();
                 }
                 else {
-                    setWifiDevEnable(true);
+                    sendWifiOnMsg();
                 }
+                goBackToTitle(mRes.getString(R.string.connectivity_wifi));
                 break;
             }
         }
