@@ -113,9 +113,7 @@ public class AddAccountWithTypeActivity extends Activity {
         List<ResolveInfo> apps = this.getPackageManager().queryIntentActivities(i, 0);
         if (apps == null ||apps.size() <= 0) {
             i = new Intent(Intent.ACTION_MAIN);
-            i.setComponent(new ComponentName("com.android.settings","com.android.settings.SubSettings"));
-            i.putExtra(":settings:show_fragment", "com.android.settings.accounts.AccountSettings");
-            i.putExtra(":settings:show_fragment_title", "Accounts");
+            i.setComponent(new ComponentName("com.android.settings","com.android.settings.accounts.ChooseAccountActivity"));
         }
         startActivityForResult(i, REQUEST_CHOOSE_ACCOUNT_TYPE);
     }
