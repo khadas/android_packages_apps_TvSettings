@@ -1663,7 +1663,7 @@ public final class ScrollAdapterView extends AdapterView<Adapter> {
         } else if (step < -1) {
             handleArrowKey(View.FOCUS_DOWN, 0, false, false);
         }
-        return true;
+        return super.onGenericMotionEvent(event);
     }
 
     /**
