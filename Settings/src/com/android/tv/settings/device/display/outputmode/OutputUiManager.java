@@ -79,6 +79,11 @@ public class OutputUiManager {
         return mUiMode;
     }
 
+    public void updateUiMode(){
+        mUiMode = getUiMode();
+        initModeValues(mUiMode);
+    }
+
     public int getCurrentModeIndex(){
          String currentMode = mSystemControlManager.readSysFs(OutputModeManager.DISPLAY_MODE).replaceAll("\n","");
          for (int i=0 ; i < mValueList.size();i++) {
@@ -95,6 +100,8 @@ public class OutputUiManager {
 
     private void initModeValues(String mode){
         filterOutputMode();
+        mTitleList.clear();
+        mValueList.clear();
 
         if (mode.equalsIgnoreCase(HDMI_MODE)) {
             for (int i=0 ; i< mHdmiValueList.length; i++) {

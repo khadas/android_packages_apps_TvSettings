@@ -8,10 +8,14 @@ import com.android.tv.settings.dialog.old.ActionFragment;
 import com.android.tv.settings.dialog.old.ContentFragment;
 import com.android.tv.settings.dialog.old.DialogActivity;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.util.Log;
@@ -27,6 +31,14 @@ public class OutputmodeActivity extends DialogActivity implements ActionAdapter.
     private ContentFragment mContentFragment;
     private ActionFragment mActionFragment;
     private OutputUiManager mOutputUiManager;
+    private IntentFilter mIntentFilter;
+
+    private BroadcastReceiver mIntentReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            mHandler.sendEmptyMessageDelayed(0, 1000);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +48,21 @@ public class OutputmodeActivity extends DialogActivity implements ActionAdapter.
         mContentFragment = createMainMenuContentFragment();
         mActionFragment = ActionFragment.newInstance(getMainActions());
         setContentAndActionFragments(mContentFragment, mActionFragment);
+
+        mIntentFilter = new IntentFilter("android.intent.action.HDMI_PLUGGED");
+        mIntentFilter.addAction(Intent.ACTION_TIME_TICK);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        registerReceiver(mIntentReceiver, mIntentFilter);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(mIntentReceiver);
     }
 
     @Override
@@ -56,6 +83,7 @@ public class OutputmodeActivity extends DialogActivity implements ActionAdapter.
     }
 
     private void updateMainScreen() {
+        mOutputUiManager.updateUiMode();
         ((ActionAdapter) mActionFragment.getAdapter()).setActions(getMainActions());
     }
 
@@ -96,4 +124,11 @@ public class OutputmodeActivity extends DialogActivity implements ActionAdapter.
         }
         return actions;
     }
+
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            updateMainScreen();
+        }
+    };
 }
