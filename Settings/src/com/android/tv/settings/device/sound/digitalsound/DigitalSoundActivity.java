@@ -17,8 +17,11 @@
 package com.android.tv.settings.device.sound.digitalsound;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
+import android.content.IntentFilter;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import com.android.tv.settings.dialog.DialogFragment;
 import com.android.tv.settings.dialog.DialogFragment.Action;
@@ -36,14 +39,26 @@ public class DigitalSoundActivity extends Activity implements Action.Listener {
     private static final String ACTION_SOUND_PCM = "sound_pcm";
     private static final String ACTION_SOUND_HDMI = "sound_hdmi";
     private static final String ACTION_SOUND_SPDIF = "sound_spdif";
+    private static final String ACTION_HDMI_PLUGGED = "android.intent.action.HDMI_PLUGGED";
 
     private static OutputModeManager mom;
     private DialogFragment mDialogFragment;
+    private IntentFilter mHdmiPluggedFilter;
+
+    private BroadcastReceiver mHdmiPluggedReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (isDigitalSoundAuto()) {
+                mDialogFragment.setActions(updateActions(OutputModeManager.IS_AUTO));
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mom = new OutputModeManager(this);
+        mHdmiPluggedFilter = new IntentFilter(ACTION_HDMI_PLUGGED);
 
         mDialogFragment = new DialogFragment.Builder()
                 .title(getString(R.string.device_sound_digital))
@@ -52,6 +67,18 @@ public class DigitalSoundActivity extends Activity implements Action.Listener {
                 .iconBackgroundColor(getResources().getColor(R.color.icon_background))
                 .actions(getActions()).build();
         DialogFragment.add(getFragmentManager(), mDialogFragment);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        registerReceiver(mHdmiPluggedReceiver, mHdmiPluggedFilter);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(mHdmiPluggedReceiver);
     }
 
     private ArrayList<Action> getActions() {
