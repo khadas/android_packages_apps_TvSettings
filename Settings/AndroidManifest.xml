@@ -254,6 +254,10 @@
             android:configChanges="keyboard|keyboardHidden|navigation"
             android:exported="true" />
         <activity
+            android:name=".device.display.rotation.ScreenRotationActivity"
+            android:configChanges="keyboard|keyboardHidden|navigation"
+            android:exported="true" />
+        <activity
             android:name=".device.display.widi.WifiDisplayActivity"
             android:configChanges="keyboard|keyboardHidden|navigation"
             android:exported="true" />

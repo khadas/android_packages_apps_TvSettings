@@ -56,6 +56,11 @@
     <string name="device_position_zoomout">缩小屏幕</string>
     <string name="device_position_zoomin">放大屏幕</string>
     <string name="device_position_description">当前缩放比例是</string>
+    <string name="device_rotation">屏幕旋转</string>
+    <string name="device_rotation_middle">横屏居中</string>
+    <string name="device_rotation_land">横屏拉申</string>
+    <string name="device_rotation_original">保持原样</string>
+    <string name="device_rotation_description">旋转应用程序的显示方向</string>
     <string name="device_sound">"声音设置"</string>
     <string name="device_sound_effects" msgid="7793281745920228622">"系统声音"</string>
     <string name="device_sound_digital">数字音效</string>

@@ -98,6 +98,11 @@
     <string name="device_position_zoomout">zoom out screen</string>
     <string name="device_position_zoomin">zoom in screen</string>
     <string name="device_position_description">current scaling is</string>
+    <string name="device_rotation">Screen rotation</string>
+    <string name="device_rotation_middle">middle port</string>
+    <string name="device_rotation_land">force land</string>
+    <string name="device_rotation_original">original</string>
+    <string name="device_rotation_description">application request to change orientatioin</string>
     <!-- Preference and title which changes system sounds settings. [CHAR LIMIT=50] -->
     <string name="device_sound">sounds</string>
     <string name="device_sound_effects">System sounds</string>
