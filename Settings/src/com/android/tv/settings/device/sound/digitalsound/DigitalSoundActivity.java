@@ -49,7 +49,12 @@ public class DigitalSoundActivity extends Activity implements Action.Listener {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (isDigitalSoundAuto()) {
+                autoSwitchDigitalSound();
                 mDialogFragment.setActions(updateActions(OutputModeManager.IS_AUTO));
+            } else {
+                int mode = getDigitalVoiceMode() & 0x0f;
+                setDigitalSoundMode(mode);
+                mDialogFragment.setActions(updateActions(mode));
             }
         }
     };
