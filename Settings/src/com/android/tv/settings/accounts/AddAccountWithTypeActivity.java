@@ -30,7 +30,11 @@ import java.io.IOException;
 import java.util.List;
 import android.util.Log;
 
+
 public class AddAccountWithTypeActivity extends Activity {
+
+    // Must match com.google.android.gms.common.AccountPicker.
+    public static final String EXTRA_ALLOWABLE_ACCOUNT_TYPES_STRING_ARRAY = "allowableAccountTypes";
 
     private static final String TAG = "AddAccountWithTypeActivity";
 
@@ -38,8 +42,6 @@ public class AddAccountWithTypeActivity extends Activity {
     private static final int REQUEST_ADD_ACCOUNT = 1;
     private static final String CHOOSE_ACCOUNT_TYPE_ACTION =
             "com.google.android.gms.common.account.CHOOSE_ACCOUNT_TYPE";
-
-    private boolean mLaunchAccountTypePicker;
 
     private final AccountManagerCallback<Bundle> mCallback = new AccountManagerCallback<Bundle>() {
         @Override
@@ -49,19 +51,19 @@ public class AddAccountWithTypeActivity extends Activity {
                         .getParcelable(AccountManager.KEY_INTENT);
                 if (addAccountIntent == null) {
                     Log.e(TAG, "Failed to retrieve add account intent from authenticator");
-                    handleAddAccountError();
+                    setResultAndFinish(Activity.RESULT_CANCELED);
                 } else {
                     startActivityForResult(addAccountIntent, REQUEST_ADD_ACCOUNT);
                 }
             } catch (OperationCanceledException e) {
                 Log.e(TAG, "Failed to get add account intent: " + e);
-                handleAddAccountError();
+                setResultAndFinish(Activity.RESULT_CANCELED);
             } catch (IOException e) {
                 Log.e(TAG, "Failed to get add account intent: " + e);
-                handleAddAccountError();
+                setResultAndFinish(Activity.RESULT_CANCELED);
             } catch (AuthenticatorException e) {
                 Log.e(TAG, "Failed to get add account intent: " + e);
-                handleAddAccountError();
+                setResultAndFinish(Activity.RESULT_CANCELED);
             }
         }
     };
@@ -73,53 +75,36 @@ public class AddAccountWithTypeActivity extends Activity {
         if (accountType != null) {
             startAddAccount(accountType);
         } else {
-            startAccountTypePicker();
+            String[] allowedTypes = getIntent().getStringArrayExtra(
+                    EXTRA_ALLOWABLE_ACCOUNT_TYPES_STRING_ARRAY);
+            startAccountTypePicker(allowedTypes);
         }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (Activity.RESULT_CANCELED == resultCode) {
-            setResult(resultCode);
-            finish();
-            return;
-        }
-
-        switch (requestCode) {
-            case REQUEST_ADD_ACCOUNT:
-                if (resultCode == Activity.RESULT_OK) {
-                    setResult(resultCode);
-                    finish();
-                } else {
-                    handleAddAccountError(resultCode);
-                }
-                break;
-            case REQUEST_CHOOSE_ACCOUNT_TYPE:
-                if (resultCode == Activity.RESULT_OK) {
-                    String accountType = data.getExtras()
-                            .getString(AccountManager.KEY_ACCOUNT_TYPE);
-                    startAddAccount(accountType);
-                } else {
-                    setResult(resultCode);
-                    finish();
-                }
-                break;
+        // User selected an account type, so kick off the add account flow for that.
+        if (requestCode == REQUEST_CHOOSE_ACCOUNT_TYPE && resultCode == Activity.RESULT_OK) {
+            String accountType = data.getExtras().getString(AccountManager.KEY_ACCOUNT_TYPE);
+            startAddAccount(accountType);
+        } else {
+            setResultAndFinish(resultCode);
         }
     }
 
-    private void startAccountTypePicker() {
-        mLaunchAccountTypePicker = true;
+    private void startAccountTypePicker(String[] allowedTypes) {
         Intent i = new Intent(CHOOSE_ACCOUNT_TYPE_ACTION);
         List<ResolveInfo> apps = this.getPackageManager().queryIntentActivities(i, 0);
         if (apps == null ||apps.size() <= 0) {
             i = new Intent(Intent.ACTION_MAIN);
             i.setComponent(new ComponentName("com.android.settings","com.android.settings.accounts.AddAccountSettings"));
         }
+
+        i.putExtra(EXTRA_ALLOWABLE_ACCOUNT_TYPES_STRING_ARRAY, allowedTypes);
         startActivityForResult(i, REQUEST_CHOOSE_ACCOUNT_TYPE);
     }
 
     private void startAddAccount(String accountType) {
-        mLaunchAccountTypePicker = false;
         AccountManager.get(this).addAccount(
                 accountType,
                 null, /* authTokenType */
@@ -128,18 +113,8 @@ public class AddAccountWithTypeActivity extends Activity {
                 null, mCallback, null);
     }
 
-    private void handleAddAccountError() {
-        handleAddAccountError(Activity.RESULT_CANCELED);
-    }
-
-    private void handleAddAccountError(int resultCode) {
-        if (mLaunchAccountTypePicker) {
-            Log.e(TAG, "request add account failed to add account");
-            // try again
-            startAccountTypePicker();
-        } else {
-            setResult(resultCode);
-            finish();
-        }
+    private void setResultAndFinish(int resultCode) {
+        setResult(resultCode);
+        finish();
     }
 }

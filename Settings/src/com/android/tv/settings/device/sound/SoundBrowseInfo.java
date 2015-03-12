@@ -41,11 +41,10 @@ public class SoundBrowseInfo extends BrowseInfoBase {
     SoundBrowseInfo(Context context) {
         mContext = context;
         mNextItemId = 0;
-        mHeaderItems.add(new HeaderItem(HEADER_ID, mContext.getString(R.string.device_sound), null));
+        mHeaderItems.add(new HeaderItem(HEADER_ID, mContext.getString(R.string.device_sound)));
         mRows.put(HEADER_ID, mRow);
     }
 
-    @Override
     public void refreshContent() {
         init();
     }

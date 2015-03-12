@@ -39,6 +39,7 @@
         android:icon="@drawable/ic_launcher_settings"
         android:label="@string/settings_app_name"
         android:banner="@drawable/ic_launcher_banner_settings"
+        android:supportsRtl="true"
         android:theme="@style/Theme.Settings" >
 
         <activity
@@ -163,7 +164,13 @@
         <activity
             android:name=".device.StorageResetActivity"
             android:configChanges="keyboard|keyboardHidden|navigation"
-            android:exported="true" />
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <action android:name="android.intent.action.MANAGE_PACKAGE_STORAGE" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".connectivity.NetworkActivity"
             android:configChanges="keyboard|keyboardHidden|navigation"
@@ -326,6 +333,14 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.settings.LOCATION_SOURCE_SETTINGS" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.VOICE_LAUNCH" />
+                <category android:name="com.android.settings.SHORTCUT" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".system.DeveloperOptionsActivity"
@@ -402,6 +417,14 @@
             android:name=".accessories.RemoteControlSetActivity"
             android:configChanges="keyboard|keyboardHidden|navigation"
             android:exported="true" />
+
+        <receiver android:name=".accessories.BluetoothConnectionsManager" >
+            <intent-filter>
+                <action android:name="android.bluetooth.device.action.ACL_CONNECTED" />
+                <action android:name="android.bluetooth.device.action.ACL_DISCONNECTED" />
+                <action android:name="android.bluetooth.adapter.action.STATE_CHANGED" />
+            </intent-filter>
+        </receiver>
 
         <receiver android:name=".accessories.BluetoothPairingRequest" >
             <intent-filter>
