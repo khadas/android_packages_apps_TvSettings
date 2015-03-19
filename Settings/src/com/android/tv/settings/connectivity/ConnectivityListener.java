@@ -384,6 +384,13 @@ public class ConnectivityListener {
                 }
 
                 case ConnectivityManager.TYPE_ETHERNET:
+                    if (mWifiManager != null) {
+                        int wifiState = mWifiManager.getWifiState();
+                        if ((wifiState == WifiManager.WIFI_STATE_ENABLED)) {
+                            mWifiManager.setWifiEnabled(false);
+
+                        }
+                    }
                     return setNetworkType(ConnectivityStatus.NETWORK_ETHERNET);
 
                 default:
