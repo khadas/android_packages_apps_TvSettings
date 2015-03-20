@@ -59,8 +59,8 @@ public class NetworkActivity extends SettingsLayoutActivity implements
     private static final String TAG = "NetworkActivity";
     private static final int REQUEST_CODE_ADVANCED_OPTIONS = 1;
     private static final int WIFI_REFRESH_INTERVAL_CAP_MILLIS = 5 * 1000;//15 * 1000; wxl reduce wait time for wifi ap refreshing
-    private static final int WIFI_SCAN_INTERVAL_CAP_MILLIS = 10 * 1000;
-    private static final int WIFI_UI_REFRESH_INTERVAL_CAP_MILLIS = 15 * 1000;
+    private static final int WIFI_SCAN_INTERVAL_CAP_MILLIS = 3 * 1000;//10 * 1000;
+    private static final int WIFI_UI_REFRESH_INTERVAL_CAP_MILLIS = 5 * 1000;//15 * 1000;
 
     private ConnectivityListener mConnectivityListener;
     private Resources mRes;
