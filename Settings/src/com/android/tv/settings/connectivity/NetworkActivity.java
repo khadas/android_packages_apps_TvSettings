@@ -25,6 +25,8 @@ import android.content.IntentFilter;
 import android.net.IpConfiguration;
 import android.net.IpConfiguration.IpAssignment;
 import android.net.IpConfiguration.ProxySettings;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiInfo;
@@ -766,7 +768,15 @@ public class NetworkActivity extends SettingsLayoutActivity implements
                     sendWifiOffMsg();
                 }
                 else {
-                    sendWifiOnMsg();
+                    ConnectivityManager mConnectivityManager = (ConnectivityManager) mContext.getSystemService(
+                        Context.CONNECTIVITY_SERVICE);
+                    NetworkInfo networkInfo = mConnectivityManager.getActiveNetworkInfo();
+                    if ( networkInfo != null ) {
+                        if (networkInfo.getType() != ConnectivityManager.TYPE_ETHERNET)
+                            sendWifiOnMsg();
+                    } else {
+                        sendWifiOnMsg();
+                    }
                 }
                 goBackToTitle(mRes.getString(R.string.connectivity_wifi));
                 break;
