@@ -40,6 +40,14 @@
             android:targetPackage="com.android.tv.settings" />
     </Preference>
     <Preference
+        android:icon="@drawable/ic_settings_outputs"
+        android:key="cec"
+        android:title="@string/system_cec" >
+        <intent
+            android:targetClass="com.android.tv.settings.system.HdmiCecActivity"
+            android:targetPackage="com.android.tv.settings" />
+    </Preference>
+    <Preference
         android:icon="@drawable/ic_settings_search"
         android:key="search"
         android:title="@string/system_search" >

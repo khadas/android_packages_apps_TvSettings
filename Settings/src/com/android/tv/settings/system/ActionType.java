@@ -129,6 +129,15 @@ enum ActionType {
     KEYBOARD_OVERVIEW_CURRENT_KEYBOARD(R.string.title_current_keyboard),
     KEYBOARD_OVERVIEW_CONFIGURE(R.string.title_configure, R.string.desc_configure_keyboard),
 
+    /*+     * cec+     */
+    CEC_OVERVIEW_SWITCH(R.string.cec_switch),
+    CEC_OVERVIEW_CONTROL(R.string.cec_control),
+    CEC_OVERVIEW_SWITCH_ON(R.string.settings_on),
+    CEC_OVERVIEW_SWITCH_OFF(R.string.settings_off),
+    CEC_OVERVIEW_ONE_KEY_PLAY(R.string.cec_one_key_play, R.string.settings_off),
+    CEC_OVERVIEW_ONE_KEY_POWER_OFF(R.string.cec_one_key_power_off, R.string.settings_off),
+    CEC_OVERVIEW_AUTO_CHANGE_LANGUAGE(R.string.cec_auto_change_language, R.string.settings_off),
+
     /*
      * Security
      */

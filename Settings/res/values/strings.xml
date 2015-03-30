@@ -1137,6 +1137,20 @@
     <!-- Action to go back to the previous screen, when no apps have been found to perform the requested action. [CHAR LIMIT=50]-->
     <string name="noAppsGoBack">Back</string>
 
+    <!-- Preference which manages hdmi cec settings. -->
+    <string name="system_cec">Hdmi cec</string>
+    <!-- Hdmi cec switch -->
+    <!-- Title for cec switch [CHAR LIMIT=80] -->
+    <string name="cec_switch">CEC Switch</string>
+    <!-- Title for cec switch [CHAR LIMIT=80] -->
+    <string name="cec_control">CEC Control</string>
+    <!-- Title for cec one key play [CHAR LIMIT=80] -->
+    <string name="cec_one_key_play">One key play</string>
+    <!-- Title for cec one key power off [CHAR LIMIT=100] -->
+    <string name="cec_one_key_power_off">One key power off</string>
+    <!-- Title for cec auto change language [CHAR LIMIT=100] -->
+    <string name="cec_auto_change_language">Auto change language</string>
+
     <!-- TV input settings row -->
     <string name="inputs_inputs">Inputs</string>
     <!-- Header of HDMI CEC device control [CHAR LIMIT=50] -->
