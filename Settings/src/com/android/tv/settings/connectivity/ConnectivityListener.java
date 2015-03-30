@@ -226,6 +226,9 @@ public class ConnectivityListener {
         LinkProperties linkProperties =
                 mConnectivityManager.getLinkProperties(ConnectivityManager.TYPE_ETHERNET);
 
+        if (linkProperties == null) {
+            return "";
+        }
         for (LinkAddress linkAddress: linkProperties.getAllLinkAddresses()) {
             InetAddress address = linkAddress.getAddress();
             if (address instanceof Inet4Address) {
@@ -401,6 +404,9 @@ public class ConnectivityListener {
                 }
 
                 case ConnectivityManager.TYPE_ETHERNET:
+                    if (getEthernetIpAddress().isEmpty()) {
+                        return setNetworkType(ConnectivityStatus.NETWORK_NONE);
+                    }
                     return setNetworkType(ConnectivityStatus.NETWORK_ETHERNET);
 
                 default:
