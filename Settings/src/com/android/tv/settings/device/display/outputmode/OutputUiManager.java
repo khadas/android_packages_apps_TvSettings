@@ -1,5 +1,7 @@
 package com.android.tv.settings.device.display.outputmode;
 
+import com.android.tv.settings.R;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -153,7 +155,7 @@ public class OutputUiManager {
             }
         }
 
-        String str_filter_mode = mSystemControlManager.getPropertyString("ro.platform.filter.modes", "");
+        String str_filter_mode = mContext.getResources().getString(R.string.display_filter_outputmode);
         if (str_filter_mode != null && str_filter_mode.length() != 0) {
             String[] array_filter_mode = str_filter_mode.split(",");
             for (int i = 0; i < array_filter_mode.length; i++) {
