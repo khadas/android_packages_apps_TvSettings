@@ -407,10 +407,12 @@ public class BrowseInfo extends BrowseInfoBase {
             i.putExtra(":settings:show_fragment_title", "Bluetooth");
         }
 
-        row.add(new MenuItem.Builder().id(mNextItemId++)
-                .title(mContext.getString(R.string.accessories_add))
-                .imageResourceId(mContext, R.drawable.ic_settings_bluetooth)
-                .intent(i).build());
+        if (mBtAdapter != null) {
+            row.add(new MenuItem.Builder().id(mNextItemId++)
+                    .title(mContext.getString(R.string.accessories_add))
+                    .imageResourceId(mContext, R.drawable.ic_settings_bluetooth)
+                    .intent(i).build());
+        }
 
         // Add new accessory activity icon
         ComponentName componentNameRC = new ComponentName("com.android.tv.settings",
