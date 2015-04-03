@@ -114,7 +114,6 @@ public class NetworkActivity extends SettingsLayoutActivity implements
     protected void onDestroy(){
         mConnectivityListener = null;
         super.onDestroy();
-        mConnectivityListener.stop();
         mContext.unregisterReceiver(mReceiver);
     }
 
