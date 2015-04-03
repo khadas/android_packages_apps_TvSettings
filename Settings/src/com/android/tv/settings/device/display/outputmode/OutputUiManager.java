@@ -72,7 +72,7 @@ public class OutputUiManager {
     }
 
     public String getUiMode(){
-        String currentMode = mSystemControlManager.readSysFs(OutputModeManager.DISPLAY_MODE).replaceAll("\n","");
+        String currentMode = mOutputModeManager.getCurrentOutputMode();
         if (currentMode.contains(CVBS_MODE)) {
             mUiMode = CVBS_MODE;
         } else {
@@ -87,7 +87,7 @@ public class OutputUiManager {
     }
 
     public int getCurrentModeIndex(){
-         String currentMode = mSystemControlManager.readSysFs(OutputModeManager.DISPLAY_MODE).replaceAll("\n","");
+         String currentMode = mOutputModeManager.getCurrentOutputMode();
          for (int i=0 ; i < mValueList.size();i++) {
              if (currentMode.equals(mValueList.get(i))) {
                 return i ;

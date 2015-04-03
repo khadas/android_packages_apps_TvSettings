@@ -111,8 +111,9 @@ public class OutputmodeActivity extends DialogActivity implements ActionAdapter.
                 .description("                " + best_resolution_description).build());
         }
 
+        int currentModeIndex = mOutputUiManager.getCurrentModeIndex();
         for (int i = 0; i < outputmodeTitleList.size(); i++) {
-            if (i == mOutputUiManager.getCurrentModeIndex()) {
+            if (i == currentModeIndex) {
                 actions.add(new Action.Builder().key(outputmodeValueList.get(i))
                     .title("        " + outputmodeTitleList.get(i))
                     .checked(true).build());
