@@ -141,10 +141,12 @@ public class DigitalSoundActivity extends Activity implements Action.Listener {
                     .key(ACTION_SOUND_HDMI)
                     .title(getString(R.string.device_sound_digital_hdmi))
                     .build());
-                actions.add(new Action.Builder()
-                    .key(ACTION_SOUND_SPDIF)
-                    .title(getString(R.string.device_sound_digital_spdif))
-                    .build());
+                if (getResources().getBoolean(R.bool.platform_support_spdif)) {
+                    actions.add(new Action.Builder()
+                        .key(ACTION_SOUND_SPDIF)
+                        .title(getString(R.string.device_sound_digital_spdif))
+                        .build());
+                }
                 break;
             case OutputModeManager.IS_PCM:
                 actions.add(new Action.Builder()
@@ -162,10 +164,12 @@ public class DigitalSoundActivity extends Activity implements Action.Listener {
                     .key(ACTION_SOUND_HDMI)
                     .title(getString(R.string.device_sound_digital_hdmi))
                     .build());
-                actions.add(new Action.Builder()
-                    .key(ACTION_SOUND_SPDIF)
-                    .title(getString(R.string.device_sound_digital_spdif))
-                    .build());
+                if (getResources().getBoolean(R.bool.platform_support_spdif)) {
+                    actions.add(new Action.Builder()
+                        .key(ACTION_SOUND_SPDIF)
+                        .title(getString(R.string.device_sound_digital_spdif))
+                        .build());
+                }
                 break;
             case OutputModeManager.IS_HDMI:
                 actions.add(new Action.Builder()
@@ -183,10 +187,12 @@ public class DigitalSoundActivity extends Activity implements Action.Listener {
                     .checked(true)
                     .checkSetId(1)
                     .build());
-                actions.add(new Action.Builder()
-                    .key(ACTION_SOUND_SPDIF)
-                    .title(getString(R.string.device_sound_digital_spdif))
-                    .build());
+                if (getResources().getBoolean(R.bool.platform_support_spdif)) {
+                    actions.add(new Action.Builder()
+                        .key(ACTION_SOUND_SPDIF)
+                        .title(getString(R.string.device_sound_digital_spdif))
+                        .build());
+                }
                 break;
             case OutputModeManager.IS_SPDIF:
                 actions.add(new Action.Builder()

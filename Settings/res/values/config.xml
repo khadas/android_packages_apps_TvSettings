@@ -19,4 +19,5 @@
     <integer name="action_title_max_lines">3</integer>
     <integer name="dialog_animation_duration">150</integer>
     <string name="display_filter_outputmode"></string>
+    <bool name="platform_support_spdif">true</bool>
 </resources>
