@@ -123,6 +123,7 @@ public class NetworkActivity extends SettingsLayoutActivity implements
     public void onConnectivityChange(Intent intent) {
         mEthernetConnectedDescription.refreshView();
         mWifiConnectedDescription.refreshView();
+        mEthernetLayout.refreshView();
         onWifiListChanged();
     }
 
