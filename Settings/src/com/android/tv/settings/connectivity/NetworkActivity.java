@@ -687,7 +687,7 @@ public class NetworkActivity extends SettingsLayoutActivity implements
                                 new Intent(this, AddWifiNetworkActivity.class))
                                 .title(R.string.wifi_setting_other_options_add_network)
                                 .build())
-                        .add(mWifiLayout))
+                        )
                     .add(new Header.Builder(mRes)
                             .title(R.string.connectivity_ethernet)
                             .contentIconRes(R.drawable.ic_settings_ethernet)
