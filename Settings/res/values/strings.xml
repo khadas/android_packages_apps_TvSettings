@@ -369,6 +369,7 @@
 
     <!-- Other Options under Wifi Settings headers [CHAR LIMIT=50] -->
     <string name="wifi_setting_other_options_wps">Connect via WPS</string>
+    <string name="wifi_setting_other_options_wpspin">Input WPS PIN</string>
     <string name="wifi_setting_other_options_add_network">Add new network</string>
 
     <!-- Strings for Add Network under Connectivity Setting -->
