@@ -171,6 +171,7 @@
     <string name="wifi_setting_see_all" msgid="3217814666041974878">"查看全部"</string>
     <string name="wifi_setting_available_networks" msgid="1244646604369133314">"可用的网络"</string>
     <string name="wifi_setting_other_options_wps" msgid="2320322351779996152">"通过WPS连接"</string>
+    <string name="wifi_setting_other_options_wpspin">输入WPS PIN</string>
     <string name="wifi_setting_other_options_add_network" msgid="2791106243851894788">"添加新网络"</string>
     <string name="add_network" msgid="2074883912462075625">"添加网络"</string>
     <string name="network_ssid" msgid="7653487431810593891">"网络 SSID"</string>

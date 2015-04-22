@@ -53,6 +53,8 @@ public class WpsConnectionActivity extends DialogActivity
             if (pin != null) {
                 displayFragment(createEnterPinFragment(pin), true);
             }
+            else
+                displayFragment(createWpsScanningFragment(), true);
         }
 
         @Override
@@ -131,12 +133,18 @@ public class WpsConnectionActivity extends DialogActivity
 
     private void startWps() {
         Fragment currentFragment = getFragmentManager().findFragmentByTag(WPS_FRAGMENT_TAG);
-        if (!(currentFragment instanceof WpsScanningFragment)) {
-            displayFragment(createWpsScanningFragment(), true);
-        }
+      //  if (!(currentFragment instanceof WpsScanningFragment)) {
+      //      displayFragment(createWpsScanningFragment(), true);
+      //  }
         mWpsComplete = false;
         WpsInfo wpsConfig = new WpsInfo();
-        wpsConfig.setup = WpsInfo.PBC;
+        //Intent intent = new Intent(this, WifiNetworksBrowseInfo.class);
+        String wpsmode = getIntent().getStringExtra("WpsMmode");
+
+        if (wpsmode.equals("PBC"))
+            wpsConfig.setup = WpsInfo.PBC;
+        else
+            wpsConfig.setup = WpsInfo.DISPLAY;
         mWifiManager.startWps(wpsConfig, mWpsCallback);
     }
 

@@ -63,6 +63,8 @@ public class NetworkActivity extends SettingsLayoutActivity implements
     private static final int WIFI_REFRESH_INTERVAL_CAP_MILLIS = 5 * 1000;//15 * 1000; wxl reduce wait time for wifi ap refreshing
     private static final int WIFI_SCAN_INTERVAL_CAP_MILLIS = 3 * 1000;//10 * 1000;
     private static final int WIFI_UI_REFRESH_INTERVAL_CAP_MILLIS = 5 * 1000;//15 * 1000;
+    private static final int OTHER_OPTIONS_WPS = 0;
+    private static final int OTHER_OPTIONS_WPSPIN = 1;
 
     private ConnectivityListener mConnectivityListener;
     private Resources mRes;
@@ -343,9 +345,14 @@ public class NetworkActivity extends SettingsLayoutActivity implements
                         .title(R.string.wifi_setting_header_other_options)
                         .build())
                 .add(new Action.Builder(mRes,
-                         new Intent(NetworkActivity.this, WpsConnectionActivity.class))
+                         getWpsOptionsIntent(OTHER_OPTIONS_WPS))
                         .title(R.string.wifi_setting_other_options_wps)
                         .build())
+                .add(new Action.Builder(mRes,
+                         getWpsOptionsIntent(OTHER_OPTIONS_WPSPIN))
+                        .title(R.string.wifi_setting_other_options_wpspin)
+                        .build())
+
                 .add(new Action.Builder(mRes,
                         new Intent(NetworkActivity.this, AddWifiNetworkActivity.class))
                         .title(R.string.wifi_setting_other_options_add_network)
@@ -644,6 +651,26 @@ public class NetworkActivity extends SettingsLayoutActivity implements
         }
     }
     //end add
+    private Intent getWpsOptionsIntent(int wpsOptionIndex)
+    {
+        Intent intent = null;
+        Bundle bundle = new Bundle();
+        switch (wpsOptionIndex) {
+            case OTHER_OPTIONS_WPS:
+                bundle.putString("WpsMmode", "PBC");
+                intent = new Intent(mContext, WpsConnectionActivity.class);
+                intent.putExtras(bundle);
+                break;
+            case OTHER_OPTIONS_WPSPIN:
+                bundle.putString("WpsMmode", "DISPLAY");
+                intent = new Intent(mContext, WpsConnectionActivity.class);
+                intent.putExtras(bundle);
+                break;
+            default:
+                break;
+        }
+        return intent;
+    }
 
     @Override
     public Layout createLayout() {
@@ -679,9 +706,13 @@ public class NetworkActivity extends SettingsLayoutActivity implements
                                 .title(R.string.wifi_setting_header_other_options)
                                 .build())
                         .add(new Action.Builder(mRes,
-                                 new Intent(this, WpsConnectionActivity.class))
+                                getWpsOptionsIntent(OTHER_OPTIONS_WPS))
                                 .title(R.string.wifi_setting_other_options_wps)
                                 .build())
+                        .add(new Action.Builder(mRes,
+                            getWpsOptionsIntent(OTHER_OPTIONS_WPSPIN))
+                            .title(R.string.wifi_setting_other_options_wpspin)
+                            .build())
                         .add(new Action.Builder(mRes,
                                 new Intent(this, AddWifiNetworkActivity.class))
                                 .title(R.string.wifi_setting_other_options_add_network)
