@@ -319,11 +319,6 @@ public class HdmiCecActivity extends BaseSettingsActivity implements ActionAdapt
                 } else {
                     editor.putString(SWITCH_ONE_KEY_POWER_OFF, SWITCH_OFF);
                 }
-                if (funs[FUN_AUTO_CHANGE_LANGUAGE] != 0) {
-                    editor.putString(SWITCH_AUTO_CHANGE_LANGUAGE, SWITCH_ON);
-                } else {
-                    editor.putString(SWITCH_AUTO_CHANGE_LANGUAGE, SWITCH_OFF);
-                }
                 editor.putString(SWITCH_CEC, SWITCH_ON);
             } else {
                 editor.putString(SWITCH_ONE_KEY_PLAY, SWITCH_OFF);
@@ -443,20 +438,16 @@ public class HdmiCecActivity extends BaseSettingsActivity implements ActionAdapt
             String s = writeConfig.substring(writeConfig.length() - 1, writeConfig.length());
             mSystemControlManager.writeSysFs(CEC_SYS, s);
         }else if(fun == FUN_AUTO_CHANGE_LANGUAGE){
+            String str = mSystemControlManager.readSysFs(CEC_SYS);
+            str = str.substring(str.lastIndexOf(":")+3);
+            int cecValue = Integer.valueOf(str,16);
             if (isOn) {
-                //tmpArray[3] = 1;
-                //tmpArray[0] = 1;
-                tmpArray[FUN_AUTO_CHANGE_LANGUAGE] = 1;
-                tmpArray[FUN_CEC] = 1;
+                cecValue = cecValue | 0x20;
             } else {
-                tmpArray[FUN_AUTO_CHANGE_LANGUAGE] = 0;
-                tmpArray[FUN_CEC] = 1;
+                cecValue = cecValue & 0xdf;
             }
-            String writeConfig = arrayToString(tmpArray);
-            mSystemControlManager.setBootenv(CEC_PROP, writeConfig);
-            Log.d(TAG, "==== cec set config : " + writeConfig);
-            String s = writeConfig.substring(writeConfig.length() - 1, writeConfig.length());
-            mSystemControlManager.writeSysFs(CEC_SYS, s);
+            str = Integer.toHexString(cecValue);
+            mSystemControlManager.writeSysFs(CEC_SYS, str);
         }
     }
 
