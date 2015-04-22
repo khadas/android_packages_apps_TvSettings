@@ -48,6 +48,7 @@
     <string name="connectivity_network" msgid="8321537111272398501">"网络"</string>
     <string name="connectivity_wifi" msgid="489974791299647708">"WLAN"</string>
     <string name="connectivity_ethernet" msgid="2182407318634700320">"有线网络"</string>
+    <string name="connectivity_vpn">VPN</string>
     <string name="device_daydream" msgid="4933581408059561077">"互动屏保"</string>
     <string name="device_display" msgid="101455384386372747">"显示"</string>
     <string name="device_outputmode" msgid="101455384386372748">"屏幕分辨率"</string>
