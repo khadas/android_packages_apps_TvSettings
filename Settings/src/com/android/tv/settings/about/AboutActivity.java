@@ -206,10 +206,11 @@ public class AboutActivity extends DialogActivity implements ActionAdapter.Liste
                 .description(DeviceManager.getDeviceName(this))
                 .intent(new Intent(SETTINGS_DEVICE_NAME_INTENT_ACTION))
                 .build());
-        actions.add(new Action.Builder()
+        //mask this Action for MonkeyTest
+        /*actions.add(new Action.Builder()
                 .key(KEY_REBOOT)
                 .title(getString(R.string.restart_button_label))
-                .build());
+                .build());*/
         actions.add(new Action.Builder()
                 .key(KEY_LEGAL_INFO)
                 .title(getString(R.string.about_legal_info))
