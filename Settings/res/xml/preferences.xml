@@ -82,6 +82,14 @@
             android:targetPackage="com.android.tv.settings" />
     </Preference>
     <Preference
+        android:icon="@drawable/ic_settings_more"
+        android:key="more"
+        android:title="@string/system_more_setting" >
+        <intent
+            android:targetClass="com.android.settings.Settings"
+            android:targetPackage="com.android.settings" />
+    </Preference>
+    <Preference
         android:icon="@drawable/ic_settings_developeroptions"
         android:key="developer"
         android:title="@string/system_developer_options" >
