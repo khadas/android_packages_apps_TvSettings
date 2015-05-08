@@ -22,6 +22,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.content.IntentFilter;
+import android.content.ComponentName;
 import android.net.IpConfiguration;
 import android.net.IpConfiguration.IpAssignment;
 import android.net.IpConfiguration.ProxySettings;
@@ -219,6 +220,25 @@ public class NetworkActivity extends SettingsLayoutActivity implements
         }
     };
 
+    LayoutGetter mVPNLayout = new LayoutGetter() {
+        public Layout get() {
+            ComponentName componentName = new ComponentName("com.android.tv.settings",
+                "com.android.tv.settings.accessories.AddAccessoryActivity");
+            Intent i = new Intent().setComponent(componentName);
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+            i = new Intent(Intent.ACTION_MAIN);
+            i.setComponent(new ComponentName("com.android.settings","com.android.settings.SubSettings"));
+            i.putExtra(":settings:show_fragment", "com.android.settings.vpn2.VpnSettings");
+            i.putExtra(":settings:show_fragment_title", "VPN");
+
+            return new Layout()
+                    .add(new Action.Builder(mRes,i)
+                    .title(mContext.getString(R.string.connectivity_vpn))
+                    .build());
+
+        }
+
+    };
     LayoutGetter mEthernetLayout = new LayoutGetter() {
         public Layout get() {
             boolean ethernetConnected =
@@ -723,7 +743,8 @@ public class NetworkActivity extends SettingsLayoutActivity implements
                             .contentIconRes(R.drawable.ic_settings_ethernet)
                             .description(mEthernetConnectedDescription)
                             .build()
-                        .add(mEthernetLayout)));
+                        .add(mEthernetLayout))
+                        .add(mVPNLayout));
         } else {
             // Only Wifi is available.
             return new Layout()

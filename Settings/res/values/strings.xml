@@ -85,7 +85,7 @@
     <string name="connectivity_wifi">Wi-Fi</string>
     <!-- Preference which manages ethernet settings. [CHAR LIMIT=50] -->
     <string name="connectivity_ethernet">Ethernet</string>
-
+    <string name="connectivity_vpn">VPN</string>
     <!-- Device preferences -->
     <skip />
     <!-- Preference which changes daydream settings. [CHAR LIMIT=50] -->
