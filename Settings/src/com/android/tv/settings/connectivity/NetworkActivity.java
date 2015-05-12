@@ -66,7 +66,7 @@ public class NetworkActivity extends SettingsLayoutActivity implements
     private static final int WIFI_UI_REFRESH_INTERVAL_CAP_MILLIS = 5 * 1000;//15 * 1000;
     private static final int OTHER_OPTIONS_WPS = 0;
     private static final int OTHER_OPTIONS_WPSPIN = 1;
-
+    private WifiConfiguration mWifiConfig = null;
     private ConnectivityListener mConnectivityListener;
     private Resources mRes;
     private Handler mHandler = new Handler();
@@ -548,6 +548,8 @@ public class NetworkActivity extends SettingsLayoutActivity implements
     private static final int ENABLED = 1;
     private static final int MSG_WIFI_ON = 0xE0;
     private static final int MSG_WIFI_OFF = 0xE1;
+    private static final int MSG_WIFIAP_ON = 0xE2;
+    private static final int MSG_WIFIAP_OFF =0xE3;
     private WifiManager mWifiManager = null;
     private IntentFilter mIntentFilter;
 
@@ -576,6 +578,12 @@ public class NetworkActivity extends SettingsLayoutActivity implements
                 case MSG_WIFI_OFF:
                     setWifiDevEnable(false);
                     break;
+                case MSG_WIFIAP_ON:
+                    setWifiApDevEnable(true);
+                    break;
+                case MSG_WIFIAP_OFF:
+                    setWifiApDevEnable(false);
+                    break;
                 default:
                     android.util.Log.e(TAG,"[handleMessage]error msg.what:"+msg.what);
                     break;
@@ -593,6 +601,19 @@ public class NetworkActivity extends SettingsLayoutActivity implements
     private void sendWifiOffMsg() {
          if (mDevHandler != null) {
             Message msg = mDevHandler.obtainMessage(MSG_WIFI_OFF);
+            mDevHandler.sendMessage(msg);
+        }
+    }
+    private void sendWifiApOnMsg() {
+        if (mDevHandler != null) {
+            Message msg = mDevHandler.obtainMessage(MSG_WIFIAP_ON);
+            mDevHandler.sendMessage(msg);
+        }
+    }
+
+    private void sendWifiApOffMsg() {
+        if (mDevHandler != null) {
+            Message msg = mDevHandler.obtainMessage(MSG_WIFIAP_OFF);
             mDevHandler.sendMessage(msg);
         }
     }
@@ -639,6 +660,22 @@ public class NetworkActivity extends SettingsLayoutActivity implements
         }
     };
 
+    private boolean getWifiApDevEnable() {
+        boolean ret = false;
+        int wifiApState = getWifiApState();
+        if ((wifiApState == WifiManager.WIFI_AP_STATE_ENABLING) ||
+            (wifiApState == WifiManager.WIFI_AP_STATE_ENABLED)) {
+            ret = true;
+        }
+        return ret;
+    }
+    private int getWifiApState() {
+        if (mWifiManager == null) {
+            mWifiManager = (WifiManager) mContext.getSystemService(Context.WIFI_SERVICE);
+        }
+        return mWifiManager.getWifiApState();
+    }
+
     private boolean getWifiDevEnable() {
         boolean ret = false;
         int wifiState = getWifiState();
@@ -665,6 +702,24 @@ public class NetworkActivity extends SettingsLayoutActivity implements
         else if(!enable && ((wifiState != WifiManager.WIFI_STATE_DISABLING) ||
                         (wifiState != WifiManager.WIFI_STATE_DISABLED))) {
             mWifiManager.setWifiEnabled(false);
+        }
+        else {
+            android.util.Log.i(TAG,"[setWifiDevEnable] wifiState:" + wifiState);
+        }
+    }
+    private void setWifiApDevEnable(boolean enable) {
+        int wifiState = getWifiApState();
+        if (mWifiManager == null) {
+            mWifiManager = (WifiManager) mContext.getSystemService(Context.WIFI_SERVICE);
+        }
+        mWifiConfig = mWifiManager.getWifiApConfiguration();
+        if (enable && ((wifiState != WifiManager.WIFI_AP_STATE_ENABLING) ||
+            (wifiState != WifiManager.WIFI_AP_STATE_ENABLED))) {
+            mWifiManager.setWifiApEnabled(mWifiConfig,true);
+        }
+        else if(!enable && ((wifiState != WifiManager.WIFI_AP_STATE_DISABLING) ||
+            (wifiState != WifiManager.WIFI_AP_STATE_DISABLED))) {
+            mWifiManager.setWifiApEnabled(mWifiConfig,false);
         }
         else {
             android.util.Log.i(TAG,"[setWifiDevEnable] wifiState:" + wifiState);
@@ -824,9 +879,17 @@ public class NetworkActivity extends SettingsLayoutActivity implements
                         Context.CONNECTIVITY_SERVICE);
                     NetworkInfo networkInfo = mConnectivityManager.getActiveNetworkInfo();
                     if ( networkInfo != null ) {
-                        if (networkInfo.getType() != ConnectivityManager.TYPE_ETHERNET)
+                        if (networkInfo.getType() != ConnectivityManager.TYPE_ETHERNET) {
+                            if (getWifiApDevEnable()) {
+                               sendWifiApOffMsg();
+                            }
                             sendWifiOnMsg();
+
+                        }
                     } else {
+                        if (getWifiApDevEnable()) {
+                            sendWifiApOffMsg();
+                        }
                         sendWifiOnMsg();
                     }
                 }
