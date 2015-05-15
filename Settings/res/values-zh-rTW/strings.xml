@@ -136,6 +136,7 @@
     <string name="about_model" msgid="6625269442206323995">"型號"</string>
     <string name="about_version" msgid="1177287676732287266">"版本"</string>
     <string name="about_serial" msgid="2723560490027171187">"序號"</string>
+    <string name="about_kernel">核心版本</string>
     <string name="about_build" msgid="9148789767199785676">"版次"</string>
   <plurals name="show_dev_countdown">
     <item quantity="one" msgid="5656331074727404150">"只要完成剩餘的 <xliff:g id="STEP_COUNT">%1$d</xliff:g> 個步驟，您就能成為開發人員"</item>

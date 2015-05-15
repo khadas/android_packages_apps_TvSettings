@@ -137,6 +137,7 @@
     <string name="about_model" msgid="6625269442206323995">"型号"</string>
     <string name="about_version" msgid="1177287676732287266">"版本"</string>
     <string name="about_serial" msgid="2723560490027171187">"序列号"</string>
+    <string name="about_kernel">内核版本</string>
     <string name="about_build" msgid="9148789767199785676">"内部版本号"</string>
   <plurals name="show_dev_countdown">
     <item quantity="one" msgid="5656331074727404150">"现在只需再执行<xliff:g id="STEP_COUNT">%1$d</xliff:g>步操作即可进入开发者模式"</item>
