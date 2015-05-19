@@ -427,21 +427,21 @@
             android:configChanges="keyboard|keyboardHidden|navigation"
             android:exported="true" />
 
-        <receiver android:name=".accessories.BluetoothConnectionsManager" >
+        <!--receiver android:name=".accessories.BluetoothConnectionsManager" >
             <intent-filter>
                 <action android:name="android.bluetooth.device.action.ACL_CONNECTED" />
                 <action android:name="android.bluetooth.device.action.ACL_DISCONNECTED" />
                 <action android:name="android.bluetooth.adapter.action.STATE_CHANGED" />
             </intent-filter>
-        </receiver>
+        </receiver-->
 
-        <receiver android:name=".accessories.BluetoothPairingRequest" >
+        <!--receiver android:name=".accessories.BluetoothPairingRequest" >
             <intent-filter>
                 <action android:name="android.bluetooth.device.action.PAIRING_REQUEST" />
             </intent-filter>
-        </receiver>
+        </receiver-->
 
-        <activity
+        <!--activity
             android:name=".accessories.BluetoothPairingDialog"
             android:configChanges="keyboard|keyboardHidden|navigation"
             android:excludeFromRecents="true"
@@ -451,8 +451,8 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-        </activity>
-        <activity
+        </activity-->
+        <!--activity
             android:name=".accessories.BluetoothDevicePickerActivity"
             android:configChanges="keyboard|keyboardHidden|navigation"
             android:excludeFromRecents="true"
@@ -462,7 +462,7 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-        </activity>
+        </activity-->
         <activity
             android:name=".about.AboutActivity"
             android:exported="true" >
