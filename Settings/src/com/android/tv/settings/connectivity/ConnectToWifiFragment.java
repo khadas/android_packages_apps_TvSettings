@@ -77,6 +77,7 @@ public class ConnectToWifiFragment extends MessageWizardFragment
     private ConnectivityListener mConnectivityListener;
     private WifiConfiguration mWifiConfiguration;
     private WifiManager mWifiManager;
+    private WifiManager.ActionListener mConnectListener;
     private Handler mHandler;
     private BroadcastReceiver mReceiver;
     private boolean mWasAssociating;
@@ -108,6 +109,15 @@ public class ConnectToWifiFragment extends MessageWizardFragment
         mConnectivityListener = new ConnectivityListener(getActivity(), this);
         mWifiConfiguration = (WifiConfiguration) getArguments().getParcelable(EXTRA_CONFIGURATION);
         mWifiManager = ((WifiManager) getActivity().getSystemService(Context.WIFI_SERVICE));
+        mConnectListener = new WifiManager.ActionListener() {
+                                   @Override
+                                   public void onSuccess() {
+                                   }
+                                   @Override
+                                   public void onFailure(int reason) {
+                                   }
+                               };
+
         mHandler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
@@ -185,22 +195,13 @@ public class ConnectToWifiFragment extends MessageWizardFragment
             notifyListener(RESULT_SUCCESS);
         } else {
             int networkId = mWifiManager.addNetwork(mWifiConfiguration);
-            if (networkId == -1) {
+            if (mWifiConfiguration.networkId != WifiConfiguration.INVALID_NETWORK_ID) {
                 if (DEBUG) {
                     Log.d(TAG, "Failed to add network!");
                 }
                 notifyListener(RESULT_UNKNOWN_ERROR);
-            } else if (!mWifiManager.enableNetwork(networkId, true)) {
-                if (DEBUG) {
-                    Log.d(TAG, "Failed to enable network id " + networkId + "!");
-                }
-                notifyListener(RESULT_UNKNOWN_ERROR);
-            } else if (!mWifiManager.reconnect()) {
-                if (DEBUG) {
-                    Log.d(TAG, "Failed to reconnect!");
-                }
-                notifyListener(RESULT_UNKNOWN_ERROR);
             } else {
+                connect(mWifiConfiguration);
                 mHandler.sendEmptyMessageDelayed(MSG_TIMEOUT, CONNECTION_TIMEOUT);
             }
         }
@@ -225,6 +226,11 @@ public class ConnectToWifiFragment extends MessageWizardFragment
             notifyListener(RESULT_SUCCESS);
         }
     }
+
+    protected void connect(final WifiConfiguration config) {
+        mWifiManager.connect(config, mConnectListener);
+    }
+
 
     private void notifyListener(int result) {
         if (mListener != null) {
