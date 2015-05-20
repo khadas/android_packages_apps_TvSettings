@@ -44,8 +44,8 @@ public class HdmiCecActivity extends BaseSettingsActivity implements ActionAdapt
     private static final String CEC_SYS = "/sys/class/amhdmitx/amhdmitx0/cec_config";
     private static final String PREFERENCE_BOX_SETTING = "preference_box_settings";
     private static final String CEC_PROP = "ubootenv.var.cecconfig";
-    private static final String CEC_0 = "cec0";
-    private static final String CEC_F = "cecf";
+    private static final String CEC_TAG = "cec0x";
+    private static final String CEC_0   = "cec0x0";
     private static final String SWITCH_ON = "true";
     private static final String SWITCH_OFF = "false";
     private static final String SWITCH_CEC = "switch_cec";
@@ -59,6 +59,13 @@ public class HdmiCecActivity extends BaseSettingsActivity implements ActionAdapt
     private static final int FUN_ONE_KEY_POWER_OFF = 0x01;
     private static final int FUN_ONE_KEY_PLAY = 0x02;
     private static final int FUN_AUTO_CHANGE_LANGUAGE = 0x03;
+
+    private static final int MASK_FUN_CEC = 0x01;                   // bit 0
+    private static final int MASK_ONE_KEY_PLAY = 0x02;              // bit 1
+    private static final int MASK_ONE_KEY_STANDBY = 0x04;           // bit 2
+    private static final int MASK_AUTO_CHANGE_LANGUAGE = 0x20;      // bit 5
+    private static final int MASK_ALL = 0x2f;                       // all mask
+
     private static final boolean FUN_OPEN = true;
     private static final boolean FUN_CLOSE = false;
 
@@ -85,6 +92,7 @@ public class HdmiCecActivity extends BaseSettingsActivity implements ActionAdapt
 
     private void switchCec(boolean on) {
         String isOpen = sharepreference.getString(SWITCH_CEC, SWITCH_OFF);
+        Log.d(TAG, "switch CEC, on:" + on + ", isOpen:" + isOpen);
         Editor editor = this.getSharedPreferences(PREFERENCE_BOX_SETTING, Context.MODE_PRIVATE).edit();
         if (isOpen.equals(SWITCH_ON) && !on) {
             editor.putString(SWITCH_CEC, SWITCH_OFF);
@@ -305,30 +313,38 @@ public class HdmiCecActivity extends BaseSettingsActivity implements ActionAdapt
 
     private void initCecFun(){
         Editor editor = this.getSharedPreferences(PREFERENCE_BOX_SETTING, Context.MODE_PRIVATE).edit();
-        String str = getBinaryString(mSystemControlManager.readSysFs(CEC_SYS));
-        int []funs = getBinaryArray(str);
-        if (funs.length == 4) {
-            if (funs[FUN_CEC] != 0) {
-                if (funs[FUN_ONE_KEY_PLAY] != 0) {
-                    editor.putString(SWITCH_ONE_KEY_PLAY, SWITCH_ON);
-                } else {
-                    editor.putString(SWITCH_ONE_KEY_PLAY, SWITCH_OFF);
-                }
-                if (funs[FUN_ONE_KEY_POWER_OFF] != 0) {
-                    editor.putString(SWITCH_ONE_KEY_POWER_OFF, SWITCH_ON);
-                } else {
-                    editor.putString(SWITCH_ONE_KEY_POWER_OFF, SWITCH_OFF);
-                }
-                editor.putString(SWITCH_CEC, SWITCH_ON);
+        String str = mSystemControlManager.readSysFs(CEC_SYS);
+        // get rid of '0x' prefix
+        int cec_config = Integer.valueOf(str.substring(2, str.length()), 16);
+        Log.d(TAG, "cec config str:" + str + ", value:" + cec_config);
+        if ((cec_config & MASK_FUN_CEC) != 0) {
+            if ((cec_config & MASK_ONE_KEY_PLAY) != 0) {
+                editor.putString(SWITCH_ONE_KEY_PLAY, SWITCH_ON);
             } else {
                 editor.putString(SWITCH_ONE_KEY_PLAY, SWITCH_OFF);
-                editor.putString(SWITCH_ONE_KEY_POWER_OFF, SWITCH_OFF);
-                editor.putString(SWITCH_AUTO_CHANGE_LANGUAGE, SWITCH_OFF);
-                editor.putString(SWITCH_CEC, SWITCH_OFF);
             }
+            if ((cec_config & MASK_ONE_KEY_STANDBY) != 0) {
+                editor.putString(SWITCH_ONE_KEY_POWER_OFF, SWITCH_ON);
+            } else {
+                editor.putString(SWITCH_ONE_KEY_POWER_OFF, SWITCH_OFF);
+            }
+            if ((cec_config & MASK_AUTO_CHANGE_LANGUAGE) != 0) {
+                editor.putString(SWITCH_AUTO_CHANGE_LANGUAGE, SWITCH_ON);
+            } else {
+                editor.putString(SWITCH_AUTO_CHANGE_LANGUAGE, SWITCH_OFF);
+            }
+            editor.putString(SWITCH_CEC, SWITCH_ON);
+        } else {
+            editor.putString(SWITCH_ONE_KEY_PLAY, SWITCH_OFF);
+            editor.putString(SWITCH_ONE_KEY_POWER_OFF, SWITCH_OFF);
+            editor.putString(SWITCH_AUTO_CHANGE_LANGUAGE, SWITCH_OFF);
+            editor.putString(SWITCH_CEC, SWITCH_OFF);
         }
         editor.commit();
-        mSystemControlManager.setBootenv(CEC_PROP, arrayToString(funs));
+        cec_config &= MASK_ALL;
+        str = CEC_TAG + Integer.toHexString(cec_config);
+        Log.d(TAG, "save env:" + str);
+        mSystemControlManager.setBootenv(CEC_PROP, str);
     }
 
     private boolean isSwitchCecOn() {
@@ -391,8 +407,10 @@ public class HdmiCecActivity extends BaseSettingsActivity implements ActionAdapt
 
     private void setCecSysfsValue(int fun, boolean isOn) {
         String cec_config = mSystemControlManager.getBootenv(CEC_PROP, CEC_0);
-        String configString = getBinaryString(cec_config);
-        int tmpArray[] = getBinaryArray(configString);
+        String writeConfig, s;
+        // get rid of '0x' prefix
+        int cec_cfg_value = Integer.valueOf(cec_config.substring(5, cec_config.length()), 16);
+        Log.d(TAG, "cec config str:" + cec_config + ", value:" + cec_cfg_value);
         if (fun != FUN_CEC) {
             if (CEC_0.equals(cec_config)) {
                 return;
@@ -401,67 +419,37 @@ public class HdmiCecActivity extends BaseSettingsActivity implements ActionAdapt
 
         if (fun == FUN_CEC) {
             if (isOn) {
-                mSystemControlManager.setBootenv(CEC_PROP, CEC_F);
-                mSystemControlManager.writeSysFs(CEC_SYS, "f");
+                mSystemControlManager.setBootenv(CEC_PROP, CEC_TAG + "2f");
+                mSystemControlManager.writeSysFs(CEC_SYS, "2f");
             } else {
                 mSystemControlManager.setBootenv(CEC_PROP, CEC_0);
                 mSystemControlManager.writeSysFs(CEC_SYS, "0");
             }
+            return ;
         } else if (fun == FUN_ONE_KEY_PLAY) {
             if (isOn) {
-                //tmpArray[2] = 1;
-                //tmpArray[0] = 1;
-                tmpArray[FUN_ONE_KEY_PLAY] = 1;
-                tmpArray[FUN_CEC] = 1;
+                cec_cfg_value |= MASK_ONE_KEY_PLAY;
             } else {
-                tmpArray[FUN_ONE_KEY_PLAY] = 0;
-                tmpArray[FUN_CEC] = 1;
+                cec_cfg_value &= ~MASK_ONE_KEY_PLAY;
             }
-            String writeConfig = arrayToString(tmpArray);
-            mSystemControlManager.setBootenv(CEC_PROP, writeConfig);
-            Log.d(TAG, "==== cec set config : " + writeConfig);
-            String s = writeConfig.substring(writeConfig.length() - 1, writeConfig.length());
-            mSystemControlManager.writeSysFs(CEC_SYS, s);
         } else if (fun == FUN_ONE_KEY_POWER_OFF) {
             if (isOn) {
-                //tmpArray[1] = 1;
-                //tmpArray[0] = 1;
-                tmpArray[FUN_ONE_KEY_POWER_OFF] = 1;
-                tmpArray[FUN_CEC] = 1;
+                cec_cfg_value |= MASK_ONE_KEY_STANDBY;
             } else {
-                tmpArray[FUN_ONE_KEY_POWER_OFF] = 0;
-                tmpArray[FUN_CEC] = 1;
+                cec_cfg_value &= ~MASK_ONE_KEY_STANDBY;
             }
-            String writeConfig = arrayToString(tmpArray);
-            mSystemControlManager.setBootenv(CEC_PROP, writeConfig);
-            Log.d(TAG, "==== cec set config : " + writeConfig);
-            String s = writeConfig.substring(writeConfig.length() - 1, writeConfig.length());
-            mSystemControlManager.writeSysFs(CEC_SYS, s);
         }else if(fun == FUN_AUTO_CHANGE_LANGUAGE){
-            String str = mSystemControlManager.readSysFs(CEC_SYS);
-            str = str.substring(str.lastIndexOf(":")+3);
-            int cecValue = Integer.valueOf(str,16);
             if (isOn) {
-                cecValue = cecValue | 0x20;
+                cec_cfg_value |= MASK_AUTO_CHANGE_LANGUAGE;
             } else {
-                cecValue = cecValue & 0xdf;
+                cec_cfg_value &= ~MASK_AUTO_CHANGE_LANGUAGE;
             }
-            str = Integer.toHexString(cecValue);
-            mSystemControlManager.writeSysFs(CEC_SYS, str);
         }
-    }
-
-    private String arrayToString(int[] array) {
-        String getIndexString = "0123456789abcdef";
-        int total = 0;
-        System.out.println();
-        for (int i = 0; i < array.length; i++) {
-            total = total + (int) (array[i] * Math.pow(2, array.length - i - 1));
-        }
-        Log.d(TAG, "in arrayToString cecConfig is:" + total);
-        String cecConfig = "cec" + getIndexString.charAt(total);
-        Log.d(TAG, "in arrayToString cecConfig is:" + cecConfig);
-        return cecConfig;
+        writeConfig = CEC_TAG + Integer.toHexString(cec_cfg_value);
+        mSystemControlManager.setBootenv(CEC_PROP, writeConfig);
+        s = writeConfig.substring(3, writeConfig.length());
+        mSystemControlManager.writeSysFs(CEC_SYS, s);
+        Log.d(TAG, "==== cec set config : " + writeConfig);
     }
 
     private int[] getBinaryArray(String binaryString) {
@@ -471,19 +459,6 @@ public class HdmiCecActivity extends BaseSettingsActivity implements ActionAdapt
             tmp[i] = Integer.parseInt(tmpString);
         }
         return tmp;
-    }
-
-    private String getBinaryString(String config) {
-        String indexString = "0123456789abcdef";
-        String configString = config.substring(config.length() - 1, config.length());
-        int indexOfConfigNum = indexString.indexOf(configString);
-        String ConfigBinary = Integer.toBinaryString(indexOfConfigNum);
-        if (ConfigBinary.length() < 4) {
-            for (int i = ConfigBinary.length(); i < 4; i++) {
-                ConfigBinary = "0" + ConfigBinary;
-            }
-        }
-        return ConfigBinary;
     }
 
     private void updateLanguage(Locale locale) {
