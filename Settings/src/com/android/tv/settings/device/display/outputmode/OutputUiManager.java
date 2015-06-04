@@ -43,11 +43,53 @@ public class OutputUiManager {
     public static final String CVBS_MODE = "cvbs";
     public static final String HDMI_MODE = "hdmi";
 
-    private static final String[] HDMI_LIST = {"1080p","1080p50hz","1080p24hz","720p","720p50hz","4k2k24hz","4k2k25hz","4k2k30hz","4k2ksmpte","576p","480p","1080i","1080i50hz","576i","480i"};
-    private static final String[] HDMI_TITLE = {"1080p-60hz","1080p-50hz","1080p-24hz","720p-60hz","720p-50hz","4k2k-24hz","4k2k-25hz","4k2k-30hz","4k2k-smpte","576p-50hz","480p-60hz","1080i-60hz","1080i-50hz","576i-50hz","480i-60hz" };
-    private static final String[] CVBS_MODE_VALUE_LIST = {"480cvbs","576cvbs"};
-    private static final String[] CVBS_MODE_TITLE_LIST = {"480 CVBS","576 CVBS"};
-    private static final int DEFAULT_HDMI_MODE = 4;
+    private static final String[] HDMI_LIST = {
+        "1080p",
+        "1080p50hz",
+        "720p",
+        "720p50hz",
+        "4k2k24hz",
+        "4k2k25hz",
+        "4k2k30hz",
+        "4k2k50hz420",
+        "4k2k60hz420",
+        "4k2ksmpte",
+        "1080p24hz",
+        "576p",
+        "480p",
+        "1080i50hz",
+        "1080i",
+        "576i",
+        "480i",
+    };
+    private static final String[] HDMI_TITLE = {
+        "1080p-60hz",
+        "1080p-50hz",
+        "720p-60hz",
+        "720p-50hz",
+        "4k2k-24hz",
+        "4k2k-25hz",
+        "4k2k-30hz",
+        "4k2k-50hz",
+        "4k2k-60hz",
+        "4k2k-smpte",
+        "1080p-24hz",
+        "576p-50hz",
+        "480p-60hz",
+        "1080i-60hz",
+        "1080i-50hz",
+        "576i-50hz",
+        "480i-60hz"
+    };
+    private static final String[] CVBS_MODE_VALUE_LIST = {
+        "480cvbs",
+        "576cvbs"
+    };
+    private static final String[] CVBS_MODE_TITLE_LIST = {
+        "480 CVBS",
+        "576 CVBS"
+    };
+    private static final int DEFAULT_HDMI_MODE = 0;
     private static final int DEFAULT_CVBS_MODE = 1;
     private static String[] mHdmiValueList;
     private static String[] mHdmiTitleList;
@@ -169,6 +211,9 @@ public class OutputUiManager {
         }
 
         String str_edid = mOutputModeManager.getHdmiSupportList();
+        if (str_edid.contains("4k2k")) {
+            str_edid = str_edid + "4k2k50hz420,4k2k60hz420";
+        }
         if (str_edid != null && str_edid.length() != 0 && !str_edid.contains("null")) {
             List<String> list_hdmi_mode = new ArrayList<String>();
             List<String> list_hdmi_title = new ArrayList<String>();
