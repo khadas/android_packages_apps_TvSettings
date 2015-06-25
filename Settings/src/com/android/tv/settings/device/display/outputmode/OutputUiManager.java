@@ -76,8 +76,8 @@ public class OutputUiManager {
         "1080p-24hz",
         "576p-50hz",
         "480p-60hz",
-        "1080i-60hz",
         "1080i-50hz",
+        "1080i-60hz",
         "576i-50hz",
         "480i-60hz"
     };
