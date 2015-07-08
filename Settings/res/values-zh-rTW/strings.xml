@@ -515,6 +515,8 @@
     <string name="cec_one_key_play">單鍵播放</string>
     <string name="cec_one_key_power_off">單鍵關機</string>
     <string name="cec_auto_change_language">語言切換</string>
+    <string name="playback_settings">播放設置</string>
+    <string name="playback_hdmi_selfadaption">HDMI自適應</string>
     <string name="inputs_inputs" msgid="4249080110281833521">"輸入裝置"</string>
     <string name="inputs_header_cec" msgid="3701104827756278489">"消費者電子控制 (CEC)"</string>
     <string name="inputs_cec_settings" msgid="8403155117662874704">"裝置控制設定"</string>

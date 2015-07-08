@@ -1145,7 +1145,7 @@
     <string name="noAppsGoBack">Back</string>
 
     <!-- Preference which manages hdmi cec settings. -->
-    <string name="system_cec">Hdmi cec</string>
+    <string name="system_cec">HDMI cec</string>
     <!-- Hdmi cec switch -->
     <!-- Title for cec switch [CHAR LIMIT=80] -->
     <string name="cec_switch">CEC Switch</string>
@@ -1157,6 +1157,11 @@
     <string name="cec_one_key_power_off">One key power off</string>
     <!-- Title for cec auto change language [CHAR LIMIT=100] -->
     <string name="cec_auto_change_language">Auto change language</string>
+
+    <!-- Preference which manages play back settings. -->
+    <string name="playback_settings">Play back settings</string>
+    <!-- Hdmi self-adaption switch -->
+    <string name="playback_hdmi_selfadaption">HDMI self-adaption</string>
 
     <!-- TV input settings row -->
     <string name="inputs_inputs">Inputs</string>

@@ -139,6 +139,14 @@ enum ActionType {
     CEC_OVERVIEW_AUTO_CHANGE_LANGUAGE(R.string.cec_auto_change_language, R.string.settings_off),
 
     /*
+     * play back
+     */
+    PLAYBACK_SETTINGS(R.string.playback_settings),
+    PLAYBACK_HDMI_SELFADAPTION_SWITCH(R.string.playback_hdmi_selfadaption),
+    PLAYBACK_OVERVIEW_SWITCH_ON(R.string.settings_on),
+    PLAYBACK_OVERVIEW_SWITCH_OFF(R.string.settings_off),
+
+    /*
      * Security
      */
     SECURITY_OVERVIEW(R.string.system_security),

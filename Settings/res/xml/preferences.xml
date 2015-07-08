@@ -48,6 +48,14 @@
             android:targetPackage="com.android.tv.settings" />
     </Preference>
     <Preference
+        android:icon="@drawable/ic_settings_now_movies"
+        android:key="cec"
+        android:title="@string/playback_settings" >
+        <intent
+            android:targetClass="com.android.tv.settings.system.PlayBackSettingsActivity"
+            android:targetPackage="com.android.tv.settings" />
+    </Preference>
+    <Preference
         android:icon="@drawable/ic_settings_home"
         android:key="home"
         android:title="@string/system_home" >

@@ -19,7 +19,6 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.droidlogic.app.SystemControlManager;
 import com.droidlogic.app.OutputModeManager;
 
 import java.io.BufferedReader;
@@ -98,7 +97,6 @@ public class OutputUiManager {
     private ArrayList<String> mValueList = new ArrayList<String>();
     private ArrayList<String> mSupportList = new ArrayList<String>();
 
-    private SystemControlManager mSystemControlManager;
     private OutputModeManager mOutputModeManager;
     private Context mContext;
 
@@ -106,7 +104,6 @@ public class OutputUiManager {
 
     public OutputUiManager(Context context){
         mContext = context;
-        mSystemControlManager = new SystemControlManager(mContext);
         mOutputModeManager = new OutputModeManager(mContext);
 
         mUiMode = getUiMode();
