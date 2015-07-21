@@ -1654,6 +1654,34 @@ public final class ScrollAdapterView extends AdapterView<Adapter> {
         }
         return super.onKeyUp(keyCode, event);
     }
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if (DBG) Log.d(TAG, "onTouchEvent");
+        switch (event.getActionMasked()) {
+            case MotionEvent.ACTION_DOWN: {
+                final int lastExpandable = lastExpandableIndex();
+                final int[] location = new int[2];
+                final int touchX = (int)event.getX();
+                final int touchY = (int)event.getY();
+                for (int i = firstExpandableIndex(); i < lastExpandable; i ++) {
+                    View view = getChildAt(i);
+                    view.getLocationOnScreen(location);
+                    if (DBG) Log.d(TAG, " locationX:"+location[0]+" locationY:"+location[1]+
+                         " High:"+view.getHeight()+" Weigh:"+view.getWidth()+
+                         " touchX:"+touchX+" touchY:"+touchY);
+                    if ((location[1] < touchY) && (touchY < (location[1] + view.getHeight()))) {
+                        int adapterIndex = getAdapterIndex(i);
+                        getOnItemClickListener().onItemClick(this, view,
+                            adapterIndex, mAdapter.getItemId(adapterIndex));
+                        return true;
+                    }
+                }
+
+                break;
+            }
+        }
+        return super.onTouchEvent(event);
+    }
 
     @Override
     public boolean onGenericMotionEvent(MotionEvent event) {
