@@ -1146,6 +1146,7 @@
 
     <!-- Preference which manages hdmi cec settings. -->
     <string name="system_cec">HDMI cec</string>
+    <string name="toast_cec">This remote device does not support CEC</string>
     <!-- Hdmi cec switch -->
     <!-- Title for cec switch [CHAR LIMIT=80] -->
     <string name="cec_switch">CEC Switch</string>

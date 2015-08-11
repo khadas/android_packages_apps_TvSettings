@@ -510,6 +510,7 @@
     <string name="justOnceOption" msgid="6051458702672920102">"僅限一次"</string>
     <string name="noApplications" msgid="4197983402774959346">"沒有應用程式可執行這項操作。"</string>
     <string name="noAppsGoBack" msgid="5663180241276177314">"返回"</string>
+    <string name="toast_cec">這個遠程設備不支持CEC</string>
     <string name="cec_switch">CEC 開關</string>
     <string name="cec_control">CEC 控制</string>
     <string name="cec_one_key_play">單鍵播放</string>

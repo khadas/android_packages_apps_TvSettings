@@ -31,6 +31,7 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.widget.Toast;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -153,6 +154,11 @@ public class HdmiCecActivity extends BaseSettingsActivity implements ActionAdapt
         /*
          * For list preferences
          */
+        if (!mHdmiCecManager.remoteSupportCec()) {
+            Toast.makeText(this, this.getResources().getString(R.string.toast_cec), Toast.LENGTH_LONG).show();
+            return;
+        }
+
         ActionKey<ActionType, ActionBehavior> actionKey = new ActionKey<ActionType, ActionBehavior>(ActionType.class, ActionBehavior.class, action.getKey());
         final ActionType type = actionKey.getType();
         switch ((ActionType) mState) {
@@ -300,6 +306,10 @@ public class HdmiCecActivity extends BaseSettingsActivity implements ActionAdapt
 
         Editor editor = this.getSharedPreferences(PREFERENCE_BOX_SETTING, Context.MODE_PRIVATE).edit();
         String str = mHdmiCecManager.getCurConfig();
+        if (!mHdmiCecManager.remoteSupportCec()) {
+            switchCec(false);
+            return;
+        }
         // get rid of '0x' prefix
         int cec_config = Integer.valueOf(str.substring(2, str.length()), 16);
         Log.d(TAG, "cec config str:" + str + ", value:" + cec_config);
