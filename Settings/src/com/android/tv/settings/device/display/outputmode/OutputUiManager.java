@@ -208,9 +208,6 @@ public class OutputUiManager {
         }
 
         String str_edid = mOutputModeManager.getHdmiSupportList();
-        if (str_edid.contains("2160p")) {
-            str_edid = str_edid + "2160p50hz420,2160p60hz420";
-        }
         if (str_edid != null && str_edid.length() != 0 && !str_edid.contains("null")) {
             List<String> list_hdmi_mode = new ArrayList<String>();
             List<String> list_hdmi_title = new ArrayList<String>();
