@@ -388,6 +388,9 @@ public class BrowseInfo extends BrowseInfoBase {
     }
 
     private boolean isInputSettingNeeded() {
+        if (!mContext.getPackageManager().hasSystemFeature(PackageManager.FEATURE_LIVE_TV))
+            return false;
+
         TvInputManager manager = (TvInputManager) mContext.getSystemService(
                 Context.TV_INPUT_SERVICE);
         if (manager != null) {
