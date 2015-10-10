@@ -50,8 +50,6 @@ public class OutputUiManager {
         "2160p24hz",
         "2160p25hz",
         "2160p30hz",
-        "2160p50hz",
-        "2160p60hz",
         "2160p50hz420",
         "2160p60hz420",
         "smpte24hz",
@@ -73,8 +71,6 @@ public class OutputUiManager {
         "4k2k-30hz",
         "4k2k-50hz",
         "4k2k-60hz",
-        "4k2k-50hz",
-        "4k2k-60hz",
         "4k2k-smpte",
         "1080p-24hz",
         "576p-50hz",
@@ -92,11 +88,6 @@ public class OutputUiManager {
         "480 CVBS",
         "576 CVBS"
     };
-    private static final String HDMI_4K2K_50HZ_444 = "2160p50hz";
-    private static final String HDMI_4K2K_60HZ_444 = "2160p60hz";
-    private static final String HDMI_4K2K_50HZ_420 = "2160p50hz420";
-    private static final String HDMI_4K2K_60HZ_420 = "2160p60hz420";
-
     private static final int DEFAULT_HDMI_MODE = 0;
     private static final int DEFAULT_CVBS_MODE = 1;
     private static String[] mHdmiValueList;
@@ -196,22 +187,8 @@ public class OutputUiManager {
         mHdmiValueList = HDMI_LIST;
         mHdmiTitleList = HDMI_TITLE;
 
-        String str_edid = mOutputModeManager.getHdmiSupportList();
-
         for (int i = 0; i < mHdmiValueList.length; i++) {
             if (mHdmiValueList[i] != null) {
-                //if edid not exist, don't show 420
-                if (str_edid == null && (mHdmiValueList[i].equals(HDMI_4K2K_50HZ_420)
-                    || mHdmiValueList[i].equals(HDMI_4K2K_60HZ_420)))
-                    continue;
-                //if tv support both 444 and 420, only show 444 mode
-                if (mHdmiValueList[i].equals(HDMI_4K2K_50HZ_420)
-                    && str_edid.contains(HDMI_4K2K_50HZ_444) && str_edid.contains(HDMI_4K2K_50HZ_420))
-                    continue;
-                if (mHdmiValueList[i].equals(HDMI_4K2K_60HZ_420)
-                    && str_edid.contains(HDMI_4K2K_60HZ_444) && str_edid.contains(HDMI_4K2K_60HZ_420))
-                    continue;
-
                 list_value.add(mHdmiValueList[i]);
                 list_title.add(mHdmiTitleList[i]);
             }
@@ -230,6 +207,7 @@ public class OutputUiManager {
             }
         }
 
+        String str_edid = mOutputModeManager.getHdmiSupportList();
         if (str_edid != null && str_edid.length() != 0 && !str_edid.contains("null")) {
             List<String> list_hdmi_mode = new ArrayList<String>();
             List<String> list_hdmi_title = new ArrayList<String>();
