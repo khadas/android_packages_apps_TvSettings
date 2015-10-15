@@ -30,27 +30,28 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.ScanResult;
-import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Pair;
 import com.android.tv.settings.dialog.SettingsLayoutActivity;
-import com.android.tv.settings.dialog.Layout;
-import com.android.tv.settings.dialog.Layout.Header;
-import com.android.tv.settings.dialog.Layout.Action;
-import com.android.tv.settings.dialog.Layout.Status;
-import com.android.tv.settings.dialog.Layout.Static;
-import com.android.tv.settings.dialog.Layout.StringGetter;
-import com.android.tv.settings.dialog.Layout.LayoutGetter;
 import com.android.tv.settings.R;
+import com.android.tv.settings.dialog.Layout;
+import com.android.tv.settings.dialog.Layout.Action;
+import com.android.tv.settings.dialog.Layout.Header;
+import com.android.tv.settings.dialog.Layout.LayoutGetter;
+import com.android.tv.settings.dialog.Layout.SelectionGroup;
+import com.android.tv.settings.dialog.Layout.Static;
+import com.android.tv.settings.dialog.Layout.Status;
+import com.android.tv.settings.dialog.Layout.StringGetter;
+import com.android.tv.settings.dialog.SettingsLayoutActivity;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -61,15 +62,26 @@ public class NetworkActivity extends SettingsLayoutActivity implements
 
     private static final String TAG = "NetworkActivity";
     private static final int REQUEST_CODE_ADVANCED_OPTIONS = 1;
+
     private static final int WIFI_REFRESH_INTERVAL_CAP_MILLIS = 5 * 1000;//15 * 1000; wxl reduce wait time for wifi ap refreshing
-    private static final int WIFI_SCAN_INTERVAL_CAP_MILLIS = 3 * 1000;//10 * 1000;
-    private static final int WIFI_UI_REFRESH_INTERVAL_CAP_MILLIS = 5 * 1000;//15 * 1000;
-    private static final int OTHER_OPTIONS_WPS = 0;
-    private static final int OTHER_OPTIONS_WPSPIN = 1;
-    private WifiConfiguration mWifiConfig = null;
+    private static final int WIFI_SCAN_INTERVAL_CAP_MILLIS = 3 * 1000;
+    private static final int WIFI_UI_REFRESH_INTERVAL_CAP_MILLIS = 5 * 1000;
+
+    private static final int NUMBER_SIGNAL_LEVELS = 4;
+    private static final int ACTION_WIFI_FORGET_NETWORK = 1;
+    private static final int ACTION_WIFI_PROXY_SETTINGS = 4;
+    private static final int ACTION_WIFI_IP_SETTINGS = 5;
+    private static final int ACTION_ETHERNET_PROXY_SETTINGS = 6;
+    private static final int ACTION_ETHERNET_IP_SETTINGS = 7;
+    private static final int ACTION_SCAN_WIFI_ON = 8;
+    private static final int ACTION_SCAN_WIFI_OFF = 9;
+    private static final int ACTION_WIFI_ENABLE_ON = 10;
+    private static final int ACTION_WIFI_ENABLE_OFF = 11;
+
     private ConnectivityListener mConnectivityListener;
     private Resources mRes;
-    private Handler mHandler = new Handler();
+    private final Handler mHandler = new Handler();
+
     private final Runnable mRefreshWifiAccessPoints = new Runnable() {
         @Override
         public void run() {
@@ -79,10 +91,38 @@ public class NetworkActivity extends SettingsLayoutActivity implements
         }
     };
 
+    private final Runnable mSetScanAlways = new Runnable () {
+        @Override
+        public void run() {
+            int setting = mAlwaysScanWifi.getId() == ACTION_SCAN_WIFI_ON ? 1 : 0;
+            Settings.Global.putInt(getContentResolver(),
+                        Settings.Global.WIFI_SCAN_ALWAYS_AVAILABLE, setting);
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         mRes = getResources();
         mConnectivityListener = new ConnectivityListener(this, this);
+
+        mAlwaysScanWifi = new SelectionGroup(getResources(), new int[][] {
+            { R.string.on, ACTION_SCAN_WIFI_ON },
+            { R.string.off, ACTION_SCAN_WIFI_OFF } });
+        int scanAlwaysAvailable = 0;
+        try {
+            scanAlwaysAvailable = Settings.Global.getInt(getContentResolver(),
+                    Settings.Global.WIFI_SCAN_ALWAYS_AVAILABLE);
+        } catch (Settings.SettingNotFoundException e) {
+        }
+        mAlwaysScanWifi.setSelected(scanAlwaysAvailable == 1 ? ACTION_SCAN_WIFI_ON :
+                ACTION_SCAN_WIFI_OFF);
+
+        mEnableWifi = new SelectionGroup(mRes, new int[][] {
+                { R.string.on, ACTION_WIFI_ENABLE_ON },
+                { R.string.off, ACTION_WIFI_ENABLE_OFF } });
+        mEnableWifi.setSelected(mConnectivityListener.isWifiEnabled() ? ACTION_WIFI_ENABLE_ON :
+                ACTION_WIFI_ENABLE_OFF);
+        refreshEnableWifiSelection();
         // The ConectivityListenter must be started before calling "super.OnCreate(.)" to ensure
         // that connectivity status is available before the layout is constructed.
         mConnectivityListener.start();
@@ -126,7 +166,14 @@ public class NetworkActivity extends SettingsLayoutActivity implements
         mEthernetConnectedDescription.refreshView();
         mWifiConnectedDescription.refreshView();
         mEthernetLayout.refreshView();
+        refreshEnableWifiSelection();
         onWifiListChanged();
+        mWifiLayout.refreshView();
+    }
+
+    private void refreshEnableWifiSelection() {
+        mEnableWifi.setSelected(mConnectivityListener.isWifiEnabled() ? ACTION_WIFI_ENABLE_ON :
+                ACTION_WIFI_ENABLE_OFF);
     }
 
     @Override
@@ -135,7 +182,7 @@ public class NetworkActivity extends SettingsLayoutActivity implements
         mWifiAllListLayout.onWifiListChanged();
     }
 
-    StringGetter mEthernetConnectedDescription = new StringGetter() {
+    final StringGetter mEthernetConnectedDescription = new StringGetter() {
         private boolean lastIsEthernetConnected;
         @Override
         public String get() {
@@ -153,7 +200,7 @@ public class NetworkActivity extends SettingsLayoutActivity implements
         }
     };
 
-    StringGetter mWifiConnectedDescription = new StringGetter() {
+    final StringGetter mWifiConnectedDescription = new StringGetter() {
         private boolean lastIsWifiConnected;
         @Override
         public String get() {
@@ -170,7 +217,7 @@ public class NetworkActivity extends SettingsLayoutActivity implements
         }
     };
 
-    StringGetter mEthernetIPAddress = new StringGetter() {
+    final StringGetter mEthernetIPAddress = new StringGetter() {
         public String get() {
             ConnectivityListener.ConnectivityStatus status =
                     mConnectivityListener.getConnectivityStatus();
@@ -182,13 +229,13 @@ public class NetworkActivity extends SettingsLayoutActivity implements
         }
     };
 
-    StringGetter mEthernetMacAddress = new StringGetter() {
+    final StringGetter mEthernetMacAddress = new StringGetter() {
         public String get() {
             return mConnectivityListener.getEthernetMacAddress();
         }
     };
 
-    LayoutGetter mEthernetAdvancedLayout = new LayoutGetter() {
+    final LayoutGetter mEthernetAdvancedLayout = new LayoutGetter() {
         public Layout get() {
             Layout layout = new Layout();
             // Do not check Ethernet's availability here
@@ -239,7 +286,8 @@ public class NetworkActivity extends SettingsLayoutActivity implements
         }
 
     };
-    LayoutGetter mEthernetLayout = new LayoutGetter() {
+
+    final LayoutGetter mEthernetLayout = new LayoutGetter() {
         public Layout get() {
             boolean ethernetConnected =
                     mConnectivityListener.getConnectivityStatus().isEthernetConnected();
@@ -274,13 +322,6 @@ public class NetworkActivity extends SettingsLayoutActivity implements
         }
     };
 
-    private static final int NUMBER_SIGNAL_LEVELS = 4;
-    private static final int ACTION_WIFI_FORGET_NETWORK = 1;
-    private static final int ACTION_WIFI_PROXY_SETTINGS = 4;
-    private static final int ACTION_WIFI_IP_SETTINGS = 5;
-    private static final int ACTION_ETHERNET_PROXY_SETTINGS = 6;
-    private static final int ACTION_ETHERNET_IP_SETTINGS = 7;
-
     private final Context mContext = this;
 
     private String getSignalStrength() {
@@ -289,7 +330,7 @@ public class NetworkActivity extends SettingsLayoutActivity implements
         return signalLevels[strength];
     }
 
-    LayoutGetter mWifiInfoLayout = new LayoutGetter() {
+    final LayoutGetter mWifiInfoLayout = new LayoutGetter() {
         public Layout get() {
             Layout layout = new Layout();
             ConnectivityListener.ConnectivityStatus status =
@@ -319,7 +360,7 @@ public class NetworkActivity extends SettingsLayoutActivity implements
         }
     };
 
-    LayoutGetter mWifiAdvancedLayout = new LayoutGetter() {
+    final LayoutGetter mWifiAdvancedLayout = new LayoutGetter() {
         public Layout get() {
             Layout layout = new Layout();
             WifiConfiguration wifiConfiguration = mConnectivityListener.getWifiConfiguration();
@@ -349,38 +390,49 @@ public class NetworkActivity extends SettingsLayoutActivity implements
         }
     };
 
-    LayoutGetter mWifiLayout = new LayoutGetter() {
-        public Layout get() {
-            return new Layout()
-                .add(new Static.Builder(mRes)
-                        .title(R.string.wifi_setting_available_networks)
-                        .build())
-                .add(mWifiShortListLayout)
-                .add(new Header.Builder(mRes)
-                        .title(R.string.wifi_setting_see_all)
-                        .build()
-                    .add(mWifiAllListLayout)
-                ).add(new Header.Builder(mRes)
-                            .title(R.string.title_wifi_device)
-                            .description(mWifiStateDescription)
-                            .build()
-                            .add(getOnOffLayout(ACTION_WIFI_SWITCH)))
-                .add(new Static.Builder(mRes)
-                        .title(R.string.wifi_setting_header_other_options)
-                        .build())
-                .add(new Action.Builder(mRes,
-                         getWpsOptionsIntent(OTHER_OPTIONS_WPS))
-                        .title(R.string.wifi_setting_other_options_wps)
-                        .build())
-                .add(new Action.Builder(mRes,
-                         getWpsOptionsIntent(OTHER_OPTIONS_WPSPIN))
-                        .title(R.string.wifi_setting_other_options_wpspin)
-                        .build())
+    private SelectionGroup mAlwaysScanWifi;
+    private SelectionGroup mEnableWifi;
 
-                .add(new Action.Builder(mRes,
-                        new Intent(NetworkActivity.this, AddWifiNetworkActivity.class))
-                        .title(R.string.wifi_setting_other_options_add_network)
-                        .build());
+    final LayoutGetter mWifiLayout = new LayoutGetter() {
+        public Layout get() {
+            final Layout layout = new Layout()
+                    .add(new Header.Builder(mRes)
+                            .title(R.string.wifi_setting_enable_wifi)
+                            .description(mEnableWifi)
+                            .build()
+                            .add(mEnableWifi));
+            if (mConnectivityListener.isWifiEnabled()) {
+                layout
+                        .add(new Static.Builder(mRes)
+                                .title(R.string.wifi_setting_available_networks)
+                                .build())
+                        .add(mWifiShortListLayout)
+                        .add(new Header.Builder(mRes)
+                                .title(R.string.wifi_setting_see_all)
+                                .build()
+                                .add(mWifiAllListLayout))
+                        .add(new Static.Builder(mRes)
+                                .title(R.string.wifi_setting_header_other_options)
+                                .build())
+                        .add(new Action.Builder(mRes,
+                                new Intent(NetworkActivity.this,
+                                        WpsConnectionActivity.class))
+                                .title(R.string.wifi_setting_other_options_wps)
+                                .build())
+                        .add(new Action.Builder(mRes,
+                                new Intent(NetworkActivity.this,
+                                        AddWifiNetworkActivity.class))
+                                .title(R.string.wifi_setting_other_options_add_network)
+                                .build())
+                        .add(new Header.Builder(mRes)
+                                .title(R.string.wifi_setting_always_scan)
+                                .description(mAlwaysScanWifi)
+                                .detailedDescription(
+                                        R.string.wifi_setting_always_scan_context)
+                                .build()
+                                .add(mAlwaysScanWifi));
+            }
+            return layout;
         }
     };
 
@@ -476,7 +528,7 @@ public class NetworkActivity extends SettingsLayoutActivity implements
                 // Generate a new list with size less than "maxItems" that ensures "mustHave" is
                 // included.
                 boolean haveMustHave = false;
-                List<ScanResult> displayList = new ArrayList<ScanResult>();
+                List<ScanResult> displayList = new ArrayList<>();
                 for (ScanResult scanResult : networks) {
                     if (!haveMustHave && TextUtils.equals(scanResult.SSID, mustHave)) {
                         haveMustHave = true;
@@ -538,7 +590,7 @@ public class NetworkActivity extends SettingsLayoutActivity implements
             }
             return layout;
         }
-    };
+    }
 
     private final WifiListLayout mWifiShortListLayout = new WifiListLayout(true);
 
@@ -900,6 +952,16 @@ public class NetworkActivity extends SettingsLayoutActivity implements
                 goBackToTitle(mRes.getString(R.string.connectivity_wifi));
                 break;
             }
+            case ACTION_SCAN_WIFI_ON:
+            case ACTION_SCAN_WIFI_OFF:
+                mHandler.post(mSetScanAlways);
+                break;
+            case ACTION_WIFI_ENABLE_ON:
+                mConnectivityListener.setWifiEnabled(true);
+                break;
+            case ACTION_WIFI_ENABLE_OFF:
+                mConnectivityListener.setWifiEnabled(false);
+                break;
         }
     }
 

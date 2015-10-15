@@ -23,6 +23,16 @@ import com.android.tv.settings.BrowseInfoFactory;
 import com.android.tv.settings.R;
 import com.android.tv.settings.MenuActivity;
 import com.android.tv.settings.device.sound.systemsound.SystemSoundActivity;
+import android.content.Context;
+import android.media.AudioManager;
+import android.os.Bundle;
+import android.provider.Settings;
+
+import com.android.tv.settings.R;
+import com.android.tv.settings.dialog.DialogFragment;
+import com.android.tv.settings.dialog.DialogFragment.Action;
+
+import java.util.ArrayList;
 
 /**
  * Activity allowing the management of display settings.
@@ -51,6 +61,16 @@ public class SoundActivity extends MenuActivity {
     }
 
     public static int getIconResource(ContentResolver contentResolver) {
-        return SystemSoundActivity.getIconResource(contentResolver);
+        return getSoundEffectsEnabled(contentResolver) ? R.drawable.settings_sound_on_icon
+                : R.drawable.settings_sound_off_icon;
+    }
+
+    private void setSoundEffectsEnabled(int value) {
+        Settings.System.putInt(getContentResolver(), Settings.System.SOUND_EFFECTS_ENABLED, value);
+    }
+
+    private static boolean getSoundEffectsEnabled(ContentResolver contentResolver) {
+        return Settings.System.getInt(contentResolver, Settings.System.SOUND_EFFECTS_ENABLED, 1)
+                != 0;
     }
 }
