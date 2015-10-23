@@ -333,6 +333,8 @@ public class BrowseInfo extends BrowseInfoBase {
                 } else {
                     builder.imageUriGetter(uriGetter);
                 }
+                /*
+                Intent intent = getIntent(parser, attrs, mHeaderId);
                 if (key.equals(PREF_KEY_CAST) || key.equals(PREF_KEY_SEARCH) || key.equals(PREF_KEY_SPEECH)) {
                     if (intent != null) {
                         List<ResolveInfo> apps = context.getPackageManager().queryIntentActivities(intent, 0);
@@ -340,7 +342,7 @@ public class BrowseInfo extends BrowseInfoBase {
                             return;//skip add item to TvSettings prefrence
                         }
                     }
-                }
+                }*/
                 final MenuItem item = builder.build();
                 if (key.equals(PREF_KEY_WIFI)) {
                     mWifiRow = mRow;
@@ -474,10 +476,12 @@ public class BrowseInfo extends BrowseInfoBase {
         Intent iRC = new Intent().setComponent(componentNameRC );
         iRC.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
 
+        /*
         row.add(new MenuItem.Builder().id(mNextItemId++)
                 .title(mContext.getString(R.string.accessories_remote))
                 .imageResourceId(mContext, R.drawable.ic_settings_remote)
                 .intent(iRC).build());
+                */
     }
 
     private Intent getIntent(XmlResourceParser parser, AttributeSet attrs)

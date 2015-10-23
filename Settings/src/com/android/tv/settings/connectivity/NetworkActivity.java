@@ -78,6 +78,9 @@ public class NetworkActivity extends SettingsLayoutActivity implements
     private static final int ACTION_WIFI_ENABLE_ON = 10;
     private static final int ACTION_WIFI_ENABLE_OFF = 11;
 
+    private static final int OTHER_OPTIONS_WPS = 0;
+    private static final int OTHER_OPTIONS_WPSPIN = 1;
+    private WifiConfiguration mWifiConfig = null;
     private ConnectivityListener mConnectivityListener;
     private Resources mRes;
     private final Handler mHandler = new Handler();

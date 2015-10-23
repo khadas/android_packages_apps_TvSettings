@@ -33,6 +33,7 @@ import android.view.KeyEvent;
 import android.view.SoundEffectConstants;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.MotionEvent;
 import android.view.ViewParent;
 import android.view.accessibility.AccessibilityEvent;
 import android.widget.Adapter;
