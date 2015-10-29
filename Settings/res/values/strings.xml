@@ -134,6 +134,8 @@
 
     <!-- Remote and Accessories -->
     <skip />
+    <!-- Preference which manages remote control settings. [CHAR LIMIT=50] -->
+    <string name="accessories_remote">Remote</string>
     <!-- Preference which manages pairing new accessories. [CHAR LIMIT=50] -->
     <string name="accessories_add">Add accessory</string>
     <!-- Preference which manages WiFi display settings. [CHAR LIMIT=50] -->

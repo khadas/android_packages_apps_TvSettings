@@ -87,14 +87,12 @@ public class RemoteControlSetActivity extends DialogActivity implements ActionAd
     }
 
     private void makeContentFragment() {
-        /*
         mContentFragment = ContentFragment.newInstance(
                 mResources.getString(R.string.accessories_remote),
                 null,
                 null,
                 R.drawable.ic_settings_remote,
                 mResources.getColor(R.color.icon_background));
-                */
     }
 
     private static int toInt(boolean enabled) {
