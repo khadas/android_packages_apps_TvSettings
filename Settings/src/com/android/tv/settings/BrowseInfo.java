@@ -291,7 +291,7 @@ public class BrowseInfo extends BrowseInfoBase {
                             .intent(recIntent)
                             .build());
                 }
-            } else if (PREF_KEY_CAST.equals(key)) {
+            } else if (PREF_KEY_CAST.equals(key) || PREF_KEY_SEARCH.equals(key) || PREF_KEY_SPEECH.equals(key)) {
                 Intent i = getIntent(parser, attrs);
                 if (systemIntentIsHandled(i) != null) {
                     mRow.add(new MenuItem.Builder()
@@ -334,15 +334,6 @@ public class BrowseInfo extends BrowseInfoBase {
                     builder.imageUriGetter(uriGetter);
                 }
 
-                Intent intent = getIntent(parser, attrs);
-                if (key.equals(PREF_KEY_CAST) || key.equals(PREF_KEY_SEARCH) || key.equals(PREF_KEY_SPEECH)) {
-                    if (intent != null) {
-                        List<ResolveInfo> apps = context.getPackageManager().queryIntentActivities(intent, 0);
-                        if (apps == null ||apps.size() <= 0) {
-                            return;//skip add item to TvSettings prefrence
-                        }
-                    }
-                }
                 final MenuItem item = builder.build();
                 if (key.equals(PREF_KEY_WIFI)) {
                     mWifiRow = mRow;
