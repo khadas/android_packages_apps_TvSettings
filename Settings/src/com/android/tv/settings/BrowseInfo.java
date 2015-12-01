@@ -170,6 +170,7 @@ public class BrowseInfo extends BrowseInfoBase {
     private static final String PREF_KEY_CAST = "cast";
     private static final String PREF_KEY_SEARCH = "search";
     private static final String PREF_KEY_SPEECH = "speech";
+    private static final String PREF_KEY_CEC = "cec";
     private static final String PREF_KEY_GOOGLESETTINGS = "googleSettings";
 
     private final Context mContext;
@@ -280,6 +281,8 @@ public class BrowseInfo extends BrowseInfoBase {
             if (PREF_KEY_ADD_ACCOUNT.equals(key)) {
                 mAccountHeaderId = mHeaderId;
                 addAccounts(mRow);
+            } else if (PREF_KEY_CEC.equals(key)) {
+                return;
             } else if (PREF_KEY_HOME.equals(key)) {
                 // Only show home screen setting if there's a system app to handle the intent.
                 Intent recIntent = getIntent(parser, attrs);

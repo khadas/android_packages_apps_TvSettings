@@ -49,7 +49,7 @@
     </Preference>
     <Preference
         android:icon="@drawable/ic_settings_now_movies"
-        android:key="cec"
+        android:key="playback"
         android:title="@string/playback_settings" >
         <intent
             android:targetClass="com.android.tv.settings.system.PlayBackSettingsActivity"
