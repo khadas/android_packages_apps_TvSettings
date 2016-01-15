@@ -594,6 +594,7 @@
 
     <!-- Title for new storage activity [CHAR_LIMIT=50] -->
     <string name="storage_new_title">USB drive connected</string>
+    <string name="storage_new_title_sd">SD card connected</string>
     <!-- Browse action for new storage activity [CHAR_LIMIT=50] -->
     <string name="storage_new_action_browse">Browse</string>
     <!-- Adopt action for new storage activity [CHAR_LIMIT=50] -->

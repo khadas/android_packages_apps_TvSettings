@@ -141,8 +141,15 @@ public class NewStorageActivity extends Activity {
 
         @Override
         public @NonNull GuidanceStylist.Guidance onCreateGuidance(Bundle savedInstanceState) {
+            String title = getString(R.string.storage_new_title);
+            StorageManager storageManager = getActivity().getSystemService(StorageManager.class);
+            final DiskInfo info = storageManager.findDiskById(mDiskId);
+            if (info.isSd()) {
+                title = getString(R.string.storage_new_title_sd);
+            }
+
             return new GuidanceStylist.Guidance(
-                    getString(R.string.storage_new_title),
+                    title,
                     mDescription,
                     null,
                     getActivity().getDrawable(R.drawable.ic_settings_storage));
