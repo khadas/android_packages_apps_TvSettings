@@ -304,10 +304,14 @@ public class NewStorageActivity extends Activity {
                 return;
             }
             final DiskInfo diskInfo = mStorageManager.findDiskById(diskId);
-            if (diskInfo.size <= 0) {
+            if (diskInfo !=null && diskInfo.size <= 0) {
                 Log.d(TAG, "Disk ID " + diskId + " has no media");
                 return;
+            } else if (diskInfo == null) {
+                Log.d(TAG, "Disk Id " + diskId + " reference to a null object");
+                return;
             }
+
             if (intent.getIntExtra(DiskInfo.EXTRA_VOLUME_COUNT, -1) != 0) {
                 Log.d(TAG, "Disk ID " + diskId + " has usable volumes, waiting for mount");
                 return;
