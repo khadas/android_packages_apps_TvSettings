@@ -530,7 +530,7 @@
     <!-- Title for wizard progress screen for formatting drive [CHAR_LIMIT=50] -->
     <string name="storage_wizard_format_progress_title">Formatting USB Drive&#8230;</string>
     <!-- Description for wizard progress screen for formatting drive [CHAR_LIMIT=NONE] -->
-    <string name="storage_wizard_format_progress_description">This may take a moment. Please don\'t remove the drive.</string>
+    <string name="storage_wizard_format_progress_description">This may take a moment. Please don\'t remove the USB drive.</string>
 
     <!-- Title for wizard confirmation screen for migrating data to new drive [CHAR_LIMIT=50] -->
     <string name="storage_wizard_migrate_confirm_title">Move data to <xliff:g id="name" example="SD card">%1$s</xliff:g></string>
@@ -549,13 +549,13 @@
     <!-- Title for wizard progress screen for migrating data to new drive [CHAR_LIMIT=50] -->
     <string name="storage_wizard_migrate_progress_title">Moving data to <xliff:g id="name" example="SD card">%1$s</xliff:g>&#8230;</string>
     <!-- Description for wizard progress screen for migrating data to new drive [CHAR_LIMIT=NONE] -->
-    <string name="storage_wizard_migrate_progress_description">This may take a moment. Please don\'t remove the drive.\nSome apps won\'t work correctly during the move.</string>
+    <string name="storage_wizard_migrate_progress_description">This may take a moment. Please don\'t remove the USB drive.\nSome apps won\'t work correctly during the move.</string>
 
     <!-- Title for warning dialog for slow drives [CHAR_LIMIT=64] -->
-    <string name="storage_wizard_format_slow_title">This drive appears to be slow.</string>
+    <string name="storage_wizard_format_slow_title">This USB drive appears to be slow.</string>
 
     <!-- Summary for warning dialog for slow drives [CHAR_LIMIT=NONE] -->
-    <string name="storage_wizard_format_slow_summary">You can continue, but apps moved to this location may stutter and data transfers may take a long time. Consider using a faster drive for better performance.</string>
+    <string name="storage_wizard_format_slow_summary">You can continue, but apps moved to this location may stutter and data transfers may take a long time. Consider using a faster USB drive for better performance.</string>
 
     <!-- Format action for wizard screen for formatting storage [CHAR LIMIT=50] -->
     <string name="storage_wizard_format_action">Format</string>
@@ -1355,5 +1355,14 @@
 
     <!-- About phone screen, status item label  [CHAR LIMIT=60] -->
     <string name="security_patch">Android security patch level</string>
+
+    <string name="storage_wizard_format_as_private_description_sd">This requires the SD card to be formatted to make it secure. After securely formatting, this drive will only work with this device. Formatting erases all data currently stored on the drive. To avoid losing the data, consider backing it up.</string>
+    <string name="storage_wizard_format_as_public_description_sd">After formatting, you can use this SD card in other devices. All data will be erased. Consider backing up first by moving apps to other internal storage.</string>
+    <string name="storage_wizard_format_progress_title_sd">Formatting SD card&#8230;</string>
+    <string name="storage_wizard_format_progress_description_sd">This may take a moment. Please don\'t remove the SD card.</string>
+    <string name="storage_wizard_migrate_progress_description_sd">This may take a moment. Please don\'t remove the SD card.\nSome apps won\'t work correctly during the move.</string>
+    <string name="storage_wizard_format_slow_title_sd">This SD card appears to be slow.</string>
+    <string name="storage_wizard_format_slow_summary_sd">You can continue, but apps moved to this location may stutter and data transfers may take a long time. Consider using a faster SD card for better performance.</string>
+    <string name="storage_wizard_eject_internal_description_sd">Apps on this device storage will stop working when it\'s ejected. This SD card is formatted to work on this device only. It won\'t work on any others.</string>
 
 </resources>

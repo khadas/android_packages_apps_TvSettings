@@ -633,4 +633,13 @@
     <string name="device_apps_permissions" msgid="2966387603529725982">"应用权限"</string>
     <string name="app_permissions_group_summary" msgid="7906834786705287901">"已授权 <xliff:g id="COUNT_0">%d</xliff:g> 个应用（共 <xliff:g id="COUNT_1">%d</xliff:g> 个）"</string>
     <string name="security_patch" msgid="2131617390189164481">"Android 安全补丁程序级别"</string>
+
+    <string name="storage_wizard_format_as_private_description_sd">"SD 卡必须进行格式化，以确保安全。安全地进行格式化之后，此 SD 卡将只能在这台设备上使用。格式化操作会清空当前存储在此 SD 卡上的所有数据。为避免丢失数据，建议您先将数据备份。"</string>
+    <string name="storage_wizard_format_as_public_description_sd">"格式化此 SD 卡之后，您就可以在其他设备上使用它了。格式化操作会将所有数据清空，因此建议您先将应用移动到其他内部存储设备上进行备份。"</string>
+    <string name="storage_wizard_format_progress_title_sd">"正在格式化 SD 卡…"</string>
+    <string name="storage_wizard_format_progress_description_sd">"此过程可能需要一些时间，请勿移除此 SD 卡。"</string>
+    <string name="storage_wizard_migrate_progress_description_sd">"该操作可能需要一些时间。请勿移除该 SD 卡。\n在移动过程中，某些应用将无法正常运行。"</string>
+    <string name="storage_wizard_format_slow_title_sd">"此 SD 卡似乎运行缓慢。"</string>
+    <string name="storage_wizard_format_slow_summary_sd">"您可以继续使用，但应用移动到此处后可能无法流畅运行，而且数据传输可能会花费很长时间。建议您使用运行速度更快的 SD 卡来提升性能。"</string>
+    <string name="storage_wizard_eject_internal_description_sd">"此内部存储设备弹出后，其中的应用将会停止运行。此 SD 卡已格式化为只能在这台设备上使用，因此在任何其他设备上将无法使用。"</string>
 </resources>

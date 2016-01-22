@@ -17,6 +17,8 @@
 package com.android.tv.settings.device.storage;
 
 import android.os.Bundle;
+import android.os.storage.DiskInfo;
+import android.os.storage.StorageManager;
 import android.support.annotation.NonNull;
 import android.support.v17.leanback.widget.GuidanceStylist;
 import android.support.v17.leanback.widget.GuidedAction;
@@ -37,9 +39,18 @@ public class SlowDriveStepFragment extends StorageGuidedStepFragment {
 
     @Override
     public @NonNull GuidanceStylist.Guidance onCreateGuidance(Bundle savedInstanceState) {
+        String title = getActivity().getString(R.string.storage_wizard_format_slow_title);
+        String description = getActivity().getString(R.string.storage_wizard_format_slow_summary);
+        StorageManager storageManager = getActivity().getSystemService(StorageManager.class);
+        DiskInfo info = storageManager.findDiskById(getArguments().getString(DiskInfo.EXTRA_DISK_ID));
+        if (info.isSd()) {
+            title = getActivity().getString(R.string.storage_wizard_format_slow_title_sd);
+            description = getActivity().getString(R.string.storage_wizard_format_slow_summary_sd);
+        }
+
         return new GuidanceStylist.Guidance(
-                getString(R.string.storage_wizard_format_slow_title),
-                getString(R.string.storage_wizard_format_slow_summary),
+                title,
+                description,
                 null,
                 getActivity().getDrawable(R.drawable.ic_settings_error));
     }

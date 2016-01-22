@@ -25,6 +25,7 @@ import android.content.Intent;
 import android.content.Loader;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.storage.DiskInfo;
 import android.os.storage.StorageManager;
 import android.os.storage.VolumeInfo;
 import android.support.annotation.NonNull;
@@ -217,9 +218,16 @@ public class UnmountActivity extends Activity {
         @Override
         public @NonNull
         GuidanceStylist.Guidance onCreateGuidance(Bundle savedInstanceState) {
+            String description = getActivity().getString(R.string.storage_wizard_eject_internal_description);
+            StorageManager storageManager = getActivity().getSystemService(StorageManager.class);
+            DiskInfo info = storageManager.findDiskById(getArguments().getString(DiskInfo.EXTRA_DISK_ID));
+            if (info.isSd()) {
+                description = getActivity().getString(R.string.storage_wizard_eject_internal_description_sd);
+            }
+
             return new GuidanceStylist.Guidance(
                     getString(R.string.storage_wizard_eject_internal_title),
-                    getString(R.string.storage_wizard_eject_internal_description), "",
+                    description, "",
                     getActivity().getDrawable(R.drawable.ic_settings_storage));
         }
 

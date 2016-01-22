@@ -18,6 +18,8 @@ package com.android.tv.settings.device.storage;
 
 import android.annotation.Nullable;
 import android.os.Bundle;
+import android.os.storage.DiskInfo;
+import android.os.storage.StorageManager;
 import android.view.View;
 
 import com.android.tv.settings.R;
@@ -32,7 +34,15 @@ public class FormattingProgressFragment extends ProgressDialogFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        setTitle(getActivity().getString(R.string.storage_wizard_format_progress_title));
-        setSummary(getActivity().getString(R.string.storage_wizard_format_progress_description));
+        String title = getActivity().getString(R.string.storage_wizard_format_progress_title);
+        String description = getActivity().getString(R.string.storage_wizard_format_progress_description);
+        StorageManager storageManager = getActivity().getSystemService(StorageManager.class);
+        DiskInfo info = storageManager.findDiskById(getArguments().getString(DiskInfo.EXTRA_DISK_ID));
+        if (info.isSd()) {
+            title = getActivity().getString(R.string.storage_wizard_format_progress_title_sd);
+            description = getActivity().getString(R.string.storage_wizard_format_progress_description_sd);
+        }
+        setTitle(title);
+        setSummary(description);
     }
 }

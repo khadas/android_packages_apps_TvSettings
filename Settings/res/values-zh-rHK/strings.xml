@@ -239,7 +239,7 @@
     <string name="storage_wizard_format_as_public_title" msgid="977475385015522171">"清除和格式化"</string>
     <string name="storage_wizard_format_as_public_description" msgid="8591201523650249337">"格式化後，您可在其他裝置使用此 USB 硬碟。USB 硬碟的所有資料將被刪除，請先將應用程式備份至其他內部儲存空間。"</string>
     <string name="storage_wizard_format_progress_title" msgid="143911640282435570">"正在格式化 USB 驅動器…"</string>
-    <string name="storage_wizard_format_progress_description" msgid="5320980721352781920">"這個過程可能需時，請勿移除驅動器。"</string>
+    <string name="storage_wizard_format_progress_description" msgid="5320980721352781920">"這個過程可能需時，請勿移除 USB 驅動器。"</string>
     <string name="storage_wizard_migrate_confirm_title" msgid="369820166257265495">"將資料移至<xliff:g id="NAME">%1$s</xliff:g>"</string>
     <string name="storage_wizard_migrate_confirm_description" msgid="2916497196106413598">"將相片、檔案和應用程式資料移至<xliff:g id="NAME">%1$s</xliff:g>。此操作可能需時數分鐘，某些應用程式在此期間將無法正常運作。"</string>
     <string name="storage_wizard_migrate_confirm_action_move_now" msgid="512504294066473542">"立即移動"</string>
@@ -247,9 +247,9 @@
     <string name="storage_wizard_migrate_toast_success" msgid="2634978204935628045">"已將資料轉移至<xliff:g id="NAME">%1$s</xliff:g>"</string>
     <string name="storage_wizard_migrate_toast_failure" msgid="6452532191705420237">"無法將資料轉移至<xliff:g id="NAME">%1$s</xliff:g>"</string>
     <string name="storage_wizard_migrate_progress_title" msgid="8063255124619498728">"正在將資料移至<xliff:g id="NAME">%1$s</xliff:g>…"</string>
-    <string name="storage_wizard_migrate_progress_description" msgid="3337889465416363170">"此操作需時，請勿移除外置硬碟。\n某些應用程式在此期間將無法正常運作。"</string>
-    <string name="storage_wizard_format_slow_title" msgid="2483634437996887661">"這驅動器好像有點緩慢。"</string>
-    <string name="storage_wizard_format_slow_summary" msgid="1949177940762639885">"您可以繼續，但轉移至此位置的應用程式可能會間斷，而資料傳輸亦可能需要較長時間。請考慮使用較高速的驅動器以提升效能。"</string>
+    <string name="storage_wizard_migrate_progress_description" msgid="3337889465416363170">"此操作需時，請勿移除 USB 硬碟。\n某些應用程式在此期間將無法正常運作。"</string>
+    <string name="storage_wizard_format_slow_title" msgid="2483634437996887661">"這 USB 驅動器好像有點緩慢。"</string>
+    <string name="storage_wizard_format_slow_summary" msgid="1949177940762639885">"您可以繼續，但轉移至此位置的應用程式可能會間斷，而資料傳輸亦可能需要較長時間。請考慮使用較高速的 USB 驅動器以提升效能。"</string>
     <string name="storage_wizard_format_action" msgid="3986485572528374905">"格式化"</string>
     <string name="storage_wizard_backup_apps_action" msgid="7246092320517630760">"備份應用程式"</string>
     <string name="storage_wizard_back_up_apps_title" msgid="452805102278225533">"存儲在<xliff:g id="NAME">%1$s</xliff:g>的應用程式"</string>
@@ -606,4 +606,13 @@
     <string name="device_apps_permissions" msgid="2966387603529725982">"應用程式權限"</string>
     <string name="app_permissions_group_summary" msgid="7906834786705287901">"已允許 <xliff:g id="COUNT_0">%d</xliff:g> 個應用程式 (共 <xliff:g id="COUNT_1">%d</xliff:g> 個)"</string>
     <string name="security_patch" msgid="2131617390189164481">"Android 安全性修補程式級別"</string>
+
+    <string name="storage_wizard_format_as_private_description_sd">"SD 卡需要格式化，以策安全。格式化後，該驅動器只能用於此裝置。格式化將清除目前驅動器上的所有資料。要避免資料遺失，請先備份資料。"</string>
+    <string name="storage_wizard_format_as_public_description_sd">"格式化後，您可在其他裝置使用此 SD 卡。SD 卡的所有資料將被刪除，請先將應用程式備份至其他內部儲存空間。"</string>
+    <string name="storage_wizard_format_progress_title_sd">"正在格式化 SD 卡…"</string>
+    <string name="storage_wizard_format_progress_description_sd">"這個過程可能需時，請勿移除 SD 卡。"</string>
+    <string name="storage_wizard_migrate_progress_description_sd">"此操作需時，請勿移除 SD 卡。\n某些應用程式在此期間將無法正常運作。"</string>
+    <string name="storage_wizard_format_slow_title_sd">"這SD 卡好像有點緩慢。"</string>
+    <string name="storage_wizard_format_slow_summary_sd">"您可以繼續，但轉移至此位置的應用程式可能會間斷，而資料傳輸亦可能需要較長時間。請考慮使用較高速的 SD 卡以提升效能。"</string>
+    <string name="storage_wizard_eject_internal_description_sd">"移除內部儲存空間後，此裝置儲存空間內的應用程式將停止運作。此 SD 卡經格式化後只能用於這部裝置。其他裝置將不能存取。"</string>
 </resources>

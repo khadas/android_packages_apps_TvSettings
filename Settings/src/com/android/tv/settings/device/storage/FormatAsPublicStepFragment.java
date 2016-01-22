@@ -69,9 +69,16 @@ public class FormatAsPublicStepFragment extends StorageGuidedStepFragment {
 
     @Override
     public @NonNull GuidanceStylist.Guidance onCreateGuidance(Bundle savedInstanceState) {
+        String description = getString(R.string.storage_wizard_format_as_public_description);
+        StorageManager storageManager = getActivity().getSystemService(StorageManager.class);
+        DiskInfo info = storageManager.findDiskById(mDiskId);
+        if (info.isSd()) {
+            description = getString(R.string.storage_wizard_format_as_public_description_sd);
+        }
+
         return new GuidanceStylist.Guidance(
                 getString(R.string.storage_wizard_format_as_public_title),
-                getString(R.string.storage_wizard_format_as_public_description), "",
+                description, "",
                 getActivity().getDrawable(R.drawable.ic_settings_warning));
     }
 

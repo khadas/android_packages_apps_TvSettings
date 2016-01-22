@@ -23,6 +23,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.storage.DiskInfo;
 import android.os.storage.StorageManager;
 import android.os.storage.VolumeInfo;
 import android.support.annotation.NonNull;
@@ -193,10 +194,15 @@ public class MigrateStorageActivity extends Activity {
         @Override
         public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
             super.onViewCreated(view, savedInstanceState);
+            String description = getActivity().getString(R.string.storage_wizard_migrate_progress_description);
+            StorageManager storageManager = getActivity().getSystemService(StorageManager.class);
+            DiskInfo info = storageManager.findDiskById(getArguments().getString(DiskInfo.EXTRA_DISK_ID));
+            if (info.isSd()) {
+                description = getActivity().getString(R.string.storage_wizard_migrate_progress_description_sd);
+            }
             setTitle(getActivity().getString(R.string.storage_wizard_migrate_progress_title,
                     getArguments().getString(ARG_VOLUME_DESC)));
-            setSummary(getActivity()
-                    .getString(R.string.storage_wizard_migrate_progress_description));
+            setSummary(description);
         }
 
     }
