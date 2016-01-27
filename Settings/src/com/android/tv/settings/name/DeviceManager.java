@@ -42,6 +42,9 @@ public class DeviceManager {
      */
     public static void setDeviceName(Context context, String name) {
         Settings.Global.putString(context.getContentResolver(), Settings.Global.DEVICE_NAME, name);
-        BluetoothAdapter.getDefaultAdapter().setName(name);
+        BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
+        if (adapter != null) {
+            adapter.setName(name);
+        }
     }
 }
