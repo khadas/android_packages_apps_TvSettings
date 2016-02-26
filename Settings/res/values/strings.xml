@@ -98,6 +98,7 @@
     <string name="device_rotation_land">force land</string>
     <string name="device_rotation_original">original</string>
     <string name="device_rotation_description">application request to change orientatioin</string>
+    <string name="device_hdr">HDR</string>
     <!-- Preference and title which changes system sounds settings. [CHAR LIMIT=50] -->
     <string name="device_sound">sounds</string>
     <string name="device_sound_effects">System sounds</string>
@@ -107,6 +108,17 @@
     <string name="device_sound_digital_pcm">PCM</string>
     <string name="device_sound_digital_hdmi">HDMI</string>
     <string name="device_sound_digital_spdif">SPDIF</string>
+    <string name="device_sound_dts">DTS Sounds</string>
+    <string name="device_sound_dts_downmix">DTS Downmix</string>
+    <string name="device_sound_dts_downmix_o">Lo/Ro</string>
+    <string name="device_sound_dts_downmix_t">Lt/Rt</string>
+    <string name="device_sound_dts_drcscale">DTS Drcscale</string>
+    <string name="device_sound_dts_dialnorm">DTS Dialnorm</string>
+    <string name="device_sound_dts_trans">DTS Transcoder</string>
+    <string name="device_sound_dts_trans_auto">Auto</string>
+    <string name="device_sound_dts_trans_51pcm">5.1 PCM Transcoder</string>
+    <string name="device_sound_dts_trans_71pcm">7.1 PCM Transcoder</string>
+    <string name="device_sound_dts_mulasset">DTS Mulasset</string>
     <!-- Preference which manages apps. [CHAR LIMIT=50] -->
     <string name="device_apps">Apps</string>
     <!-- Preference which shows storage status. [CHAR LIMIT=50] -->
@@ -1091,6 +1103,11 @@
     <string name="playback_settings">Play back settings</string>
     <!-- Hdmi self-adaption switch -->
     <string name="playback_hdmi_selfadaption">HDMI self-adaption</string>
+
+    <!-- Preference which manages power key definition. -->
+    <string name="power_key_definition">Power key definition</string>
+    <string name="power_key_shutdown">shutdown</string>
+    <string name="power_key_suspend">suspend and resume</string>
 
     <!-- TV input settings row -->
     <string name="inputs_inputs">Inputs</string>

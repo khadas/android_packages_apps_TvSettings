@@ -30,4 +30,13 @@ public class SettingsConstant {
         SystemControlManager sm = new SystemControlManager(context);
         return sm.getPropertyBoolean("ro.platform.has.mbxuimode", false);
     }
+
+    public static boolean needDroidlogicTvFeature(Context context){
+        SystemControlManager sm = new SystemControlManager(context);
+        return sm.getPropertyBoolean("ro.platform.has.tvuimode", false);
+    }
+
+    public static boolean needScreenResolutionFeture(Context context){
+        return context.getResources().getBoolean(R.bool.display_need_screen_resolution);
+    }
 }

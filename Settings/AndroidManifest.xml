@@ -269,6 +269,10 @@
             android:configChanges="keyboard|keyboardHidden|navigation"
             android:exported="true" />
         <activity
+            android:name=".device.display.hdr.HdrSettingActivity"
+            android:configChanges="keyboard|keyboardHidden|navigation"
+            android:exported="true" />
+        <activity
             android:name=".device.display.widi.WifiDisplayActivity"
             android:configChanges="keyboard|keyboardHidden|navigation"
             android:exported="true" />
@@ -395,6 +399,15 @@
         </activity>
         <activity
             android:name=".system.PlayBackSettingsActivity"
+            android:configChanges="keyboard|keyboardHidden|navigation"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".system.PowerKeyDefinitionActivity"
             android:configChanges="keyboard|keyboardHidden|navigation"
             android:exported="true" >
             <intent-filter>
