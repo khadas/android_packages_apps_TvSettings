@@ -56,6 +56,14 @@
             android:targetPackage="com.android.tv.settings" />
     </Preference>
     <Preference
+        android:icon="@drawable/ic_settings_power"
+        android:key="power_key_definition"
+        android:title="@string/power_key_definition" >
+        <intent
+            android:targetClass="com.android.tv.settings.system.PowerKeyDefinitionActivity"
+            android:targetPackage="com.android.tv.settings" />
+    </Preference>
+    <Preference
         android:icon="@drawable/ic_settings_home"
         android:key="home"
         android:title="@string/system_home" >

@@ -53,7 +53,7 @@
     <string name="device_position_description">当前缩放比例是</string>
     <string name="device_rotation">屏幕旋转</string>
     <string name="device_rotation_middle">横屏居中</string>
-    <string name="device_rotation_land">横屏拉申</string>
+    <string name="device_rotation_land">横屏拉伸</string>
     <string name="device_rotation_original">保持原样</string>
     <string name="device_rotation_description">旋转应用程序的显示方向</string>
     <string name="device_sound">"声音设置"</string>
@@ -64,6 +64,17 @@
     <string name="device_sound_digital_pcm">PCM</string>
     <string name="device_sound_digital_hdmi">HDMI</string>
     <string name="device_sound_digital_spdif">SPDIF</string>
+    <string name="device_sound_dts">DTS 音效</string>
+    <string name="device_sound_dts_downmix">DTS Downmix</string>
+    <string name="device_sound_dts_downmix_o">Lo/Ro</string>
+    <string name="device_sound_dts_downmix_t">Lt/Rt</string>
+    <string name="device_sound_dts_drcscale">DTS Drcscale</string>
+    <string name="device_sound_dts_dialnorm">DTS Dialnorm</string>
+    <string name="device_sound_dts_trans">DTS 解码器</string>
+    <string name="device_sound_dts_trans_auto">自动</string>
+    <string name="device_sound_dts_trans_51pcm">5.1 PCM 解码器</string>
+    <string name="device_sound_dts_trans_71pcm">7.1 PCM 解码器</string>
+    <string name="device_sound_dts_mulasset">DTS 多资源解码器</string>
     <string name="device_apps" msgid="9180435229638772838">"应用"</string>
     <string name="device_storage_reset" msgid="1425978936501134425">"存储空间和恢复出厂设置"</string>
     <string name="device_storage" msgid="5536683600091277826">"存储空间"</string>
@@ -501,6 +512,9 @@
     <string name="cec_auto_change_language">语言切换</string>
     <string name="playback_settings">播放设置</string>
     <string name="playback_hdmi_selfadaption">HDMI自适应</string>
+    <string name="power_key_definition">电源键定义</string>
+    <string name="power_key_shutdown">关机</string>
+    <string name="power_key_suspend">待机和唤醒</string>
     <string name="inputs_inputs" msgid="4249080110281833521">"输入端口"</string>
     <string name="inputs_header_cec" msgid="3701104827756278489">"消费电子产品控制(CEC)"</string>
     <string name="inputs_cec_settings" msgid="8403155117662874704">"设备控制设置"</string>

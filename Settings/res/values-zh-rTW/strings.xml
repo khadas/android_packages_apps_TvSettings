@@ -63,6 +63,17 @@
     <string name="device_sound_digital_pcm">PCM</string>
     <string name="device_sound_digital_hdmi">HDMI</string>
     <string name="device_sound_digital_spdif">SPDIF</string>
+    <string name="device_sound_dts">DTS 音效</string>
+    <string name="device_sound_dts_downmix">DTS Downmix</string>
+    <string name="device_sound_dts_downmix_o">Lo/Ro</string>
+    <string name="device_sound_dts_downmix_t">Lt/Rt</string>
+    <string name="device_sound_dts_drcscale">DTS Drcscale</string>
+    <string name="device_sound_dts_dialnorm">DTS Dialnorm</string>
+    <string name="device_sound_dts_trans">DTS 解碼器</string>
+    <string name="device_sound_dts_trans_auto">自動</string>
+    <string name="device_sound_dts_trans_51pcm">5.1 PCM 解碼器</string>
+    <string name="device_sound_dts_trans_71pcm">7.1 PCM 解碼器</string>
+    <string name="device_sound_dts_mulasset">DTS 多資源解碼器</string>
     <string name="device_apps" msgid="9180435229638772838">"應用程式"</string>
     <string name="device_storage_reset" msgid="1425978936501134425">"儲存空間與重設"</string>
     <string name="device_storage" msgid="5536683600091277826">"儲存空間"</string>
@@ -499,6 +510,9 @@
     <string name="cec_auto_change_language">語言切換</string>
     <string name="playback_settings">播放設置</string>
     <string name="playback_hdmi_selfadaption">HDMI自適應</string>
+    <string name="power_key_definition">電源鍵定義</string>
+    <string name="power_key_shutdown">關機</string>
+    <string name="power_key_suspend">待機和喚醒</string>
     <string name="inputs_inputs" msgid="4249080110281833521">"輸入裝置"</string>
     <string name="inputs_header_cec" msgid="3701104827756278489">"消費者電子控制 (CEC)"</string>
     <string name="inputs_cec_settings" msgid="8403155117662874704">"裝置控制設定"</string>

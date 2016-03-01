@@ -49,12 +49,13 @@ public class DisplayBrowseInfo extends BrowseInfoBase {
         mRow.clear();
 
         if (SettingsConstant.needDroidlogicMboxFeature(mContext)) {
-            mRow.add(new MenuItem.Builder().id(mNextItemId++)
-                    .title(mContext.getString(R.string.device_outputmode))
-                    .imageResourceId(mContext, R.drawable.ic_settings_display)
-                    .intent(getIntent(SettingsConstant.PACKAGE,
-                            SettingsConstant.PACKAGE + ".device.display.outputmode.OutputmodeActivity"))
-                    .build());
+            if (SettingsConstant.needScreenResolutionFeture(mContext))
+                mRow.add(new MenuItem.Builder().id(mNextItemId++)
+                        .title(mContext.getString(R.string.device_outputmode))
+                        .imageResourceId(mContext, R.drawable.ic_settings_display)
+                        .intent(getIntent(SettingsConstant.PACKAGE,
+                                SettingsConstant.PACKAGE + ".device.display.outputmode.OutputmodeActivity"))
+                        .build());
 
             mRow.add(new MenuItem.Builder().id(mNextItemId++)
                     .title(mContext.getString(R.string.device_position))
@@ -91,6 +92,14 @@ public class DisplayBrowseInfo extends BrowseInfoBase {
                 .title(mContext.getString(R.string.device_calibration))
                 .imageResourceId(mContext, R.drawable.ic_settings_overscan)
                 .intent(new Intent("com.google.android.athome.overscan.CALIBRATE")).build());
+        }
+
+        if (SettingsConstant.needDroidlogicTvFeature(mContext)) {
+            mRow.add(new MenuItem.Builder().id(mNextItemId++)
+                .title(mContext.getString(R.string.device_hdr))
+                .imageResourceId(mContext, R.drawable.ic_settings_hdr)
+                .intent(getIntent(SettingsConstant.PACKAGE,
+                            SettingsConstant.PACKAGE + ".device.display.hdr.HdrSettingActivity")).build());
         }
     }
 
