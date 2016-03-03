@@ -17,6 +17,8 @@
 package com.android.tv.settings.device.sound.digitalsound;
 
 import android.app.Activity;
+import android.content.SharedPreferences.Editor;
+import android.content.SharedPreferences;
 import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
 import android.content.IntentFilter;
@@ -40,22 +42,23 @@ public class DigitalSoundActivity extends Activity implements Action.Listener {
     private static final String ACTION_SOUND_HDMI = "sound_hdmi";
     private static final String ACTION_SOUND_SPDIF = "sound_spdif";
     private static final String ACTION_HDMI_PLUGGED = "android.intent.action.HDMI_PLUGGED";
+    private static final String PREFERENCE = "preference_box_settings";
+    private static final String KEY_AUTO = "auto";
 
     private static OutputModeManager mom;
     private DialogFragment mDialogFragment;
     private IntentFilter mHdmiPluggedFilter;
+    private SharedPreferences mPreference;
 
     private BroadcastReceiver mHdmiPluggedReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (isDigitalSoundAuto()) {
                 autoSwitchDigitalSound();
-                mDialogFragment.setActions(updateActions(OutputModeManager.IS_AUTO));
             } else {
-                int mode = getDigitalVoiceMode() & 0x0f;
-                setDigitalSoundMode(mode);
-                mDialogFragment.setActions(updateActions(mode));
+                setDigitalSoundMode(getDigitalVoiceMode());
             }
+            mDialogFragment.setActions(getActions());
         }
     };
 
@@ -64,6 +67,7 @@ public class DigitalSoundActivity extends Activity implements Action.Listener {
         super.onCreate(savedInstanceState);
         mom = new OutputModeManager(this);
         mHdmiPluggedFilter = new IntentFilter(ACTION_HDMI_PLUGGED);
+        mPreference = this.getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
 
         mDialogFragment = new DialogFragment.Builder()
                 .title(getString(R.string.device_sound_digital))
@@ -77,194 +81,86 @@ public class DigitalSoundActivity extends Activity implements Action.Listener {
     @Override
     protected void onResume() {
         super.onResume();
-        registerReceiver(mHdmiPluggedReceiver, mHdmiPluggedFilter);
+        this.registerReceiver(mHdmiPluggedReceiver, mHdmiPluggedFilter);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        unregisterReceiver(mHdmiPluggedReceiver);
+        this.unregisterReceiver(mHdmiPluggedReceiver);
     }
 
     private ArrayList<Action> getActions() {
-        int updateMode = OutputModeManager.IS_AUTO;
-        String mode = getDigitalSoundMode();
-        boolean isAuto = isDigitalSoundAuto();
-        if (isAuto) {
-            updateMode = OutputModeManager.IS_AUTO;
-        }else{
-            if (mode.contains(OutputModeManager.PCM)) {
-                updateMode = OutputModeManager.IS_PCM;
-            }else if (mode.contains(OutputModeManager.HDMI)) {
-                updateMode = OutputModeManager.IS_HDMI;
-            }else if (mode.contains(OutputModeManager.SPDIF)) {
-                updateMode = OutputModeManager.IS_SPDIF;
-            }
-        }
-        return updateActions(updateMode);
+        return updateActions();
     }
 
     @Override
     public void onActionClicked(Action action) {
-        int updateMode = OutputModeManager.IS_AUTO;
         if (ACTION_SOUND_AUTO.equals(action.getKey())) {
             autoSwitchDigitalSound();
-            updateMode = OutputModeManager.IS_AUTO;
         } else if (ACTION_SOUND_PCM.equals(action.getKey())) {
-            setDigitalSoundMode(OutputModeManager.IS_PCM);
-            updateMode = OutputModeManager.IS_PCM;
+            setDigitalSoundMode(OutputModeManager.PCM);
         } else if (ACTION_SOUND_HDMI.equals(action.getKey())) {
-            setDigitalSoundMode(OutputModeManager.IS_HDMI);
-            updateMode = OutputModeManager.IS_HDMI;
+            setDigitalSoundMode(OutputModeManager.HDMI_RAW);
         } else if (ACTION_SOUND_SPDIF.equals(action.getKey())) {
-            setDigitalSoundMode(OutputModeManager.IS_SPDIF);
-            updateMode = OutputModeManager.IS_SPDIF;
+            setDigitalSoundMode(OutputModeManager.SPDIF_RAW);
         }
-        mDialogFragment.setActions(updateActions(updateMode));
+        mDialogFragment.setActions(getActions());
     }
 
-    private ArrayList<Action> updateActions(int mode) {
-        String AutoMode = getString(R.string.device_sound_digital_auto_off);
-        if (mode == OutputModeManager.IS_AUTO) {
-            AutoMode = getDigitalSoundMode();
-        }
+    private ArrayList<Action> updateActions() {
+        boolean isAuto = isDigitalSoundAuto();
+        String mode = getDigitalVoiceMode();
+        String AutoMode = isAuto ? mode : getString(R.string.device_sound_digital_auto_off);
+
         ArrayList<Action> actions = new ArrayList<Action>();
-        switch (mode) {
-            case OutputModeManager.IS_AUTO:
-                actions.add(new Action.Builder()
-                    .key(ACTION_SOUND_AUTO)
-                    .title(getString(R.string.device_sound_digital_auto))
-                    .description(AutoMode)
-                    .checked(true)
-                    .checkSetId(1)
-                    .build());
-                actions.add(new Action.Builder()
-                    .key(ACTION_SOUND_PCM)
-                    .title(getString(R.string.device_sound_digital_pcm))
-                    .build());
-                actions.add(new Action.Builder()
-                    .key(ACTION_SOUND_HDMI)
-                    .title(getString(R.string.device_sound_digital_hdmi))
-                    .build());
-                if (getResources().getBoolean(R.bool.platform_support_spdif)) {
-                    actions.add(new Action.Builder()
-                        .key(ACTION_SOUND_SPDIF)
-                        .title(getString(R.string.device_sound_digital_spdif))
-                        .build());
-                }
-                break;
-            case OutputModeManager.IS_PCM:
-                actions.add(new Action.Builder()
-                    .key(ACTION_SOUND_AUTO)
-                    .title(getString(R.string.device_sound_digital_auto))
-                    .description(AutoMode)
-                    .build());
-                actions.add(new Action.Builder()
-                    .key(ACTION_SOUND_PCM)
-                    .title(getString(R.string.device_sound_digital_pcm))
-                    .checked(true)
-                    .checkSetId(1)
-                    .build());
-                actions.add(new Action.Builder()
-                    .key(ACTION_SOUND_HDMI)
-                    .title(getString(R.string.device_sound_digital_hdmi))
-                    .build());
-                if (getResources().getBoolean(R.bool.platform_support_spdif)) {
-                    actions.add(new Action.Builder()
-                        .key(ACTION_SOUND_SPDIF)
-                        .title(getString(R.string.device_sound_digital_spdif))
-                        .build());
-                }
-                break;
-            case OutputModeManager.IS_HDMI:
-                actions.add(new Action.Builder()
-                    .key(ACTION_SOUND_AUTO)
-                    .title(getString(R.string.device_sound_digital_auto))
-                    .description(AutoMode)
-                    .build());
-                actions.add(new Action.Builder()
-                    .key(ACTION_SOUND_PCM)
-                    .title(getString(R.string.device_sound_digital_pcm))
-                    .build());
-                actions.add(new Action.Builder()
-                    .key(ACTION_SOUND_HDMI)
-                    .title(getString(R.string.device_sound_digital_hdmi))
-                    .checked(true)
-                    .checkSetId(1)
-                    .build());
-                if (getResources().getBoolean(R.bool.platform_support_spdif)) {
-                    actions.add(new Action.Builder()
-                        .key(ACTION_SOUND_SPDIF)
-                        .title(getString(R.string.device_sound_digital_spdif))
-                        .build());
-                }
-                break;
-            case OutputModeManager.IS_SPDIF:
-                actions.add(new Action.Builder()
-                    .key(ACTION_SOUND_AUTO)
-                    .title(getString(R.string.device_sound_digital_auto))
-                    .description(AutoMode)
-                    .build());
-                actions.add(new Action.Builder()
-                    .key(ACTION_SOUND_PCM)
-                    .title(getString(R.string.device_sound_digital_pcm))
-                    .build());
-                actions.add(new Action.Builder()
-                    .key(ACTION_SOUND_HDMI)
-                    .title(getString(R.string.device_sound_digital_hdmi))
-                    .build());
-                actions.add(new Action.Builder()
-                    .key(ACTION_SOUND_SPDIF)
-                    .title(getString(R.string.device_sound_digital_spdif))
-                    .checked(true)
-                    .checkSetId(1)
-                    .build());
-                break;
+        actions.add(new Action.Builder()
+            .key(ACTION_SOUND_AUTO)
+            .title(getString(R.string.device_sound_digital_auto))
+            .description(AutoMode)
+            .checked(isAuto)
+            .build());
+        actions.add(new Action.Builder()
+            .key(ACTION_SOUND_PCM)
+            .title(getString(R.string.device_sound_digital_pcm))
+            .checked(!isAuto && mode.equals(OutputModeManager.PCM))
+            .build());
+        actions.add(new Action.Builder()
+            .key(ACTION_SOUND_HDMI)
+            .title(getString(R.string.device_sound_digital_hdmi))
+            .checked(!isAuto && mode.equals(OutputModeManager.HDMI_RAW))
+            .build());
+        if (getResources().getBoolean(R.bool.platform_support_spdif)) {
+            actions.add(new Action.Builder()
+                .key(ACTION_SOUND_SPDIF)
+                .title(getString(R.string.device_sound_digital_spdif))
+                .checked(!isAuto && mode.equals(OutputModeManager.SPDIF_RAW))
+                .build());
         }
         return actions;
     }
 
+    private void savePreference(String key, boolean value) {
+        Editor editor = mPreference.edit();
+        editor.putBoolean(key, value);
+        editor.commit();
+    }
+
     public boolean isDigitalSoundAuto(){
-        return (getDigitalVoiceMode() & OutputModeManager.IS_AUTO) == OutputModeManager.IS_AUTO;
+        return mPreference.getBoolean(KEY_AUTO, false);
     }
 
-    public String getDigitalSoundMode(){
-        String mode = OutputModeManager.PCM;
-        switch (getDigitalVoiceMode() & 0x0f) {
-            case OutputModeManager.IS_PCM:
-                mode = OutputModeManager.PCM;
-                break;
-            case OutputModeManager.IS_HDMI:
-                mode = OutputModeManager.HDMI;
-                break;
-            case OutputModeManager.IS_SPDIF:
-                mode = OutputModeManager.SPDIF;
-                break;
-        }
-        return mode;
-    }
-
-    private int getDigitalVoiceMode(){
+    private String getDigitalVoiceMode(){
         return mom.getDigitalVoiceMode();
     }
 
     private int autoSwitchDigitalSound(){
+        savePreference(KEY_AUTO, true);
         return mom.autoSwitchHdmiPassthough();
     }
 
-    private void setDigitalSoundMode(int mode){
-        String value = OutputModeManager.PCM;
-        switch (mode) {
-            case OutputModeManager.IS_PCM:
-                value = OutputModeManager.PCM;
-                break;
-            case OutputModeManager.IS_HDMI:
-                value = OutputModeManager.HDMI_RAW;
-                break;
-            case OutputModeManager.IS_SPDIF:
-                value = OutputModeManager.SPDIF_RAW;
-                break;
-        }
-        mom.setDigitalVoiceValue(value);
+    private void setDigitalSoundMode(String mode){
+        savePreference(KEY_AUTO, false);
+        mom.setDigitalMode(mode);
     }
 }
