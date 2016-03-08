@@ -50,6 +50,8 @@ public class NewStorageActivity extends Activity {
             "com.android.tv.settings.device.storage.NewStorageActivity.NEW_STORAGE";
     private static final String ACTION_MISSING_STORAGE =
             "com.android.tv.settings.device.storage.NewStorageActivity.MISSING_STORAGE";
+    private static VolumeInfo mInfo = null;
+    private static NewStorageFragment mFragment = null;
 
     public static Intent getNewStorageLaunchIntent(Context context, String volumeId,
             String diskId) {
@@ -80,6 +82,11 @@ public class NewStorageActivity extends Activity {
                 if (TextUtils.isEmpty(volumeId) && TextUtils.isEmpty(diskId)) {
                     throw new IllegalStateException(
                             "NewStorageActivity launched without specifying new storage");
+                }
+
+                if (!TextUtils.isEmpty(volumeId)) {
+                    StorageManager storageManager = getSystemService(StorageManager.class);
+                    mInfo = storageManager.findVolumeById(volumeId);
                 }
 
                 getFragmentManager().beginTransaction()
@@ -116,6 +123,7 @@ public class NewStorageActivity extends Activity {
             b.putString(DiskInfo.EXTRA_DISK_ID, diskId);
             final NewStorageFragment fragment = new NewStorageFragment();
             fragment.setArguments(b);
+            mFragment = fragment;
             return fragment;
         }
 
@@ -200,6 +208,13 @@ public class NewStorageActivity extends Activity {
                     break;
             }
             getActivity().finish();
+        }
+
+        public void finish() {
+            Activity activity = getActivity();
+            if (activity != null) {
+                activity.finish();
+            }
         }
     }
 
@@ -365,6 +380,11 @@ public class NewStorageActivity extends Activity {
                 final Intent i = NewStorageActivity.getMissingStorageLaunchIntent(context, fsUuid);
                 setPopupLaunchFlags(i);
                 context.startActivity(i);
+            }
+
+            Log.d(TAG, "[handleUnmount]mInfo:" + mInfo);
+            if (mInfo != null && mInfo.getFsUuid().equals(fsUuid)) {
+                mFragment.finish();
             }
         }
 
