@@ -52,7 +52,7 @@
     <string name="device_position_description">當前縮放比例是</string>
     <string name="device_rotation">熒幕旋轉</string>
     <string name="device_rotation_middle">橫屏居中</string>
-    <string name="device_rotation_land">橫屏拉申</string>
+    <string name="device_rotation_land">橫屏拉伸</string>
     <string name="device_rotation_original">保持原樣</string>
     <string name="device_rotation_description">旋轉應用程序的顯示方向</string>
     <string name="device_sound">聲音設置</string>
