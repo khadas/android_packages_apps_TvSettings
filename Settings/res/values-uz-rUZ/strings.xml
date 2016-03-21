@@ -97,6 +97,7 @@
     <string name="system_accessibility" msgid="6215431399759498005">"Maxsus imkoniyatlar"</string>
     <string name="system_developer_options" msgid="3237985523474863638">"Dasturchi sozlamalari"</string>
     <string name="accessibility_none" msgid="3441648940134070004">"Hech biri"</string>
+    <string name="system_diagnostic" msgid="7269638365915225701">"Foydalanish statistikasi va tashxis"</string>
     <string name="about_system_update" msgid="7282772247661356586">"Tizim yangilanishi"</string>
     <string name="about_preference" msgid="4131396784531360434">"Ma’lumot"</string>
     <string name="device_name" msgid="2670488158531273028">"Qurilma nomi"</string>
@@ -130,7 +131,7 @@
     <string name="connected" msgid="7563100162902079938">"Ulangan"</string>
     <string name="not_connected" msgid="6858480380326923017">"Ulanmagan"</string>
     <string name="wifi_setting_header_available_networks" msgid="6244107218643835636">"Wi-Fi"</string>
-    <string name="wifi_setting_header_other_options" msgid="1530334691232749342">"BOSHQA VARIANTLAR"</string>
+    <string name="wifi_setting_header_other_options" msgid="1530334691232749342">"BOSHQA PARAMETRLAR"</string>
     <string name="wifi_setting_see_all" msgid="3217814666041974878">"Barchasini ko‘rish"</string>
     <string name="wifi_setting_available_networks" msgid="1244646604369133314">"Mavjud tarmoqlar"</string>
     <string name="wifi_setting_other_options_wps" msgid="2320322351779996152">"WPS orqali ulanish"</string>

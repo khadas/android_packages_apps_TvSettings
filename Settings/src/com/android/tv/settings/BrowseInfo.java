@@ -172,6 +172,7 @@ public class BrowseInfo extends BrowseInfoBase {
     private static final String PREF_KEY_SPEECH = "speech";
     private static final String PREF_KEY_CEC = "cec";
     private static final String PREF_KEY_GOOGLESETTINGS = "googleSettings";
+    private static final String PREF_KEY_USAGE_AND_DIAG = "usageAndDiag";
 
     private final Context mContext;
     private final AuthenticatorHelper mAuthenticatorHelper;
@@ -325,6 +326,16 @@ public class BrowseInfo extends BrowseInfoBase {
                         Log.e(TAG, "Error adding google settings", e);
                     }
                 }
+            } else if (PREF_KEY_USAGE_AND_DIAG.equals(key)) {
+                Intent i = getIntent(parser, attrs);
+                if (systemIntentIsHandled(i) != null) {
+                    mRow.add(new MenuItem.Builder()
+                            .id(mNextItemId++)
+                            .title(title)
+                            .imageResourceId(mContext, iconRes)
+                            .intent(i)
+                            .build());
+                }
             } else if (!PREF_KEY_INPUTS.equals(key) || mInputSettingNeeded) {
                 MenuItem.TextGetter descriptionGetter = getDescriptionTextGetterFromKey(key);
                 MenuItem.UriGetter uriGetter = getIconUriGetterFromKey(key);
@@ -368,9 +379,10 @@ public class BrowseInfo extends BrowseInfoBase {
             }
             ArrayObjectAdapter row = mRows.get(mAccountHeaderId);
             // Clear any account row cards that are not "Location" or "Security".
-            String dontDelete[] = new String[2];
+            String dontDelete[] = new String[3];
             dontDelete[0] = mContext.getString(R.string.system_location);
             dontDelete[1] = mContext.getString(R.string.system_security);
+            dontDelete[2] = mContext.getString(R.string.system_diagnostic);
             int i = 0;
             while (i < row.size ()) {
                 MenuItem menuItem = (MenuItem) row.get(i);

@@ -128,6 +128,7 @@
     <string name="system_more_setting">更多设置</string>
     <string name="system_developer_options" msgid="3237985523474863638">"开发者选项"</string>
     <string name="accessibility_none" msgid="3441648940134070004">"无"</string>
+    <string name="system_diagnostic" msgid="7269638365915225701">"使用情况和诊断信息"</string>
     <string name="about_system_update" msgid="7282772247661356586">"系统更新"</string>
     <string name="about_preference" msgid="4131396784531360434">"关于"</string>
     <string name="device_name" msgid="2670488158531273028">"设备名称"</string>
@@ -644,7 +645,7 @@
     <string name="change_setting" msgid="2047402388786162246">"更改"</string>
     <string name="keep_settings" msgid="6798327196645732517">"不要更改"</string>
     <string name="apps_permissions" msgid="1283592091618660965">"权限"</string>
-    <string name="device_apps_permissions" msgid="2966387603529725982">"应用权限"</string>
+    <string name="device_apps_permissions" msgid="2966387603529725982">"应用所需权限"</string>
     <string name="app_permissions_group_summary" msgid="7906834786705287901">"已授权 <xliff:g id="COUNT_0">%d</xliff:g> 个应用（共 <xliff:g id="COUNT_1">%d</xliff:g> 个）"</string>
     <string name="security_patch" msgid="2131617390189164481">"Android 安全补丁程序级别"</string>
 
