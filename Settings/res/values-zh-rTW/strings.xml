@@ -127,7 +127,6 @@
     <string name="system_more_setting">更多設置</string>
     <string name="system_developer_options" msgid="3237985523474863638">"開發人員選項"</string>
     <string name="accessibility_none" msgid="3441648940134070004">"無"</string>
-    <string name="system_diagnostic" msgid="7269638365915225701">"使用情形與診斷資訊"</string>
     <string name="about_system_update" msgid="7282772247661356586">"系統更新"</string>
     <string name="about_preference" msgid="4131396784531360434">"關於"</string>
     <string name="device_name" msgid="2670488158531273028">"裝置名稱"</string>
@@ -420,7 +419,7 @@
     <string name="system_show_layout_bounds" msgid="645732439882291943">"顯示版面配置界限"</string>
     <string name="system_show_gpu_view_updates" msgid="7936280271091152459">"顯示 GPU 畫面更新"</string>
     <string name="system_show_hardware_layer" msgid="7301942527058509453">"顯示硬體層"</string>
-    <string name="system_show_gpu_overdraw" msgid="707861254106800199">"顯示 GPU 重複繪圖"</string>
+    <string name="system_show_gpu_overdraw" msgid="707861254106800199">"顯示 GPU 透支"</string>
     <string name="system_show_surface_updates" msgid="8878834675712192327">"顯示表層更新"</string>
     <string name="system_window_animation_scale" msgid="3213952676672537856">"視窗動畫比例"</string>
     <string name="system_transition_animation_scale" msgid="2964817709721784757">"轉場動畫比例"</string>
@@ -572,7 +571,7 @@
     <string name="pin_enter_new_pin" msgid="4788218421265924211">"設定新 PIN"</string>
     <string name="pin_enter_again" msgid="1510456697040826496">"重新輸入新 PIN"</string>
     <string name="pin_enter_old_pin" msgid="851029058127630869">"輸入舊 PIN"</string>
-    <string name="pin_enter_wrong_seconds" msgid="7541208202846169755">"您已輸入 5 次錯誤的 PIN 碼。\n請於 <xliff:g id="RELATIVE_TIME_SPAN">%1$d</xliff:g> 秒後再試一次。"</string>
+    <string name="pin_enter_wrong" msgid="5653864140710683928">"您已輸入 5 次錯誤的 PIN。\n請於 <xliff:g id="RELATIVE_TIME_SPAN">%1$s</xliff:g>再試一次。"</string>
     <string name="pin_toast_wrong" msgid="4628358195224633248">"PIN 錯誤，請再試一次"</string>
     <string name="pin_toast_not_match" msgid="5886041789737632996">"PIN 不符，請再試一次"</string>
 
@@ -588,16 +587,13 @@
     <string name="device_apps_app_management_force_stop_desc" msgid="3616902338964109665">"如果您強制停止應用程式，應用程式可能無法正常運作。"</string>
     <string name="device_apps_app_management_uninstall" msgid="531427430753359746">"解除安裝"</string>
     <string name="device_apps_app_management_uninstall_desc" msgid="1104982472633576960">"您要解除安裝這個應用程式嗎？"</string>
-    <string name="device_apps_app_management_uninstall_updates" msgid="5151008748970915803">"解除安裝更新"</string>
-    <string name="device_apps_app_management_uninstall_updates_desc" msgid="9165160845303755321">"這個 Android 系統應用程式的所有更新將會解除安裝。"</string>
     <string name="device_apps_app_management_disable" msgid="6136528600052941589">"停用"</string>
     <string name="device_apps_app_management_disable_desc" msgid="1295507373252301108">"您要停用這個應用程式嗎？"</string>
     <string name="device_apps_app_management_enable" msgid="3246823119203444608">"啟用"</string>
     <string name="device_apps_app_management_enable_desc" msgid="7490219375247065314">"您要啟用這個應用程式嗎？"</string>
-    <string name="device_apps_app_management_storage_used" msgid="4611351576179140634">"已使用的儲存空間"</string>
-    <string name="device_apps_app_management_storage_used_desc" msgid="1529188874944834661">"已使用 <xliff:g id="SIZE">%1$s</xliff:g> 的<xliff:g id="VOLUME">%2$s</xliff:g>"</string>
     <string name="device_apps_app_management_clear_data" msgid="4439114679323274127">"清除資料"</string>
-    <string name="device_apps_app_management_clear_data_desc" msgid="4832124568689052441">"這個應用程式的所有資料都將永遠遭到刪除，\n包含所有檔案、設定、帳戶、資料庫等。"</string>
+    <string name="device_apps_app_management_clear_data_desc" msgid="5312754223024135016">"這個應用程式的資料將全部遭到永久刪除。"</string>
+    <string name="device_apps_app_management_clear_data_what" msgid="6010791116393405500">"包括所有檔案、設定、帳戶、資料庫等。"</string>
     <string name="device_apps_app_management_clear_default" msgid="1861082768599452304">"清除預設值"</string>
     <string name="device_apps_app_management_clear_default_set" msgid="4191720055364731307">"設定執行某些操作時啟動這個應用程式"</string>
     <string name="device_apps_app_management_clear_default_none" msgid="196932966641339141">"未設定預設值"</string>

@@ -128,7 +128,6 @@
     <string name="system_more_setting">更多设置</string>
     <string name="system_developer_options" msgid="3237985523474863638">"开发者选项"</string>
     <string name="accessibility_none" msgid="3441648940134070004">"无"</string>
-    <string name="system_diagnostic" msgid="7269638365915225701">"使用情况和诊断信息"</string>
     <string name="about_system_update" msgid="7282772247661356586">"系统更新"</string>
     <string name="about_preference" msgid="4131396784531360434">"关于"</string>
     <string name="device_name" msgid="2670488158531273028">"设备名称"</string>
@@ -325,7 +324,7 @@
     <string name="system_set_time" msgid="4661804115501057452">"设置时间"</string>
     <string name="system_set_time_zone" msgid="8239601932757697259">"设置时区"</string>
     <string name="desc_set_time_zone" msgid="2948629174438460709">"<xliff:g id="OFFSET">%1$s</xliff:g>（<xliff:g id="NAME">%2$s</xliff:g>）"</string>
-    <string name="system_set_time_format" msgid="4447882066895090612">"使用 24 小时制"</string>
+    <string name="system_set_time_format" msgid="4447882066895090612">"使用24小时格式"</string>
     <string name="desc_set_time_format" msgid="3131006238681763219">"<xliff:g id="STATE">%1$s</xliff:g>（<xliff:g id="SAMPLE">%2$s</xliff:g>）"</string>
     <string name="system_auto_date_time" msgid="3629668599205033272">"自动确定日期和时间"</string>
     <string name="desc_auto_date_time" msgid="6997571927680580633">"使用网络提供的时间"</string>
@@ -574,7 +573,7 @@
     <string name="pin_enter_new_pin" msgid="4788218421265924211">"设置新的PIN码"</string>
     <string name="pin_enter_again" msgid="1510456697040826496">"重新输入新的PIN码"</string>
     <string name="pin_enter_old_pin" msgid="851029058127630869">"输入原来的PIN码"</string>
-    <string name="pin_enter_wrong_seconds" msgid="7541208202846169755">"您已连续 5 次输错 PIN 码。\n请在 <xliff:g id="RELATIVE_TIME_SPAN">%1$d</xliff:g> 秒后重试。"</string>
+    <string name="pin_enter_wrong" msgid="5653864140710683928">"您已连续5次输错PIN码。\n请<xliff:g id="RELATIVE_TIME_SPAN">%1$s</xliff:g>重试。"</string>
     <string name="pin_toast_wrong" msgid="4628358195224633248">"PIN码错误，请重试"</string>
     <string name="pin_toast_not_match" msgid="5886041789737632996">"PIN码不匹配，请重试"</string>
 
@@ -590,16 +589,13 @@
     <string name="device_apps_app_management_force_stop_desc" msgid="3616902338964109665">"强行停止某个应用可能会导致其出现异常。"</string>
     <string name="device_apps_app_management_uninstall" msgid="531427430753359746">"卸载"</string>
     <string name="device_apps_app_management_uninstall_desc" msgid="1104982472633576960">"要卸载此应用吗？"</string>
-    <string name="device_apps_app_management_uninstall_updates" msgid="5151008748970915803">"卸载更新"</string>
-    <string name="device_apps_app_management_uninstall_updates_desc" msgid="9165160845303755321">"系统将会卸载此 Android 系统应用的所有相关更新。"</string>
     <string name="device_apps_app_management_disable" msgid="6136528600052941589">"停用"</string>
     <string name="device_apps_app_management_disable_desc" msgid="1295507373252301108">"要停用此应用吗？"</string>
     <string name="device_apps_app_management_enable" msgid="3246823119203444608">"启用"</string>
     <string name="device_apps_app_management_enable_desc" msgid="7490219375247065314">"要启用此应用吗？"</string>
-    <string name="device_apps_app_management_storage_used" msgid="4611351576179140634">"已使用的存储空间"</string>
-    <string name="device_apps_app_management_storage_used_desc" msgid="1529188874944834661">"<xliff:g id="VOLUME">%2$s</xliff:g>已使用 <xliff:g id="SIZE">%1$s</xliff:g>"</string>
     <string name="device_apps_app_management_clear_data" msgid="4439114679323274127">"清除数据"</string>
-    <string name="device_apps_app_management_clear_data_desc" msgid="4832124568689052441">"系统会永久删除此应用的所有数据。\n删除的内容包括所有文件、设置、帐户、数据库等。"</string>
+    <string name="device_apps_app_management_clear_data_desc" msgid="5312754223024135016">"此应用的所有数据都将被永久删除。"</string>
+    <string name="device_apps_app_management_clear_data_what" msgid="6010791116393405500">"这包括所有文件、设置、帐户、数据库等。"</string>
     <string name="device_apps_app_management_clear_default" msgid="1861082768599452304">"清除默认操作"</string>
     <string name="device_apps_app_management_clear_default_set" msgid="4191720055364731307">"使用此应用处理某些操作"</string>
     <string name="device_apps_app_management_clear_default_none" msgid="196932966641339141">"没有默认操作"</string>
@@ -645,7 +641,7 @@
     <string name="change_setting" msgid="2047402388786162246">"更改"</string>
     <string name="keep_settings" msgid="6798327196645732517">"不要更改"</string>
     <string name="apps_permissions" msgid="1283592091618660965">"权限"</string>
-    <string name="device_apps_permissions" msgid="2966387603529725982">"应用所需权限"</string>
+    <string name="device_apps_permissions" msgid="2966387603529725982">"应用权限"</string>
     <string name="app_permissions_group_summary" msgid="7906834786705287901">"已授权 <xliff:g id="COUNT_0">%d</xliff:g> 个应用（共 <xliff:g id="COUNT_1">%d</xliff:g> 个）"</string>
     <string name="security_patch" msgid="2131617390189164481">"Android 安全补丁程序级别"</string>
 
