@@ -136,7 +136,7 @@ public class WpsConnectionActivity extends DialogActivity
         //Intent intent = new Intent(this, WifiNetworksBrowseInfo.class);
         String wpsmode = getIntent().getStringExtra("WpsMmode");
 
-        if (wpsmode.equals("PBC"))
+        if ("PBC".equals(wpsmode))
             wpsConfig.setup = WpsInfo.PBC;
         else
             wpsConfig.setup = WpsInfo.DISPLAY;
