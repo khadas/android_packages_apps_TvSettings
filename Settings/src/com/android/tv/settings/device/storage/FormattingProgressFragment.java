@@ -37,12 +37,14 @@ public class FormattingProgressFragment extends ProgressDialogFragment {
         String title = getActivity().getString(R.string.storage_wizard_format_progress_title);
         String description = getActivity().getString(R.string.storage_wizard_format_progress_description);
         StorageManager storageManager = getActivity().getSystemService(StorageManager.class);
-        DiskInfo info = storageManager.findDiskById(getArguments().getString(DiskInfo.EXTRA_DISK_ID));
-        if (info.isSd()) {
-            title = getActivity().getString(R.string.storage_wizard_format_progress_title_sd);
-            description = getActivity().getString(R.string.storage_wizard_format_progress_description_sd);
+        if (getArguments() != null) {
+            DiskInfo info = storageManager.findDiskById(getArguments().getString(DiskInfo.EXTRA_DISK_ID));
+            if (info.isSd()) {
+                title = getActivity().getString(R.string.storage_wizard_format_progress_title_sd);
+                description = getActivity().getString(R.string.storage_wizard_format_progress_description_sd);
+            }
+            setTitle(title);
+            setSummary(description);
         }
-        setTitle(title);
-        setSummary(description);
     }
 }
