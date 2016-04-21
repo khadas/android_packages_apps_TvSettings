@@ -94,7 +94,7 @@ public class DisplayBrowseInfo extends BrowseInfoBase {
                 .intent(new Intent("com.google.android.athome.overscan.CALIBRATE")).build());
         }
 
-        if (SettingsConstant.needDroidlogicTvFeature(mContext)) {
+        if (SettingsConstant.needDroidlogicHdrFeature(mContext)) {
             mRow.add(new MenuItem.Builder().id(mNextItemId++)
                 .title(mContext.getString(R.string.device_hdr))
                 .imageResourceId(mContext, R.drawable.ic_settings_hdr)

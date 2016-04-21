@@ -35,7 +35,9 @@ public class SettingsConstant {
         SystemControlManager sm = new SystemControlManager(context);
         return sm.getPropertyBoolean("ro.platform.has.tvuimode", false);
     }
-
+    public static boolean needDroidlogicHdrFeature(Context context){
+        return context.getResources().getBoolean(R.bool.display_need_hdr_function);
+    }
     public static boolean needScreenResolutionFeture(Context context){
         return context.getResources().getBoolean(R.bool.display_need_screen_resolution);
     }

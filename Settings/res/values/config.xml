@@ -21,4 +21,5 @@
     <string name="display_filter_outputmode"></string>
     <bool name="display_need_screen_resolution">true</bool>
     <bool name="platform_support_spdif">true</bool>
+    <bool name="display_need_hdr_function">false</bool>
 </resources>
