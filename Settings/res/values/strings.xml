@@ -88,10 +88,10 @@
     <!-- Preference which changes display settings. [CHAR LIMIT=50] -->
     <string name="device_display">Display</string>
     <string name="device_outputmode">Screen resolution</string>
-    <string name="device_outputmode_auto">auto switch to best resolution</string>
+    <string name="device_outputmode_auto">Auto switch to best resolution</string>
     <string name="device_position">Screen position</string>
-    <string name="device_position_zoomout">zoom out screen</string>
-    <string name="device_position_zoomin">zoom in screen</string>
+    <string name="device_position_zoomout">Zoom out screen</string>
+    <string name="device_position_zoomin">Zoom in screen</string>
     <string name="device_position_description">current scaling is</string>
     <string name="device_rotation">Screen rotation</string>
     <string name="device_rotation_middle">middle port</string>
@@ -100,7 +100,7 @@
     <string name="device_rotation_description">application request to change orientatioin</string>
     <string name="device_hdr">HDR</string>
     <!-- Preference and title which changes system sounds settings. [CHAR LIMIT=50] -->
-    <string name="device_sound">sounds</string>
+    <string name="device_sound">Sounds</string>
     <string name="device_sound_effects">System sounds</string>
     <string name="device_sound_digital">Digital sounds</string>
     <string name="device_sound_digital_auto">Auto detection</string>
@@ -235,7 +235,7 @@
     <!-- Preference which manages accessibility settings. [CHAR LIMIT=50] -->
     <string name="system_accessibility">Accessibility</string>
     <!-- Preference which manages more settings. [CHAR LIMIT=50] -->
-    <string name="system_more_setting">More setting</string>
+    <string name="system_more_setting">More settings</string>
     <!-- Preference which manages developer options. [CHAR LIMIT=50] -->
     <string name="system_developer_options">Developer options</string>
     <!-- Label for no accessibility color or opacity [CHAR LIMIT=50] -->
@@ -1088,7 +1088,7 @@
     <string name="noAppsGoBack">Back</string>
 
     <!-- Preference which manages hdmi cec settings. -->
-    <string name="system_cec">HDMI cec</string>
+    <string name="system_cec">HDMI CEC</string>
     <string name="toast_cec">This remote device does not support CEC</string>
     <!-- Hdmi cec switch -->
     <!-- Title for cec switch [CHAR LIMIT=80] -->
@@ -1103,7 +1103,7 @@
     <string name="cec_auto_change_language">Auto change language</string>
 
     <!-- Preference which manages play back settings. -->
-    <string name="playback_settings">Play back settings</string>
+    <string name="playback_settings">Playback settings</string>
     <!-- Hdmi self-adaption switch -->
     <string name="playback_hdmi_selfadaption">HDMI self-adaption</string>
 
