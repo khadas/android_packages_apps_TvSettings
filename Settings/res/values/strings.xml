@@ -1383,5 +1383,5 @@
     <string name="storage_wizard_format_slow_title_sd">This SD card appears to be slow.</string>
     <string name="storage_wizard_format_slow_summary_sd">You can continue, but apps moved to this location may stutter and data transfers may take a long time. Consider using a faster SD card for better performance.</string>
     <string name="storage_wizard_eject_internal_description_sd">Apps on this device storage will stop working when it\'s ejected. This SD card is formatted to work on this device only. It won\'t work on any others.</string>
-
+    <string name="netflix_esn">Netflix ESN</string>
 </resources>
