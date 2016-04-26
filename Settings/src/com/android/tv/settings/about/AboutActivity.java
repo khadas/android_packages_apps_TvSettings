@@ -21,10 +21,12 @@ import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.res.Resources;
+import android.content.BroadcastReceiver;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.PowerManager;
@@ -44,7 +46,12 @@ import com.android.tv.settings.R;
 import com.android.tv.settings.dialog.Layout;
 import com.android.tv.settings.dialog.SettingsLayoutActivity;
 import com.android.tv.settings.name.DeviceManager;
-
+import com.android.tv.settings.dialog.Layout.Action;
+import com.android.tv.settings.dialog.Layout.Header;
+import com.android.tv.settings.dialog.Layout.Static;
+import com.android.tv.settings.dialog.Layout.Status;
+import com.android.tv.settings.dialog.Layout.StringGetter;
+import com.android.tv.settings.dialog.SettingsLayoutActivity;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -116,6 +123,7 @@ public class AboutActivity extends SettingsLayoutActivity {
     private Toast mToast;
     private final long[] mHits = new long[3];
     private int mHitsIndex;
+    private String mEsnText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,7 +136,28 @@ public class AboutActivity extends SettingsLayoutActivity {
         super.onResume();
         mDeveloperClickCount = 0;
         mDeviceNameLayoutGetter.refreshView();
+        IntentFilter esnIntentFilter = new IntentFilter("com.netflix.ninja.intent.action.ESN_RESPONSE");
+        registerReceiver(esnReceiver, esnIntentFilter, "com.netflix.ninja.permission.ESN",null);
+        Intent esnQueryIntent = new Intent("com.netflix.ninja.intent.action.ESN");
+        esnQueryIntent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
+        sendBroadcast(esnQueryIntent);
     }
+    private BroadcastReceiver esnReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            mEsnText = intent.getStringExtra("ESNValue");
+            mDeviceNameLayoutGetter.refreshView();
+        }
+    };
+    private final Layout.LayoutGetter mNetflixLayoutGetter = new Layout.LayoutGetter() {
+        @Override
+        public Layout get() {
+            return new Layout().add(new Layout.Status.Builder(getResources())
+                    .title(R.string.netflix_esn)
+                    .description(mEsnText)
+                    .build());
+        }
+    };
 
     @Override
     public void onActionClicked(Layout.Action action) {
@@ -234,6 +263,9 @@ public class AboutActivity extends SettingsLayoutActivity {
                 .description(Build.MODEL)
                 .build());
 
+        if (getPackageManager().hasSystemFeature("android.software.netflix")) {
+            header.add(mNetflixLayoutGetter);
+        }
         String patch = Build.VERSION.SECURITY_PATCH;
         if (!TextUtils.isEmpty(patch)) {
             try {

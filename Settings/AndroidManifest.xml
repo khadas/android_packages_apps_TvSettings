@@ -36,6 +36,7 @@
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" />
     <uses-permission android:name="droidlogic.permission.SYSTEM_CONTROL" />
+    <uses-permission android:name="com.netflix.ninja.permission.ESN"/>
     <application
         android:icon="@drawable/ic_launcher_settings"
         android:label="@string/settings_app_name"
