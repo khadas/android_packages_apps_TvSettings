@@ -420,9 +420,6 @@ public class ConnectivityListener {
                 }
 
                 case ConnectivityManager.TYPE_ETHERNET:
-                    if (getEthernetIpAddress().isEmpty()) {
-                        return setNetworkType(ConnectivityStatus.NETWORK_NONE);
-                    }
                     return setNetworkType(ConnectivityStatus.NETWORK_ETHERNET);
 
                 default:
