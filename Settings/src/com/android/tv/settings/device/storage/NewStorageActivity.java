@@ -141,7 +141,11 @@ public class NewStorageActivity extends Activity {
                 mDescription = storageManager.getBestVolumeDescription(info);
             } else {
                 final DiskInfo info = storageManager.findDiskById(mDiskId);
-                mDescription = info.getDescription();
+                if (info != null) {
+                    mDescription = info.getDescription();
+                } else {
+                    finish();
+                }
             }
 
             super.onCreate(savedInstanceState);
