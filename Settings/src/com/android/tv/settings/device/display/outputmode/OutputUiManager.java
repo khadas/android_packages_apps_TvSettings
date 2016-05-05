@@ -125,6 +125,10 @@ public class OutputUiManager {
         initModeValues(mUiMode);
     }
 
+    public String getCurrentMode(){
+         return mOutputModeManager.getCurrentOutputMode();
+    }
+
     public int getCurrentModeIndex(){
          String currentMode = mOutputModeManager.getCurrentOutputMode();
          for (int i=0 ; i < mValueList.size();i++) {
@@ -170,6 +174,14 @@ public class OutputUiManager {
     }
     public boolean isBestOutputmode(){
         return mOutputModeManager.isBestOutputmode();
+    }
+
+    public void change2DeepColorMode() {
+        mOutputModeManager.setDeepColorMode();
+    }
+
+    public boolean isDeepColor(){
+        return mOutputModeManager.isDeepColor();
     }
 
     public ArrayList<String> getOutputmodeTitleList(){
