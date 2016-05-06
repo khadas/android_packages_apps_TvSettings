@@ -107,11 +107,32 @@ public class InputsActivity extends SettingsLayoutActivity {
         }
     };
 
-    final LayoutGetter mCecSettingsLayout = new LayoutGetter() {
+    final LayoutGetter mDeviceAutoOffLayout = new LayoutGetter() {
         @Override
         public Layout get() {
             boolean hdmiControl = readCecOption(getCecOptionKey(ACTION_HDMI_CONTROL));
             boolean deviceAutoOff = readCecOption(getCecOptionKey(ACTION_DEVICE_AUTO_OFF));
+
+            return new Layout()
+                .add(new Layout.Header.Builder(mRes)
+                        .title(R.string.inputs_device_auto_off)
+                        .description(getOnOffResId(hdmiControl ? deviceAutoOff : hdmiControl))
+                        .detailedDescription(R.string.inputs_device_auto_off_desc)
+                        .enabled(hdmiControl)
+                        .build()
+                        .add(getOnOffLayout(
+                                R.string.inputs_device_auto_off,
+                                R.string.inputs_device_auto_off_desc,
+                                ACTION_DEVICE_AUTO_OFF,
+                                null,
+                                deviceAutoOff)));
+        }
+    };
+
+    final LayoutGetter mCecSettingsLayout = new LayoutGetter() {
+        @Override
+        public Layout get() {
+            boolean hdmiControl = readCecOption(getCecOptionKey(ACTION_HDMI_CONTROL));
             boolean tvAutoOn = readCecOption(getCecOptionKey(ACTION_TV_AUTO_ON));
 
             return
@@ -127,17 +148,7 @@ public class InputsActivity extends SettingsLayoutActivity {
                                 ACTION_HDMI_CONTROL,
                                 null,
                                 hdmiControl)))
-                    .add(new Header.Builder(mRes)
-                            .title(R.string.inputs_device_auto_off)
-                            .description(getOnOffResId(deviceAutoOff))
-                            .detailedDescription(R.string.inputs_device_auto_off_desc)
-                            .build()
-                        .add(getOnOffLayout(
-                                R.string.inputs_device_auto_off,
-                                R.string.inputs_device_auto_off_desc,
-                                ACTION_DEVICE_AUTO_OFF,
-                                null,
-                                deviceAutoOff)))
+                    .add(mDeviceAutoOffLayout)
                     .add(new Header.Builder(mRes)
                             .title(R.string.inputs_tv_auto_on)
                             .description(getOnOffResId(tvAutoOn))
@@ -391,6 +402,10 @@ public class InputsActivity extends SettingsLayoutActivity {
         String key = getCecOptionKey(action.getId());
         boolean enabled = action.getData().getBoolean(KEY_ON);
         writeCecOption(key, enabled);
+
+        if (action.getId() == ACTION_HDMI_CONTROL) {
+            mDeviceAutoOffLayout.refreshView();
+        }
     }
 
     private void saveCustomLabel(String inputId, String label) {
