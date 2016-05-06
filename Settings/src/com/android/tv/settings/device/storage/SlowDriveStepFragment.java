@@ -42,10 +42,13 @@ public class SlowDriveStepFragment extends StorageGuidedStepFragment {
         String title = getActivity().getString(R.string.storage_wizard_format_slow_title);
         String description = getActivity().getString(R.string.storage_wizard_format_slow_summary);
         StorageManager storageManager = getActivity().getSystemService(StorageManager.class);
-        DiskInfo info = storageManager.findDiskById(getArguments().getString(DiskInfo.EXTRA_DISK_ID));
-        if (info.isSd()) {
-            title = getActivity().getString(R.string.storage_wizard_format_slow_title_sd);
-            description = getActivity().getString(R.string.storage_wizard_format_slow_summary_sd);
+
+        if (getArguments() != null) {
+            DiskInfo info = storageManager.findDiskById(getArguments().getString(DiskInfo.EXTRA_DISK_ID));
+            if (info.isSd()) {
+                title = getActivity().getString(R.string.storage_wizard_format_slow_title_sd);
+                description = getActivity().getString(R.string.storage_wizard_format_slow_summary_sd);
+            }
         }
 
         return new GuidanceStylist.Guidance(
