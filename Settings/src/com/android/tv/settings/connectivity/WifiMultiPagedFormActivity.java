@@ -19,6 +19,9 @@ package com.android.tv.settings.connectivity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.net.wifi.WifiConfiguration;
+import android.net.wifi.WifiConfiguration;
+import android.net.wifi.WifiConfiguration.AuthAlgorithm;
+import android.net.wifi.WifiConfiguration.KeyMgmt;
 import android.os.Bundle;
 
 import com.android.tv.settings.R;
@@ -142,6 +145,9 @@ public abstract class WifiMultiPagedFormActivity extends MultiPagedForm
             WifiConfiguration wifiConfiguration, WifiSecurity wifiSecurity, String password) {
         if (wifiSecurity == WifiSecurity.WEP) {
             int length = password.length();
+            wifiConfiguration.allowedKeyManagement.set(KeyMgmt.NONE);
+            wifiConfiguration.allowedAuthAlgorithms.set(AuthAlgorithm.OPEN);
+            wifiConfiguration.allowedAuthAlgorithms.set(AuthAlgorithm.SHARED);
             // WEP-40, WEP-104, and 256-bit WEP (WEP-232?)
             if ((length == 10 || length == 26 || length == 58)
                     && password.matches("[0-9A-Fa-f]*")) {
@@ -149,6 +155,20 @@ public abstract class WifiMultiPagedFormActivity extends MultiPagedForm
             } else {
                 wifiConfiguration.wepKeys[0] = '"' + password + '"';
             }
+        } else if (wifiSecurity == WifiSecurity.PSK) {
+            wifiConfiguration.allowedKeyManagement.set(KeyMgmt.WPA_PSK);
+            if (password.length() != 0) {
+                if (password.matches("[0-9A-Fa-f]{64}")) {
+                    wifiConfiguration.preSharedKey = password;
+                } else {
+                    wifiConfiguration.preSharedKey = '"' + password + '"';
+                }
+            }
+        } else if (wifiSecurity == WifiSecurity.EAP) {
+            wifiConfiguration.preSharedKey = '"' + password + '"';
+        } else if (wifiSecurity == WifiSecurity.NONE) {
+            wifiConfiguration.allowedKeyManagement.set(KeyMgmt.NONE);
+            wifiConfiguration.preSharedKey = '"' + password + '"';
         } else {
             wifiConfiguration.preSharedKey = '"' + password + '"';
         }
