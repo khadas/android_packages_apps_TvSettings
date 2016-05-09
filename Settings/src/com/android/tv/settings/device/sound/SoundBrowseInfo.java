@@ -58,7 +58,7 @@ public class SoundBrowseInfo extends BrowseInfoBase {
                         SettingsConstant.PACKAGE + ".device.sound.systemsound.SystemSoundActivity"))
                 .build());
 
-        if (SettingsConstant.needDroidlogicMboxFeature(mContext)) {
+        if (SettingsConstant.needDroidlogicDigitalSounds(mContext)) {
             mRow.add(new MenuItem.Builder().id(mNextItemId++)
                     .title(mContext.getString(R.string.device_sound_digital))
                     .imageResourceId(mContext, R.drawable.ic_settings_sound_on)
