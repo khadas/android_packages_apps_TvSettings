@@ -92,7 +92,7 @@
         android:key="inputs"
         android:title="@string/system_inputs" >
         <intent
-            android:targetClass="com.android.tv.settings.system.InputsActivity"
+            android:targetClass="com.android.tv.settings.system.HdmiInputsActivity"
             android:targetPackage="com.android.tv.settings" />
     </Preference>
     <Preference

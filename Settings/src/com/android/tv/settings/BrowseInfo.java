@@ -59,6 +59,7 @@ import com.android.tv.settings.connectivity.WifiNetworksActivity;
 import com.android.tv.settings.device.sound.SoundActivity;
 import com.android.tv.settings.users.RestrictedProfileDialogFragment;
 import com.android.tv.settings.util.UriUtils;
+import com.android.tv.settings.SettingsConstant;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -436,6 +437,9 @@ public class BrowseInfo extends BrowseInfoBase {
     private boolean isInputSettingNeeded() {
         if (!mContext.getPackageManager().hasSystemFeature(PackageManager.FEATURE_LIVE_TV))
             return false;
+
+        if (SettingsConstant.needDroidlogicTvFeature(mContext))
+            return true;
 
         TvInputManager manager = (TvInputManager) mContext.getSystemService(
                 Context.TV_INPUT_SERVICE);
