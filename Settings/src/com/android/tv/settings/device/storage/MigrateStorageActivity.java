@@ -196,10 +196,17 @@ public class MigrateStorageActivity extends Activity {
             super.onViewCreated(view, savedInstanceState);
             String description = getActivity().getString(R.string.storage_wizard_migrate_progress_description);
             StorageManager storageManager = getActivity().getSystemService(StorageManager.class);
-            DiskInfo info = storageManager.findDiskById(getArguments().getString(DiskInfo.EXTRA_DISK_ID));
-            if (info.isSd()) {
-                description = getActivity().getString(R.string.storage_wizard_migrate_progress_description_sd);
+
+            if (getArguments() != null) {
+                String id = getArguments().getString(DiskInfo.EXTRA_DISK_ID);
+                if (id != null) {
+                    DiskInfo info = storageManager.findDiskById(id);
+                    if (info !=null && info.isSd()) {
+                        description = getActivity().getString(R.string.storage_wizard_migrate_progress_description_sd);
+                    }
+                }
             }
+
             setTitle(getActivity().getString(R.string.storage_wizard_migrate_progress_title,
                     getArguments().getString(ARG_VOLUME_DESC)));
             setSummary(description);
