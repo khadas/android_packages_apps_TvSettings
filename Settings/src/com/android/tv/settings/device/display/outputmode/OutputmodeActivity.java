@@ -194,8 +194,7 @@ public class OutputmodeActivity extends DialogActivity implements ActionAdapter.
         if (saveDeepColor != mOutputUiManager.isDeepColor() && mOutputUiManager.isDeepColor()) {
             tx_content.setText(getResources().getString(R.string.device_outputmode_confirm_deepcolor));
         } else {
-            tx_content.setText(getResources().getString(R.string.device_outputmode_confirm_mode)
-                    + " " + mOutputUiManager.getOutputmodeTitleList().get(mOutputUiManager.getCurrentModeIndex()));
+            tx_content.setText(getResources().getString(R.string.device_outputmode_confirm_mode));
         }
 
         countdown = 15;

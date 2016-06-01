@@ -48,8 +48,8 @@
     <string name="device_position">熒幕縮放</string>
     <string name="device_outputmode_auto">自動切換到最佳分辨率</string>
     <string name="device_outputmode_deepcolor">深色模式</string>
-    <string name="device_outputmode_confirm_mode">確認切換至</string>
-    <string name="device_outputmode_confirm_deepcolor">確認改變深色模式</string>
+    <string name="device_outputmode_confirm_mode">確認關閉深色模式</string>
+    <string name="device_outputmode_confirm_deepcolor">確認開啟深色模式</string>
     <string name="device_outputmode_countdown"> 秒后恢復原來制式</string>
     <string name="device_position_zoomout">縮小熒幕</string>
     <string name="device_position_zoomin">放大熒幕</string>
