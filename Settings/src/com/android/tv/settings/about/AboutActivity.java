@@ -263,7 +263,7 @@ public class AboutActivity extends SettingsLayoutActivity {
                 .description(Build.MODEL)
                 .build());
 
-        if (getPackageManager().hasSystemFeature("android.software.netflix")) {
+        if (getPackageManager().hasSystemFeature("droidlogic.software.netflix")) {
             header.add(mNetflixLayoutGetter);
         }
         String patch = Build.VERSION.SECURITY_PATCH;
