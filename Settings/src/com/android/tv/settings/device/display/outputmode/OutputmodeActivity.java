@@ -54,6 +54,7 @@ public class OutputmodeActivity extends DialogActivity implements ActionAdapter.
     private TimerTask task;
     private AlertDialog mAlertDialog = null;
     private int countdown = 15;
+    private static String mode = null;
 
     private BroadcastReceiver mIntentReceiver = new BroadcastReceiver() {
         @Override
@@ -89,7 +90,7 @@ public class OutputmodeActivity extends DialogActivity implements ActionAdapter.
 
     @Override
     public void onActionClicked(Action action) {
-        String mode = action.getKey();
+        mode = action.getKey();
 
         saveDeepColor = mOutputUiManager.isDeepColor();
         saveMode = mOutputUiManager.getCurrentMode();
@@ -191,10 +192,15 @@ public class OutputmodeActivity extends DialogActivity implements ActionAdapter.
         mAlertDialog.show();
         mAlertDialog.getWindow().setContentView(view_dialog);
 
-        if (saveDeepColor != mOutputUiManager.isDeepColor() && mOutputUiManager.isDeepColor()) {
-            tx_content.setText(getResources().getString(R.string.device_outputmode_confirm_deepcolor));
+        if (mode.equals(DEEP_COLOR)) {
+            if (saveDeepColor != mOutputUiManager.isDeepColor() && mOutputUiManager.isDeepColor()) {
+                tx_content.setText(getResources().getString(R.string.device_outputmode_confirm_deepcolor));
+            } else {
+                tx_content.setText(getResources().getString(R.string.device_outputmode_confirm_mode));
+            }
         } else {
-            tx_content.setText(getResources().getString(R.string.device_outputmode_confirm_mode));
+            tx_content.setText(getResources().getString(R.string.device_outputmode_change)
+                + " " +mOutputUiManager.getOutputmodeTitleList().get(mOutputUiManager.getCurrentModeIndex()));
         }
 
         countdown = 15;

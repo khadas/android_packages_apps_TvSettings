@@ -50,6 +50,7 @@
     <string name="device_outputmode_deepcolor">深色模式</string>
     <string name="device_outputmode_confirm_mode">確認關閉深色模式</string>
     <string name="device_outputmode_confirm_deepcolor">確認開啟深色模式</string>
+    <string name="device_outputmode_change">確認切換至模式：</string>
     <string name="device_outputmode_countdown"> 秒后恢復原來制式</string>
     <string name="device_position_zoomout">縮小熒幕</string>
     <string name="device_position_zoomin">放大熒幕</string>
