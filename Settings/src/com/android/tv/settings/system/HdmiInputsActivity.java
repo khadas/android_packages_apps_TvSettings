@@ -249,9 +249,8 @@ public class HdmiInputsActivity extends BaseSettingsActivity implements ActionAd
             if (!port.equals("") && port.length() == 1) {
                 int deviceid = Integer.parseInt(port);
                 if (deviceid == portid) {
-                    SystemProperties.set(DroidLogicTvUtils.SOURCE_NAME, name);
                     Intent intent = new Intent(Intent.ACTION_MAIN);
-                    intent.putExtra(DroidLogicTvUtils.EXTRA_CHANNEL_NUMBER, name);
+                    intent.putExtra(DroidLogicTvUtils.SOURCE_INPUT_ID, info.getId());
                     intent.setClassName("com.droidlogic.tvsource", "com.droidlogic.tvsource.DroidLogicTv");
                     startActivity(intent);
                     return;
