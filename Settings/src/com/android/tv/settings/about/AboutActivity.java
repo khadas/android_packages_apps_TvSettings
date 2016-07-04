@@ -188,13 +188,13 @@ public class AboutActivity extends SettingsLayoutActivity {
                 intent.setComponent(mPlatLogoActivity);
                 startActivity(intent);
             }
-        } else if (key == KEY_REBOOT) {
+        } /*else if (key == KEY_REBOOT) {
             final Fragment f = new RebootConfirmFragment();
             getFragmentManager().beginTransaction()
                     .replace(android.R.id.content, f)
                     .addToBackStack(null)
                     .commit();
-        } else {
+        }*/ else {
             Intent intent = action.getIntent();
             if (intent != null) {
                 try {
@@ -232,9 +232,9 @@ public class AboutActivity extends SettingsLayoutActivity {
                 .title(R.string.about_system_update)
                 .build());
         header.add(mDeviceNameLayoutGetter);
-        header.add(new Layout.Action.Builder(res, KEY_REBOOT)
+        /*header.add(new Layout.Action.Builder(res, KEY_REBOOT)
                 .title(R.string.restart_button_label)
-                .build());
+                .build());*/
         header.add(new Layout.Header.Builder(res)
                 .title(R.string.about_legal_info)
                 .build()
@@ -374,7 +374,7 @@ public class AboutActivity extends SettingsLayoutActivity {
             m.group(4);                            // Thu Jun 28 11:02:39 PDT 2012
     }
 
-    public static class RebootConfirmFragment extends GuidedStepFragment {
+    /*public static class RebootConfirmFragment extends GuidedStepFragment {
 
         private static final int ACTION_RESTART = 1;
 
@@ -416,5 +416,5 @@ public class AboutActivity extends SettingsLayoutActivity {
                 getFragmentManager().popBackStack();
             }
         }
-    }
+    }*/
 }
