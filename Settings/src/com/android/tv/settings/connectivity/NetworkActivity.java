@@ -426,14 +426,7 @@ public class NetworkActivity extends SettingsLayoutActivity implements
                                 new Intent(NetworkActivity.this,
                                         AddWifiNetworkActivity.class))
                                 .title(R.string.wifi_setting_other_options_add_network)
-                                .build())
-                        .add(new Header.Builder(mRes)
-                                .title(R.string.wifi_setting_always_scan)
-                                .description(mAlwaysScanWifi)
-                                .detailedDescription(
-                                        R.string.wifi_setting_always_scan_context)
-                                .build()
-                                .add(mAlwaysScanWifi));
+                                .build());
             }
             return layout;
         }
