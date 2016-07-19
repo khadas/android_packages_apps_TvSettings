@@ -283,8 +283,16 @@ public class BrowseInfo extends BrowseInfoBase {
             if (PREF_KEY_ADD_ACCOUNT.equals(key)) {
                 mAccountHeaderId = mHeaderId;
                 addAccounts(mRow);
-            } else if (PREF_KEY_CEC.equals(key)) {
-                return;
+            } else if (PREF_KEY_CEC.equals(key) && SettingsConstant.needDroidlogicMboxFeature(mContext)) {
+                Intent i = getIntent(parser, attrs);
+                if (systemIntentIsHandled(i) != null) {
+                    mRow.add(new MenuItem.Builder()
+                            .id(mNextItemId++)
+                            .title(title)
+                            .imageResourceId(mContext, iconRes)
+                            .intent(i)
+                            .build());
+                }
             } else if (PREF_KEY_HOME.equals(key)) {
                 // Only show home screen setting if there's a system app to handle the intent.
                 Intent recIntent = getIntent(parser, attrs);
