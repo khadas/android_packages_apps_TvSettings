@@ -283,7 +283,8 @@ public class BrowseInfo extends BrowseInfoBase {
             if (PREF_KEY_ADD_ACCOUNT.equals(key)) {
                 mAccountHeaderId = mHeaderId;
                 addAccounts(mRow);
-            } else if (PREF_KEY_CEC.equals(key) && SettingsConstant.needDroidlogicMboxFeature(mContext)) {
+            } else if (PREF_KEY_CEC.equals(key)) {
+                if (SettingsConstant.needDroidlogicTvFeature(mContext)) return;
                 Intent i = getIntent(parser, attrs);
                 if (systemIntentIsHandled(i) != null) {
                     mRow.add(new MenuItem.Builder()
