@@ -34,7 +34,7 @@ import android.net.wifi.WifiManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Pair;
-
+import com.android.settingslib.wifi.AccessPoint;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.util.ArrayList;
@@ -61,6 +61,7 @@ public class ConnectivityListener {
     private final Context mContext;
     private final Listener mListener;
     private final IntentFilter mFilter;
+    private IntentFilter mWifiStateFilter;
     private final BroadcastReceiver mReceiver;
     private boolean mStarted;
 
@@ -68,6 +69,7 @@ public class ConnectivityListener {
     private final WifiManager mWifiManager;
     private final EthernetManager mEthernetManager;
     private WifiNetworkListener mWifiListener;
+    private NetworkInfo mWifiNetworkInfo;
     private final BroadcastReceiver mWifiListReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -83,26 +85,43 @@ public class ConnectivityListener {
             mListener.onConnectivityChange(intent);
         }
     };
+
     private final EthernetManager.Listener mEthernetListener = new EthernetManager.Listener() {
         @Override
         public void onAvailabilityChanged(boolean isAvailable) {
             mListener.onConnectivityChange(null);
         }
     };
+    private void handleNetworkStateChanged(NetworkInfo networkInfo) {
+        if (mWifiManager.isWifiEnabled()) {
+            WifiInfo info = mWifiManager.getConnectionInfo();
+            String summary = AccessPoint.getSummary(mContext, info.getSSID(),
+                    networkInfo.getDetailedState(),
+                    info.getNetworkId() == WifiConfiguration.INVALID_NETWORK_ID, null);
+            Log.e(TAG,"AccessPoint.getSummary:"+summary);
+        }
+    }
 
     public static class ConnectivityStatus {
-        public static final int NETWORK_NONE = 1;
-        public static final int NETWORK_WIFI_OPEN = 3;
-        public static final int NETWORK_WIFI_SECURE = 5;
-        public static final int NETWORK_ETHERNET = 7;
+        public static final int NETWORK_NONE = 0x00;
+        public static final int NETWORK_WIFI_OPEN = 0x01;
+        public static final int NETWORK_WIFI_SECURE = 0x02;
+        public static final int NETWORK_ETHERNET = 0x80;
+        public static final int NETWORK_WIFI_OP_ETHERNET = 0x81;
+        public static final int NETWORK_WIFI_SE_ETHERNET = 0x82;
 
         public int mNetworkType;
         public String mWifiSsid;
         public int mWifiSignalStrength;
 
-        boolean isEthernetConnected() { return mNetworkType == NETWORK_ETHERNET; }
+        boolean isEthernetConnected() { return mNetworkType == NETWORK_ETHERNET ||
+                                          mNetworkType == NETWORK_WIFI_OP_ETHERNET ||
+                                          mNetworkType == NETWORK_WIFI_SE_ETHERNET; }
         boolean isWifiConnected() {
-            return mNetworkType == NETWORK_WIFI_OPEN ||  mNetworkType == NETWORK_WIFI_SECURE;
+            return mNetworkType == NETWORK_WIFI_OPEN ||
+                   mNetworkType == NETWORK_WIFI_SECURE ||
+                   mNetworkType == NETWORK_WIFI_OP_ETHERNET ||
+                   mNetworkType == NETWORK_WIFI_SE_ETHERNET;
         }
 
         @Override
@@ -128,14 +147,25 @@ public class ConnectivityListener {
         mFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
         mFilter.addAction(ConnectivityManager.INET_CONDITION_ACTION);
         mFilter.addAction(WifiManager.RSSI_CHANGED_ACTION);
+        mFilter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
+
         mReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 if (DEBUG) {
                     Log.d(TAG, "Connectivity change!");
                 }
-                if (updateConnectivityStatus()) {
-                    mListener.onConnectivityChange(intent);
+
+                if (intent.getAction().equals(WifiManager.NETWORK_STATE_CHANGED_ACTION)) {
+                    mWifiNetworkInfo = (NetworkInfo) intent.getParcelableExtra(WifiManager.EXTRA_NETWORK_INFO);
+                    handleNetworkStateChanged(mWifiNetworkInfo);
+                    if (updateConnectivityStatus(mWifiNetworkInfo)) {
+                        mListener.onConnectivityChange(intent);
+                    }
+                } else {
+                    if (updateConnectivityStatus(mWifiNetworkInfo)) {
+                        mListener.onConnectivityChange(intent);
+                    }
                 }
             }
         };
@@ -148,7 +178,7 @@ public class ConnectivityListener {
     public void start() {
         if (!mStarted) {
             mStarted = true;
-            updateConnectivityStatus();
+            updateConnectivityStatus(null);
             mContext.registerReceiver(mReceiver, mFilter);
             mContext.registerReceiver(mWifiListReceiver, new IntentFilter(
                     WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
@@ -370,27 +400,32 @@ public class ConnectivityListener {
 
     private boolean setNetworkType(int networkType) {
         boolean hasChanged = mConnectivityStatus.mNetworkType != networkType;
-        mConnectivityStatus.mNetworkType = networkType;
+        if (hasChanged) {
+            mConnectivityStatus.mNetworkType = networkType;
+        }
         return hasChanged;
     }
 
-    private boolean updateConnectivityStatus() {
+    private boolean updateConnectivityStatus(NetworkInfo mWifiInfo) {
+        int netwifiType=0;
+        int netethType=0;
+        boolean hasChanged = false;
         NetworkInfo networkInfo = mConnectivityManager.getActiveNetworkInfo();
+        NetworkInfo netInfoETH = mConnectivityManager.getNetworkInfo(ConnectivityManager.TYPE_ETHERNET);
         if (networkInfo == null) {
             return setNetworkType(ConnectivityStatus.NETWORK_NONE);
         } else {
-            switch (networkInfo.getType()) {
-                case ConnectivityManager.TYPE_WIFI: {
-                    boolean hasChanged;
-
+            if (mWifiInfo != null) {
+                if (mWifiInfo.getState() == NetworkInfo.State.CONNECTED) {
                     // Determine if this is an open or secure wifi connection.
                     WifiInfo wifiInfo = mWifiManager.getConnectionInfo();
-                    if (isSecureWifi(wifiInfo)) {
-                        hasChanged = setNetworkType(ConnectivityStatus.NETWORK_WIFI_SECURE);
-                    } else {
-                        hasChanged = setNetworkType(ConnectivityStatus.NETWORK_WIFI_OPEN);
+                    if (wifiInfo != null && isWifiEnabled()) {
+                        if (isSecureWifi(wifiInfo)) {
+                            netwifiType = ConnectivityStatus.NETWORK_WIFI_SECURE;
+                        } else {
+                            netwifiType = ConnectivityStatus.NETWORK_WIFI_OPEN;
+                        }
                     }
-
                     // Find the SSID of network.
                     String ssid = null;
                     if (wifiInfo != null) {
@@ -416,15 +451,16 @@ public class ConnectivityListener {
                         hasChanged = true;
                         mConnectivityStatus.mWifiSignalStrength = signalStrength;
                     }
-                    return hasChanged;
+                } else {
+                    netwifiType = ConnectivityStatus.NETWORK_NONE;
                 }
-
-                case ConnectivityManager.TYPE_ETHERNET:
-                    return setNetworkType(ConnectivityStatus.NETWORK_ETHERNET);
-
-                default:
-                    return setNetworkType(ConnectivityStatus.NETWORK_NONE);
+            }else {
+                Log.e(TAG,"mWifiInfo == null!");
             }
+            if (networkInfo.getType() ==  ConnectivityManager.TYPE_ETHERNET) {
+                netethType = ConnectivityStatus.NETWORK_ETHERNET;
+            }
+            return (setNetworkType(netwifiType | netethType) || hasChanged);
         }
     }
 }

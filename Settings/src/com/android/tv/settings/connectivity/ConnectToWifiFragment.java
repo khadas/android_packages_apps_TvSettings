@@ -57,7 +57,6 @@ public class ConnectToWifiFragment extends MessageWizardFragment
     private static final String EXTRA_CONFIGURATION = "configuration";
     private static final int MSG_TIMEOUT = 1;
     private static final int CONNECTION_TIMEOUT = 15000;
-
     public static ConnectToWifiFragment newInstance(String title, boolean showProgressIndicator,
             WifiConfiguration configuration) {
         ConnectToWifiFragment fragment = new ConnectToWifiFragment();
@@ -133,7 +132,6 @@ public class ConnectToWifiFragment extends MessageWizardFragment
         mWifiConfiguration = getArguments().getParcelable(EXTRA_CONFIGURATION);
         mWifiManager = ((WifiManager) getActivity().getSystemService(Context.WIFI_SERVICE));
         mHandler = new MessageHandler(this);
-
         IntentFilter filter = new IntentFilter();
         filter.addAction(WifiManager.SUPPLICANT_STATE_CHANGED_ACTION);
         mReceiver = new BroadcastReceiver() {
@@ -248,6 +246,8 @@ public class ConnectToWifiFragment extends MessageWizardFragment
         ConnectivityManager connMan =
                 (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = connMan.getActiveNetworkInfo();
+        if (mConnectivityListener != null)
+            return mConnectivityListener.getConnectivityStatus().isWifiConnected();
         if (netInfo == null) {
             if (DEBUG) Log.d(TAG, "NetworkInfo is null; network is not connected");
             return false;

@@ -516,7 +516,7 @@ public class NetworkActivity extends SettingsLayoutActivity implements
         private Layout initAvailableWifiNetworks(boolean top3EntriesOnly, String mustHave) {
             List<ScanResult> networks = mConnectivityListener.getAvailableNetworks();
             Layout layout = new Layout();
-            if (networks.size() > 0) {
+            if (networks.size() > 0 && getWifiDevEnable() == true) {
                 int maxItems = top3EntriesOnly ? 3 : Integer.MAX_VALUE;
                 // "networks" is already sorted by the signal strength and connection status.
                 // Generate a new list with size less than "maxItems" that ensures "mustHave" is
@@ -925,6 +925,9 @@ public class NetworkActivity extends SettingsLayoutActivity implements
                     sendWifiOffMsg();
                 }
                 else {
+                    if (getWifiApDevEnable()) {
+                        sendWifiApOffMsg();
+                    }
                     sendWifiOnMsg();
                 }
                 goBackToTitle(mRes.getString(R.string.connectivity_wifi));
