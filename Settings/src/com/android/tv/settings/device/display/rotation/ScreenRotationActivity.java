@@ -6,6 +6,9 @@ import android.content.Context;
 import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.UserHandle;
+import android.provider.Settings;
+import android.content.ContentResolver;
 import com.droidlogic.app.SystemControlManager;
 import com.android.tv.settings.dialog.DialogFragment;
 import com.android.tv.settings.dialog.DialogFragment.Action;
@@ -66,12 +69,29 @@ public class ScreenRotationActivity extends Activity implements Action.Listener 
     public void onActionClicked(Action action) {
         if (ACTION_ROTATION_MIDDLE.equals(action.getKey())) {
             setRotationType("middle_port");
+            enableAccelerMeter(false);
         } else if (ACTION_ROTATION_LAND.equals(action.getKey())) {
             setRotationType("force_land");
+            enableAccelerMeter(false);
         } else if (ACTION_ROTATION_ORIGINAL.equals(action.getKey())) {
             setRotationType("original");
+            enableAccelerMeter(true);
         }
         //mDialogFragment.setIcon(getIconResource(getContentResolver()));
+    }
+
+    private void enableAccelerMeter(boolean b) {
+        if (b) {
+            Settings.System.putIntForUser(this.getContentResolver(),
+               Settings.System.ACCELEROMETER_ROTATION,
+               1,
+               UserHandle.USER_CURRENT);
+        } else {
+            Settings.System.putIntForUser(this.getContentResolver(),
+               Settings.System.ACCELEROMETER_ROTATION,
+               0,
+               UserHandle.USER_CURRENT);
+        }
     }
 
     public int getIconResource(ContentResolver contentResolver) {
