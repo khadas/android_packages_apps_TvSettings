@@ -63,12 +63,12 @@ public class DisplayBrowseInfo extends BrowseInfoBase {
                     .intent(getIntent(SettingsConstant.PACKAGE,
                             SettingsConstant.PACKAGE + ".device.display.position.DisplayPositionActivity"))
                     .build());
-         /*   mRow.add(new MenuItem.Builder().id(mNextItemId++)
+            mRow.add(new MenuItem.Builder().id(mNextItemId++)
                     .title(mContext.getString(R.string.device_rotation))
                     .imageResourceId(mContext, R.drawable.ic_settings_rotation)
                     .intent(getIntent(SettingsConstant.PACKAGE,
                             SettingsConstant.PACKAGE + ".device.display.rotation.ScreenRotationActivity"))
-                    .build());*/
+                    .build());
         }
 
         mRow.add(new MenuItem.Builder().id(mNextItemId++)
