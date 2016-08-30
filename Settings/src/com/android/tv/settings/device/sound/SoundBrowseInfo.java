@@ -26,6 +26,7 @@ import com.android.tv.settings.BrowseInfoBase;
 import com.android.tv.settings.MenuItem;
 import com.android.tv.settings.R;
 import com.android.tv.settings.SettingsConstant;
+import android.os.SystemProperties;
 
 /**
  * Gets the list of browse headers and browse items.
@@ -57,7 +58,14 @@ public class SoundBrowseInfo extends BrowseInfoBase {
                 .intent(getIntent(SettingsConstant.PACKAGE,
                         SettingsConstant.PACKAGE + ".device.sound.systemsound.SystemSoundActivity"))
                 .build());
-
+        if (SystemProperties.getBoolean("ro.platform.support.dolby", false)) {
+            mRow.add(new MenuItem.Builder().id(mNextItemId++)
+                    .title(mContext.getString(R.string.device_sound_dolby))
+                    .imageResourceId(mContext, R.drawable.ic_settings_sound_on)
+                    .intent(getIntent(SettingsConstant.PACKAGE,
+                            SettingsConstant.PACKAGE + ".device.sound.dolbysound.DolbySoundActivity"))
+                    .build());
+        }
         if (SettingsConstant.needDroidlogicDigitalSounds(mContext)) {
             mRow.add(new MenuItem.Builder().id(mNextItemId++)
                     .title(mContext.getString(R.string.device_sound_digital))

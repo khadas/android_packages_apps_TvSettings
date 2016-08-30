@@ -124,6 +124,11 @@
     <string name="device_sound_dts_trans_51pcm">5.1 PCM Transcoder</string>
     <string name="device_sound_dts_trans_71pcm">7.1 PCM Transcoder</string>
     <string name="device_sound_dts_mulasset">DTS Mulasset</string>
+    <string name="device_sound_dolby">Dolby sounds</string>
+    <string name="device_sound_dolby_drcmode">DRC mode</string>
+    <string name="device_sound_dolby_drcoff">OFF</string>
+    <string name="device_sound_dolby_drcline">LINE</string>
+    <string name="device_sound_dolby_drcrf">RF</string>
     <!-- Preference which manages apps. [CHAR LIMIT=50] -->
     <string name="device_apps">Apps</string>
     <!-- Preference which shows storage status. [CHAR LIMIT=50] -->
