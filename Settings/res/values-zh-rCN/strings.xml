@@ -80,6 +80,8 @@
     <string name="device_sound_dts_trans_51pcm">5.1 PCM 解码器</string>
     <string name="device_sound_dts_trans_71pcm">7.1 PCM 解码器</string>
     <string name="device_sound_dts_mulasset">DTS 多资源解码器</string>
+    <string name="device_sound_dolby">杜比音效</string>
+    <string name="device_sound_dolby_drcmode">DRC 模式</string>
     <string name="device_apps" msgid="9180435229638772838">"应用"</string>
     <string name="device_storage_reset" msgid="1425978936501134425">"存储空间和恢复出厂设置"</string>
     <string name="device_storage" msgid="5536683600091277826">"存储空间"</string>

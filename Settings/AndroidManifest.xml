@@ -247,6 +247,10 @@
             android:configChanges="keyboard|keyboardHidden|navigation"
             android:exported="true" />
         <activity
+            android:name=".device.sound.dolbysound.DolbySoundActivity"
+            android:configChanges="keyboard|keyboardHidden|navigation"
+            android:exported="true" />
+        <activity
             android:name=".device.display.DisplayActivity"
             android:configChanges="keyboard|keyboardHidden|navigation"
             android:exported="true" >
@@ -543,7 +547,11 @@
                   <action android:name="android.intent.action.BOOT_COMPLETED"/>
             </intent-filter>
         </receiver>
-
+        <receiver android:name=".device.sound.dolbysound.DolbyBootReceiver">
+            <intent-filter>
+                  <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
         <receiver android:name=".device.storage.NewStorageActivity$DiskReceiver">
             <intent-filter>
                 <action android:name="android.os.storage.action.DISK_SCANNED" />
