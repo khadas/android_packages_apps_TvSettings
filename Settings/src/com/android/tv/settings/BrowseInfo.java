@@ -489,18 +489,31 @@ public class BrowseInfo extends BrowseInfoBase {
                     .intent(i).build());
         }
 
-        // Add new accessory activity icon
-        ComponentName componentNameRC = new ComponentName("com.android.tv.settings",
-                "com.android.tv.settings.accessories.RemoteControlSetActivity");
-        Intent iRC = new Intent().setComponent(componentNameRC );
-        iRC.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+        if ( hasRemote() ) {
+            // Add new accessory activity icon
+            ComponentName componentNameRC = new ComponentName("com.android.tv.settings",
+                    "com.android.tv.settings.accessories.RemoteControlSetActivity");
+            Intent iRC = new Intent().setComponent(componentNameRC );
+            iRC.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
 
-        row.add(new MenuItem.Builder().id(mNextItemId++)
-                .title(mContext.getString(R.string.accessories_remote))
-                .imageResourceId(mContext, R.drawable.ic_settings_remote)
-                .intent(iRC).build());
+            row.add(new MenuItem.Builder().id(mNextItemId++)
+                    .title(mContext.getString(R.string.accessories_remote))
+                    .imageResourceId(mContext, R.drawable.ic_settings_remote)
+                    .intent(iRC).build());
+        }
     }
 
+   private boolean hasRemote() {
+        try{
+            ApplicationInfo info = mContext.getPackageManager().getApplicationInfo("com.droidlogic.service.remotecontrol",0);
+            if (info != null) {
+                return true;
+            }
+        } catch(Exception ex) {
+            return false;
+        }
+        return false;
+    }
     private Intent getIntent(XmlResourceParser parser, AttributeSet attrs)
             throws org.xmlpull.v1.XmlPullParserException, IOException {
         Intent intent = null;
