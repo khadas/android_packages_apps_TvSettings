@@ -312,6 +312,18 @@ public class AboutActivity extends SettingsLayoutActivity {
         // Limit the intent to an activity that is in the system image.
         final PackageManager pm = getPackageManager();
         final List<ResolveInfo> activities = pm.queryIntentActivities(intent, 0);
+
+        if (action.equals(SETTINGS_UPDATE_SYSTEM) && activities.size() > 1) {
+            for (ResolveInfo info : activities) {
+                if ((info.activityInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0) {
+                    if (info.activityInfo.isEnabled() && info.activityInfo.packageName.contains("google")) {
+                        intent.setPackage(info.activityInfo.packageName);
+                        return intent;
+                    }
+                }
+            }
+        }
+        //for Update Intent---->google package not contains will set default
         for (ResolveInfo info : activities) {
             if ((info.activityInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0) {
                 if (info.activityInfo.isEnabled()) {
