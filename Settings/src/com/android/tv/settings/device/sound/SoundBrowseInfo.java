@@ -74,15 +74,6 @@ public class SoundBrowseInfo extends BrowseInfoBase {
                             SettingsConstant.PACKAGE + ".device.sound.digitalsound.DigitalSoundActivity"))
                     .build());
         }
-
-        if (SystemProperties.getBoolean("ro.platform.support.dolby", false)) {
-            mRow.add(new MenuItem.Builder().id(mNextItemId++)
-                    .title(mContext.getString(R.string.device_sound_dolby))
-                    .imageResourceId(mContext, R.drawable.ic_settings_sound_on)
-                    .intent(getIntent(SettingsConstant.PACKAGE,
-                                SettingsConstant.PACKAGE + ".device.sound.dolbysound.DolbySoundActivity"))
-                    .build());
-        }
     }
 
     private Intent getIntent(String targetPackage, String targetClass) {
