@@ -122,7 +122,8 @@ public class MainFragment extends LeanbackPreferenceFragment {
 
         final TvInputManager manager = (TvInputManager) getContext().getSystemService(
                 Context.TV_INPUT_SERVICE);
-        if (manager != null) {
+        if (getContext().getPackageManager().hasSystemFeature(PackageManager.FEATURE_LIVE_TV) &&
+            (manager != null)) {
             for (final TvInputInfo input : manager.getTvInputList()) {
                 if (input.isPassthroughInput()) {
                     mInputSettingNeeded = true;
