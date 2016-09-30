@@ -48,6 +48,17 @@
     <string name="wifi_setting_enable_wifi" msgid="9214100840401870408">"WLAN"</string>
     <string name="device_daydream" msgid="3354366974209179614">"屏保"</string>
     <string name="device_display" msgid="101455384386372747">"显示"</string>
+    <string name="device_outputmode" msgid="101455384386372748">"屏幕分辨率"</string>
+    <string name="device_position">屏幕缩放</string>
+    <string name="device_outputmode_auto">自动切换到最佳分辨率</string>
+    <string name="device_outputmode_deepcolor">深色模式</string>
+    <string name="device_outputmode_confirm_mode">确认关闭深色模式</string>
+    <string name="device_outputmode_confirm_deepcolor">确认打开深色模式</string>
+    <string name="device_outputmode_change">确认切换至模式：</string>
+    <string name="device_outputmode_countdown"> 秒后恢复原来制式</string>
+    <string name="device_position_zoomout">缩小屏幕</string>
+    <string name="device_position_zoomin">放大屏幕</string>
+    <string name="device_position_description">当前缩放比例是</string>
     <string name="device_sound" msgid="9214182566287657481">"声音"</string>
     <string name="device_surround_sound" msgid="6272196310566546860">"环绕声"</string>
     <string name="device_sound_effects" msgid="7793281745920228622">"系统声音"</string>

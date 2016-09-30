@@ -52,6 +52,14 @@
             android:title="@string/device_daydream"
             android:fragment="com.android.tv.settings.device.display.daydream.DaydreamFragment" />
         <Preference
+        android:icon="@drawable/ic_settings_display"
+        android:key="display"
+        android:title="@string/device_display" >
+        <intent
+            android:targetClass="com.android.tv.settings.device.display.DisplayActivity"
+            android:targetPackage="com.android.tv.settings" />
+    </Preference>
+        <Preference
             android:icon="@drawable/ic_storage"
             android:key="storagereset"
             android:title="@string/device_storage_reset"

@@ -48,6 +48,17 @@
     <string name="wifi_setting_enable_wifi" msgid="9214100840401870408">"Wi-Fi"</string>
     <string name="device_daydream" msgid="3354366974209179614">"螢幕保護程式"</string>
     <string name="device_display" msgid="101455384386372747">"螢幕"</string>
+    <string name="device_outputmode" msgid="101455384386372748">"熒幕分辨率"</string>
+    <string name="device_position">熒幕縮放</string>
+    <string name="device_outputmode_auto">自動切換到最佳分辨率</string>
+    <string name="device_outputmode_deepcolor">深色模式</string>
+    <string name="device_outputmode_confirm_mode">確認關閉深色模式</string>
+    <string name="device_outputmode_confirm_deepcolor">確認開啟深色模式</string>
+    <string name="device_outputmode_change">確認切換至模式：</string>
+    <string name="device_outputmode_countdown"> 秒后恢復原來制式</string>
+    <string name="device_position_zoomout">縮小熒幕</string>
+    <string name="device_position_zoomin">放大熒幕</string>
+    <string name="device_position_description">當前縮放比例是</string>
     <string name="device_sound" msgid="9214182566287657481">"音效"</string>
     <string name="device_surround_sound" msgid="6272196310566546860">"環繞音效"</string>
     <string name="device_sound_effects" msgid="7793281745920228622">"系統音效"</string>

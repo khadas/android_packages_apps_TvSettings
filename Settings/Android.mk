@@ -22,7 +22,7 @@ LOCAL_MODULE_TAGS := optional
 LOCAL_PROGUARD_FLAG_FILES := proguard.cfg
 
 LOCAL_PRIVILEGED_MODULE := true
-
+LOCAL_JAVA_LIBRARIES := droidlogic
 LOCAL_STATIC_JAVA_LIBRARIES := \
     android-support-v7-recyclerview \
     android-support-v7-preference \
