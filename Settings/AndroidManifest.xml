@@ -290,6 +290,9 @@
             android:configChanges="keyboard|keyboardHidden|navigation"
             android:exported="true" />
         <activity
+            android:name=".device.display.hdr.HdrSettingActivity"
+            android:configChanges="keyboard|keyboardHidden|navigation"
+            android:exported="true" />
             android:name=".device.display.daydream.DaydreamActivity"
             android:theme="@style/Theme.Settings.Transparent"
             android:configChanges="keyboard|keyboardHidden|navigation"
@@ -414,6 +417,19 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".system.PowerKeyActivity"
+            android:label="@string/power_key_action"
+            android:icon="@drawable/ic_power_launch"
+            android:configChanges="keyboard|keyboardHidden|navigation"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LEANBACK_SETTINGS" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
         <activity
             android:name=".system.InputsActivity"
             android:configChanges="keyboard|keyboardHidden|navigation"

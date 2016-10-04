@@ -105,8 +105,20 @@
     <string name="device_sound">Sound</string>
     <!-- Title for preference which controls surround sound passthrough function [CHAR LIMIT=50] -->
     <string name="device_surround_sound">Surround sound</string>
+    <string name="device_hdr">HDR</string>
     <!-- Preference and title which changes system sounds settings. [CHAR LIMIT=50] -->
     <string name="device_sound_effects">System sounds</string>
+    <string name="device_sound_dts">DTS Sounds</string>
+    <string name="device_sound_dts_downmix">DTS Downmix</string>
+    <string name="device_sound_dts_downmix_o">Lo/Ro</string>
+    <string name="device_sound_dts_downmix_t">Lt/Rt</string>
+    <string name="device_sound_dts_drcscale">DTS Drcscale</string>
+    <string name="device_sound_dts_dialnorm">DTS Dialnorm</string>
+    <string name="device_sound_dts_trans">DTS Transcoder</string>
+    <string name="device_sound_dts_trans_auto">Auto</string>
+    <string name="device_sound_dts_trans_51pcm">5.1 PCM Transcoder</string>
+    <string name="device_sound_dts_trans_71pcm">7.1 PCM Transcoder</string>
+    <string name="device_sound_dts_mulasset">DTS Mulasset</string>
     <!-- Preference which manages apps. [CHAR LIMIT=50] -->
     <string name="device_apps">Apps</string>
     <!-- Preference which shows storage status. [CHAR LIMIT=50] -->
@@ -1171,6 +1183,11 @@
     <!-- Action to go back to the previous screen, when no apps have been found to perform the requested action. [CHAR LIMIT=50]-->
     <string name="noAppsGoBack">Back</string>
 
+    <!-- Preference which manages power key definition. -->
+    <string name="power_key_definition">Power key definition</string>
+    <string name="power_key_shutdown">shutdown</string>
+    <string name="power_key_suspend">suspend and resume</string>
+
     <!-- TV input settings row -->
     <string name="inputs_inputs">Inputs</string>
     <!-- Header of HDMI CEC device control [CHAR LIMIT=50] -->
@@ -1454,5 +1471,6 @@
     <string name="reboot_safemode_confirm">Do you want to reboot into safe mode?</string>
     <!-- Shutdown Confirmation Dialog. Detailed message in the confirmation dialog when the user asks to reboot into safe mode [CHAR LIMIT=NONE] -->
     <string name="reboot_safemode_desc">This will disable all third party applications you have installed. They will be restored when you reboot again.</string>
+    <string name="power_key_action">Power</string>
 
 </resources>

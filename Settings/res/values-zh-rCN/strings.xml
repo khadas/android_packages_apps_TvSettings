@@ -61,7 +61,19 @@
     <string name="device_position_description">当前缩放比例是</string>
     <string name="device_sound" msgid="9214182566287657481">"声音"</string>
     <string name="device_surround_sound" msgid="6272196310566546860">"环绕声"</string>
+    <string name="device_rotation_land">横屏拉伸</string>
     <string name="device_sound_effects" msgid="7793281745920228622">"系统声音"</string>
+    <string name="device_sound_dts">DTS 音效</string>
+    <string name="device_sound_dts_downmix">DTS Downmix</string>
+    <string name="device_sound_dts_downmix_o">Lo/Ro</string>
+    <string name="device_sound_dts_downmix_t">Lt/Rt</string>
+    <string name="device_sound_dts_drcscale">DTS Drcscale</string>
+    <string name="device_sound_dts_dialnorm">DTS Dialnorm</string>
+    <string name="device_sound_dts_trans">DTS 解码器</string>
+    <string name="device_sound_dts_trans_auto">自动</string>
+    <string name="device_sound_dts_trans_51pcm">5.1 PCM 解码器</string>
+    <string name="device_sound_dts_trans_71pcm">7.1 PCM 解码器</string>
+    <string name="device_sound_dts_mulasset">DTS 多资源解码器</string>
     <string name="device_apps" msgid="9180435229638772838">"应用"</string>
     <string name="device_storage_reset" msgid="1425978936501134425">"存储空间和恢复出厂设置"</string>
     <string name="device_backup_restore" msgid="5627523987587511884">"备份和还原"</string>
@@ -537,6 +549,9 @@
     <string name="justOnceOption" msgid="6051458702672920102">"仅此一次"</string>
     <string name="noApplications" msgid="4197983402774959346">"没有应用可执行此操作。"</string>
     <string name="noAppsGoBack" msgid="5663180241276177314">"返回"</string>
+    <string name="power_key_definition">电源键定义</string>
+    <string name="power_key_shutdown">关机</string>
+    <string name="power_key_suspend">待机和唤醒</string>
     <string name="inputs_inputs" msgid="4249080110281833521">"输入端口"</string>
     <string name="inputs_header_cec" msgid="3701104827756278489">"消费电子产品控制(CEC)"</string>
     <string name="inputs_cec_settings" msgid="8403155117662874704">"设备控制设置"</string>
@@ -674,4 +689,8 @@
     <string name="reboot_safemode_action" msgid="8129550438717110406">"重新启动并进入安全模式"</string>
     <string name="reboot_safemode_confirm" msgid="3329475617645192086">"您想重新启动并进入安全模式吗？"</string>
     <string name="reboot_safemode_desc" msgid="5031024337104679492">"这将停用您已安装的所有第三方应用。您必须再次重新启动才能恢复这些应用。"</string>
+    <string name="power_key_action">"电源"</string>
+    <string name="power_action_suspend">"休眠"</string>
+    <string name="power_action_restart">"重启"</string>
+    <string name="power_action_shutdown">"关机"</string>
 </resources>

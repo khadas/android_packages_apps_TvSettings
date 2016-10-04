@@ -93,14 +93,14 @@ public class DisplayBrowseInfo extends BrowseInfoBase {
                 .imageResourceId(mContext, R.drawable.ic_settings_overscan)
                 .intent(new Intent("com.google.android.athome.overscan.CALIBRATE")).build());
         }
-
+        */
         if (SettingsConstant.needDroidlogicHdrFeature(mContext)) {
             mRow.add(new MenuItem.Builder().id(mNextItemId++)
                 .title(mContext.getString(R.string.device_hdr))
                 .imageResourceId(mContext, R.drawable.ic_settings_hdr)
                 .intent(getIntent(SettingsConstant.PACKAGE,
                             SettingsConstant.PACKAGE + ".device.display.hdr.HdrSettingActivity")).build());
-        }*/
+        }
     }
 
     private Intent getIntent(String targetPackage, String targetClass) {

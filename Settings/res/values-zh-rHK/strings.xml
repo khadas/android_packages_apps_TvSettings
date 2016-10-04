@@ -664,4 +664,8 @@
     <string name="reboot_safemode_action" msgid="8129550438717110406">"重新開機進入安全模式"</string>
     <string name="reboot_safemode_confirm" msgid="3329475617645192086">"您要重新開機進入安全模式嗎？"</string>
     <string name="reboot_safemode_desc" msgid="5031024337104679492">"這會停用所有已安裝的第三方應用程式。您必須再次重新開機才能復原這些應用程式。"</string>
+    <string name="power_key_action">"電源"</string>
+    <string name="power_action_suspend">"休眠"</string>
+    <string name="power_action_restart">"重啟"</string>
+    <string name="power_action_shutdown">"關機"</string>
 </resources>
