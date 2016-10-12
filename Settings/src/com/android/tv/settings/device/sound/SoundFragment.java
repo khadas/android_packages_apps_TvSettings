@@ -20,6 +20,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.media.AudioManager;
 import android.os.Bundle;
+import android.os.SystemProperties;
 import android.provider.Settings;
 import android.support.v14.preference.SwitchPreference;
 import android.support.v17.preference.LeanbackPreferenceFragment;
@@ -29,17 +30,34 @@ import android.support.v7.preference.PreferenceScreen;
 import android.support.v7.preference.TwoStatePreference;
 import android.text.TextUtils;
 
+import com.droidlogic.app.OutputModeManager;
+
 import com.android.tv.settings.R;
+import android.util.Log;
 
 public class SoundFragment extends LeanbackPreferenceFragment implements
         Preference.OnPreferenceChangeListener {
-
+    public static final String LINE = "2";
+    public static final String RF = "3";
+    public static final String TAG = "SoundFragment";
     private static final String KEY_SOUND_EFFECTS = "sound_effects";
     private static final String KEY_SURROUND_PASSTHROUGH = "surround_passthrough";
+    private static final String KEY_DRCMODE_PASSTHROUGH = "drc_mode";
+    private static final String KEY_DIGITALSOUND_PASSTHROUGH = "digital_sound";
 
     private static final String VAL_SURROUND_SOUND_AUTO = "auto";
     private static final String VAL_SURROUND_SOUND_ALWAYS = "always";
     private static final String VAL_SURROUND_SOUND_NEVER = "never";
+    public static final String DRC_MODE = "dolbydrc";
+    public static final String DRC_OFF = "off";
+    public static final String DRC_LINE = "line";
+    public static final String DRC_RF = "rf";
+    public static final String AUTO = "auto";
+    public static final String PCM = "pcm";
+    public static final String HDMI = "hdmi";
+    public static final String SPDIF = "spdif";
+
+    private OutputModeManager mOMM;
 
     private AudioManager mAudioManager;
 
@@ -50,6 +68,7 @@ public class SoundFragment extends LeanbackPreferenceFragment implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         mAudioManager = (AudioManager) getActivity().getSystemService(Context.AUDIO_SERVICE);
+        mOMM = new OutputModeManager(getActivity());
         super.onCreate(savedInstanceState);
     }
 
@@ -62,8 +81,21 @@ public class SoundFragment extends LeanbackPreferenceFragment implements
 
         final ListPreference surroundPref =
                 (ListPreference) findPreference(KEY_SURROUND_PASSTHROUGH);
+        final ListPreference drcmodePref =
+                (ListPreference) findPreference(KEY_DRCMODE_PASSTHROUGH);
+        final ListPreference digitalsoundPref =
+                (ListPreference) findPreference(KEY_DIGITALSOUND_PASSTHROUGH);
+
         surroundPref.setValue(getSurroundPassthroughSetting());
         surroundPref.setOnPreferenceChangeListener(this);
+        drcmodePref.setValue(getDrcModePassthroughSetting());
+        drcmodePref.setOnPreferenceChangeListener(this);
+        digitalsoundPref.setValue(getDigitalSoundPassthroughSetting());
+        digitalsoundPref.setOnPreferenceChangeListener(this);
+        if (!SystemProperties.getBoolean("ro.platform.support.dolby", false)) {
+            drcmodePref.setVisible(false);
+            Log.d(TAG,"platform doesn't support dolby");
+        }
     }
 
     @Override
@@ -94,9 +126,60 @@ public class SoundFragment extends LeanbackPreferenceFragment implements
             }
             return true;
         }
+        else if (TextUtils.equals(preference.getKey(), KEY_DRCMODE_PASSTHROUGH)) {
+            final String selection = (String) newValue;
+            switch (selection) {
+                case DRC_OFF:
+                    mOMM.enableDobly_DRC(false);
+                    mOMM.setDoblyMode(LINE);
+                    setDrcModePassthroughSetting(0);
+                    break;
+                case DRC_LINE:
+                    mOMM.enableDobly_DRC(true);
+                    mOMM.setDoblyMode(LINE);
+                    setDrcModePassthroughSetting(1);
+                    break;
+                case DRC_RF:
+                    mOMM.setDoblyMode(RF);
+                    setDrcModePassthroughSetting(2);
+                    break;
+                default:
+                    throw new IllegalArgumentException("Unknown drc mode pref value");
+            }
+            return true;
+        }
+        else if (TextUtils.equals(preference.getKey(), KEY_DIGITALSOUND_PASSTHROUGH)) {
+            final String selection = (String) newValue;
+            switch (selection) {
+                case AUTO:
+                    autoSwitchDigitalSound();
+                    setDigitalSoundPassthroughSetting(0);
+                    break;
+                case PCM:
+                    setDigitalSoundMode(OutputModeManager.PCM);
+                    setDigitalSoundPassthroughSetting(1);
+                    break;
+                case HDMI:
+                    setDigitalSoundMode(OutputModeManager.HDMI_RAW);
+                    setDigitalSoundPassthroughSetting(2);
+                    break;
+                case SPDIF:
+                    setDigitalSoundMode(OutputModeManager.SPDIF_RAW);
+                    setDigitalSoundPassthroughSetting(3);
+                    break;
+                default:
+                    throw new IllegalArgumentException("Unknown digital sound pref value");
+            }
+            return true;
+        }
         return true;
     }
-
+    private int autoSwitchDigitalSound(){
+        return mOMM.autoSwitchHdmiPassthough();
+    }
+    private void setDigitalSoundMode(String mode){
+        mOMM.setDigitalMode(mode);
+    }
     private boolean getSoundEffectsEnabled() {
         return getSoundEffectsEnabled(getActivity().getContentResolver());
     }
@@ -121,6 +204,14 @@ public class SoundFragment extends LeanbackPreferenceFragment implements
                 Settings.Global.ENCODED_SURROUND_OUTPUT, newVal);
     }
 
+    private void setDrcModePassthroughSetting(int newVal) {
+        Settings.Global.putInt(getContext().getContentResolver(),
+                "drc_mode", newVal);
+    }
+    private void setDigitalSoundPassthroughSetting(int newVal) {
+        Settings.Global.putInt(getContext().getContentResolver(),
+                "digital_sound", newVal);
+    }
     private String getSurroundPassthroughSetting() {
         final int value = Settings.Global.getInt(getContext().getContentResolver(),
                 Settings.Global.ENCODED_SURROUND_OUTPUT,
@@ -134,6 +225,34 @@ public class SoundFragment extends LeanbackPreferenceFragment implements
                 return VAL_SURROUND_SOUND_ALWAYS;
             case Settings.Global.ENCODED_SURROUND_OUTPUT_NEVER:
                 return VAL_SURROUND_SOUND_NEVER;
+        }
+    }
+    private String getDrcModePassthroughSetting() {
+        final int value = Settings.Global.getInt(getContext().getContentResolver(), "drc_mode",0);
+
+        switch (value) {
+            case 0:
+            default:
+                return DRC_OFF;
+            case 1:
+                return DRC_LINE;
+            case 2:
+                return DRC_RF;
+        }
+    }
+    private String getDigitalSoundPassthroughSetting() {
+        final int value = Settings.Global.getInt(getContext().getContentResolver(), "digital_sound",0);
+
+        switch (value) {
+            case 0:
+            default:
+                return AUTO;
+            case 1:
+                return PCM;
+            case 2:
+                return HDMI;
+            case 3:
+                return SPDIF;
         }
     }
 }

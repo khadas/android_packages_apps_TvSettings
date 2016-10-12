@@ -61,6 +61,12 @@
     <string name="device_position_description">當前縮放比例是</string>
     <string name="device_sound" msgid="9214182566287657481">"音效"</string>
     <string name="device_surround_sound" msgid="6272196310566546860">"環繞音效"</string>
+    <string name="device_sound_digital">數字音頻</string>
+    <string name="device_sound_digital_auto">自動檢測</string>
+    <string name="device_sound_digital_auto_off">關閉</string>
+    <string name="device_sound_dolby">杜比音頻</string>
+    <string name="device_sound_dolby_drcmode">杜比模式</string>
+    <string name="device_sound_dolby_drcoff">關閉</string>
     <string name="device_rotation_land">橫屏拉伸</string>
     <string name="device_sound_effects" msgid="7793281745920228622">"系統音效"</string>
     <string name="device_sound_dts">DTS 音效</string>

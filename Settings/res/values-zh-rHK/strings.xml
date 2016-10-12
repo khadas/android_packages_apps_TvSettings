@@ -52,6 +52,12 @@
     <string name="device_sound" msgid="9214182566287657481">"音效"</string>
     <string name="device_surround_sound" msgid="6272196310566546860">"環迴音響"</string>
     <string name="device_sound_effects" msgid="7793281745920228622">"系統音效"</string>
+    <string name="device_sound_digital">數字音頻</string>
+    <string name="device_sound_digital_auto">自動檢測</string>
+    <string name="device_sound_digital_auto_off">關閉</string>
+    <string name="device_sound_dolby">杜比音頻</string>
+    <string name="device_sound_dolby_drcmode">杜比模式</string>
+    <string name="device_sound_dolby_drcoff">關閉</string>
     <string name="device_apps" msgid="9180435229638772838">"應用程式"</string>
     <string name="device_storage_reset" msgid="1425978936501134425">"儲存空間與重設"</string>
     <string name="device_backup_restore" msgid="5627523987587511884">"備份與還原"</string>

@@ -63,6 +63,9 @@
     <string name="device_surround_sound" msgid="6272196310566546860">"环绕声"</string>
     <string name="device_rotation_land">横屏拉伸</string>
     <string name="device_sound_effects" msgid="7793281745920228622">"系统声音"</string>
+    <string name="device_sound_digital">数字音频</string>
+    <string name="device_sound_digital_auto">自动检测</string>
+    <string name="device_sound_digital_auto_off">关闭</string>
     <string name="device_sound_dts">DTS 音效</string>
     <string name="device_sound_dts_downmix">DTS Downmix</string>
     <string name="device_sound_dts_downmix_o">Lo/Ro</string>
@@ -74,6 +77,9 @@
     <string name="device_sound_dts_trans_51pcm">5.1 PCM 解码器</string>
     <string name="device_sound_dts_trans_71pcm">7.1 PCM 解码器</string>
     <string name="device_sound_dts_mulasset">DTS 多资源解码器</string>
+    <string name="device_sound_dolby">杜比音频</string>
+    <string name="device_sound_dolby_drcmode">杜比模式</string>
+    <string name="device_sound_dolby_drcoff">关闭</string>
     <string name="device_apps" msgid="9180435229638772838">"应用"</string>
     <string name="device_storage_reset" msgid="1425978936501134425">"存储空间和恢复出厂设置"</string>
     <string name="device_backup_restore" msgid="5627523987587511884">"备份和还原"</string>
