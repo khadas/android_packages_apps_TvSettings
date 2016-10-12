@@ -23,6 +23,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.format.DateFormat;
+import android.view.MotionEvent;
 
 import com.android.tv.settings.R;
 import com.android.tv.settings.dialog.old.ContentFragment;
@@ -149,7 +150,12 @@ public class SetDateTimeActivity extends DialogActivity {
         final Picker picker = (Picker) getActionFragment();
         picker.setResultListener(resultListener);
     }
-
+    public boolean dispatchGenericMotionEvent(MotionEvent event) {
+        return true;
+    }
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        return true;
+    }
     public static void setDate(Context context, int year, int month, int day) {
         Calendar c = Calendar.getInstance();
 
