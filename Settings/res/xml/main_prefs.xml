@@ -31,6 +31,11 @@
             android:title="@string/system_inputs"
             android:fragment="com.android.tv.settings.system.InputsFragment" />
         <Preference
+            android:icon="@drawable/ic_settings_outputs"
+            android:key="hdmicec"
+            android:title="@string/system_cec"
+            android:fragment="com.android.tv.settings.system.HdmiCecFragment" />
+        <Preference
             android:icon="@drawable/ic_cast"
             android:key="cast"
             android:title="@string/system_cast" >

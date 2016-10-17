@@ -439,6 +439,11 @@
             android:excludeFromRecents="true"
             android:exported="true" />
         <activity
+            android:name=".system.HdmiCecActivity"
+            android:configChanges="keyboard|keyboardHidden|navigation"
+            android:excludeFromRecents="true"
+            android:exported="true" />
+        <activity
             android:name=".accessories.BluetoothAccessoryActivity"
             android:theme="@style/Theme.Settings.Transparent"
             android:configChanges="keyboard|keyboardHidden|navigation"

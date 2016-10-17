@@ -34,6 +34,7 @@ import android.graphics.drawable.Drawable;
 import android.media.tv.TvInputInfo;
 import android.media.tv.TvInputManager;
 import android.os.Bundle;
+import android.os.SystemProperties;
 import android.os.UserHandle;
 import android.support.v17.preference.LeanbackPreferenceFragment;
 import android.support.v4.content.LocalBroadcastManager;
@@ -76,6 +77,7 @@ public class MainFragment extends LeanbackPreferenceFragment {
     private static final String KEY_SPEECH_SETTINGS = "speech";
     private static final String KEY_SEARCH_SETTINGS = "search";
     private static final String KEY_ACCOUNTS_CATEGORY = "accounts";
+    private static final String KEY_HDMICEC = "hdmicec";
 
     private AuthenticatorHelper mAuthenticatorHelper;
     private BluetoothAdapter mBtAdapter;
@@ -150,6 +152,14 @@ public class MainFragment extends LeanbackPreferenceFragment {
         final Preference inputPref = findPreference(KEY_INPUTS);
         if (inputPref != null) {
             inputPref.setVisible(mInputSettingNeeded);
+        }
+
+        final Preference hdmicecPref = findPreference(KEY_HDMICEC);
+        if (getContext().getPackageManager().hasSystemFeature(PackageManager.FEATURE_HDMI_CEC) &&
+                SystemProperties.getBoolean("ro.platform.has.mbxuimode", false)) {
+            hdmicecPref.setVisible(true);
+        } else {
+            hdmicecPref.setVisible(false);
         }
     }
 

@@ -1486,4 +1486,10 @@
     <string name="reboot_safemode_desc">This will disable all third party applications you have installed. They will be restored when you reboot again.</string>
     <string name="power_key_action">Power</string>
 
+    <string name="system_cec">HDMI CEC</string>
+    <string name="cec_control">CEC Control</string>
+    <string name="cec_switch">CEC Switch</string>
+    <string name="cec_one_key_play">One key play</string>
+    <string name="cec_one_key_power_off">One key power off</string>
+    <string name="cec_auto_change_language">Auto change language</string>
 </resources>
