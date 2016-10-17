@@ -115,6 +115,14 @@
             android:key="developer"
             android:title="@string/system_developer_options"
             android:fragment="com.android.tv.settings.system.development.DevelopmentFragment" />
+        <Preference
+            android:icon="@drawable/ic_settings_more"
+            android:key="more"
+            android:title="@string/system_more_setting" >
+            <intent
+                android:targetClass="com.android.settings.Settings"
+                android:targetPackage="com.android.settings" />
+        </Preference>
     </PreferenceCategory>
     <PreferenceCategory
         android:key="accessories"
