@@ -233,6 +233,8 @@
     <string name="system_accessibility">Accessibility</string>
     <!-- Preference which manages developer options. [CHAR LIMIT=50] -->
     <string name="system_developer_options">Developer options</string>
+    <!-- Preference which manages more settings. [CHAR LIMIT=50] -->
+    <string name="system_more_setting">More settings</string>
     <!-- Label for no accessibility color or opacity [CHAR LIMIT=50] -->
     <string name="accessibility_none">None</string>
     <!-- Preference which manages Diagnostic and Usage reporting -->
