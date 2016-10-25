@@ -197,7 +197,7 @@ public class BluetoothPairingDialog extends DialogActivity {
         unregisterReceiver(mReceiver);
 
         // Finish the activity if we get placed in the background and cancel pairing
-        cancelPairing();
+        //  cancelPairing();
         dismiss();
 
         super.onPause();
