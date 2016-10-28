@@ -16,30 +16,31 @@
 
 package com.android.tv.settings.device.display;
 
-import android.graphics.drawable.Drawable;
-import com.android.tv.settings.BrowseInfoFactory;
-import com.android.tv.settings.R;
-import com.android.tv.settings.MenuActivity;
+import android.app.Fragment;
+
+import com.android.tv.settings.BaseSettingsFragment;
+import com.android.tv.settings.TvSettingsActivity;
 
 /**
- * Activity allowing the management of display settings.
+ * Activity to display displaymode and hdr.
  */
-public class DisplayActivity extends MenuActivity {
+public class DisplayActivity extends TvSettingsActivity {
 
     @Override
-    protected String getBrowseTitle() {
-        return getString(R.string.device_display);
+    protected Fragment createSettingsFragment() {
+        return SettingsFragment.newInstance();
     }
 
-    @Override
-    protected Drawable getBadgeImage() {
-        return getResources().getDrawable(R.drawable.ic_settings_display);
-    }
+    public static class SettingsFragment extends BaseSettingsFragment {
 
-    @Override
-    protected BrowseInfoFactory getBrowseInfoFactory() {
-        DisplayBrowseInfo displayBrowseInfo = new DisplayBrowseInfo(this);
-        displayBrowseInfo.init();
-        return displayBrowseInfo;
+        public static SettingsFragment newInstance() {
+            return new SettingsFragment();
+        }
+
+        @Override
+        public void onPreferenceStartInitialScreen() {
+            final DisplayFragment fragment = DisplayFragment.newInstance();
+            startPreferenceFragment(fragment);
+        }
     }
 }

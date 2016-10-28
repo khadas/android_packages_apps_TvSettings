@@ -1,89 +1,43 @@
+/*
+ * Copyright (C) 2014 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.android.tv.settings.device.display.hdr;
 
-import android.app.Activity;
-import android.content.ContentResolver;
-import android.content.Context;
-import android.net.Uri;
-import android.os.Bundle;
-import com.android.tv.settings.dialog.old.Action;
-import com.android.tv.settings.dialog.old.ActionAdapter;
-import com.android.tv.settings.dialog.old.ActionFragment;
-import com.android.tv.settings.dialog.old.ContentFragment;
-import com.android.tv.settings.dialog.old.DialogActivity;
-import com.android.tv.settings.R;
+import android.app.Fragment;
 
-import com.droidlogic.app.HdrManager;
+import com.android.tv.settings.BaseSettingsFragment;
+import com.android.tv.settings.TvSettingsActivity;
 
-import java.util.ArrayList;
-
-
-public class HdrSettingActivity extends DialogActivity implements ActionAdapter.Listener {
-    private static final String ACTION_AUTO = "auto";
-    private static final String ACTION_ON = "on";
-    private static final String ACTION_OFF = "off";
-
-    private ContentFragment mContentFragment;
-    private ActionFragment mActionFragment;
-    private HdrManager mHdrManager;
+public class HdrSettingActivity extends TvSettingsActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mHdrManager = new HdrManager(this);
-
-        mContentFragment = createMainMenuContentFragment();
-        mActionFragment = ActionFragment.newInstance(getActions());
-        setContentAndActionFragments(mContentFragment, mActionFragment);
+    protected Fragment createSettingsFragment() {
+        return SettingsFragment.newInstance();
     }
 
-    private ContentFragment createMainMenuContentFragment() {
-        return ContentFragment.newInstance(
-                getString(R.string.device_hdr),
-                getString(R.string.device_display),
-                null,
-                getIconResource(getContentResolver()),
-                getResources().getColor(R.color.icon_background));
-    }
+    public static class SettingsFragment extends BaseSettingsFragment {
 
-    private ArrayList<Action> getActions() {
-        int mode = mHdrManager.getHdrMode();
-        ArrayList<Action> actions = new ArrayList<Action>();
-        actions.add(new Action.Builder()
-                .key(ACTION_AUTO)
-                .title(getString(R.string.device_sound_dts_trans_auto))
-                .checked(mode == HdrManager.MODE_AUTO)
-                .build());
-        actions.add(new Action.Builder()
-                .key(ACTION_ON)
-                .title(getString(R.string.on))
-                .checked(mode == HdrManager.MODE_ON)
-                .build());
-        actions.add(new Action.Builder()
-                .key(ACTION_OFF)
-                .title(getString(R.string.off))
-                .checked(mode == HdrManager.MODE_OFF)
-                .build());
-        return actions;
-    }
-
-    @Override
-    public void onActionClicked(Action action) {
-        if (ACTION_AUTO.equals(action.getKey())) {
-            mHdrManager.setHdrMode(HdrManager.MODE_AUTO);
-        } else if (ACTION_ON.equals(action.getKey())) {
-            mHdrManager.setHdrMode(HdrManager.MODE_ON);
-        } else if (ACTION_OFF.equals(action.getKey())) {
-            mHdrManager.setHdrMode(HdrManager.MODE_OFF);
+        public static SettingsFragment newInstance() {
+            return new SettingsFragment();
         }
-        updateMainScreen();
-    }
 
-    private void updateMainScreen() {
-        ((ActionAdapter) mActionFragment.getAdapter()).setActions(getActions());
-    }
-
-    public int getIconResource(ContentResolver contentResolver) {
-        return R.drawable.ic_settings_hdr;
+        @Override
+        public void onPreferenceStartInitialScreen() {
+            final HdrSettingFragment fragment = HdrSettingFragment.newInstance();
+            startPreferenceFragment(fragment);
+        }
     }
 }
 
