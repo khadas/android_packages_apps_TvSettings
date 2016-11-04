@@ -262,6 +262,6 @@
         <item>auto</item>
         <item>pcm</item>
         <item>hdmi</item>
-        <item>sfdif</item>
+        <item>spdif</item>
     </string-array>
 </resources>
