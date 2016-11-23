@@ -101,6 +101,12 @@
     <string name="device_position_zoomout">Zoom out screen</string>
     <string name="device_position_zoomin">Zoom in screen</string>
     <string name="device_position_description">current scaling is</string>
+
+    <!-- Preference which manages play back settings. -->
+    <string name="playback_settings">Playback settings</string>
+    <!-- Hdmi self-adaption switch -->
+    <string name="playback_hdmi_selfadaption">HDMI self-adaption</string>
+
     <!-- Title for preference screen controlling sound settings [CHAR LIMIT=50] -->
     <string name="device_sound">Sound</string>
     <!-- Title for preference which controls surround sound passthrough function [CHAR LIMIT=50] -->
