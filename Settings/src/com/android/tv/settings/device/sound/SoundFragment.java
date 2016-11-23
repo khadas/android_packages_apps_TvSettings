@@ -92,6 +92,7 @@ public class SoundFragment extends LeanbackPreferenceFragment implements
         drcmodePref.setOnPreferenceChangeListener(this);
         digitalsoundPref.setValue(getDigitalSoundPassthroughSetting());
         digitalsoundPref.setOnPreferenceChangeListener(this);
+        digitalsoundPref.setVisible(false);
         if (!SystemProperties.getBoolean("ro.platform.support.dolby", false)) {
             drcmodePref.setVisible(false);
             Log.d(TAG,"platform doesn't support dolby");
