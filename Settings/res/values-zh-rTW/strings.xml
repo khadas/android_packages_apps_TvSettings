@@ -700,7 +700,7 @@
     <string name="power_key_action">"電源"</string>
     <string name="power_action_restart">"重啟"</string>
     <string name="power_action_shutdown">"關機"</string>
-
+    <string name="power_action_suspend">"立即休眠"</string>
     <string name="system_cec">"HDMI CEC"</string>
     <string name="cec_control">"CEC 控制"</string>
     <string name="cec_switch">"CEC 開關"</string>
