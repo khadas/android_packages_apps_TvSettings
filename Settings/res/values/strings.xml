@@ -1492,4 +1492,7 @@
     <string name="cec_one_key_play">One key play</string>
     <string name="cec_one_key_power_off">One key power off</string>
     <string name="cec_auto_change_language">Auto change language</string>
+    <string name="power_action_suspend">sleep now</string>
+    <string name="power_action_restart">restart</string>
+    <string name="power_action_shutdown">shutdown</string>
 </resources>
