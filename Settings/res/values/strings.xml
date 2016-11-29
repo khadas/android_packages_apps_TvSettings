@@ -157,6 +157,7 @@
     <skip />
     <!-- Preference which manages pairing new accessories. [CHAR LIMIT=50] -->
     <string name="accessories_add">Add accessory</string>
+    <string name="upgrade_bluetooth_remote">Upgrade bluetoothremote</string>
     <!-- Device Paring Status: Pairing. [CHAR LIMIT=50] -->
     <string name="accessory_state_pairing">Pairing&#8230;</string>
     <!-- Device Paring Status: Connecting. [CHAR LIMIT=50] -->

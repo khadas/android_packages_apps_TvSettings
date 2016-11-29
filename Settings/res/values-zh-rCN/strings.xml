@@ -102,6 +102,7 @@
     <string name="accessory_unpairing" msgid="7568241162181184667">"正在取消与设备的配对…"</string>
     <string name="accessory_connected" msgid="2156489304110030393">"已连接"</string>
     <string name="accessories_add_title" msgid="6940361421891873321">"正在搜索配件…"</string>
+    <string name="upgrade_bluetooth_remote">蓝牙遥控升级</string>
     <string name="accessories_add_bluetooth_inst" msgid="5892952745770640383">"在配对您的蓝牙设备之前，请确保它们处于配对模式"</string>
     <string name="accessories_autopair_msg" msgid="8618829246837821752">"发现了一部设备，将会在<xliff:g id="COUNTDOWN">%1$s</xliff:g>秒后自动配对"</string>
     <string name="error_action_not_supported" msgid="300552308104354666">"此设备不支持执行此操作"</string>
