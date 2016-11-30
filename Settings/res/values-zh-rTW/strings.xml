@@ -91,6 +91,7 @@
     <string name="apps_system" msgid="2499191125802829425">"系統應用程式"</string>
     <string name="apps_running" msgid="6430310491739956228">"執行中的應用程式"</string>
     <string name="accessories_add" msgid="1347802656349218830">"新增配件"</string>
+    <string name="upgrade_bluetooth_remote">藍牙遙控升級</string>
     <string name="accessory_state_pairing" msgid="7501989679637780963">"配對中…"</string>
     <string name="accessory_state_connecting" msgid="8777884957977608529">"連線中…"</string>
     <string name="accessory_state_error" msgid="4529815543328841909">"無法配對"</string>

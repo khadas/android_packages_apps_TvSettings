@@ -68,6 +68,7 @@ public class MainFragment extends LeanbackPreferenceFragment {
     private static final String KEY_ACCESSORIES = "accessories";
     private static final String KEY_PERSONAL = "personal";
     private static final String KEY_ADD_ACCESSORY = "add_accessory";
+    private static final String KEY_UPGRADE_BLUTOOTH_REMOTE= "upgrade_bluetooth_remote";
     private static final String KEY_NETWORK = "network";
     private static final String KEY_INPUTS = "inputs";
     private static final String KEY_SOUNDS = "sound_effects";
@@ -89,6 +90,7 @@ public class MainFragment extends LeanbackPreferenceFragment {
     private PreferenceGroup mAccessoriesGroup;
     private PreferenceGroup mAccountsGroup;
     private Preference mAddAccessory;
+    private Preference mUpgradeBluetoothRemote;
     private Preference mNetworkPref;
     private Preference mSoundsPref;
 
@@ -145,6 +147,7 @@ public class MainFragment extends LeanbackPreferenceFragment {
         mDeveloperPref = findPreference(KEY_DEVELOPER);
         mAccessoriesGroup = (PreferenceGroup) findPreference(KEY_ACCESSORIES);
         mAddAccessory = findPreference(KEY_ADD_ACCESSORY);
+        mUpgradeBluetoothRemote = findPreference(KEY_UPGRADE_BLUTOOTH_REMOTE);
         mNetworkPref = findPreference(KEY_NETWORK);
         mSoundsPref = findPreference(KEY_SOUNDS);
         mAccountsGroup = (PreferenceGroup) findPreference(KEY_ACCOUNTS_CATEGORY);
@@ -330,6 +333,9 @@ public class MainFragment extends LeanbackPreferenceFragment {
         final Set<String> touchedKeys = new ArraySet<>(bondedDevices.size() + 1);
         if (mAddAccessory != null) {
             touchedKeys.add(mAddAccessory.getKey());
+        }
+        if (mUpgradeBluetoothRemote != null) {
+            touchedKeys.add(mUpgradeBluetoothRemote.getKey());
         }
 
         for (final BluetoothDevice device : bondedDevices) {

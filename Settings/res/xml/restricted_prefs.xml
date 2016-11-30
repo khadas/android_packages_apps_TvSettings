@@ -59,6 +59,14 @@
                 android:targetClass="com.android.tv.settings.accessories.AddAccessoryActivity"
                 android:targetPackage="com.android.tv.settings" />
         </Preference>
+        <Preference
+            android:icon="@drawable/ic_bluetooth"
+            android:key="upgrade_bluetooth_remote"
+            android:title="@string/upgrade_bluetooth_remote">
+            <intent
+                android:targetClass="com.droidlogic.BluetoothRemote.ScanActivity"
+                android:targetPackage="com.droidlogic.BluetoothRemote" />
+        </Preference>
     </PreferenceCategory>
     <PreferenceCategory
         android:key="personal"
