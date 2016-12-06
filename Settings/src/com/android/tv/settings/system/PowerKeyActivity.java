@@ -1,97 +1,76 @@
 package com.android.tv.settings.system;
 
 import com.android.tv.settings.R;
-import com.android.tv.settings.dialog.old.Action;
-import com.android.tv.settings.dialog.old.ActionAdapter;
-import com.android.tv.settings.dialog.old.ActionFragment;
-import com.android.tv.settings.dialog.old.ContentFragment;
-import com.android.tv.settings.dialog.old.DialogActivity;
-import com.android.tv.settings.SettingsConstant;
 
-import android.content.Context;
+import com.android.tv.settings.TvSettingsActivity;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.os.PowerManager;
-import android.provider.Settings;
-import android.text.TextUtils;
-import android.util.Log;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v17.preference.LeanbackPreferenceFragment;
+import android.support.v17.preference.LeanbackSettingsFragment;
+import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.preference.Preference;
+import android.support.v7.preference.PreferenceScreen;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Space;
 
-import java.util.ArrayList;
+public class PowerKeyActivity extends TvSettingsActivity {
 
-public class PowerKeyActivity extends DialogActivity implements ActionAdapter.Listener {
-    private static final String TAG = "PowerKeyDefinition";
-
-    private static final String POWER_KEY_DEFINITION = "power_key_definition";
-    private static final String POWER_KEY_SHUTDOWN = "power_key_shutdown";
-    private static final String POWER_KEY_SUSPEND = "power_key_suspend";
-    private static final String POWER_KEY_RESTART = "power_key_restart";
-    private ContentFragment mContentFragment;
-    private ActionFragment mActionFragment;
-
+    private static final String PREFERENCE_FRAGMENT_TAG =
+            "android.support.v17.preference.LeanbackSettingsFragment.PREFERENCE_FRAGMENT";
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        mContentFragment = createMainMenuContentFragment();
-        mActionFragment = ActionFragment.newInstance(getMainActions());
-        setContentAndActionFragments(mContentFragment, mActionFragment);
+    protected Fragment createSettingsFragment() {
+        return SettingsFragment.newInstance();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
+    public static class SettingsFragment extends LeanbackPreferenceFragment {
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
+        public static SettingsFragment newInstance() {
+            return new SettingsFragment();
+        }
+        @Override
+        public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+            setPreferencesFromResource(R.xml.device_info_settings, null);
+        }
+         @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                Bundle savedInstanceState) {
+            final View v = inflater.inflate(R.layout.leanback_settings_fragment, container, false);
+            return v;
+        }
 
-    @Override
-    public void onActionClicked(Action action) {
-        String mode = action.getKey();
-        PowerManager pm = (PowerManager)getSystemService(Context.POWER_SERVICE);
-
-        if (mode.equals(POWER_KEY_SUSPEND)) {
-            pm.goToSleep(20);
-        }else if (mode.equals(POWER_KEY_SHUTDOWN)) {
-            pm.shutdown(false,"userrequested",false);
-        }else if (mode.equals(POWER_KEY_RESTART)) {
-            pm.reboot("");
+         @Override
+        public void onViewCreated(View view, Bundle savedInstanceState) {
+            Fragment fragment = PowermanagerFragment.newInstance();
+            final FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+            final Fragment preferenceFragment =
+                getChildFragmentManager().findFragmentByTag(PREFERENCE_FRAGMENT_TAG);
+            if (preferenceFragment != null && !preferenceFragment.isHidden()) {
+                if (android.os.Build.VERSION.SDK_INT < 23) {
+                    transaction.add(R.id.settings_preference_fragment_container, new DummyFragment());
+                }
+                transaction.remove(preferenceFragment);
+            }
+            transaction
+                    .add(R.id.settings_dialog_container, fragment)
+                    .addToBackStack(null)
+                    .commit();
         }
     }
 
-    private void goToMainScreen() {
-        updateMainScreen();
-        getFragmentManager().popBackStack(null, 0);
-    }
+    public static class DummyFragment extends Fragment {
 
-    private void updateMainScreen() {
-        ((ActionAdapter) mActionFragment.getAdapter()).setActions(getMainActions());
-    }
-
-    private ContentFragment createMainMenuContentFragment() {
-        return ContentFragment.newInstance(
-                getString(R.string.power_key_action), getString(R.string.power_key_action),
-                null, R.drawable.ic_power_launch,
-                getResources().getColor(R.color.icon_background));
-    }
-
-    private ArrayList<Action> getMainActions() {
-        ArrayList<Action> actions = new ArrayList<Action>();
-
-        actions.add(new Action.Builder().key(POWER_KEY_SUSPEND)
-            .title(getString(R.string.power_action_suspend))
-            .checked(false).build());
-
-        actions.add(new Action.Builder().key(POWER_KEY_SHUTDOWN)
-            .title(getString(R.string.power_action_shutdown))
-            .checked(false).build());
-
-        actions.add(new Action.Builder().key(POWER_KEY_RESTART)
-            .title(getString(R.string.power_action_restart))
-            .checked(false).build());
-
-        return actions;
+        @Override
+        public @Nullable View onCreateView(LayoutInflater inflater, ViewGroup container,
+                Bundle savedInstanceState) {
+            final View v = new Space(inflater.getContext());
+            v.setVisibility(View.GONE);
+            return v;
+        }
     }
 }
 
