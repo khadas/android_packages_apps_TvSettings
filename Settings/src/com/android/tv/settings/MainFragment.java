@@ -79,6 +79,7 @@ public class MainFragment extends LeanbackPreferenceFragment {
     private static final String KEY_SEARCH_SETTINGS = "search";
     private static final String KEY_ACCOUNTS_CATEGORY = "accounts";
     private static final String KEY_HDMICEC = "hdmicec";
+    private static final String KEY_STORAGE_RESET = "storagereset";
 
     private AuthenticatorHelper mAuthenticatorHelper;
     private BluetoothAdapter mBtAdapter;
@@ -93,6 +94,7 @@ public class MainFragment extends LeanbackPreferenceFragment {
     private Preference mUpgradeBluetoothRemote;
     private Preference mNetworkPref;
     private Preference mSoundsPref;
+    private Preference mStorageresetPref;
 
     private final BroadcastReceiver mBCMReceiver = new BroadcastReceiver() {
         @Override
@@ -166,6 +168,10 @@ public class MainFragment extends LeanbackPreferenceFragment {
                 hdmicecPref.setVisible(false);
             }
         }
+       final Preference mStorageresetPref= findPreference(KEY_STORAGE_RESET);
+       if (SystemProperties.getBoolean("ro.build.ab_update", false)) {
+           mStorageresetPref.setVisible(false);
+       }
     }
 
     @Override
