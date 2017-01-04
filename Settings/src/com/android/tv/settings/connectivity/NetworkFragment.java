@@ -26,7 +26,7 @@ import android.support.v17.preference.LeanbackPreferenceFragment;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceCategory;
 import android.support.v7.preference.TwoStatePreference;
-
+import android.net.wifi.WifiManager;
 import com.android.settingslib.wifi.AccessPoint;
 import com.android.settingslib.wifi.AccessPointPreference;
 import com.android.tv.settings.R;
@@ -163,11 +163,29 @@ public class NetworkFragment extends LeanbackPreferenceFragment implements
         if (!isAdded()) {
             return;
         }
-
         final boolean wifiEnabled = mConnectivityListener.isWifiEnabled();
-        mEnableWifiPref.setChecked(wifiEnabled);
-
-        mWifiNetworksCategory.setVisible(wifiEnabled);
+        final int wifiState = mConnectivityListener.getWifiState();
+        switch (wifiState) {
+            case WifiManager.WIFI_STATE_ENABLING:
+                mWifiNetworksCategory.setVisible(true);
+                mEnableWifiPref.setChecked(true);
+                break;
+            case WifiManager.WIFI_STATE_ENABLED:
+                mWifiNetworksCategory.setVisible(true);
+                mEnableWifiPref.setChecked(true);
+                break;
+            case WifiManager.WIFI_STATE_DISABLING:
+                mWifiNetworksCategory.setVisible(false);
+                mEnableWifiPref.setChecked(false);
+                break;
+            case WifiManager.WIFI_STATE_DISABLED:
+                mWifiNetworksCategory.setVisible(false);
+                mEnableWifiPref.setChecked(false);
+                break;
+            default:
+                mWifiNetworksCategory.setVisible(false);
+                mEnableWifiPref.setChecked(false);
+        }
         mCollapsePref.setVisible(wifiEnabled && mWifiNetworksCategory.shouldShowCollapsePref());
         mWpsPref.setVisible(wifiEnabled);
         mAddPref.setVisible(wifiEnabled);
