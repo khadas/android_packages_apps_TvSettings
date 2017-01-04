@@ -47,6 +47,9 @@ import com.android.tv.settings.PreferenceUtils;
 import com.android.tv.settings.R;
 import com.android.tv.settings.name.DeviceManager;
 
+import android.content.BroadcastReceiver;
+import android.content.IntentFilter;
+
 public class AboutFragment extends LeanbackPreferenceFragment implements
         LongClickPreference.OnLongClickListener {
     private static final String TAG = "AboutFragment";
@@ -59,6 +62,7 @@ public class AboutFragment extends LeanbackPreferenceFragment implements
     private static final String KEY_KERNEL_VERSION = "kernel_version";
     private static final String KEY_BUILD_NUMBER = "build_number";
     private static final String KEY_DEVICE_MODEL = "device_model";
+    private static final String KEY_NETFLIX_ESN = "netflix_esn";
     private static final String KEY_SELINUX_STATUS = "selinux_status";
     private static final String KEY_BASEBAND_VERSION = "baseband_version";
     private static final String KEY_FIRMWARE_VERSION = "firmware_version";
@@ -76,7 +80,7 @@ public class AboutFragment extends LeanbackPreferenceFragment implements
     long[] mHits = new long[3];
     int mDevHitCountdown;
     Toast mDevHitToast;
-
+    private String mEsnText;
     private UserManager mUm;
 
     private final BroadcastReceiver mDeviceNameReceiver = new BroadcastReceiver() {
@@ -183,6 +187,12 @@ public class AboutFragment extends LeanbackPreferenceFragment implements
             removePreference(findPreference(KEY_MANUAL));
         }
 
+        if (!getActivity().getApplicationContext().getPackageManager().hasSystemFeature("droidlogic.software.netflix")) {
+            removePreference(findPreference(KEY_NETFLIX_ESN));
+        } else {
+            findPreference(KEY_NETFLIX_ESN).setSummary(mEsnText);
+        }
+
         // Remove regulatory information if none present.
         final Preference regulatoryPref = findPreference(KEY_REGULATORY_INFO);
         PreferenceUtils.resolveSystemActivityOrRemove(getActivity(), screen, regulatoryPref, 0);
@@ -211,6 +221,12 @@ public class AboutFragment extends LeanbackPreferenceFragment implements
                 android.os.Build.TYPE.equals("eng") ? 1 : 0) == 1;
         mDevHitCountdown = developerEnabled ? -1 : TAPS_TO_BE_A_DEVELOPER;
         mDevHitToast = null;
+
+        IntentFilter esnIntentFilter = new IntentFilter("com.netflix.ninja.intent.action.ESN_RESPONSE");
+        getActivity().getApplicationContext().registerReceiver(esnReceiver, esnIntentFilter, "com.netflix.ninja.permission.ESN",null);
+        Intent esnQueryIntent = new Intent("com.netflix.ninja.intent.action.ESN");
+        esnQueryIntent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
+        getActivity().getApplicationContext().sendBroadcast(esnQueryIntent);
     }
 
     @Override
@@ -355,6 +371,14 @@ public class AboutFragment extends LeanbackPreferenceFragment implements
                 Context.CONNECTIVITY_SERVICE);
         return (!cm.isNetworkSupported(ConnectivityManager.TYPE_MOBILE));
     }
+
+    private BroadcastReceiver esnReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            mEsnText = intent.getStringExtra("ESNValue");
+            findPreference(KEY_NETFLIX_ESN).setSummary(mEsnText);
+        }
+    };
 
     private void sendFeedback() {
         String reporterPackage = DeviceInfoUtils.getFeedbackReporterPackage(getActivity());
