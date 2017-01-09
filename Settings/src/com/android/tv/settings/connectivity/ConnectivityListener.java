@@ -288,7 +288,9 @@ public class ConnectivityListener implements WifiTracker.WifiListener {
     public boolean isWifiEnabled() {
         return mWifiManager.isWifiEnabled();
     }
-
+    public int getWifiState() {
+        return mWifiManager.getWifiState();
+    }
     public void setWifiEnabled(boolean enable) {
         mWifiManager.setWifiEnabled(enable);
     }
