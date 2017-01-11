@@ -153,7 +153,7 @@
     <item msgid="7541004325985469896">"Good"</item>
     <item msgid="1546771355788926692">"Excellent"</item>
   </string-array>
-    <string name="title_mac_address" msgid="3428401680168668544">"MAC address"</string>
+    <string name="title_mac_address" msgid="3428401680168668544">"Wi-Fi MAC address"</string>
     <string name="title_signal_strength" msgid="205478650262078041">"Signal strength"</string>
     <string name="title_ip_address" msgid="4533523100923004711">"IP address"</string>
     <string name="title_ssid" msgid="4858945903642469730">"Enter name of Wi-Fi network"</string>

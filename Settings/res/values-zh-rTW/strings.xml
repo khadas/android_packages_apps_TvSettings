@@ -184,7 +184,7 @@
     <item msgid="7541004325985469896">"佳"</item>
     <item msgid="1546771355788926692">"極優"</item>
   </string-array>
-    <string name="title_mac_address" msgid="3428401680168668544">"MAC 位址"</string>
+    <string name="title_mac_address" msgid="3428401680168668544">"Wi-Fi MAC 位址"</string>
     <string name="title_signal_strength" msgid="205478650262078041">"訊號強度"</string>
     <string name="title_ip_address" msgid="4533523100923004711">"IP 位址"</string>
     <string name="title_ssid" msgid="4858945903642469730">"輸入 Wi-Fi 網路名稱"</string>

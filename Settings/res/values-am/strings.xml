@@ -153,7 +153,7 @@
     <item msgid="7541004325985469896">"ጥሩ"</item>
     <item msgid="1546771355788926692">"እጅግ በጣም ጥሩ"</item>
   </string-array>
-    <string name="title_mac_address" msgid="3428401680168668544">"MAC አድራሻ"</string>
+    <string name="title_mac_address" msgid="3428401680168668544">"Wi-Fi MAC አድራሻ"</string>
     <string name="title_signal_strength" msgid="205478650262078041">"የሲግናል ጥንካሬ"</string>
     <string name="title_ip_address" msgid="4533523100923004711">"አይ ፒ አድራሻ"</string>
     <string name="title_ssid" msgid="4858945903642469730">"የWi-Fi አውታረ መረብ ስም ያስገቡ"</string>

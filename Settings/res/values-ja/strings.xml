@@ -153,7 +153,7 @@
     <item msgid="7541004325985469896">"強"</item>
     <item msgid="1546771355788926692">"非常に強い"</item>
   </string-array>
-    <string name="title_mac_address" msgid="3428401680168668544">"MACアドレス"</string>
+    <string name="title_mac_address" msgid="3428401680168668544">"Wi-Fi MACアドレス"</string>
     <string name="title_signal_strength" msgid="205478650262078041">"電波強度"</string>
     <string name="title_ip_address" msgid="4533523100923004711">"IPアドレス"</string>
     <string name="title_ssid" msgid="4858945903642469730">"Wi-Fiネットワークの名前を入力"</string>
