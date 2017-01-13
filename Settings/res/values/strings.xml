@@ -374,7 +374,7 @@
 
     <!-- titles for connection status -->
     <!-- label mac address [CHAR LIMIT=50] -->
-    <string name="title_mac_address">MAC address</string>
+    <string name="title_mac_address">Wi-Fi MAC address</string>
     <!-- label signal strength [CHAR LIMIT=50] -->
     <string name="title_signal_strength">Signal strength</string>
     <!-- label IP address [CHAR LIMIT=50] -->

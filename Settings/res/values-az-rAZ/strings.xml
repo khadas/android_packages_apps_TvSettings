@@ -153,7 +153,7 @@
     <item msgid="7541004325985469896">"Yaxşı"</item>
     <item msgid="1546771355788926692">"Əla"</item>
   </string-array>
-    <string name="title_mac_address" msgid="3428401680168668544">"MAC ünvanı"</string>
+    <string name="title_mac_address" msgid="3428401680168668544">"Wi-Fi MAC ünvanı"</string>
     <string name="title_signal_strength" msgid="205478650262078041">"Siqnal gücü"</string>
     <string name="title_ip_address" msgid="4533523100923004711">"IP ünvanı"</string>
     <string name="title_ssid" msgid="4858945903642469730">"Wi-Fi şəbəkəsinin adını daxil edin"</string>
