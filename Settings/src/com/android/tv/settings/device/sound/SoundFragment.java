@@ -131,7 +131,6 @@ public class SoundFragment extends LeanbackPreferenceFragment implements
             switch (selection) {
                 case DRC_OFF:
                     mOMM.enableDobly_DRC(false);
-                    mOMM.setDoblyMode(LINE);
                     setDrcModePassthroughSetting(0);
                     break;
                 case DRC_LINE:
