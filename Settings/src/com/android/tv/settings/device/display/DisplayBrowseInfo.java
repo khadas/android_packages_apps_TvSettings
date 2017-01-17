@@ -101,6 +101,13 @@ public class DisplayBrowseInfo extends BrowseInfoBase {
                 .intent(getIntent(SettingsConstant.PACKAGE,
                             SettingsConstant.PACKAGE + ".device.display.hdr.HdrSettingActivity")).build());
         }
+        if (SettingsConstant.needDroidlogicSdrFeature(mContext)) {
+            mRow.add(new MenuItem.Builder().id(mNextItemId++)
+                .title(mContext.getString(R.string.device_sdr))
+                .imageResourceId(mContext, R.drawable.ic_settings_sdr)
+                .intent(getIntent(SettingsConstant.PACKAGE,
+                            SettingsConstant.PACKAGE + ".device.display.sdr.SdrSettingActivity")).build());
+        }
     }
 
     private Intent getIntent(String targetPackage, String targetClass) {

@@ -35,4 +35,8 @@
             android:key="hdr"
             android:title="@string/device_hdr"
             android:fragment="com.android.tv.settings.device.display.hdr.HdrSettingFragment"/>
+        <Preference
+            android:key="sdr"
+            android:title="@string/device_sdr"
+            android:fragment="com.android.tv.settings.device.display.sdr.SdrSettingFragment"/>
 </PreferenceScreen>

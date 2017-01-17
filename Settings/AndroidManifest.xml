@@ -297,6 +297,11 @@
             android:theme="@style/Theme.Settings.Transparent"
             android:configChanges="keyboard|keyboardHidden|navigation"
             android:exported="true" />
+        <activity
+            android:name=".device.display.sdr.SdrSettingActivity"
+            android:theme="@style/Theme.Settings.Transparent"
+            android:configChanges="keyboard|keyboardHidden|navigation"
+            android:exported="true" />
          <activity
             android:name=".device.display.daydream.DaydreamActivity"
             android:theme="@style/Theme.Settings.Transparent"

@@ -111,7 +111,8 @@
     <string name="device_sound">Sound</string>
     <!-- Title for preference which controls surround sound passthrough function [CHAR LIMIT=50] -->
     <string name="device_surround_sound">Surround sound</string>
-    <string name="device_hdr">HDR</string>
+    <string name="device_hdr">HDR to SDR</string>
+    <string name="device_sdr">SDR to HDR</string>
     <!-- Preference and title which changes system sounds settings. [CHAR LIMIT=50] -->
     <string name="device_sound_effects">System sounds</string>
     <string name="device_sound_digital">Digital sounds</string>
