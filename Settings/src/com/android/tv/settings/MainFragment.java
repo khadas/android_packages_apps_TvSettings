@@ -158,11 +158,13 @@ public class MainFragment extends LeanbackPreferenceFragment {
         }
 
         final Preference hdmicecPref = findPreference(KEY_HDMICEC);
-        if (getContext().getPackageManager().hasSystemFeature(PackageManager.FEATURE_HDMI_CEC) &&
-                SystemProperties.getBoolean("ro.platform.has.mbxuimode", false)) {
-            hdmicecPref.setVisible(true);
-        } else {
-            hdmicecPref.setVisible(false);
+        if (hdmicecPref != null) {
+            if (getContext().getPackageManager().hasSystemFeature(PackageManager.FEATURE_HDMI_CEC) &&
+                   SystemProperties.getBoolean("ro.platform.has.mbxuimode", false)) {
+                hdmicecPref.setVisible(true);
+            } else {
+                hdmicecPref.setVisible(false);
+            }
         }
     }
 
