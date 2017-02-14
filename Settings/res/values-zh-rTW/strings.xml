@@ -73,8 +73,9 @@
     <string name="device_sound_dts_downmix">DTS Downmix</string>
     <string name="device_sound_dts_downmix_o">Lo/Ro</string>
     <string name="device_sound_dts_downmix_t">Lt/Rt</string>
-    <string name="device_sound_dts_drcscale">DTS Drcscale</string>
     <string name="device_sound_dts_dialnorm">DTS Dialnorm</string>
+    <string name="device_sound_dts_drcscale">DTS DRC範圍</string>
+    <string name="device_sound_dts_sound">DTS 聲音</string>
     <string name="device_sound_dts_trans">DTS 解碼器</string>
     <string name="device_sound_dts_trans_auto">自動</string>
     <string name="device_sound_dts_trans_51pcm">5.1 PCM 解碼器</string>

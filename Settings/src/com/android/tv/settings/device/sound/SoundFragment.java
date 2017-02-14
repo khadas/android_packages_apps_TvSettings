@@ -44,6 +44,8 @@ public class SoundFragment extends LeanbackPreferenceFragment implements
     private static final String KEY_SURROUND_PASSTHROUGH = "surround_passthrough";
     private static final String KEY_DRCMODE_PASSTHROUGH = "drc_mode";
     private static final String KEY_DIGITALSOUND_PASSTHROUGH = "digital_sound";
+    private static final String KEY_DTSDRCMODE_PASSTHROUGH = "dtsdrc_mode";
+    private static final String KEY_DTSDRCCUSTOMMODE_PASSTHROUGH = "dtsdrc_custom_mode";
 
     private static final String VAL_SURROUND_SOUND_AUTO = "auto";
     private static final String VAL_SURROUND_SOUND_ALWAYS = "always";
@@ -56,6 +58,7 @@ public class SoundFragment extends LeanbackPreferenceFragment implements
     public static final String PCM = "pcm";
     public static final String HDMI = "hdmi";
     public static final String SPDIF = "spdif";
+    public static final String DTSDRC_SCALE_DEFAULT = "0";
 
     private OutputModeManager mOMM;
 
@@ -85,6 +88,10 @@ public class SoundFragment extends LeanbackPreferenceFragment implements
                 (ListPreference) findPreference(KEY_DRCMODE_PASSTHROUGH);
         final ListPreference digitalsoundPref =
                 (ListPreference) findPreference(KEY_DIGITALSOUND_PASSTHROUGH);
+        final ListPreference dtsdrccustommodePref =
+                (ListPreference) findPreference(KEY_DTSDRCCUSTOMMODE_PASSTHROUGH);
+        final ListPreference dtsdrcmodePref =
+                (ListPreference) findPreference(KEY_DTSDRCMODE_PASSTHROUGH);
 
         surroundPref.setValue(getSurroundPassthroughSetting());
         surroundPref.setOnPreferenceChangeListener(this);
@@ -92,9 +99,20 @@ public class SoundFragment extends LeanbackPreferenceFragment implements
         drcmodePref.setOnPreferenceChangeListener(this);
         digitalsoundPref.setValue(getDigitalSoundPassthroughSetting());
         digitalsoundPref.setOnPreferenceChangeListener(this);
+        dtsdrcmodePref.setValue(getDtsDrcModePassthroughSetting());
+        dtsdrcmodePref.setOnPreferenceChangeListener(this);
         if (!SystemProperties.getBoolean("ro.platform.support.dolby", false)) {
             drcmodePref.setVisible(false);
             Log.d(TAG,"platform doesn't support dolby");
+        }
+        if (!SystemProperties.getBoolean("ro.platform.support.dts", false)) {
+            dtsdrcmodePref.setVisible(false);
+            dtsdrccustommodePref.setVisible(false);
+            Log.d(TAG,"platform doesn't support dts");
+        } else if (SystemProperties.getBoolean("persist.sys.dtsdrccustom", false)) {
+            dtsdrcmodePref.setVisible(false);
+        } else {
+            dtsdrccustommodePref.setVisible(false);
         }
     }
 
@@ -171,6 +189,12 @@ public class SoundFragment extends LeanbackPreferenceFragment implements
             }
             return true;
         }
+        else if (TextUtils.equals(preference.getKey(), KEY_DTSDRCMODE_PASSTHROUGH)) {
+            final String selection = (String) newValue;
+            mOMM.setDtsDrcScale(selection);
+            setDtsDrcModePassthroughSetting(selection);
+            return true;
+        }
         return true;
     }
     private int autoSwitchDigitalSound(){
@@ -210,6 +234,11 @@ public class SoundFragment extends LeanbackPreferenceFragment implements
     private void setDigitalSoundPassthroughSetting(int newVal) {
         Settings.Global.putInt(getContext().getContentResolver(),
                 "digital_sound", newVal);
+    }
+
+    private void setDtsDrcModePassthroughSetting(String newVal) {
+        Settings.Global.putString(getContext().getContentResolver(),
+                "dtsdrc_mode", newVal);
     }
     private String getSurroundPassthroughSetting() {
         final int value = Settings.Global.getInt(getContext().getContentResolver(),
@@ -253,5 +282,10 @@ public class SoundFragment extends LeanbackPreferenceFragment implements
             case 3:
                 return SPDIF;
         }
+    }
+
+    private String getDtsDrcModePassthroughSetting() {
+        String dtsdrc_mode_value = Settings.Global.getString(getContext().getContentResolver(), "dtsdrc_mode");
+        return dtsdrc_mode_value == null ? DTSDRC_SCALE_DEFAULT : dtsdrc_mode_value;
     }
 }

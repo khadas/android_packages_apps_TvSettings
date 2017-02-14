@@ -45,5 +45,21 @@
         android:entryValues="@array/digital_sounds_entry_values"
         android:title="@string/device_sound_digital"
         android:summary="%s" />
+    <ListPreference
+        android:key="dtsdrc_mode"
+        android:persistent="false"
+        android:entries="@array/dts_sounds_entries"
+        android:entryValues="@array/dts_sounds_entry_values"
+        android:title="@string/device_sound_dts_sound"
+        android:dialogTitle="@string/device_sound_dts_drcscale"
+        android:summary="%s" />
 
+    <ListPreference
+        android:key="dtsdrc_custom_mode"
+        android:persistent="false"
+        android:entries="@array/dts_custom_sounds_entries"
+        android:entryValues="@array/dts_custom_sounds_entry_values"
+        android:title="@string/device_sound_dts_sound"
+        android:dialogTitle="@string/device_sound_dts_drcscale"
+        android:summary="%s" />
 </PreferenceScreen>

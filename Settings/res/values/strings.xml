@@ -125,6 +125,7 @@
     <string name="device_sound_dts_downmix_o">Lo/Ro</string>
     <string name="device_sound_dts_downmix_t">Lt/Rt</string>
     <string name="device_sound_dts_drcscale">DTS Drcscale</string>
+    <string name="device_sound_dts_sound">Dts sounds</string>
     <string name="device_sound_dts_dialnorm">DTS Dialnorm</string>
     <string name="device_sound_dts_trans">DTS Transcoder</string>
     <string name="device_sound_dts_trans_auto">Auto</string>
