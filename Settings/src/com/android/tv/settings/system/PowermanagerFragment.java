@@ -25,7 +25,7 @@ import android.support.v17.leanback.app.GuidedStepFragment;
 import android.support.v17.leanback.widget.GuidanceStylist;
 import android.support.v17.leanback.widget.GuidedAction;
 import android.view.View;
-
+import android.os.SystemClock;
 import com.android.tv.settings.R;
 
 import java.util.List;
@@ -61,7 +61,7 @@ public class PowermanagerFragment extends GuidedStepFragment{
     public void onGuidedActionClicked(GuidedAction action) {
         PowerManager pm = (PowerManager)getActivity().getSystemService(Context.POWER_SERVICE);
         if (action.getId() == R.string.power_action_suspend) {
-            pm.goToSleep(20);
+            pm.goToSleep(SystemClock.uptimeMillis());
         }else if (action.getId() == R.string.power_action_shutdown) {
             pm.shutdown(false,"userrequested",false);
         }else if (action.getId() == R.string.power_action_restart) {
