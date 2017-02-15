@@ -49,6 +49,9 @@
     <string name="device_daydream" msgid="3354366974209179614">"螢幕保護程式"</string>
     <string name="device_display" msgid="101455384386372747">"螢幕"</string>
     <string name="device_outputmode" msgid="101455384386372748">"熒幕分辨率"</string>
+    <string name="device_color">色彩</string>
+    <string name="device_colorattribute">格式和色深</string>
+    <string name="device_outputmode_moresetting">更多設置</string>
     <string name="device_position">熒幕縮放</string>
     <string name="device_outputmode_auto">自動切換到最佳分辨率</string>
     <string name="device_outputmode_deepcolor">深色模式</string>

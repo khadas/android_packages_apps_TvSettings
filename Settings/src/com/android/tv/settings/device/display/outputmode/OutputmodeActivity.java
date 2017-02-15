@@ -39,6 +39,7 @@ import java.util.TimerTask;
 public class OutputmodeActivity extends DialogActivity implements ActionAdapter.Listener, OnClickListener, OnFocusChangeListener{
     private final static String BEST_RESOLUTION = "best resolution";
     private final static String DEEP_COLOR = "deep_color";
+    private final static String MORE_SETTING= "more setting";
     private ContentFragment mContentFragment;
     private ActionFragment mActionFragment;
     private OutputUiManager mOutputUiManager;
@@ -97,8 +98,11 @@ public class OutputmodeActivity extends DialogActivity implements ActionAdapter.
 
         if (mode.equals(BEST_RESOLUTION)) {
             mOutputUiManager.change2BestMode();
-        }else if (mode.equals(DEEP_COLOR)) {
-            mOutputUiManager.change2DeepColorMode();
+        }else if (mode.equals(MORE_SETTING)) {
+            Intent intent = new Intent(OutputmodeActivity.this,ColorAttributeActivity.class);
+            startActivity(intent);
+            return;
+            //mOutputUiManager.change2DeepColorMode();
         }else {
             mOutputUiManager.change2NewMode(mode);
         }
@@ -143,7 +147,7 @@ public class OutputmodeActivity extends DialogActivity implements ActionAdapter.
                     .title("        " + getString(R.string.device_outputmode_auto))
                     .description("                " + best_resolution_description).build());
         }
-
+        /*
         String isDeepColor;
         if (mOutputUiManager.isDeepColor()) {
             isDeepColor = getString(R.string.captions_display_on);
@@ -153,6 +157,10 @@ public class OutputmodeActivity extends DialogActivity implements ActionAdapter.
         actions.add(new Action.Builder().key(DEEP_COLOR)
                 .title("        " + getString(R.string.device_outputmode_deepcolor))
                 .description("                " + isDeepColor).build());
+        */
+        actions.add(new Action.Builder().key(MORE_SETTING)
+                .title("        " + getString(R.string.device_outputmode_moresetting))
+                .description("").build());
 
         int currentModeIndex = mOutputUiManager.getCurrentModeIndex();
         for (int i = 0; i < outputmodeTitleList.size(); i++) {

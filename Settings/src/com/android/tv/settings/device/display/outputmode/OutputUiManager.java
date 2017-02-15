@@ -50,8 +50,8 @@ public class OutputUiManager {
         "2160p24hz",
         "2160p25hz",
         "2160p30hz",
-        "2160p50hz420",
-        "2160p60hz420",
+        "2160p50hz",
+        "2160p60hz",
         "smpte24hz",
         "1080p24hz",
         "576p50hz",
@@ -80,6 +80,36 @@ public class OutputUiManager {
         "576i-50hz",
         "480i-60hz"
     };
+
+    private static final String[] HDMI_COLOR_LIST = {
+        "444,12bit",
+        "444,10bit",
+        "444,8bit",
+        "422,12bit",
+        "422,10bit",
+        "422,8bit",
+        "420,12bit",
+        "420,10bit",
+        "420,8bit",
+        "rgb,12bit",
+        "rgb,10bit",
+        "rgb,8bit"
+    };
+    private static final String[] HDMI_COLOR_TITLE = {
+        "YCbCr444 12bit",
+        "YCbCr444 10bit",
+        "YCbCr444 8bit",
+        "YCbCr422 12bit",
+        "YCbCr422 10bit",
+        "YCbCr422 8bit",
+        "YCbCr420 12bit",
+        "YCbCr420 10bit",
+        "YCbCr420 8bit",
+        "RGB 12bit",
+        "RGB 10bit",
+        "RGB 8bit"
+    };
+
     private static final String[] CVBS_MODE_VALUE_LIST = {
         "480cvbs",
         "576cvbs"
@@ -93,9 +123,15 @@ public class OutputUiManager {
     private static String[] mHdmiValueList;
     private static String[] mHdmiTitleList;
 
+    private static String[] mHdmiColorValueList;
+    private static String[] mHdmiColorTitleList;
+
     private ArrayList<String> mTitleList = new ArrayList<String>();
     private ArrayList<String> mValueList = new ArrayList<String>();
     private ArrayList<String> mSupportList = new ArrayList<String>();
+
+    private ArrayList<String> mColorTitleList = new ArrayList<String>();
+    private ArrayList<String> mColorValueList = new ArrayList<String>();
 
     private OutputModeManager mOutputModeManager;
     private Context mContext;
@@ -108,6 +144,7 @@ public class OutputUiManager {
 
         mUiMode = getUiMode();
         initModeValues(mUiMode);
+        initColorValues(mUiMode);
     }
 
     public String getUiMode(){
@@ -127,6 +164,74 @@ public class OutputUiManager {
 
     public String getCurrentMode(){
          return mOutputModeManager.getCurrentOutputMode();
+    }
+
+   public String getCurrentColorAttribute(){
+         return mOutputModeManager.getCurrentColorAttribute();
+    }
+
+    private void initColorValues(String mode){
+        filterColorAttribute();
+        mColorTitleList.clear();
+        mColorValueList.clear();
+
+        if (mode.equalsIgnoreCase(HDMI_MODE)) {
+            for (int i=0 ; i< mHdmiColorValueList.length; i++) {
+                if (mHdmiColorTitleList[i] != null && mHdmiColorTitleList[i].length() != 0) {
+                    mColorTitleList.add(mHdmiColorTitleList[i]);
+                    mColorValueList.add(mHdmiColorValueList[i]);
+                }
+            }
+        }
+    }
+
+    public void changeColorAttribte(final String colorValue) {
+        mOutputModeManager.setDeepColorAttribute(colorValue);
+    }
+
+    public ArrayList<String> getColorTitleList(){
+        return mColorTitleList;
+    }
+
+    public ArrayList<String> getColorValueList(){
+        return mColorValueList;
+    }
+
+    public void  filterColorAttribute() {
+        List<String> listValue = new ArrayList<String>();
+        List<String> listTitle = new ArrayList<String>();
+
+        mHdmiColorValueList = HDMI_COLOR_LIST;
+        mHdmiColorTitleList = HDMI_COLOR_TITLE;
+
+        for (int i = 0; i < mHdmiColorValueList.length; i++) {
+            if (mHdmiColorValueList[i] != null) {
+                listValue.add(mHdmiColorValueList[i]);
+                listTitle.add(mHdmiColorTitleList[i]);
+            }
+        }
+
+        String strColorlist = mOutputModeManager.getHdmiColorSupportList();
+        if (strColorlist != null && strColorlist.length() != 0 && !strColorlist.contains("null")) {
+            List<String> listHdmiMode = new ArrayList<String>();
+            List<String> listHdmiTitle = new ArrayList<String>();
+            for (int i = 0; i < listValue.size(); i++) {
+                if (strColorlist.contains(listValue.get(i))) {
+                    listHdmiMode.add(listValue.get(i));
+                    listHdmiTitle.add(listTitle.get(i));
+                }
+
+            }
+            mHdmiColorValueList = listHdmiMode.toArray(new String[listValue.size()]);
+            mHdmiColorTitleList = listHdmiTitle.toArray(new String[listTitle.size()]);
+        } else {
+            mHdmiColorValueList = new String[]{""};
+            mHdmiColorTitleList = new String[]{"No data!"};
+        }
+    }
+
+    public boolean isModeSupportColor(final String curMode, final String curValue){
+        return mOutputModeManager.isModeSupportColor(curMode, curValue);
     }
 
     public int getCurrentModeIndex(){
@@ -193,48 +298,49 @@ public class OutputUiManager {
     }
 
     public void  filterOutputMode() {
-        List<String> list_value = new ArrayList<String>();
-        List<String> list_title = new ArrayList<String>();
+        List<String> listValue = new ArrayList<String>();
+        List<String> listTitle = new ArrayList<String>();
 
         mHdmiValueList = HDMI_LIST;
         mHdmiTitleList = HDMI_TITLE;
 
         for (int i = 0; i < mHdmiValueList.length; i++) {
             if (mHdmiValueList[i] != null) {
-                list_value.add(mHdmiValueList[i]);
-                list_title.add(mHdmiTitleList[i]);
+                listValue.add(mHdmiValueList[i]);
+                listTitle.add(mHdmiTitleList[i]);
             }
         }
 
-        String str_filter_mode = mContext.getResources().getString(R.string.display_filter_outputmode);
-        if (str_filter_mode != null && str_filter_mode.length() != 0) {
-            String[] array_filter_mode = str_filter_mode.split(",");
+        String strFilterMode = mContext.getResources().getString(R.string.display_filter_outputmode);
+        if (strFilterMode != null && strFilterMode.length() != 0) {
+            String[] array_filter_mode = strFilterMode.split(",");
             for (int i = 0; i < array_filter_mode.length; i++) {
-                for (int j = 0; j < list_value.size(); j++) {
-                    if ((list_value.get(j).toString()).equals(array_filter_mode[i])) {
-                        list_value.remove(j);
-                        list_title.remove(j);
+                for (int j = 0; j < listValue.size(); j++) {
+                    if ((listValue.get(j).toString()).equals(array_filter_mode[i])) {
+                        listValue.remove(j);
+                        listTitle.remove(j);
                     }
                 }
             }
         }
 
-        String str_edid = mOutputModeManager.getHdmiSupportList();
-        if (str_edid != null && str_edid.length() != 0 && !str_edid.contains("null")) {
-            List<String> list_hdmi_mode = new ArrayList<String>();
-            List<String> list_hdmi_title = new ArrayList<String>();
-            for (int i = 0; i < list_value.size(); i++) {
-                if (str_edid.contains(list_value.get(i))) {
-                    list_hdmi_mode.add(list_value.get(i));
-                    list_hdmi_title.add(list_title.get(i));
+        String strEdid = mOutputModeManager.getHdmiSupportList();
+        if (strEdid != null && strEdid.length() != 0 && !strEdid.contains("null")) {
+            List<String> listHdmiMode = new ArrayList<String>();
+            List<String> listHdmiTitle = new ArrayList<String>();
+            for (int i = 0; i < listValue.size(); i++) {
+                if (strEdid.contains(listValue.get(i))) {
+                    listHdmiMode.add(listValue.get(i));
+                    listHdmiTitle.add(listTitle.get(i));
                 }
 
             }
-            mHdmiValueList = list_hdmi_mode.toArray(new String[list_value.size()]);
-            mHdmiTitleList = list_hdmi_title.toArray(new String[list_title.size()]);
+            mHdmiValueList = listHdmiMode.toArray(new String[listValue.size()]);
+            mHdmiTitleList = listHdmiTitle.toArray(new String[listTitle.size()]);
         } else {
-            mHdmiValueList = list_value.toArray(new String[list_value.size()]);
-            mHdmiTitleList = list_title.toArray(new String[list_title.size()]);
+            mHdmiValueList = listValue.toArray(new String[listValue.size()]);
+            mHdmiTitleList = listTitle.toArray(new String[listTitle.size()]);
         }
     }
+
 }

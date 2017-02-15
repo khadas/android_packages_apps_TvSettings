@@ -49,6 +49,9 @@
     <string name="device_daydream" msgid="3354366974209179614">"螢幕保護程式"</string>
     <string name="device_display" msgid="101455384386372747">"顯示"</string>
     <string name="device_outputmode" msgid="101455384386372748">"顯示分辨率"</string>
+    <string name="device_color">色彩</string>
+    <string name="device_colorattribute">格式和色深</string>
+    <string name="device_outputmode_moresetting">更多設置</string>
     <string name="device_sound" msgid="9214182566287657481">"音效"</string>
     <string name="device_surround_sound" msgid="6272196310566546860">"環迴音響"</string>
     <string name="device_sound_effects" msgid="7793281745920228622">"系統音效"</string>
