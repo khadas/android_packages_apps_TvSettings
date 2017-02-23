@@ -428,6 +428,12 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".system.PowerKeyActionDefinitionActivity"
+            android:configChanges="keyboard|keyboardHidden|navigation"
+            android:excludeFromRecents="true"
+            android:exported="false" />
+        </activity>
+        <activity
             android:name=".system.PowerKeyActivity"
             android:theme="@style/Theme.Settings.Transparent"
             android:excludeFromRecents="true"

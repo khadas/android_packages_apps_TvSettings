@@ -226,6 +226,7 @@
     <string name="system_date_time">Date &amp; time</string>
     <!-- Preference which manages language settings. [CHAR LIMIT=50] -->
     <string name="system_language">Language</string>
+    <string name="system_powerkeyaction">Powerkey definition</string>
     <!-- Preference which manages input method settings. [CHAR LIMIT=50] -->
     <string name="system_keyboard">Keyboard</string>
     <!-- Preference which manages home screen settings. [CHAR LIMIT=50] -->

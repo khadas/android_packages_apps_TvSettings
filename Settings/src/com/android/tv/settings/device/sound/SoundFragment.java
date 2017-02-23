@@ -101,6 +101,10 @@ public class SoundFragment extends LeanbackPreferenceFragment implements
         digitalsoundPref.setOnPreferenceChangeListener(this);
         dtsdrcmodePref.setValue(getDtsDrcModePassthroughSetting());
         dtsdrcmodePref.setOnPreferenceChangeListener(this);
+        if (SystemProperties.getBoolean("ro.platform.has.tvuimode", false)) {
+            digitalsoundPref.setVisible(false);
+            Log.d(TAG,"tv don't need digital sound switch!");
+        }
         if (!SystemProperties.getBoolean("ro.platform.support.dolby", false)) {
             drcmodePref.setVisible(false);
             Log.d(TAG,"platform doesn't support dolby");

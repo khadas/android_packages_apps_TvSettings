@@ -97,6 +97,11 @@
             android:title="@string/system_keyboard"
             android:fragment="com.android.tv.settings.system.KeyboardFragment" />
         <Preference
+            android:icon="@drawable/ic_power_launch"
+            android:key="PowerKeyAction"
+            android:title="@string/system_powerkeyaction"
+            android:fragment="com.android.tv.settings.system.PowerKeyActionDefinitionFragment" />
+        <Preference
             android:icon="@drawable/ic_home"
             android:key="home"
             android:title="@string/system_home" >

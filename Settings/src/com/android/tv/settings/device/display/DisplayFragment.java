@@ -22,6 +22,7 @@ import android.os.Handler;
 import android.os.storage.DiskInfo;
 import android.os.storage.VolumeInfo;
 import android.os.storage.VolumeRecord;
+import android.os.SystemProperties;
 import android.support.v17.preference.LeanbackPreferenceFragment;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceCategory;
@@ -39,6 +40,9 @@ import java.util.Set;
 public class DisplayFragment extends LeanbackPreferenceFragment {
 
     private static final String TAG = "DisplayFragment";
+    private static final String KEY_SCREENRESOLUTION_PASSTHROUGH = "outputmode";
+    private static final String KEY_HDR_PASSTHROUGH = "hdr";
+    private static final String KEY_SDR_PASSTHROUGH = "sdr";
 
     public static DisplayFragment newInstance() {
         return new DisplayFragment();
@@ -51,6 +55,18 @@ public class DisplayFragment extends LeanbackPreferenceFragment {
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.display, null);
+        final Preference screenresolutionPref =
+                (Preference) findPreference(KEY_SCREENRESOLUTION_PASSTHROUGH);
+        final Preference hdrPref =
+                (Preference) findPreference(KEY_HDR_PASSTHROUGH);
+        final Preference sdrPref =
+                (Preference) findPreference(KEY_SDR_PASSTHROUGH);
+        if (SystemProperties.getBoolean("ro.platform.has.tvuimode", false)) {
+            screenresolutionPref.setVisible(false);
+            hdrPref.setVisible(false);
+            sdrPref.setVisible(false);
+            Log.d(TAG,"tv don't need screen resolution hdr&sdr&sdr control switch!");
+        }
     }
 
     @Override
