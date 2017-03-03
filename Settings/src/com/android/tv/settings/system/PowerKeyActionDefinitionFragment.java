@@ -56,11 +56,11 @@ public class PowerKeyActionDefinitionFragment extends LeanbackPreferenceFragment
         public void run() {
             PowerManager pm = (PowerManager)mContext.getSystemService(Context.POWER_SERVICE);
             if (POWER_KEY_SUSPEND.equals(mNewKeyDefinition)) {
-                pm.goToSleep(SystemClock.uptimeMillis());
+                setPowerKeyActionDefinition(0);
             }else if (POWER_KEY_SHUTDOWN.equals(mNewKeyDefinition)) {
-                pm.shutdown(false,"userrequested",false);
+                setPowerKeyActionDefinition(1);
             }else if (POWER_KEY_RESTART.equals(mNewKeyDefinition)) {
-                pm.reboot("");
+                setPowerKeyActionDefinition(2);
             }
         }
     };
@@ -101,23 +101,23 @@ public class PowerKeyActionDefinitionFragment extends LeanbackPreferenceFragment
     }
 
     private ArrayList<Action> getActions() {
-        String mode = POWER_KEY_SUSPEND;
         ArrayList<Action> actions = new ArrayList<Action>();
+        int checkedKey = whichPowerKeyDefinition();
         actions.add(new Action.Builder()
                 .key(POWER_KEY_SUSPEND)
                 .title(getString(R.string.power_action_suspend))
-                .checked(mode == POWER_KEY_SUSPEND)
+                .checked(checkedKey == 0)
                 .build());
         actions.add(new Action.Builder()
                 .key(POWER_KEY_SHUTDOWN)
                 .title(getString(R.string.power_action_shutdown))
-                .checked(mode == POWER_KEY_SHUTDOWN)
+                .checked(checkedKey == 1)
                 .build());
         if (!SystemProperties.getBoolean("ro.platform.has.tvuimode", false)) {
             actions.add(new Action.Builder()
                 .key(POWER_KEY_RESTART)
                 .title(getString(R.string.power_action_restart))
-                .checked(mode == POWER_KEY_RESTART)
+                .checked(checkedKey == 2)
                 .build());
         }
         return actions;
@@ -134,5 +134,16 @@ public class PowerKeyActionDefinitionFragment extends LeanbackPreferenceFragment
             radioPreference.setChecked(true);
         }
         return super.onPreferenceTreeClick(preference);
+    }
+    private int whichPowerKeyDefinition() {
+        int default_value = 0;
+        if (SystemProperties.getBoolean("ro.platform.has.tvuimode", false)) {
+            default_value = 1;
+        }
+        return Settings.System.getInt(mContext.getContentResolver(), POWER_KEY_DEFINITION, default_value);
+    }
+
+    private void setPowerKeyActionDefinition (int keyValue) {
+        Settings.System.putInt(mContext.getContentResolver(), POWER_KEY_DEFINITION, keyValue);//supend:0,shutdown 1,restart 2
     }
 }
