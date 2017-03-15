@@ -712,4 +712,5 @@
     <string name="cec_one_key_play">"单键播放"</string>
     <string name="cec_one_key_power_off">"单键关机"</string>
     <string name="cec_auto_change_language">"语言切换"</string>
+    <string name="playback_settings">播放设置</string>
 </resources>
