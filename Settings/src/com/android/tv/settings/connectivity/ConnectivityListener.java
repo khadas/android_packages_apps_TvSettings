@@ -35,7 +35,6 @@ import android.text.TextUtils;
 
 import com.android.settingslib.wifi.AccessPoint;
 import com.android.settingslib.wifi.WifiTracker;
-
 import java.util.List;
 
 /**
@@ -67,6 +66,7 @@ public class ConnectivityListener implements WifiTracker.WifiListener {
     private final BroadcastReceiver mWifiEnabledReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
+            updateConnectivityStatus();
             mListener.onConnectivityChange();
         }
     };
@@ -124,6 +124,8 @@ public class ConnectivityListener implements WifiTracker.WifiListener {
             mWifiTracker.startTracking();
             mContext.registerReceiver(mWifiEnabledReceiver, new IntentFilter(
                     WifiManager.WIFI_STATE_CHANGED_ACTION));
+            mContext.registerReceiver(mWifiEnabledReceiver, new IntentFilter(
+                    ConnectivityManager.CONNECTIVITY_ACTION));
             mEthernetManager.addListener(mEthernetListener);
         }
     }
@@ -306,10 +308,10 @@ public class ConnectivityListener implements WifiTracker.WifiListener {
         if (networkInfo == null) {
             return setNetworkType(ConnectivityStatus.NETWORK_NONE);
         } else {
+
             switch (networkInfo.getType()) {
                 case ConnectivityManager.TYPE_WIFI: {
                     boolean hasChanged;
-
                     // Determine if this is an open or secure wifi connection.
                     WifiInfo wifiInfo = mWifiManager.getConnectionInfo();
                     if (isSecureWifi(wifiInfo)) {
@@ -347,8 +349,10 @@ public class ConnectivityListener implements WifiTracker.WifiListener {
                 }
 
                 case ConnectivityManager.TYPE_ETHERNET:
-                    return setNetworkType(ConnectivityStatus.NETWORK_ETHERNET);
-
+                    if (networkInfo.getState() == NetworkInfo.State.CONNECTED)
+                        return setNetworkType(ConnectivityStatus.NETWORK_ETHERNET);
+                    else
+                        return setNetworkType(ConnectivityStatus.NETWORK_NONE);
                 default:
                     return setNetworkType(ConnectivityStatus.NETWORK_NONE);
             }
