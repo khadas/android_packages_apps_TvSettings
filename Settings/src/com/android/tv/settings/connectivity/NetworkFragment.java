@@ -30,6 +30,9 @@ import android.net.wifi.WifiManager;
 import com.android.settingslib.wifi.AccessPoint;
 import com.android.settingslib.wifi.AccessPointPreference;
 import com.android.tv.settings.R;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -48,6 +51,7 @@ public class NetworkFragment extends LeanbackPreferenceFragment implements
     private static final String KEY_WIFI_ALWAYS_SCAN = "wifi_always_scan";
     private static final String KEY_ETHERNET = "ethernet";
     private static final String KEY_ETHERNET_STATUS = "ethernet_status";
+    private static final String KEY_ETHERNET_MAC_ADDR = "ethernet_mac_addr";
     private static final String KEY_ETHERNET_PROXY = "ethernet_proxy";
     private static final String KEY_ETHERNET_DHCP = "ethernet_dhcp";
 
@@ -64,6 +68,7 @@ public class NetworkFragment extends LeanbackPreferenceFragment implements
     private TwoStatePreference mAlwaysScan;
     private PreferenceCategory mEthernetCategory;
     private Preference mEthernetStatusPref;
+    private Preference mEthernetMacAddrPref;
     private Preference mEthernetProxyPref;
     private Preference mEthernetDhcpPref;
 
@@ -125,12 +130,25 @@ public class NetworkFragment extends LeanbackPreferenceFragment implements
 
         mEthernetCategory = (PreferenceCategory) findPreference(KEY_ETHERNET);
         mEthernetStatusPref = findPreference(KEY_ETHERNET_STATUS);
+        mEthernetMacAddrPref = findPreference(KEY_ETHERNET_MAC_ADDR);
+        mEthernetMacAddrPref.setSummary(GetEthernetMacAddr());
         mEthernetProxyPref = findPreference(KEY_ETHERNET_PROXY);
         mEthernetProxyPref.setIntent(EditProxySettingsActivity.createIntent(getContext(),
                 WifiConfiguration.INVALID_NETWORK_ID));
         mEthernetDhcpPref = findPreference(KEY_ETHERNET_DHCP);
         mEthernetDhcpPref.setIntent(EditIpSettingsActivity.createIntent(getContext(),
                 WifiConfiguration.INVALID_NETWORK_ID));
+    }
+
+    private String GetEthernetMacAddr() {
+        BufferedReader reader = null;
+        String mac = null;
+        try {
+            reader = new BufferedReader(new FileReader("sys/class/net/eth0/address"));
+            mac = reader.readLine();
+        } catch (Exception e) {
+        }
+        return mac;
     }
 
     @Override

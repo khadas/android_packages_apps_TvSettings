@@ -61,6 +61,10 @@
             android:key="ethernet_status"
             android:title="@string/not_connected" />
         <Preference
+            android:key="ethernet_mac_addr"
+            android:title="@string/ethernet_mac_addr_title"
+            android:summary="%s" />
+        <Preference
             android:key="ethernet_proxy"
             android:title="@string/title_wifi_proxy_settings" />
         <Preference

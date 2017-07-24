@@ -395,6 +395,7 @@
     <string name="connected">Connected</string>
     <!-- Not connected [CHAR LIMIT=50] -->
     <string name="not_connected">Not connected</string>
+    <string name="ethernet_mac_addr_title">MAC address</string>
 
     <!-- Wifi setting headers [CHAR LIMIT=50] -->
     <string name="wifi_setting_header_other_options">Other options</string>
