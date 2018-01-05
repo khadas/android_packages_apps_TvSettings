@@ -73,7 +73,9 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-/**
+import com.android.tv.settings.dialog.UsbModeSettings;
+
+/*
  * Displays preferences for application developers.
  */
 public class DevelopmentFragment extends SettingsPreferenceFragment
@@ -83,6 +85,7 @@ public class DevelopmentFragment extends SettingsPreferenceFragment
 
     private static final String ENABLE_DEVELOPER = "development_settings_enable";
     private static final String ENABLE_ADB = "enable_adb";
+    private static final String ENABLE_USB = "enable_usb";
     private static final String CLEAR_ADB_KEYS = "clear_adb_keys";
     private static final String ENABLE_TERMINAL = "enable_terminal";
     private static final String KEEP_SCREEN_ON = "keep_screen_on";
@@ -175,6 +178,7 @@ public class DevelopmentFragment extends SettingsPreferenceFragment
 
     private SwitchPreference mEnableDeveloper;
     private SwitchPreference mEnableAdb;
+    private SwitchPreference mEnableUsb;
     private Preference mClearAdbKeys;
     private SwitchPreference mEnableTerminal;
     private Preference mBugreport;
@@ -242,6 +246,8 @@ public class DevelopmentFragment extends SettingsPreferenceFragment
 
     private boolean mUnavailable;
 
+    private UsbModeSettings mUsbModeSetting = null;
+
     public static DevelopmentFragment newInstance() {
         return new DevelopmentFragment();
     }
@@ -270,6 +276,13 @@ public class DevelopmentFragment extends SettingsPreferenceFragment
         mContentResolver = getActivity().getContentResolver();
 
         super.onCreate(icicle);
+        mUsbModeSetting = new UsbModeSettings(getPreferenceManager().getContext());
+        mEnableUsb.setChecked(mUsbModeSetting.getDefaultValue());
+        if (mEnableUsb.isChecked()){
+            mEnableUsb.setSummary(R.string.usb_connect_to_computer);
+        } else {
+            mEnableUsb.setSummary(R.string.usb_disconnect_to_computer);
+        }
     }
 
     @Override
@@ -297,6 +310,7 @@ public class DevelopmentFragment extends SettingsPreferenceFragment
         final PreferenceGroup debugDebuggingCategory = (PreferenceGroup)
                 findPreference(DEBUG_DEBUGGING_CATEGORY_KEY);
         mEnableAdb = findAndInitSwitchPref(ENABLE_ADB);
+        mEnableUsb = findAndInitSwitchPref(ENABLE_USB);
         mClearAdbKeys = findPreference(CLEAR_ADB_KEYS);
         if (!SystemProperties.getBoolean("ro.adb.secure", false)) {
             if (debugDebuggingCategory != null) {
@@ -336,6 +350,7 @@ public class DevelopmentFragment extends SettingsPreferenceFragment
 
         if (!mUm.isAdminUser()) {
             disableForUser(mEnableAdb);
+            disableForUser(mEnableUsb);
             disableForUser(mClearAdbKeys);
             disableForUser(mEnableTerminal);
             disableForUser(mPassword);
@@ -1484,6 +1499,14 @@ public class DevelopmentFragment extends SettingsPreferenceFragment
                 Settings.Global.putInt(mContentResolver, Settings.Global.ADB_ENABLED, 0);
                 mVerifyAppsOverUsb.setEnabled(false);
                 mVerifyAppsOverUsb.setChecked(false);
+            }
+        } else if (preference == mEnableUsb) {
+            if (mEnableUsb.isChecked()){
+                mUsbModeSetting.onUsbModeClick(UsbModeSettings.SLAVE_MODE);
+                mEnableUsb.setSummary(R.string.usb_connect_to_computer);
+            } else {
+                mUsbModeSetting.onUsbModeClick(UsbModeSettings.HOST_MODE);
+                mEnableUsb.setSummary(R.string.usb_disconnect_to_computer);
             }
         } else if (preference == mEnableTerminal) {
             final PackageManager pm = getActivity().getPackageManager();

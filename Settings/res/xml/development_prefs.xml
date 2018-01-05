@@ -85,6 +85,12 @@
                         android:title="@string/debug_debugging_category">
 
         <SwitchPreference
+            android:key="enable_usb"
+            android:title="@string/enable_usb"
+            android:summary="@string/enable_usb_summary"
+            android:fragment="com.android.tv.settings.system.development.AdbDialog" />
+
+        <SwitchPreference
             android:key="enable_adb"
             android:title="@string/enable_adb"
             android:summary="@string/enable_adb_summary"

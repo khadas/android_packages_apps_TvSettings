@@ -743,4 +743,8 @@
     <string name="picture_in_picture_app_detail_summary" msgid="3478182415601436326">"允许应用在您打开应用时或您离开应用后（例如继续观看视频）创建画中画窗口。这类窗口会显示在您当前使用的其他应用的上层。"</string>
     <string name="special_access" msgid="3513811566600299998">"特殊应用权限"</string>
     <string name="string_concat" msgid="5897947064488902904">"<xliff:g id="PART1">%1s</xliff:g>，<xliff:g id="PART2">%2s</xliff:g>"</string>
+    
+    <!-- USB settings:host or device config -->
+    <string name="enable_usb">USB连接状态</string>
+    <string name="enable_usb_summary">置USB 连接状态</string>
 </resources>
