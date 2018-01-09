@@ -86,6 +86,8 @@ public class DevelopmentFragment extends SettingsPreferenceFragment
     private static final String ENABLE_DEVELOPER = "development_settings_enable";
     private static final String ENABLE_ADB = "enable_adb";
     private static final String ENABLE_USB = "enable_usb";
+    private static final String ENABLE_INTERNET_ADB = "enable_internet_adb";
+    private static final String ENABLE_ABC = "enable_abc";
     private static final String CLEAR_ADB_KEYS = "clear_adb_keys";
     private static final String ENABLE_TERMINAL = "enable_terminal";
     private static final String KEEP_SCREEN_ON = "keep_screen_on";
@@ -158,6 +160,7 @@ public class DevelopmentFragment extends SettingsPreferenceFragment
 
     private static final String PERSISTENT_DATA_BLOCK_PROP = "ro.frp.pst";
 
+    private static final String PERSIST_RK_ABC_SWITCH = "persist.sys.abc_switch";
     private static String DEFAULT_LOG_RING_BUFFER_SIZE_IN_BYTES = "262144"; // 256K
 
     private static final int[] MOCK_LOCATION_APP_OPS = new int[] {AppOpsManager.OP_MOCK_LOCATION};
@@ -179,6 +182,8 @@ public class DevelopmentFragment extends SettingsPreferenceFragment
     private SwitchPreference mEnableDeveloper;
     private SwitchPreference mEnableAdb;
     private SwitchPreference mEnableUsb;
+    private SwitchPreference mEnableInternetAdb;
+    private SwitchPreference mEnableAbc;
     private Preference mClearAdbKeys;
     private SwitchPreference mEnableTerminal;
     private Preference mBugreport;
@@ -283,6 +288,12 @@ public class DevelopmentFragment extends SettingsPreferenceFragment
         } else {
             mEnableUsb.setSummary(R.string.usb_disconnect_to_computer);
         }
+        String internetADB = SystemProperties.get("persist.internet.adb.enable", "0");
+        if (internetADB.equals("1")) {
+            mEnableInternetAdb.setChecked(true);
+        } else {
+            mEnableInternetAdb.setChecked(false);
+        }
     }
 
     @Override
@@ -311,6 +322,8 @@ public class DevelopmentFragment extends SettingsPreferenceFragment
                 findPreference(DEBUG_DEBUGGING_CATEGORY_KEY);
         mEnableAdb = findAndInitSwitchPref(ENABLE_ADB);
         mEnableUsb = findAndInitSwitchPref(ENABLE_USB);
+        mEnableInternetAdb = findAndInitSwitchPref(ENABLE_INTERNET_ADB);
+        mEnableAbc = findAndInitSwitchPref(ENABLE_ABC);
         mClearAdbKeys = findPreference(CLEAR_ADB_KEYS);
         if (!SystemProperties.getBoolean("ro.adb.secure", false)) {
             if (debugDebuggingCategory != null) {
@@ -351,6 +364,8 @@ public class DevelopmentFragment extends SettingsPreferenceFragment
         if (!mUm.isAdminUser()) {
             disableForUser(mEnableAdb);
             disableForUser(mEnableUsb);
+            disableForUser(mEnableInternetAdb);
+            disableForUser(mEnableAbc);
             disableForUser(mClearAdbKeys);
             disableForUser(mEnableTerminal);
             disableForUser(mPassword);
@@ -621,6 +636,7 @@ public class DevelopmentFragment extends SettingsPreferenceFragment
                 Settings.Global.DEBUG_VIEW_ATTRIBUTES, 0) != 0);
         updateSwitchPreference(mForceAllowOnExternal, Settings.Global.getInt(cr,
                 Settings.Global.FORCE_ALLOW_ON_EXTERNAL, 0) != 0);
+        updateSwitchPreference(mEnableAbc, (SystemProperties.getInt(PERSIST_RK_ABC_SWITCH, 0)) != 0);
         updateHdcpValues();
         updatePasswordSummary();
         updateDebuggerOptions();
@@ -1507,6 +1523,20 @@ public class DevelopmentFragment extends SettingsPreferenceFragment
             } else {
                 mUsbModeSetting.onUsbModeClick(UsbModeSettings.HOST_MODE);
                 mEnableUsb.setSummary(R.string.usb_disconnect_to_computer);
+            }
+        } else if (preference == mEnableInternetAdb) {
+            if (mEnableInternetAdb.isChecked()) {
+                SystemProperties.set("persist.internet.adb.enable", "1");
+            } else {
+                SystemProperties.set("persist.internet.adb.enable", "0");
+            }
+        } else if (preference == mEnableAbc) {
+            if (SystemProperties.getInt(PERSIST_RK_ABC_SWITCH, 0) == 1) {
+                Log.d(TAG, "set modify abc property to persist 0");
+                SystemProperties.set(PERSIST_RK_ABC_SWITCH, "0");
+            } else {
+                Log.d(TAG, "set modify abc property to persist 1");
+                SystemProperties.set(PERSIST_RK_ABC_SWITCH, "1");
             }
         } else if (preference == mEnableTerminal) {
             final PackageManager pm = getActivity().getPackageManager();

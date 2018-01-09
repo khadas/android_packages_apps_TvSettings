@@ -744,7 +744,20 @@
     <string name="special_access" msgid="3513811566600299998">"特殊应用权限"</string>
     <string name="string_concat" msgid="5897947064488902904">"<xliff:g id="PART1">%1s</xliff:g>，<xliff:g id="PART2">%2s</xliff:g>"</string>
     
-    <!-- USB settings:host or device config -->
+    <!-- More Settins -->
+    <string name="more_settings">更多设置</string>
+
+    <!-- USB Settings -->
     <string name="enable_usb">USB连接状态</string>
-    <string name="enable_usb_summary">置USB 连接状态</string>
+    <string name="enable_usb_summary">设置USB 连接状态</string>
+    <string name="usb_connect_to_computer">已连接到计算机</string>
+    <string name="usb_disconnect_to_computer">未连接到计算机</string>
+
+    <!-- Internet ADB -->
+    <string name="enable_internet_adb">网络 Adb</string>
+    <string name="enable_internet_adb_summary">打开网络 adb</string>
+
+    <!-- enable abc -->
+    <string name="enable_abc" >"Android日志收集器"</string>
+    <string name="enable_abc_summary" >"保存近几次开机log到/data/logs目录"</string>
 </resources>

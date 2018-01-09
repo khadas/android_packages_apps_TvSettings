@@ -24,6 +24,7 @@ import android.util.Log;
 public class UsbModeSettings
 {
     private static final String TAG = "UsbModeSettings";
+    //0 otg  1 host 2 peripheral
     public static final String HOST_MODE = new String("host");
     public static final String SLAVE_MODE = new String("otg");
     private static final String filename_rk3399 = "/sys/kernel/debug/usb@fe800000/rk_usb_force_mode";

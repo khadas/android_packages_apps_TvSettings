@@ -1640,7 +1640,18 @@
     <!-- concat two strings, e.g. "Android Keyboard, My Pass" [CHAR LIMIT=NONE] -->
     <string name="string_concat"><xliff:g id="part1">%1s</xliff:g>, <xliff:g id="part2">%2s</xliff:g></string>
     
-    <!-- USB settings:host or device config -->
+    <!-- USB Settings -->
     <string name="enable_usb">USB settings</string>
     <string name="enable_usb_summary">Set the USB connection status</string>
+    <string name="usb_connect_to_computer">Connect to Computer</string>
+    <string name="usb_disconnect_to_computer">Disconnect to Computer</string>
+
+    <!-- Internet ADB -->
+    <string name="enable_internet_adb">Internet Adb</string>
+    <string name="enable_internet_adb_summary">enabled internet adb</string>
+
+    <!-- abc -->
+    <string name="enable_abc">Android bug collector</string>
+    <string name="enable_abc_summary" >"Save recent boot logs in /data/logs"</string>
+
 </resources>
