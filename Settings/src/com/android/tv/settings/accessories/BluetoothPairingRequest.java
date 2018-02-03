@@ -20,6 +20,9 @@ import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.app.ActivityManager;
+import android.app.ActivityManager.RunningTaskInfo;
+import java.util.List;
 
 /**
  * BluetoothPairingRequest is a receiver for any Bluetooth pairing request. It
@@ -32,6 +35,10 @@ public final class BluetoothPairingRequest extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         String action = intent.getAction();
         if (!action.equals(BluetoothDevice.ACTION_PAIRING_REQUEST)) {
+            return;
+        }
+
+        if (isOriginSettingsActive(context)) {
             return;
         }
 
@@ -58,4 +65,19 @@ public final class BluetoothPairingRequest extends BroadcastReceiver {
         // as opposed to displaying a notification that will start the pairing activity.
         context.startActivity(pairingIntent);
     }
+
+    private boolean isOriginSettingsActive(Context context) {
+
+        ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        List<RunningTaskInfo> list = am.getRunningTasks(100);
+        if(list != null && list.size() > 0) {
+            String packName = list.get(0).topActivity.getPackageName();
+            if(packName.equals("com.android.settings"))
+                return true;
+            else
+                return false;
+        } else {
+           return false;
+        }
+   }
 }
