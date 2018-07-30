@@ -152,6 +152,7 @@ public class DevicePrefFragment extends SettingsPreferenceFragment implements
             }
         }
         mAudioManager = getContext().getSystemService(AudioManager.class);
+        mInputSettingNeeded = true;
         super.onCreate(savedInstanceState);
     }
 
