@@ -43,6 +43,11 @@
         android:key="sound_effects"
         android:title="@string/device_sound"/>
     <Preference
+        android:icon="@drawable/ic_input"
+        android:key="inputs"
+        android:title="@string/system_inputs"
+        android:fragment="com.android.tv.settings.system.InputsFragment" />
+    <Preference
         android:fragment="com.android.tv.settings.device.StorageSummaryFragment"
         android:icon="@drawable/ic_storage"
         android:key="storage"
