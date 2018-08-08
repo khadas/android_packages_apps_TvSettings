@@ -45,7 +45,9 @@ class WifiConfig implements NetworkConfiguration {
 
     @Override
     public void save(WifiManager.ActionListener listener) {
-        mWifiManager.save(mWifiConfiguration, listener);
+        //mWifiManager.save(mWifiConfiguration, listener);
+        mWifiManager.disconnect();
+        mWifiManager.connect(mWifiConfiguration, listener);
     }
 
     /**
