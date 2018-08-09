@@ -281,25 +281,13 @@ public class DevelopmentFragment extends SettingsPreferenceFragment
         mContentResolver = getActivity().getContentResolver();
 
         super.onCreate(icicle);
-        mUsbModeSetting = new UsbModeSettings(getPreferenceManager().getContext());
-        mEnableUsb.setChecked(mUsbModeSetting.getDefaultValue());
-        if (mEnableUsb.isChecked()){
-            mEnableUsb.setSummary(R.string.usb_connect_to_computer);
-        } else {
-            mEnableUsb.setSummary(R.string.usb_disconnect_to_computer);
-        }
-        String internetADB = SystemProperties.get("persist.internet.adb.enable", "0");
-        if (internetADB.equals("1")) {
-            mEnableInternetAdb.setChecked(true);
-        } else {
-            mEnableInternetAdb.setChecked(false);
-        }
     }
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         mLogdSizeController = new LogdSizePreferenceController(getActivity());
         mLogpersistController = new LogpersistPreferenceController(getActivity(), getLifecycle());
+        mUsbModeSetting = new UsbModeSettings(getPreferenceManager().getContext());
 
         if (!mUm.isAdminUser()
                 || mUm.hasUserRestriction(UserManager.DISALLOW_DEBUGGING_FEATURES)
@@ -324,6 +312,20 @@ public class DevelopmentFragment extends SettingsPreferenceFragment
         mEnableUsb = findAndInitSwitchPref(ENABLE_USB);
         mEnableInternetAdb = findAndInitSwitchPref(ENABLE_INTERNET_ADB);
         mEnableAbc = findAndInitSwitchPref(ENABLE_ABC);
+
+        mEnableUsb.setChecked(mUsbModeSetting.getDefaultValue());
+        if (mEnableUsb.isChecked()){
+            mEnableUsb.setSummary(R.string.usb_connect_to_computer);
+        } else {
+            mEnableUsb.setSummary(R.string.usb_disconnect_to_computer);
+        }
+        String internetADB = SystemProperties.get("persist.internet.adb.enable", "0");
+        if (internetADB.equals("1")) {
+            mEnableInternetAdb.setChecked(true);
+        } else {
+            mEnableInternetAdb.setChecked(false);
+        }
+
         mClearAdbKeys = findPreference(CLEAR_ADB_KEYS);
         if (!SystemProperties.getBoolean("ro.adb.secure", false)) {
             if (debugDebuggingCategory != null) {
