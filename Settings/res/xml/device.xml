@@ -18,6 +18,11 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
                   android:title="@string/device_pref_category_title">
     <Preference
+        android:fragment="com.android.tv.settings.display.DisplayFragment"
+        android:icon="@drawable/icon_display"
+        android:key="displaies"
+        android:title="@string/display_category_title"/>
+    <Preference
         android:fragment="com.android.tv.settings.about.AboutFragment"
         android:icon="@drawable/ic_info_outline"
         android:key="about_device"
@@ -110,4 +115,9 @@
             android:targetClass="com.android.tv.settings.device.storage.ResetActivity"
             android:targetPackage="com.android.tv.settings"/>
     </Preference>
+	<!-- <Preference
+        android:fragment="com.android.tv.settings.advance_settings.AdvanceSettingsFragment"
+        android:icon="@drawable/logo_settings_color_48dp"
+        android:key="advance_settings"
+        android:title="@string/advance_settings"/> -->
 </PreferenceScreen>

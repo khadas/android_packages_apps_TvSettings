@@ -272,4 +272,30 @@
         <!-- Do not translate. -->
         <item>GTC</item>
     </string-array>
+
+    
+    <!-- WengTao resolution list -->
+    <string-array name="resolution_list" translatable="false">
+        <item>1920x1080p-60</item>
+        <item>1280x720p-60</item>
+        <item>720x480p-60</item>
+    </string-array>
+    
+    
+    <string-array name="color_list" translatable="false">
+        <item>color1</item>
+        <item>color2</item>
+        <item>color3</item>
+    </string-array>
+
+     <string-array name="audio_device_list">
+        <item>Default Output</item>
+        <item>Spdif Passthrough</item>
+        <item>HDMI Bitstream</item>
+    </string-array>
+    <string-array name="audio_device_list_values">
+        <item>default</item>
+        <item>spdif</item>
+        <item>hdmi</item>
+    </string-array>
 </resources>

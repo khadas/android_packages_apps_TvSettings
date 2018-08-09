@@ -760,4 +760,47 @@
     <!-- enable abc -->
     <string name="enable_abc" >"Android日志收集器"</string>
     <string name="enable_abc_summary" >"保存近几次开机log到/data/logs目录"</string>
+    <string name="advance_settings">高级设置</string>
+    <string name="screen_resolution">屏幕分辨率</string>
+    <string name="screen_zoom">屏幕缩放</string>
+    <string name="hdr2sdr">HDR 转 SDR</string>
+    <string name="sdr2sdr">SDR 转 HDR</string>
+    <string name="hdmi_cec">HDMI CEC</string>
+    <string name="enable_cec">CEC</string>
+    <string name="enable_singlekey_play">单键播放</string>
+    <string name="enable_singlekey_poweroff">单键关机</string>
+    <string name="play_setting">播放设置</string>
+    <string name="hdmi_self_adaption">HDMI 自适应</string>
+    <string name="dolby_audio">杜比音频</string>
+    <string name="digital_audio">数字音频</string>
+    <string name="dts_audio">DTS 声音</string>
+    <string name="auto_switch_resolution">自动切换到最佳分辨率</string>
+    <string name="resolution_list">输出制式列表</string>
+
+
+
+    <string name="display_category_title">显示</string>
+    <string name="resolutions">分辨率</string>
+    <string name="display">显示</string>
+    <string name="resolution">分辨率</string>
+    <string name="display_devices">显示设备</string>
+    <string name="zoom">缩放</string>
+    <string name="rk3399_resolutions">RK3399分辨率</string>
+    <string name="bcsh">BCSH</string>
+    <string name="bcsh_reset">重置</string>
+    <string name="bcsh_cold">冷</string>
+    <string name="bcsh_warm">暖</string>
+    <string name="bcsh_sharp">锐利</string>
+    <string name="hdr">HDR</string>
+    <string name="brightness">亮度</string>
+    <string name="current">当前数值:</string>
+    <string name="contrast">对比度</string>
+    <string name="saturation">饱和度</string>
+    <string name="tone">色调</string>
+    <string name="max_brightness">最大亮度</string>
+    <string name="min_brightness">最小亮度</string>
+    <string name="ok">确定</string>
+    <string name="confirm_dialog_title">保存确认</string>
+    <string name="confirm_dialog_message">将会取消</string>
+    <string name="audio_device">音频设备</string>
 </resources>

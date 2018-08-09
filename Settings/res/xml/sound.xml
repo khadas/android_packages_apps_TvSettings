@@ -23,6 +23,14 @@
         android:persistent="true"
         android:title="@string/device_sound_effects"/>
 
+    <!-- <ListPreference
+        android:key="audio_device"
+        android:persistent="false"
+        android:title="@string/audio_device"
+        android:entries="@array/audio_device_list"
+        android:entryValues="@array/audio_device_list_values"
+        android:summary="%s" /> -->
+
     <PreferenceCategory
         android:key="surround_sound_category"
         android:title="@string/surround_sound_category_title"

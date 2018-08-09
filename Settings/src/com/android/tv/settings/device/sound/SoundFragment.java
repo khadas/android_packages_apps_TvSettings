@@ -20,6 +20,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.media.AudioFormat;
 import android.media.AudioManager;
+// import com.android.server.AudioCommon;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v14.preference.SwitchPreference;
@@ -50,6 +51,16 @@ public class SoundFragment extends PreferenceControllerFragment implements
     static final String KEY_SURROUND_SOUND_CATEGORY = "surround_sound_category";
     static final String KEY_SURROUND_SOUND_FORMAT_PREFIX = "surround_sound_format_";
 
+    private static final String KEY_AUDIO_DEVICE = "audio_device";
+    private static final String VAL_AUDIO_OUTPUT_DEFAUL = "default";
+    private static final String VAL_AUDIO_OUTPUT_SPDIF = "spdif";
+    private static final String VAL_AUDIO_OUTPUT_HDMI = "hdmi";
+
+    private static String MEDIA_CFG_AUDIO_BYPASS = "media.cfg.audio.bypass";
+    private static String HDMI_AUDIO_MULTICHANNEL = "media.cfg.audio.mul";
+    private static final String HDMI_PASSTHROUGH_KEY = "6";
+    private static final String SPDIF_PASSTHROUGH_KEY = "8";
+
     static final String VAL_SURROUND_SOUND_AUTO = "auto";
     static final String VAL_SURROUND_SOUND_NEVER = "never";
     static final String VAL_SURROUND_SOUND_ALWAYS = "always";
@@ -59,6 +70,8 @@ public class SoundFragment extends PreferenceControllerFragment implements
     private Map<Integer, Boolean> mFormats;
     private List<AbstractPreferenceController> mPreferenceControllers;
     private PreferenceCategory mSurroundSoundCategoryPref;
+
+    private ListPreference audiodevicePref;
 
     public static SoundFragment newInstance() {
         return new SoundFragment();
@@ -88,10 +101,15 @@ public class SoundFragment extends PreferenceControllerFragment implements
         surroundPref.setValue(getSurroundPassthroughSetting(getContext()));
         surroundPref.setOnPreferenceChangeListener(this);
 
+        // audiodevicePref = (ListPreference) findPreference(KEY_AUDIO_DEVICE);
+
         mSurroundSoundCategoryPref =
                 (PreferenceCategory) findPreference(KEY_SURROUND_SOUND_CATEGORY);
         createFormatPreferences();
         updateFormatPreferencesStates();
+        
+        // audiodevicePref.setValue(getAudioDeviceSetting());
+        // audiodevicePref.setOnPreferenceChangeListener(this);
     }
 
     @Override
@@ -187,6 +205,49 @@ public class SoundFragment extends PreferenceControllerFragment implements
             }
             updateFormatPreferencesStates();
             return true;
+        } else if(TextUtils.equals(preference.getKey(),KEY_AUDIO_DEVICE)){
+            /* ListPreference listpreference = (ListPreference)preference;
+            final String selection = (String) newValue;
+            if(selection.equals(listpreference.getValue())){
+                return true;
+            }
+            int deviceType = AudioCommon.SND_DEV_TYPE_DEFAULT;
+            mSelectedCaptureKey = "0";
+            mSelectedPlaybackKey = "0";
+            boolean bSpdifPassThrough = false;
+            boolean bHdmiMultichannel = false;
+            switch (selection) {
+                case VAL_AUDIO_OUTPUT_DEFAUL:
+                    setAudioOutputSetting(Settings.Global.AUDIO_OUTPUT_DEFAULT);
+                    deviceType = AudioCommon.SND_DEV_TYPE_DEFAULT;
+                    break;
+                case VAL_AUDIO_OUTPUT_SPDIF:
+                    setAudioOutputSetting(Settings.Global.AUDIO_OUTPUT_SPDIF);
+                    deviceType = AudioCommon.SND_DEV_TYPE_SPDIF_PASSTHROUGH;
+                    bSpdifPassThrough = true;
+                    mSelectedPlaybackKey = SPDIF_PASSTHROUGH_KEY;
+                    break;
+                case VAL_AUDIO_OUTPUT_HDMI:
+                    setAudioOutputSetting(Settings.Global.AUDIO_OUTPUT_HDMI);
+                    deviceType = AudioCommon.SND_DEV_TYPE_HDMI_PASSTHROUGH;
+                    bSpdifPassThrough = true;
+                    mSelectedPlaybackKey = HDMI_PASSTHROUGH_KEY;
+                    break;
+                default:
+                    throw new IllegalArgumentException("Unknown audio device output pref value");
+            }
+            if (bSpdifPassThrough){
+                SystemProperties.set(MEDIA_CFG_AUDIO_BYPASS, "true");
+            }
+            else{
+                SystemProperties.set(MEDIA_CFG_AUDIO_BYPASS, "false");
+            }
+            if (bHdmiMultichannel) {
+                SystemProperties.set(HDMI_AUDIO_MULTICHANNEL, "true");
+            } else {
+                SystemProperties.set(HDMI_AUDIO_MULTICHANNEL, "false");
+            }
+            AudioCommon.doAudioDevicesRouting(getContext(), deviceType, AudioCommon.SND_PCM_STREAM_PLAYBACK, mSelectedPlaybackKey); */
         }
         return true;
     }
@@ -236,5 +297,27 @@ public class SoundFragment extends PreferenceControllerFragment implements
     @Override
     public int getMetricsCategory() {
         return MetricsProto.MetricsEvent.SOUND;
+    }
+
+    private void setAudioOutputSetting(int newVal) {
+        /* Settings.Global.putInt(getContext().getContentResolver(),
+                Settings.Global.AUDIO_OUTPUT_DEVICE, newVal); */
+    }
+    
+    private String getAudioDeviceSetting() {
+        /* final int value = Settings.Global.getInt(getContext().getContentResolver(),
+                Settings.Global.AUDIO_OUTPUT_DEVICE,
+                Settings.Global.AUDIO_OUTPUT_DEFAULT);
+
+        switch (value) {
+            case Settings.Global.AUDIO_OUTPUT_DEFAULT:
+            default:
+                return VAL_AUDIO_OUTPUT_DEFAUL;
+            case Settings.Global.AUDIO_OUTPUT_SPDIF:
+                return VAL_AUDIO_OUTPUT_SPDIF;
+            case Settings.Global.AUDIO_OUTPUT_HDMI:
+                return VAL_AUDIO_OUTPUT_HDMI;
+         } */
+         return "";
     }
 }
