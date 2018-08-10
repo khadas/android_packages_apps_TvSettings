@@ -160,7 +160,7 @@ public class DevelopmentFragment extends SettingsPreferenceFragment
 
     private static final String PERSISTENT_DATA_BLOCK_PROP = "ro.frp.pst";
 
-    private static final String PERSIST_RK_ABC_SWITCH = "persist.sys.abc_switch";
+    private static final String PERSIST_RK_ABC_SWITCH = "persist.vendor.abc_switch";
     private static String DEFAULT_LOG_RING_BUFFER_SIZE_IN_BYTES = "262144"; // 256K
 
     private static final int[] MOCK_LOCATION_APP_OPS = new int[] {AppOpsManager.OP_MOCK_LOCATION};
