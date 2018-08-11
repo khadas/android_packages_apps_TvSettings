@@ -139,6 +139,7 @@ public class BluetoothDevicePairer {
 
     private static final int MSG_PAIR = 1;
     private static final int MSG_START = 2;
+    private static final int MSG_CONNECT_CHK = 3;
 
     private static final boolean DEBUG = true;
 
@@ -247,9 +248,13 @@ public class BluetoothDevicePairer {
 
     private final OpenConnectionCallback mOpenConnectionCallback = new OpenConnectionCallback() {
         public void succeeded() {
+            Log.d(TAG, "succeeded");
+            mHandler.removeMessages(MSG_CONNECT_CHK);
             setStatus(STATUS_NONE);
         }
         public void failed() {
+             Log.d(TAG, "failed");
+             mHandler.removeMessages(MSG_CONNECT_CHK);
             setStatus(STATUS_ERROR);
         }
     };
@@ -289,6 +294,12 @@ public class BluetoothDevicePairer {
                         break;
                     case MSG_START:
                         start();
+                        break;
+		    case MSG_CONNECT_CHK:
+                        if (mTarget.isConnected()) {
+                            Log.d(TAG, "device is connected.");
+                            setStatus(STATUS_NONE);
+                        }
                         break;
                     default:
                         Log.d(TAG, "No handler case available for message: " + msg.what);
@@ -556,6 +567,7 @@ public class BluetoothDevicePairer {
      * Set the status and update any listener.
      */
     private void setStatus(int status) {
+        Log.d(TAG, "setStatus = " + status);
         mStatus = status;
         updateListener();
     }
@@ -583,6 +595,7 @@ public class BluetoothDevicePairer {
         if (btConnector != null) {
             setStatus(STATUS_CONNECTING);
             btConnector.openConnection(adapter);
+             mHandler.sendEmptyMessageDelayed(MSG_CONNECT_CHK, 3000);
         } else {
             Log.w(TAG, "There was an error getting the BluetoothConnector.");
             setStatus(STATUS_ERROR);
