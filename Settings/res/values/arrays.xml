@@ -289,13 +289,23 @@
     </string-array>
 
      <string-array name="audio_device_list">
-        <item>Default Output</item>
-        <item>Spdif Passthrough</item>
         <item>HDMI Bitstream</item>
+        <item>Spdif Passthrough</item>
     </string-array>
     <string-array name="audio_device_list_values">
-        <item>default</item>
-        <item>spdif</item>
         <item>hdmi</item>
+        <item>spdif</item>
     </string-array>
+    
+    <string-array name="surround_sound_entries_spdif" translatable="false">
+        <item>@string/surround_sound_none_summary</item>
+        <item>@string/surround_sound_manual_summary</item>
+    </string-array>
+
+    
+    <string-array name="surround_sound_entry_values_spdif" translatable="false">
+        <item>never</item>
+        <item>manual</item>
+    </string-array>
+
 </resources>

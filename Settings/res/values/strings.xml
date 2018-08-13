@@ -1652,8 +1652,8 @@
 
     <!-- abc -->
     <string name="enable_abc">Android bug collector</string>
-
     <string name="enable_abc_summary" >"Save recent boot logs in /data/logs"</string>	
+    <!-- if not Advance_settings,remove this unuse resource begin by wengtao -->
     <string name="advance_settings">Advanced setting</string>
     <string name="screen_resolution">Screen resolution</string>
     <string name="screen_zoom">Screen zoom</string>
@@ -1669,6 +1669,7 @@
     <string name="digital_audio">Digital audio</string>
     <string name="dts_audio">DTS audio</string>
     <string name="auto_switch_resolution">Automatic switching to the best resolution</string>
+    <!-- if not Advance_settings,remove this unuse resource end by wengtao -->
     <string name="resolution_list">The list of resolution</string>
 
     <!-- WengTao add for display -->

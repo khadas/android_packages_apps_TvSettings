@@ -29,6 +29,7 @@ import com.android.settingslib.core.AbstractPreferenceController;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Map;
+import android.media.AudioSystem;
 
 /**
  * Controller for the surround sound switch preferences.
@@ -76,42 +77,64 @@ public class SoundFormatPreferenceController extends AbstractPreferenceControlle
     }
 
     /**
-     * @return checked state of a surround sound format switch based on passthrough setting and
-     * audio manager state for the format.
+     * @return checked state of a surround sound format switch based on passthrough
+     *         setting and audio manager state for the format.
      */
     private boolean getFormatPreferenceCheckedState() {
-        switch (SoundFragment.getSurroundPassthroughSetting(mContext)) {
-            case SoundFragment.VAL_SURROUND_SOUND_NEVER:
-                return false;
-            case SoundFragment.VAL_SURROUND_SOUND_ALWAYS:
-                return true;
-            case SoundFragment.VAL_SURROUND_SOUND_AUTO:
-                return isReportedFormat();
-            case SoundFragment.VAL_SURROUND_SOUND_MANUAL:
-                return getFormatsEnabledInManualMode().contains(mFormatId);
-            default: return false;
+        int device = SoundFragment.getPassthroughDevice(mContext);
+        String mode = "";
+        if (device == AudioSystem.DEVICE_OUT_AUX_DIGITAL) {
+            mode = SoundFragment.getSurroundPassthroughSetting(mContext);
+        } else if (device == AudioSystem.DEVICE_OUT_SPDIF) {
+            mode = SoundFragment.getSpdifPassthroughModeSetting(mContext);
+        }
+        switch (mode) {
+        case SoundFragment.VAL_SURROUND_SOUND_NEVER:
+            return false;
+        case SoundFragment.VAL_SURROUND_SOUND_ALWAYS:
+            return true;
+        case SoundFragment.VAL_SURROUND_SOUND_AUTO:
+            return isReportedFormat();
+        case SoundFragment.VAL_SURROUND_SOUND_MANUAL:
+            return getFormatsEnabledInManualMode().contains(mFormatId);
+        default:
+            return false;
         }
     }
 
-    /** @return true if the format checkboxes should be enabled, i.e. in manual mode. */
+    /**
+     * @return true if the format checkboxes should be enabled, i.e. in manual mode.
+     */
     private boolean getFormatPreferencesEnabledState() {
-        return SoundFragment.getSurroundPassthroughSetting(mContext)
-                == SoundFragment.VAL_SURROUND_SOUND_MANUAL;
+        if (SoundFragment.getPassthroughDevice(mContext) == AudioSystem.DEVICE_OUT_AUX_DIGITAL) {
+            return SoundFragment.getSurroundPassthroughSetting(mContext) == SoundFragment.VAL_SURROUND_SOUND_MANUAL;
+        }
+        if (SoundFragment.getPassthroughDevice(mContext) == AudioSystem.DEVICE_OUT_SPDIF) {
+            return SoundFragment.getSpdifPassthroughModeSetting(mContext) == SoundFragment.VAL_SURROUND_SOUND_MANUAL;
+        }
+        return false;
     }
 
     /** @return the formats that are enabled in manual mode, from global settings */
     private HashSet<Integer> getFormatsEnabledInManualMode() {
         HashSet<Integer> formats = new HashSet<>();
-        String enabledFormats = Settings.Global.getString(mContext.getContentResolver(),
-                Settings.Global.ENCODED_SURROUND_OUTPUT_ENABLED_FORMATS);
+        String enabledFormats = null;
+        int device = SoundFragment.getPassthroughDevice(mContext);
+        if (device == AudioSystem.DEVICE_OUT_SPDIF) {
+            enabledFormats = Settings.Global.getString(mContext.getContentResolver(),
+                    Settings.Global.BITSTREAM_SPDIF_OUTPUT_ENABLED_FORMATS);
+        } else if (device == AudioSystem.DEVICE_OUT_AUX_DIGITAL) {
+            enabledFormats = Settings.Global.getString(mContext.getContentResolver(),
+                    Settings.Global.ENCODED_SURROUND_OUTPUT_ENABLED_FORMATS);
+        }
         if (enabledFormats == null) {
-            // Starting with Android P passthrough setting ALWAYS has been replaced with MANUAL.
+            // Starting with Android P passthrough setting ALWAYS has been replaced with
+            // MANUAL.
             // In that case all formats will be enabled when in MANUAL mode.
             formats.addAll(mAudioManager.getSurroundFormats().keySet());
         } else {
             try {
-                Arrays.stream(enabledFormats.split(",")).mapToInt(Integer::parseInt)
-                        .forEach(formats::add);
+                Arrays.stream(enabledFormats.split(",")).mapToInt(Integer::parseInt).forEach(formats::add);
             } catch (NumberFormatException e) {
                 Log.w(TAG, "ENCODED_SURROUND_OUTPUT_ENABLED_FORMATS misformatted.", e);
             }
@@ -129,9 +152,15 @@ public class SoundFormatPreferenceController extends AbstractPreferenceControlle
         } else {
             formats.remove(mFormatId);
         }
-        Settings.Global.putString(mContext.getContentResolver(),
-                Settings.Global.ENCODED_SURROUND_OUTPUT_ENABLED_FORMATS,
-                TextUtils.join(",", formats));
+
+        int device = SoundFragment.getPassthroughDevice(mContext);
+        if (device == AudioSystem.DEVICE_OUT_SPDIF) {
+            Settings.Global.putString(mContext.getContentResolver(),
+                    Settings.Global.BITSTREAM_SPDIF_OUTPUT_ENABLED_FORMATS, TextUtils.join(",", formats));
+        } else if (device == AudioSystem.DEVICE_OUT_AUX_DIGITAL) {
+            Settings.Global.putString(mContext.getContentResolver(),
+                    Settings.Global.ENCODED_SURROUND_OUTPUT_ENABLED_FORMATS, TextUtils.join(",", formats));
+        }
     }
 
     /** @return true if the given format is reported by the device. */

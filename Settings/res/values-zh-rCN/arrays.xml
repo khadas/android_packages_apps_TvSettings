@@ -75,8 +75,7 @@
     <item msgid="7190796629038944307">"GTC"</item>
   </string-array>
   <string-array name="audio_device_list">
-    <item>默认输出</item>
-    <item>SPDIF透传</item>
     <item>HDMI源码</item>
+    <item>SPDIF透传</item>
   </string-array>
 </resources>

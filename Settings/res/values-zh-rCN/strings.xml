@@ -760,6 +760,7 @@
     <!-- enable abc -->
     <string name="enable_abc" >"Android日志收集器"</string>
     <string name="enable_abc_summary" >"保存近几次开机log到/data/logs目录"</string>
+    <!-- if not Advance_settings,remove this unuse resource begin by wengtao -->
     <string name="advance_settings">高级设置</string>
     <string name="screen_resolution">屏幕分辨率</string>
     <string name="screen_zoom">屏幕缩放</string>
@@ -775,6 +776,7 @@
     <string name="digital_audio">数字音频</string>
     <string name="dts_audio">DTS 声音</string>
     <string name="auto_switch_resolution">自动切换到最佳分辨率</string>
+    <!-- if not Advance_settings,remove this unuse resource end by wengtao -->
     <string name="resolution_list">输出制式列表</string>
 
 
