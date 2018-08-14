@@ -40,4 +40,7 @@ public class MainSettings extends TvSettingsActivity {
             startPreferenceFragment(fragment);
         }
     }
+
+    
+    public static class ScanningSettingsActivity extends MainSettings { /* empty */ }
 }
