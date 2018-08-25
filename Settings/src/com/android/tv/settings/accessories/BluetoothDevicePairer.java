@@ -130,7 +130,7 @@ public class BluetoothDevicePairer {
      * called and when we actually start pairing. This gives the caller a
      * chance to change their mind.
      */
-    public static final int DELAY_MANUAL_PAIRING = 5 * 1000;
+    public static final int DELAY_MANUAL_PAIRING = 0 * 1000;
     /**
      * If there was an error in pairing, we will wait this long before trying
      * again.
@@ -295,7 +295,7 @@ public class BluetoothDevicePairer {
                     case MSG_START:
                         start();
                         break;
-		    case MSG_CONNECT_CHK:
+                    case MSG_CONNECT_CHK:
                         if (mTarget.isConnected()) {
                             Log.d(TAG, "device is connected.");
                             setStatus(STATUS_NONE);
@@ -451,6 +451,7 @@ public class BluetoothDevicePairer {
 
     private void startPairing(BluetoothDevice device, boolean isManual) {
         // TODO check if we're already paired/bonded to this device
+        Log.d(TAG, "startPairing " + device + " isManual = " + isManual);
 
         // cancel auto-mode if applicable
         mAutoMode = !isManual;
