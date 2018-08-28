@@ -72,7 +72,15 @@ public class ConnectivityListener implements WifiTracker.WifiListener, Lifecycle
     private final EthernetManager.Listener mEthernetListener = new EthernetManager.Listener() {
         @Override
         public void onAvailabilityChanged(String iface, boolean isAvailable) {
-            mListener.onConnectivityChange();
+            //mListener.onConnectivityChange();
+        }
+    };
+    private final BroadcastReceiver mConnectivityReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            int netType = intent.getIntExtra(ConnectivityManager.EXTRA_NETWORK_TYPE, -1);
+            if (netType == ConnectivityManager.TYPE_ETHERNET)
+                onConnectedChanged();
         }
     };
     private final PhoneStateListener mPhoneStateListener = new PhoneStateListener() {
@@ -108,6 +116,7 @@ public class ConnectivityListener implements WifiTracker.WifiListener, Lifecycle
         } else {
             mWifiTracker = new WifiTracker(context, this, true, true);
         }
+        start();
     }
 
     /**
@@ -136,6 +145,8 @@ public class ConnectivityListener implements WifiTracker.WifiListener, Lifecycle
 
             mContext.registerReceiver(mNetworkReceiver, networkIntentFilter);
             mEthernetManager.addListener(mEthernetListener);
+            mContext.registerReceiver(mConnectivityReceiver, new IntentFilter(
+                    ConnectivityManager.CONNECTIVITY_ACTION));
             final TelephonyManager telephonyManager = mContext
                     .getSystemService(TelephonyManager.class);
             if (telephonyManager != null) {
@@ -164,6 +175,7 @@ public class ConnectivityListener implements WifiTracker.WifiListener, Lifecycle
         if (mStarted) {
             mStarted = false;
             mContext.unregisterReceiver(mNetworkReceiver);
+            mContext.unregisterReceiver(mConnectivityReceiver);
             mWifiListener = null;
             mEthernetManager.removeListener(mEthernetListener);
             final TelephonyManager telephonyManager = mContext
