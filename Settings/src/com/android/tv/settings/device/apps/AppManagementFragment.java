@@ -284,6 +284,17 @@ public class AppManagementFragment extends SettingsPreferenceFragment {
             mAppStoragePreference.setEntry(mEntry);
         }
 
+        // Permissions
+        Preference permissionsPreference = findPreference(KEY_PERMISSIONS);
+        if (permissionsPreference == null) {
+            permissionsPreference = new Preference(themedContext);
+            permissionsPreference.setKey(KEY_PERMISSIONS);
+            permissionsPreference.setTitle(R.string.device_apps_app_management_permissions);
+            replacePreference(permissionsPreference);
+        }
+        permissionsPreference.setIntent(new Intent(Intent.ACTION_MANAGE_APP_PERMISSIONS)
+                .putExtra(Intent.EXTRA_PACKAGE_NAME, mPackageName));
+
         // Clear data
         if (mClearDataPreference == null) {
             mClearDataPreference = new ClearDataPreference(themedContext, mEntry);
@@ -319,17 +330,6 @@ public class AppManagementFragment extends SettingsPreferenceFragment {
         } else {
             mNotificationsPreference.setEntry(mEntry);
         }
-
-        // Permissions
-        Preference permissionsPreference = findPreference(KEY_PERMISSIONS);
-        if (permissionsPreference == null) {
-            permissionsPreference = new Preference(themedContext);
-            permissionsPreference.setKey(KEY_PERMISSIONS);
-            permissionsPreference.setTitle(R.string.device_apps_app_management_permissions);
-            replacePreference(permissionsPreference);
-        }
-        permissionsPreference.setIntent(new Intent(Intent.ACTION_MANAGE_APP_PERMISSIONS)
-                .putExtra(Intent.EXTRA_PACKAGE_NAME, mPackageName));
     }
 
     private void replacePreference(Preference preference) {
