@@ -235,7 +235,7 @@ public class DrmDisplaySetting {
     private final static String SYS_NODE_HDMI_STATUS =
             "/sys/devices/platform/display-subsystem/drm/card0/card0-HDMI-A-1/status";
 
-    private final static String PROP_RESOLUTION_HDMI = "persist.sys.resolution.main";
+    private final static String PROP_RESOLUTION_HDMI = "persist.vendor.sys.resolution.main";
 
     public static String tmpSetHdmiMode = null;
     public static String curSetHdmiMode = null;
@@ -382,7 +382,7 @@ public class DrmDisplaySetting {
     private final static String SYS_NODE_DP_STATUS =
             "/sys/devices/platform/display-subsystem/drm/card0/card0-DP-1/status";
 
-    private final static String PROP_RESOLUTION_DP = "persist.sys.resolution.aux";
+    private final static String PROP_RESOLUTION_DP = "persist.vendor.sys.resolution.aux";
 
     private static String tmpSetDpMode = null;
     private static String curSetDpMode = "1920x1080p60";

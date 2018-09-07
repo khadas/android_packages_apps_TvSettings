@@ -64,8 +64,8 @@ public class ScreenScaleActivity extends Activity {
     private int mDefaultDpi = 160;
     private float mDpiRatio = 0;
     private int mkeylast = -1;
-    public static final String PROPERTY_OVERSCAN_MAIN = "persist.sys.overscan.main";
-    public static final String PROPERTY_OVERSCAN_AUX = "persist.sys.overscan.aux";
+    public static final String PROPERTY_OVERSCAN_MAIN = "persist.vendor.sys.overscan.main";
+    public static final String PROPERTY_OVERSCAN_AUX = "persist.vendor.sys.overscan.aux";
     /**
      * 标识平台
      */
