@@ -64,8 +64,8 @@ public class ScreenScaleActivity extends Activity {
     private int mDefaultDpi = 160;
     private float mDpiRatio = 0;
     private int mkeylast = -1;
-    public static final String PROPERTY_OVERSCAN_MAIN = "persist.vendor.sys.overscan.main";
-    public static final String PROPERTY_OVERSCAN_AUX = "persist.vendor.sys.overscan.aux";
+    public static final String PROPERTY_OVERSCAN_MAIN = "persist.vendor.overscan.main";
+    public static final String PROPERTY_OVERSCAN_AUX = "persist.vendor.overscan.aux";
     /**
      * 标识平台
      */
@@ -404,6 +404,7 @@ public class ScreenScaleActivity extends Activity {
         if (rkDisplayOutputManager == null)
             return;
         Log.i(TAG, "setOverScanProperty->time1:" + System.currentTimeMillis());
+        Log.e(TAG, "mLeft = " + mLeftScale + ",mBottom = " + mBottomScale);
         switch (direction) {
         case ConstData.ScaleDirection.LEFT:
         case ConstData.ScaleDirection.RIGHT:
