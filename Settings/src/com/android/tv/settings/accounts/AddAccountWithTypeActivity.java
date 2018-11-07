@@ -41,6 +41,8 @@ public class AddAccountWithTypeActivity extends Activity {
     private static final int REQUEST_ADD_ACCOUNT = 1;
     private static final String CHOOSE_ACCOUNT_TYPE_ACTION =
             "com.google.android.gms.common.account.CHOOSE_ACCOUNT_TYPE";
+    private static final String NORMAL_CHOOSE_ACCOUNT_TYPE_ACTION =
+            "com.google.android.gms.common.account.CHOOSE_ACCOUNT";
 
     private final AccountManagerCallback<Bundle> mCallback = new AccountManagerCallback<Bundle>() {
         @Override
@@ -90,6 +92,9 @@ public class AddAccountWithTypeActivity extends Activity {
 
     private void startAccountTypePicker(String[] allowedTypes) {
         Intent i = new Intent(CHOOSE_ACCOUNT_TYPE_ACTION);
+        if(null == i.resolveActivity(getPackageManager())){
+            i = new Intent(NORMAL_CHOOSE_ACCOUNT_TYPE_ACTION);
+        } 
         i.putExtra(EXTRA_ALLOWABLE_ACCOUNT_TYPES_STRING_ARRAY, allowedTypes);
         startActivityForResult(i, REQUEST_CHOOSE_ACCOUNT_TYPE);
     }
