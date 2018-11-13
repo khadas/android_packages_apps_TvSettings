@@ -1905,7 +1905,6 @@
     <string name="location_scanning_bluetooth_always_scanning_description">Improve location by allowing system apps and services to detect Bluetooth devices at any
         time.</string>
     <string name="bluetooth_on_time">Wi\u2011Fi on time</string>
-    <string name="hotpot_setting_title">Hotpot Setup</string>
     <string name="wifi_in_airplane_mode">In Airplane mode</string>
     <string name="bluetooth_paired">Paired devices</string>
     <string name="bluetooth_turning_off">"Turning Bluetooth off\u2026"</string>
@@ -1920,4 +1919,155 @@
     <string name="yes">"Yes"</string>
     <!-- Strings for Dialog no button -->
     <string name="no">"No"</string>
+
+    <!-- VPN interface -->
+    <string name="vpn" >VPN</string>
+    <string name="create_vpn" >Create VPN</string>
+        <!-- Input label for the name of a VPN profile. [CHAR LIMIT=40] -->
+    <string name="vpn_name">Name</string>
+    <!-- Input label for the type of a VPN profile. [CHAR LIMIT=40] -->
+    <string name="vpn_type">Type</string>
+    <!-- Input label for the server address of a VPN profile. [CHAR LIMIT=40] -->
+    <string name="vpn_server">Server address</string>
+    <!-- Checkbox label to enable PPP encryption for a VPN profile. [CHAR LIMIT=40] -->
+    <string name="vpn_mppe">PPP encryption (MPPE)</string>
+    <!-- Input label for the L2TP secret of a VPN profile. [CHAR LIMIT=40] -->
+    <string name="vpn_l2tp_secret">L2TP secret</string>
+    <!-- Input label for the IPSec identifier of a VPN profile. [CHAR LIMIT=40] -->
+    <string name="vpn_ipsec_identifier">IPSec identifier</string>
+    <!-- Input label for the IPSec pre-shared key of a VPN profile. [CHAR LIMIT=40] -->
+    <string name="vpn_ipsec_secret">IPSec pre-shared key</string>
+    <!-- Selection label for the IPSec user certificate of a VPN profile. [CHAR LIMIT=40] -->
+    <string name="vpn_ipsec_user_cert">IPSec user certificate</string>
+    <!-- Selection label for the IPSec CA certificate of a VPN profile. [CHAR LIMIT=40] -->
+    <string name="vpn_ipsec_ca_cert">IPSec CA certificate</string>
+    <!-- Selection label for the IPSec server certificate of a VPN profile. [CHAR LIMIT=40] -->
+    <string name="vpn_ipsec_server_cert">IPSec server certificate</string>
+    <!-- Checkbox label to show advanced options of a VPN profile. [CHAR LIMIT=40] -->
+    <string name="vpn_show_options">Show advanced options</string>
+    <!-- Input label for the DNS search domains of a VPN profile. [CHAR LIMIT=40] -->
+    <string name="vpn_search_domains">DNS search domains</string>
+    <!-- Input label for the DNS servers of a VPN profile. [CHAR LIMIT=40] -->
+    <string name="vpn_dns_servers">DNS servers (e.g. 8.8.8.8)</string>
+    <!-- Input label for the forwarding routes of a VPN profile. [CHAR LIMIT=40] -->
+    <string name="vpn_routes">Forwarding routes (e.g. 10.0.0.0/8)</string>
+    <!-- Input label for the username of a VPN profile. [CHAR LIMIT=40] -->
+    <string name="vpn_username">Username</string>
+    <!-- Input label for the password of a VPN profile. [CHAR LIMIT=40] -->
+    <string name="vpn_password">Password</string>
+    <!-- Checkbox label to save the username and the password in a VPN profile. [CHAR LIMIT=40] -->
+    <string name="vpn_save_login">Save account information</string>
+    <!-- Hint for not using an optional feature in a VPN profile. [CHAR LIMIT=40] -->
+    <string name="vpn_not_used">(not used)</string>
+    <!-- Option to not use a CA certificate to verify the VPN server. [CHAR LIMIT=40] -->
+    <string name="vpn_no_ca_cert">(don\u2019t verify server)</string>
+    <!-- Option to use the server certificate received from the VPN server. [CHAR LIMIT=40] -->
+    <string name="vpn_no_server_cert">(received from server)</string>
+
+    <!-- Button label to cancel changing a VPN profile. [CHAR LIMIT=40] -->
+    <string name="vpn_cancel">Cancel</string>
+    <!-- Button label to finish editing a VPN profile. [CHAR LIMIT=40] -->
+    <string name="vpn_done">Dismiss</string>
+    <!-- Button label to save a VPN profile. [CHAR LIMIT=40] -->
+    <string name="vpn_save">Save</string>
+    <!-- Button label to connect to a VPN profile. [CHAR LIMIT=40] -->
+    <string name="vpn_connect">Connect</string>
+    <!-- Button label to connect a VPN profile, replacing the current one. [CHAR LIMIT=40] -->
+    <string name="vpn_replace">Replace</string>
+    <!-- Dialog title to edit a VPN profile. [CHAR LIMIT=40] -->
+    <string name="vpn_edit">Edit VPN profile</string>
+    <!-- Button label to forget a VPN profile. [CHAR LIMIT=40] -->
+    <string name="vpn_forget">Forget</string>
+    <!-- Dialog title to connect to a VPN profile. [CHAR LIMIT=40] -->
+    <string name="vpn_connect_to">Connect to <xliff:g id="profile" example="School">%s</xliff:g></string>
+    <!-- Dialog message body to disconnect from a VPN profile. -->
+    <string name="vpn_disconnect_confirm">Disconnect this VPN.</string>
+    <!-- Button label to disconnect from a VPN profile. [CHAR LIMIT=40] -->
+    <string name="vpn_disconnect">Disconnect</string>
+    <!-- Field label to show the version number for a VPN app. [CHAR LIMIT=40] -->
+    <string name="vpn_version">Version <xliff:g id="version" example="3.3.0">%s</xliff:g></string>
+    <!-- Button label to forget a VPN profile [CHAR LIMIT=40] -->
+    <string name="vpn_forget_long">Forget VPN</string>
+    <!-- Dialog message title to set another VPN app to be always-on [CHAR LIMIT=40] -->
+    <string name="vpn_replace_always_on_vpn_title">Replace existing VPN?</string>
+    <!-- Dialog message body to set another VPN app to be always-on [CHAR LIMIT=NONE] -->
+    <string name="vpn_replace_always_on_vpn_message">You\'re already connected to a VPN. If you connect to a different one, your existing VPN will be replaced.</string>
+    <!-- Dialog mesage title when the user can't connect an always-on vpn [CHAR LIMIT=NONE] -->
+    <string name="vpn_cant_connect_title"><xliff:g id="vpn_name" example="OpenVPN">%1$s</xliff:g> can\'t connect</string>
+    <!-- Dialog message subtitle when the user can't connect an always-on vpn [CHAR LIMIT=NONE] -->
+    <string name="vpn_cant_connect_message">This app doesn\'t support always-on VPN.</string>
+    <!-- Preference title for VPN settings. [CHAR LIMIT=40] -->
+    <string name="vpn_title">VPN</string>
+    <!-- Preference title to create a new VPN profile. [CHAR LIMIT=40] -->
+    <string name="vpn_create">Add VPN profile</string>
+    <!-- Menu item to edit a VPN profile. [CHAR LIMIT=40] -->
+    <string name="vpn_menu_edit">Edit profile</string>
+    <!-- Menu item to delete a VPN profile. [CHAR LIMIT=40] -->
+    <string name="vpn_menu_delete">Delete profile</string>
+    <!-- Menu item to select always-on VPN profile. [CHAR LIMIT=40] -->
+    <string name="vpn_menu_lockdown">Always-on VPN</string>
+    <!-- Placeholder when VPN settings is open but no VPNs have been created. [CHAR LIMIT=100] -->
+    <string name="vpn_no_vpns_added">No VPNs added.</string>
+    <!-- Preference summary for active always-on vpn [CHAR LIMIT=40] -->
+    <string name="vpn_always_on_active">Always-on active</string>
+    <!-- Preference summary for app not supporting always-on vpn [CHAR LIMIT=NONE] -->
+    <string name="vpn_not_supported_by_this_app">Not supported by this app</string>
+
+    <!-- Summary describing the always-on VPN feature. [CHAR LIMIT=NONE] -->
+    <string name="vpn_lockdown_summary">Select a VPN profile to always remain connected to. Network traffic will only be allowed when connected to this VPN.</string>
+    <!-- List item indicating that no always-on VPN is selected. [CHAR LIMIT=64] -->
+    <string name="vpn_lockdown_none">None</string>
+    <!-- Error indicating that the selected VPN doesn't meet requirements. [CHAR LIMIT=NONE] -->
+    <string name="vpn_lockdown_config_error">Always-on VPN requires an IP address for both server and DNS.</string>
+
+    <!-- Toast message when there is no network connection to start VPN. [CHAR LIMIT=100] -->
+    <string name="vpn_no_network">There is no network connection. Please try again later.</string>
+    <!-- Toast message when a certificate is missing. [CHAR LIMIT=100] -->
+    <string name="vpn_missing_cert">A certificatavaliable_bluetoothe is missing. Please edit the profile.</string>
+    <string name="join_two_unrelated_items"><xliff:g id="first_item">%1$s</xliff:g>, <xliff:g id="second_item">%2$s</xliff:g></string>
+    <string name="avaliable_vpns">Available vpns</string>
+    <string name="edit_vpn">Edit vpn</string>
+    <string name="edit">Edit</string>
+
+    <!-- HotPot -->
+    <string name="hotpot_name">HotPot</string>
+    <string name="hotpot_setting_title">Hotpot Setup</string>
+    <string name="usb_tethering_active_subtext">Tethered</string>
+	<string name="usb_tethering_available_subtext">USB connected, check to tether</string>
+	<string name="usb_tethering_errored_subtext">USB tethering error</string>
+	<string name="usb_tethering_storage_active_subtext">Can\u2019t tether when USB storage is in use</string>
+	<string name="usb_tethering_unavailable_subtext">USB not connected</string>
+    <string name="bluetooth_tethering_devices_connected_subtext" product="tablet">Sharing this tablet\u2019s Internet connection to <xliff:g id="connectedDeviceCount">%1$d</xliff:g> devices</string>
+    <string name="bluetooth_tethering_devices_connected_subtext" product="default">Sharing this phone\u2019s Internet connection to <xliff:g id="connectedDeviceCount">%1$d</xliff:g> devices</string>
+	<string name="wifi_tether_enabled_subtext">Portable hotspot <xliff:g id="network_ssid">%1$s</xliff:g> active</string>
+	<string name="wifi_error">Error</string>
+	<string name="wifi_tether_starting">Turning hotspot on\u2026</string>
+	<string name="wifi_tether_stopping">Turning off hotspot\u2026</string>
+	<string name="wifi_sap_no_channel_error">5 GHz band not available in this country</string>
+	<string name="wifi_ap_choose_2G">2.4 GHz Band</string>
+	<string name="wifi_ap_choose_5G">5 GHz Band</string>
+	<string name="usb_tethering_button_text">USB tethering</string>
+	<string name="wifi_tether_checkbox_text">Portable Wi\u2011Fi hotspot</string>
+	<string name="wifi_tether_configure_ap_text">Set up Wi\u2011Fi hotspot</string>
+	<string name="bluetooth_tether_checkbox_text">Bluetooth tethering</string>
+    <string name="wifi_tether_configure_subtext"><xliff:g id="network_ssid">%1$s</xliff:g> <xliff:g id="network_security">%2$s</xliff:g> portable Wi\u2011Fi hotspot</string>
+    <string name="bluetooth_tethering_device_connected_subtext" product="tablet">Sharing this tablet\u2019s Internet connection to 1 device</string>
+    <string name="bluetooth_tethering_device_connected_subtext" product="default">Sharing this phone\u2019s Internet connection to 1 device</string>
+    <string name="bluetooth_tethering_errored_subtext">Not tethered</string>
+    <string name="bluetooth_tethering_available_subtext" product="tablet">Sharing this tablet\u2019s Internet connection</string>
+    <!-- Bluetooth available subtext - shown when Bluetooth tethering is turned on but it is not currently tethered to any devices [CHAR LIMIT=50]-->
+    <string name="bluetooth_tethering_available_subtext" product="default">Sharing this phone\u2019s Internet connection</string>
+	<string name="wifi_save">Save</string>
+	<string name="wifi_cancel">Cancel</string>
+	<string name="credentials_password_too_short">The password must have at least 8 characters.</string>
+    <string name="wifi_ssid">Network name</string>
+    <string name="wifi_ssid_hint">Enter the SSID</string>
+    <string name="wifi_security">Security</string>
+    <string name="wifi_password">Password</string>
+    <string name="wifi_show_password">Show password</string>
+	<string name="wifi_ap_band_config">Select AP Band</string>
+	<string name="no_button">Cancel</string>
+	<string name="ok_button">Save</string><string name="bluetooth_tethering_off_subtext" product="tablet">Not sharing this tablet\u2019s Internet connection</string>
+    <!-- Bluetooth tethering off subtext - shown when Bluetooth Tethering is turned off [CHAR LIMIT=50]-->
+    <string name="bluetooth_tethering_off_subtext" product="default">Not sharing this phone\u2019s Internet connection</string>
 </resources>

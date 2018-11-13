@@ -742,6 +742,28 @@
             <meta-data android:name="com.android.settings.PRIMARY_PROFILE_CONTROLLED"
                 android:value="true" />
         </activity>
+
+        <activity
+              android:name="com.android.tv.settings.vpn.VpnCreateActivity"
+              android:configChanges="keyboard"
+              android:windowSoftInputMode="adjustPan">
+              <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+              </intent-filter>
+         </activity>
+
+        <activity
+            android:name=".connectivity.HotPotActivity" >
+        </activity>
+        <activity
+            android:name=".connectivity.WifiApDialog" >
+        </activity>
+        <activity
+            android:name=".connectivity.HotpotDialogActivity">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
