@@ -84,7 +84,10 @@ public class AddAccountWithTypeActivity extends Activity {
         // User selected an account type, so kick off the add account flow for that.
         if (requestCode == REQUEST_CHOOSE_ACCOUNT_TYPE && resultCode == Activity.RESULT_OK) {
             String accountType = data.getExtras().getString(AccountManager.KEY_ACCOUNT_TYPE);
-            startAddAccount(accountType);
+            if(accountType!=null)
+              startAddAccount(accountType);
+            else
+              setResultAndFinish(resultCode);
         } else {
             setResultAndFinish(resultCode);
         }
