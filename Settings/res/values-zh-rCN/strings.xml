@@ -1039,4 +1039,21 @@
    <string name="no_button">取消</string>
    <string name="ok_button">保存</string>
    <string name="bluetooth_tethering_off_subtext" product="default">不共享网络连接</string>
+
+   <!-- keyboards -->
+   <string name="keyboard_and_input_methods_category" msgid="6035224122054465137">"键盘和输入法"</string>
+   <string name="virtual_keyboard_category" msgid="1012830752318677119">"虚拟键盘"</string>
+   <string name="physical_keyboard_title" msgid="8285149877925752042">"实体键盘"</string>
+   <string name="builtin_keyboard_settings_title" msgid="7688732909551116798">"物理键盘"</string>
+   <string name="keyboard_layout_default_label" msgid="2952672513543482165">"默认"</string>
+   <string name="keyboard_layout_picker_title" msgid="556081931972771610">"键盘布局"</string>
+   <string name="keyboard_assistance_category" msgid="5843634175231134014">"键盘辅助功能"</string>
+   <string name="show_ime_summary" msgid="8164993045923240698">"开启后，连接到实体键盘时，它会一直显示在屏幕上"</string>
+   <string name="show_ime" msgid="2658582193437188227">"显示虚拟键盘"</string>
+   <string name="keyboard_shortcuts_helper_summary" msgid="5871299901459743288">"显示可用的快捷键"</string>
+   <string name="keyboard_shortcuts_helper" msgid="4839453720463798145">"键盘快捷键帮助程序"</string>
+   <string name="add_virtual_keyboard" msgid="3302152381456516928">"管理键盘"</string>
+   <string name="keyboard_layout_dialog_setup_button" msgid="8514583747236476384">"设置键盘布局"</string>
+   <string name="keyboard_layout_dialog_title" msgid="8030087214949381372">"选择键盘布局"</string>
+   <string name="keyboard_layout_dialog_switch_hint" msgid="3889961090676293795">"要切换，请按 Ctrl+空格键"</string>
 </resources>

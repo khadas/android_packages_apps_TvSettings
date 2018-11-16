@@ -764,6 +764,18 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".inputmethod.KeyboardLayoutPickerActivity"
+            android:label="@string/keyboard_layout_picker_title"
+            android:clearTaskOnLaunch="true">
+              <intent-filter>
+                  <action android:name="android.intent.action.MAIN" />
+                  <category android:name="android.intent.category.DEFAULT" />
+              </intent-filter>
+              <meta-data android:name="com.android.tv.settings.FRAGMENT_CLASS"
+                  android:value="com.android.tv.settings.inputmethod.KeyboardLayoutPickerFragment" />
+        </activity>
     </application>
 
 </manifest>

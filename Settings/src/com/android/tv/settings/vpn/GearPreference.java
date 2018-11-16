@@ -34,6 +34,7 @@ public class GearPreference extends RestrictedPreference implements View.OnClick
     public GearPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
         setWidgetLayoutResource(R.layout.preference_widget_settings);
+        setLayoutResource(R.layout.leanback_preference);
     }
 
     public void setOnGearClickListener(OnGearClickListener l) {
