@@ -170,6 +170,7 @@
     <string name="device_surround_sound">Surround sound</string>
     <!-- Preference and title which changes system sounds settings. [CHAR LIMIT=50] -->
     <string name="device_sound_effects">System sounds</string>
+    <string name="device_sound_bootsafe">Enforce safe volume</string>
     <!-- Preference which manages apps. [CHAR LIMIT=50] -->
     <string name="device_apps">Applications</string>
     <!-- Preference which shows storage status. [CHAR LIMIT=50] -->

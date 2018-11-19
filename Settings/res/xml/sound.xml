@@ -22,6 +22,12 @@
         android:key="sound_effects"
         android:persistent="true"
         android:title="@string/device_sound_effects"/>
+ 
+    <SwitchPreference
+        android:key="sound_safe"
+        android:persistent="true"
+        android:title="@string/device_sound_bootsafe"/>
+
 
     <ListPreference
         android:key="audio_device"

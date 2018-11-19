@@ -40,6 +40,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import android.util.Log;
+import android.os.SystemProperties;
 
 /**
  * The "Sound" screen in TV Settings.
@@ -47,6 +48,7 @@ import android.util.Log;
 public class SoundFragment extends PreferenceControllerFragment implements Preference.OnPreferenceChangeListener {
 
     static final String KEY_SOUND_EFFECTS = "sound_effects";
+    static final String KEY_SOUND_SAFE = "sound_safe";
     static final String KEY_SURROUND_PASSTHROUGH = "surround_passthrough";
     static final String KEY_SURROUND_SOUND_CATEGORY = "surround_sound_category";
     static final String KEY_SURROUND_SOUND_FORMAT_PREFIX = "surround_sound_format_";
@@ -96,6 +98,9 @@ public class SoundFragment extends PreferenceControllerFragment implements Prefe
 
         final TwoStatePreference soundPref = (TwoStatePreference) findPreference(KEY_SOUND_EFFECTS);
         soundPref.setChecked(getSoundEffectsEnabled());
+        
+        final TwoStatePreference soundSafe = (TwoStatePreference) findPreference(KEY_SOUND_SAFE);
+        soundSafe.setChecked(getSoundBootSafeEnabled());
 
         audiodevicePref = (ListPreference) findPreference(KEY_AUDIO_DEVICE);
         spdifSurroundPref = (ListPreference) findPreference(KEY_SORROUND_PASSTHROUGH_SPDIF);
@@ -199,6 +204,10 @@ public class SoundFragment extends PreferenceControllerFragment implements Prefe
             final TwoStatePreference soundPref = (TwoStatePreference) preference;
             setSoundEffectsEnabled(soundPref.isChecked());
         }
+        if (TextUtils.equals(preference.getKey(), KEY_SOUND_SAFE)) {
+            final TwoStatePreference soundSafe = (TwoStatePreference) preference;
+            setSoundBootSafeEnabled(soundSafe.isChecked());
+        }
         return super.onPreferenceTreeClick(preference);
     }
 
@@ -259,6 +268,16 @@ public class SoundFragment extends PreferenceControllerFragment implements Prefe
             return true;
         }
         return true;
+    }
+
+    private boolean getSoundBootSafeEnabled() {
+        return "true".equals(SystemProperties.get("persist.sys.audio.enforce_safevolume","true"));
+    }
+    private void setSoundBootSafeEnabled(boolean enabled) {
+        if(enabled)
+            SystemProperties.set("persist.sys.audio.enforce_safevolume","true");
+        else
+            SystemProperties.set("persist.sys.audio.enforce_safevolume","false");
     }
 
     private boolean getSoundEffectsEnabled() {
