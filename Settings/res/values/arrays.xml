@@ -346,4 +346,16 @@
         <item>@string/wifi_ap_choose_2G</item>
         <item>@string/wifi_ap_choose_5G</item>
     </string-array>
+
+    <string-array name="power_key_choose">
+        <item>@string/dormancy</item>
+        <item>@string/power_off</item>
+        <item>@string/reboot</item>
+    </string-array>
+
+    <string-array name="power_key_choose_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
 </resources>

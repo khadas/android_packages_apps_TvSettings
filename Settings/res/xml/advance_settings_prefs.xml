@@ -17,18 +17,10 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
                   android:title="@string/advance_settings">
-	<PreferenceCategory
+	<!-- <PreferenceCategory
             android:key="display_title"
             android:title="@string/device_display"
             android:layout="@layout/preference_category_compact_layout">
-		<ListPreference
-            android:key="screen_resolution_pref"
-            android:title="@string/screen_resolution"
-            android:fragment="com.android.tv.settings.advance_settings.ScreenResolutionFragment" />
-		<Preference
-            android:key="screen_zoom_pref"
-            android:title="@string/screen_zoom"
-            android:fragment="" />
 		<Preference
             android:key="hdr2sdr"
             android:title="@string/hdr2sdr"
@@ -38,9 +30,9 @@
             android:title="@string/sdr2sdr"
             android:fragment="" />
 		
-	</PreferenceCategory>
+	</PreferenceCategory> -->
 			
-	<PreferenceCategory
+	<!-- <PreferenceCategory
             android:key="hdmi_cec"
             android:title="@string/hdmi_cec"
             android:layout="@layout/preference_category_compact_layout">
@@ -55,18 +47,18 @@
             android:key="enable_singlekey_poweroff"
             android:title="@string/enable_singlekey_poweroff"/>
 		
-	</PreferenceCategory>
+	</PreferenceCategory> -->
 			
-	<PreferenceCategory
+	<!-- <PreferenceCategory
             android:key="play_setting"
             android:title="@string/play_setting"
             android:layout="@layout/preference_category_compact_layout">
 		<SwitchPreference
             android:key="hdmi_self_adaption"
             android:title="@string/hdmi_self_adaption"/>	
-	</PreferenceCategory>
+	</PreferenceCategory> -->
 	
-	<PreferenceCategory
+	<!-- <PreferenceCategory
             android:key="device_sound"
             android:title="@string/device_sound"
             android:layout="@layout/preference_category_compact_layout">
@@ -82,6 +74,20 @@
             android:key="dts_audio"
             android:title="@string/dts_audio"
             android:fragment="" />
-	</PreferenceCategory>
+	</PreferenceCategory> -->
+
+      <PreferenceCategory
+            android:key="device_power_key"
+            android:title="@string/power_key"
+            android:layout="@layout/preference_category_compact_layout">
+
+		<ListPreference
+            android:key="power_key"
+            android:title="@string/power_key_definition"
+            android:persistent="true"
+            android:summary="%s"
+            android:entries="@array/power_key_choose"
+            android:entryValues="@array/power_key_choose_values"/>
+      </PreferenceCategory>
 
 </PreferenceScreen>

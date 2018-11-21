@@ -24,6 +24,7 @@ import android.location.LocationManager;
 import android.os.BatteryManager;
 import android.os.Bundle;
 import android.os.UserManager;
+import android.os.SystemProperties;
 import android.provider.Settings;
 import android.support.v7.preference.ListPreference;
 import android.support.v7.preference.Preference;
@@ -46,8 +47,8 @@ import java.util.List;
 /**
  * The location settings screen in TV settings.
  */
-public class AdvanceSettingsFragment extends SettingsPreferenceFragment implements
-        Preference.OnPreferenceChangeListener {
+public class AdvanceSettingsFragment extends SettingsPreferenceFragment
+        implements Preference.OnPreferenceChangeListener {
 
     private static final String TAG = "AdvanceSettingsFragment";
 
@@ -55,7 +56,14 @@ public class AdvanceSettingsFragment extends SettingsPreferenceFragment implemen
     private static final String LOCATION_MODE_OFF = "off";
 
     private static final String KEY_LOCATION_MODE = "locationMode";
+    private static final String KEY_POWER_KEY = "power_key";
 
+    private static final String DORMANCY = "0";
+    private static final String POWER_OFF = "1";
+    private static final String REBOOT = "2";
+    private static final String PROPERTY_POWER_KEY = "persist.vendor.power_key";
+
+    private ListPreference powerKeyPref;
 
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
@@ -63,7 +71,7 @@ public class AdvanceSettingsFragment extends SettingsPreferenceFragment implemen
             if (Log.isLoggable(TAG, Log.DEBUG)) {
                 Log.d(TAG, "Received location mode change intent: " + intent);
             }
-            
+
         }
     };
 
@@ -74,6 +82,9 @@ public class AdvanceSettingsFragment extends SettingsPreferenceFragment implemen
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.advance_settings_prefs, null);
+
+        powerKeyPref = (ListPreference) findPreference(KEY_POWER_KEY);
+        initPowerKey();
     }
 
     // When selecting the location preference, LeanbackPreferenceFragment
@@ -83,17 +94,19 @@ public class AdvanceSettingsFragment extends SettingsPreferenceFragment implemen
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //getActivity().registerReceiver(mReceiver, new IntentFilter(LocationManager.MODE_CHANGED_ACTION));
+        // getActivity().registerReceiver(mReceiver, new
+        // IntentFilter(LocationManager.MODE_CHANGED_ACTION));
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        //getActivity().unregisterReceiver(mReceiver);
+        // getActivity().unregisterReceiver(mReceiver);
     }
 
     private void addPreferencesSorted(List<Preference> prefs, PreferenceGroup container) {
-        // If there's some items to display, sort the items and add them to the container.
+        // If there's some items to display, sort the items and add them to the
+        // container.
         prefs.sort(Comparator.comparing(lhs -> lhs.getTitle().toString()));
         for (Preference entry : prefs) {
             container.addPreference(entry);
@@ -102,22 +115,52 @@ public class AdvanceSettingsFragment extends SettingsPreferenceFragment implemen
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
-        /*if (TextUtils.equals(preference.getKey(), KEY_LOCATION_MODE)) {
-            int mode = Settings.Secure.LOCATION_MODE_OFF;
-            if (TextUtils.equals((CharSequence) newValue, LOCATION_MODE_WIFI)) {
-                mode = Settings.Secure.LOCATION_MODE_HIGH_ACCURACY;
-            } else if (TextUtils.equals((CharSequence) newValue, LOCATION_MODE_OFF)) {
-                mode = Settings.Secure.LOCATION_MODE_OFF;
-            } else {
-                Log.wtf(TAG, "Tried to set unknown location mode!");
+        /*
+         * if (TextUtils.equals(preference.getKey(), KEY_LOCATION_MODE)) { int mode =
+         * Settings.Secure.LOCATION_MODE_OFF; if (TextUtils.equals((CharSequence)
+         * newValue, LOCATION_MODE_WIFI)) { mode =
+         * Settings.Secure.LOCATION_MODE_HIGH_ACCURACY; } else if
+         * (TextUtils.equals((CharSequence) newValue, LOCATION_MODE_OFF)) { mode =
+         * Settings.Secure.LOCATION_MODE_OFF; } else { Log.wtf(TAG,
+         * "Tried to set unknown location mode!"); } }
+         */
+        if (TextUtils.equals(preference.getKey(), KEY_POWER_KEY)) {
+            Log.i("ROCKCHIP", "newValue = " + newValue);
+            String powerKey = (String) newValue;
+            switch (powerKey) {
+            case POWER_OFF:
+                SystemProperties.set(PROPERTY_POWER_KEY, POWER_OFF);
+                break;
+            case REBOOT:
+                SystemProperties.set(PROPERTY_POWER_KEY, REBOOT);
+                break;
+            default:
+                SystemProperties.set(PROPERTY_POWER_KEY, DORMANCY);
+                break;
             }
-        }*/
+        }
         return true;
     }
-	
-	
+
     @Override
     public int getMetricsCategory() {
         return MetricsProto.MetricsEvent.LOCATION;
+    }
+
+    private void initPowerKey() {
+        String powerKey = SystemProperties.get(PROPERTY_POWER_KEY, "0");
+        Log.i("ROCKCHIP","powerKey = " + powerKey);
+        switch (powerKey) {
+        case POWER_OFF:
+            powerKeyPref.setValue(POWER_OFF);
+            break;
+        case REBOOT:
+            powerKeyPref.setValue(REBOOT);
+            break;
+        default:
+            powerKeyPref.setValue(DORMANCY);
+            break;
+        }
+        powerKeyPref.setOnPreferenceChangeListener(this);
     }
 }

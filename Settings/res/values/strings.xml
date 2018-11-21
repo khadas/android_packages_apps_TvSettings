@@ -2089,4 +2089,11 @@
     <string name="keyboard_layout_dialog_setup_button">Set up keyboard layouts</string>
     <string name="keyboard_layout_dialog_title">Choose keyboard layout</string>
     <string name="keyboard_layout_dialog_switch_hint">To switch, press Control-Spacebar</string>
+
+    <!-- power -->
+    <string name="power_key">Power Key</string>
+    <string name="power_key_definition">Power Key Definition</string>
+    <string name="dormancy">Dormancy</string>
+    <string name="power_off">Power Off</string>
+    <string name="reboot">Reboot</string>
 </resources>

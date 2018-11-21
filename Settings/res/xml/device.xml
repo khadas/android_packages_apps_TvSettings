@@ -120,9 +120,9 @@
             android:targetClass="com.android.tv.settings.device.storage.ResetActivity"
             android:targetPackage="com.android.tv.settings"/>
     </Preference>
-	<!-- <Preference
+	<Preference
         android:fragment="com.android.tv.settings.advance_settings.AdvanceSettingsFragment"
         android:icon="@drawable/logo_settings_color_48dp"
         android:key="advance_settings"
-        android:title="@string/advance_settings"/> -->
+        android:title="@string/advance_settings"/>
 </PreferenceScreen>
