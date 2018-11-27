@@ -53,8 +53,10 @@ public class SoundFragment extends PreferenceControllerFragment implements Prefe
     static final String KEY_SURROUND_SOUND_CATEGORY = "surround_sound_category";
     static final String KEY_SURROUND_SOUND_FORMAT_PREFIX = "surround_sound_format_";
     static final String KEY_SORROUND_PASSTHROUGH_SPDIF = "surround_passthrough_spdif";
+    static final String KEY_AUDIO_MODE_PROPERTY = "persist.dolby.rfmode";
 
     private static final String KEY_AUDIO_DEVICE = "audio_device";
+    private static final String KEY_AUDIO_MODE = "audio_mode";
     private static final String VAL_AUDIO_OUTPUT_DEFAUL = "default";
     private static final String VAL_AUDIO_OUTPUT_SPDIF = "spdif";
     private static final String VAL_AUDIO_OUTPUT_HDMI = "hdmi";
@@ -67,6 +69,9 @@ public class SoundFragment extends PreferenceControllerFragment implements Prefe
     static final String HDMI = "hdmi";
     static final String SPDIF = "spdif";
 
+    static final String RF_MODE = "RF Mode";
+    static final String Line_MODE = "Line Mode";
+
     private AudioManager mAudioManager;
     private Map<Integer, Boolean> mFormats;
     private List<AbstractPreferenceController> mPreferenceControllers;
@@ -75,6 +80,7 @@ public class SoundFragment extends PreferenceControllerFragment implements Prefe
     private ListPreference audiodevicePref;
     private ListPreference spdifSurroundPref;
     private ListPreference surroundPref;
+    private ListPreference audiomodePref;
 
     public static SoundFragment newInstance() {
         return new SoundFragment();
@@ -98,22 +104,36 @@ public class SoundFragment extends PreferenceControllerFragment implements Prefe
 
         final TwoStatePreference soundPref = (TwoStatePreference) findPreference(KEY_SOUND_EFFECTS);
         soundPref.setChecked(getSoundEffectsEnabled());
-        
+
         final TwoStatePreference soundSafe = (TwoStatePreference) findPreference(KEY_SOUND_SAFE);
         soundSafe.setChecked(getSoundBootSafeEnabled());
 
         audiodevicePref = (ListPreference) findPreference(KEY_AUDIO_DEVICE);
         spdifSurroundPref = (ListPreference) findPreference(KEY_SORROUND_PASSTHROUGH_SPDIF);
+        audiomodePref = (ListPreference) findPreference(KEY_AUDIO_MODE);
         mSurroundSoundCategoryPref = (PreferenceCategory) findPreference(KEY_SURROUND_SOUND_CATEGORY);
         surroundPref = (ListPreference) findPreference(KEY_SURROUND_PASSTHROUGH);
         int bitStreamDevices = getPassthroughDevice(getContext());
         audiodevicePref.setValue(bitStreamDevices == AudioSystem.DEVICE_OUT_SPDIF ? SPDIF : HDMI);
         audiodevicePref.setOnPreferenceChangeListener(this);
 
+        String audioMode = SystemProperties.get(KEY_AUDIO_MODE_PROPERTY, "true");
+        Log.d("SoundFragment","onCreatePreferences audioMode = "+audioMode);
+        if (audioMode.equals("true")){ // equals
+            audiomodePref.setValue(RF_MODE);
+            Log.d("SoundFragment","audiodevicePref rf mode");
+        } else {
+            audiomodePref.setValue(Line_MODE);
+            Log.d("SoundFragment","audiodevicePref line mode");
+        }
+        audiomodePref.setOnPreferenceChangeListener(this);
+
         createSurroundPref();
 
         createFormatPreferences();
         updateFormatPreferencesStates();
+
+        getPreferenceScreen().removePreference(audiomodePref);
 
     }
 
@@ -213,6 +233,7 @@ public class SoundFragment extends PreferenceControllerFragment implements Prefe
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
+        Log.d("SoundFragment","onPreferenceChange preference.getKey() = "+preference.getKey());
         if (TextUtils.equals(preference.getKey(), KEY_SURROUND_PASSTHROUGH)) {
             final String selection = (String) newValue;
             switch (selection) {
@@ -265,6 +286,10 @@ public class SoundFragment extends PreferenceControllerFragment implements Prefe
             createSurroundPref();
             createFormatPreferences();
             updateFormatPreferencesStates();
+            return true;
+        } else if (TextUtils.equals(preference.getKey(), KEY_AUDIO_MODE)) {
+            final String selection = (String) newValue;
+            setAudioMode(selection);
             return true;
         }
         return true;
@@ -351,5 +376,22 @@ public class SoundFragment extends PreferenceControllerFragment implements Prefe
     public static int getPassthroughDevice(Context context) {
         return Settings.Global.getInt(context.getContentResolver(), Settings.Global.BITSTREAM_OUTPUT_DEVICE,
                 AudioSystem.DEVICE_OUT_AUX_DIGITAL);
+    }
+
+    private void setAudioMode(String mode) {
+        Log.d("SoundFragment","setAudioMode, mode = "+mode);
+        switch (mode) {
+            case RF_MODE:
+                SystemProperties.set(KEY_AUDIO_MODE_PROPERTY,"true");
+                Log.d("SoundFragment","setAudioMode, rf mode");
+                break;
+            case Line_MODE:
+                SystemProperties.set(KEY_AUDIO_MODE_PROPERTY,"false");
+                Log.d("SoundFragment","setAudioMode, line mode");
+                break;
+            default:
+                Log.d("SoundFragment","unknown mode = "+mode);
+                break;
+        }
     }
 }

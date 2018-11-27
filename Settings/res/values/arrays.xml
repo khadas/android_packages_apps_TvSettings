@@ -273,15 +273,15 @@
         <item>GTC</item>
     </string-array>
 
-    
+
     <!-- WengTao resolution list -->
     <string-array name="resolution_list" translatable="false">
         <item>1920x1080p-60</item>
         <item>1280x720p-60</item>
         <item>720x480p-60</item>
     </string-array>
-    
-    
+
+
     <string-array name="color_list" translatable="false">
         <item>color1</item>
         <item>color2</item>
@@ -296,13 +296,13 @@
         <item>hdmi</item>
         <item>spdif</item>
     </string-array>
-    
+
     <string-array name="surround_sound_entries_spdif" translatable="false">
         <item>@string/surround_sound_none_summary</item>
         <item>@string/surround_sound_manual_summary</item>
     </string-array>
 
-    
+
     <string-array name="surround_sound_entry_values_spdif" translatable="false">
         <item>never</item>
         <item>manual</item>
@@ -357,5 +357,15 @@
         <item>0</item>
         <item>1</item>
         <item>2</item>
+    </string-array>
+
+    <string-array name="audio_mode_list">
+        <item>RF</item>
+        <item>Line</item>
+    </string-array>
+
+    <string-array name="audio_mode_list_values">
+        <item>RF Mode</item>
+        <item>Line Mode</item>
     </string-array>
 </resources>

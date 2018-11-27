@@ -744,7 +744,7 @@
     <string name="picture_in_picture_app_detail_summary" msgid="3478182415601436326">"允许应用在您打开应用时或您离开应用后（例如继续观看视频）创建画中画窗口。这类窗口会显示在您当前使用的其他应用的上层。"</string>
     <string name="special_access" msgid="3513811566600299998">"特殊应用权限"</string>
     <string name="string_concat" msgid="5897947064488902904">"<xliff:g id="PART1">%1s</xliff:g>，<xliff:g id="PART2">%2s</xliff:g>"</string>
-    
+
     <!-- More Settins -->
     <string name="more_settings">更多设置</string>
 
@@ -806,6 +806,7 @@
     <string name="confirm_dialog_title">保存确认</string>
     <string name="confirm_dialog_message">将会取消</string>
     <string name="audio_device">音频设备</string>
+    <string name="audio_mode">音频解码模式</string>
 
     <!-- Bluetooth interface -->
     <string name="bluetooth">蓝牙</string>

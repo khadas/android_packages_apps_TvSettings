@@ -127,6 +127,7 @@ public class SoundFormatPreferenceController extends AbstractPreferenceControlle
             enabledFormats = Settings.Global.getString(mContext.getContentResolver(),
                     Settings.Global.ENCODED_SURROUND_OUTPUT_ENABLED_FORMATS);
         }
+        Log.d(TAG,"getFormatsEnabledInManualMode: device = "+device+",enabledFormats = "+enabledFormats);
         if (enabledFormats == null) {
             // Starting with Android P passthrough setting ALWAYS has been replaced with
             // MANUAL.

@@ -22,7 +22,7 @@
         android:key="sound_effects"
         android:persistent="true"
         android:title="@string/device_sound_effects"/>
- 
+
     <SwitchPreference
         android:key="sound_safe"
         android:persistent="true"
@@ -34,6 +34,13 @@
         android:title="@string/audio_device"
         android:entries="@array/audio_device_list"
         android:entryValues="@array/audio_device_list_values"
+        android:summary="%s" />
+
+    <ListPreference
+        android:key="audio_mode"
+        android:title="@string/audio_mode"
+        android:entries="@array/audio_mode_list"
+        android:entryValues="@array/audio_mode_list_values"
         android:summary="%s" />
 
     <PreferenceCategory
@@ -50,7 +57,7 @@
             android:summary="%s"
             android:dialogMessage="@string/surround_sound_auto_info"/>
 
-            
+
         <ListPreference
             android:key="surround_passthrough_spdif"
             android:persistent="true"
