@@ -288,6 +288,7 @@ public class BluetoothFragment extends LeanbackPreferenceFragment implements Pre
             return true;
         } else if (preference == mPreferenceBluetoothReceived) {
             Intent intent = new Intent(BTOPP_ACTION_OPEN_RECEIVED_FILES);
+            intent.setPackage("com.android.bluetooth");
             getActivity().sendBroadcast(intent);
         }
         return super.onPreferenceTreeClick(preference);
