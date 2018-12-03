@@ -373,6 +373,32 @@ public class BluetoothDevicePairer {
         mVisibleDevices.clear();
     }
 
+    public void cancelScanning() {
+        Log.d(TAG, "stopScanning");
+        // TODO allow cancel to be called from any state
+        if (isInProgress()) {
+            Log.d(TAG, "Pairing process has already begun, it can not be canceled.");
+            return;
+        }
+
+        // stop scanning, just in case we are
+        final boolean wasListening = BluetoothScanner.stopListening(mBtListener);
+        BluetoothScanner.stopNow();
+
+        mHandler.removeCallbacksAndMessages(null);
+
+        // remove bond, if existing
+        unpairDevice(mTarget);
+
+        mTarget = null;
+
+        setStatus(STATUS_NONE);
+
+        Log.d(TAG, "doCancel and wasListening is " + wasListening);
+
+        mVisibleDevices.clear();
+    }
+
     /**
      * Stop any pairing request that is in progress.
      */
@@ -558,6 +584,7 @@ public class BluetoothDevicePairer {
 
         setStatus(STATUS_NONE);
 
+        Log.d(TAG, "doCancel and wasListening is " + wasListening);
         // resume scanning
         if (wasListening) {
             start();

@@ -2097,4 +2097,13 @@
     <string name="dormancy">Dormancy</string>
     <string name="power_off">Power Off</string>
     <string name="reboot">Reboot</string>
+    <!-- auto pair -->
+    <string name="pair_searching">Searching</string>
+    <string name="pair_pairing">remote begines pairring</string>
+    <string name="pair_paired">remote is pairred</string>
+    <string name="pair_connecting">remote begines connecting</string>
+    <string name="pair_connected">remote is connected</string>
+    <string name="autopait_timeout_error">not find device, continue searching</string>
+    <string name="pair_fail">remote pairs fail</string>
+    <string name="pair_status_error">pair_status_error</string>
 </resources>
