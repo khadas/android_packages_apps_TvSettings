@@ -733,7 +733,7 @@
             </intent-filter>
         </provider>
 
-    
+
         <activity
             android:name="MainSettings$ScanningSettingsActivity">
             <intent-filter android:priority="1">
@@ -779,6 +779,8 @@
               <meta-data android:name="com.android.tv.settings.FRAGMENT_CLASS"
                   android:value="com.android.tv.settings.inputmethod.KeyboardLayoutPickerFragment" />
         </activity>
+
+        <activity android:name=".advance_settings.DefaultLauncherActivity"/>
     </application>
 
 </manifest>

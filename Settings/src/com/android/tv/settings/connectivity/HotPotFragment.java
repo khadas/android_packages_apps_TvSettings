@@ -113,7 +113,7 @@ public class HotPotFragment extends LeanbackPreferenceFragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        addPreferencesFromResource(R.xml.hotpot);
+        addPreferencesFromResource(R.xml.hotspot);
 
         mDataSaverFooter = findPreference(DATA_SAVER_FOOTER);
 
@@ -169,7 +169,7 @@ public class HotPotFragment extends LeanbackPreferenceFragment
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-//        setPreferencesFromResource(R.xml.hotpot, null);
+//        setPreferencesFromResource(R.xml.hotspot, null);
     }
 
     @Override

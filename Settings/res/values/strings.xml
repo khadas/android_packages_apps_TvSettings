@@ -1654,10 +1654,10 @@
     <!-- abc -->
     <string name="enable_abc">Android bug collector</string>
     <string name="enable_abc_summary" >"Save recent boot logs in /data/logs"</string>
-    <!-- if not Advance_settings,remove this unuse resource begin by wengtao -->
     <string name="advance_settings">Advanced setting</string>
     <string name="screen_resolution">Screen resolution</string>
-    <string name="screen_zoom">Screen zoom</string>
+    <string name="default_launcher">Default Launcher</string>
+    <!-- if not Advance_settings,remove this unuse resource begin by wengtao -->
     <string name="hdr2sdr">HDR switch to SDR</string>
     <string name="sdr2sdr">SDR switch to HDR</string>
     <string name="hdmi_cec">HDMI CEC</string>
@@ -2032,8 +2032,8 @@
     <string name="edit">Edit</string>
 
     <!-- HotPot -->
-    <string name="hotpot_name">HotPot</string>
-    <string name="hotpot_setting_title">Hotpot Setup</string>
+    <string name="hotspot_name">Hotspot</string>
+    <string name="hotspot_setting_title">Hotspot Setup</string>
     <string name="usb_tethering_active_subtext">Tethered</string>
 	<string name="usb_tethering_available_subtext">USB connected, check to tether</string>
 	<string name="usb_tethering_errored_subtext">USB tethering error</string>

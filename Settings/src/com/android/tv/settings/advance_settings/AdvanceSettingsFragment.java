@@ -19,28 +19,24 @@ package com.android.tv.settings.advance_settings;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.location.LocationManager;
-import android.os.BatteryManager;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.os.Bundle;
-import android.os.UserManager;
 import android.os.SystemProperties;
-import android.provider.Settings;
 import android.support.v7.preference.ListPreference;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceCategory;
 import android.support.v7.preference.PreferenceGroup;
-import android.support.v7.preference.PreferenceScreen;
 import android.text.TextUtils;
 import android.util.Log;
 
 import com.android.internal.logging.nano.MetricsProto;
-import com.android.settingslib.location.RecentLocationApps;
 import com.android.tv.settings.R;
 import com.android.tv.settings.SettingsPreferenceFragment;
 import com.android.tv.settings.device.apps.AppManagementFragment;
+import com.android.tv.settings.display.DrmDisplaySetting;
+import com.android.tv.settings.util.ReflectUtils;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -57,12 +53,14 @@ public class AdvanceSettingsFragment extends SettingsPreferenceFragment
 
     private static final String KEY_LOCATION_MODE = "locationMode";
     private static final String KEY_POWER_KEY = "power_key";
+    private static final String KEY_DEFAULT_LAUNCHER = "default_launcher";
 
     private static final String DORMANCY = "0";
     private static final String POWER_OFF = "1";
     private static final String REBOOT = "2";
     private static final String PROPERTY_POWER_KEY = "persist.vendor.power_key";
 
+    private PreferenceCategory displayPC;
     private ListPreference powerKeyPref;
 
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
@@ -85,6 +83,10 @@ public class AdvanceSettingsFragment extends SettingsPreferenceFragment
 
         powerKeyPref = (ListPreference) findPreference(KEY_POWER_KEY);
         initPowerKey();
+
+        //Default Launcher
+        Preference defaultLauncher = (Preference) findPreference(KEY_DEFAULT_LAUNCHER);
+        defaultLauncher.setSummary(getCurrentLauncherString());
     }
 
     // When selecting the location preference, LeanbackPreferenceFragment
@@ -96,6 +98,14 @@ public class AdvanceSettingsFragment extends SettingsPreferenceFragment
         super.onCreate(savedInstanceState);
         // getActivity().registerReceiver(mReceiver, new
         // IntentFilter(LocationManager.MODE_CHANGED_ACTION));
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        Preference defaultLauncher = (Preference) findPreference(KEY_DEFAULT_LAUNCHER);
+        defaultLauncher.setSummary(getCurrentLauncherString());
     }
 
     @Override
@@ -124,8 +134,8 @@ public class AdvanceSettingsFragment extends SettingsPreferenceFragment
          * Settings.Secure.LOCATION_MODE_OFF; } else { Log.wtf(TAG,
          * "Tried to set unknown location mode!"); } }
          */
+        Log.i("ROCKCHIP", "newValue = " + newValue);
         if (TextUtils.equals(preference.getKey(), KEY_POWER_KEY)) {
-            Log.i("ROCKCHIP", "newValue = " + newValue);
             String powerKey = (String) newValue;
             switch (powerKey) {
             case POWER_OFF:
@@ -149,7 +159,7 @@ public class AdvanceSettingsFragment extends SettingsPreferenceFragment
 
     private void initPowerKey() {
         String powerKey = SystemProperties.get(PROPERTY_POWER_KEY, "0");
-        Log.i("ROCKCHIP","powerKey = " + powerKey);
+        Log.i("ROCKCHIP", "powerKey = " + powerKey);
         switch (powerKey) {
         case POWER_OFF:
             powerKeyPref.setValue(POWER_OFF);
@@ -162,5 +172,18 @@ public class AdvanceSettingsFragment extends SettingsPreferenceFragment
             break;
         }
         powerKeyPref.setOnPreferenceChangeListener(this);
+    }
+
+    private String getCurrentLauncherString() {
+        PackageManager pm = getActivity().getPackageManager();
+        Intent intent = new Intent(Intent.ACTION_MAIN, null);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.addCategory(Intent.CATEGORY_DEFAULT);
+        ResolveInfo currentLauncher =  pm.resolveActivity(intent, 0);
+        if (currentLauncher != null && !TextUtils.isEmpty(currentLauncher.activityInfo.packageName) && !TextUtils.equals(currentLauncher.activityInfo.packageName, "android")) {
+            return currentLauncher.loadLabel(pm).toString();
+        } else {
+            return "android";
+        }
     }
 }

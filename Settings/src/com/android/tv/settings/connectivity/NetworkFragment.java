@@ -86,7 +86,7 @@ public class NetworkFragment extends SettingsPreferenceFragment implements
     private static final String KEY_ETHERNET_STATUS = "ethernet_status";
     private static final String KEY_ETHERNET_PROXY = "ethernet_proxy";
     private static final String KEY_ETHERNET_DHCP = "ethernet_dhcp";
-    private static final String KEY_HOTPOT = "hotpot";
+    private static final String KEY_HOTPOT = "hotspot";
     private static final String KEY_VPN = "avaliable_vpns";
     private static final String KEY_EDIT_VPN = "edit_vpn";
 

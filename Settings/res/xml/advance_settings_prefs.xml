@@ -17,64 +17,18 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
                   android:title="@string/advance_settings">
-	<!-- <PreferenceCategory
-            android:key="display_title"
-            android:title="@string/device_display"
+
+      <PreferenceCategory
+            android:title="@string/default_launcher"
             android:layout="@layout/preference_category_compact_layout">
-		<Preference
-            android:key="hdr2sdr"
-            android:title="@string/hdr2sdr"
-            android:fragment="" />
-		<Preference
-            android:key="sdr2hdr"
-            android:title="@string/sdr2sdr"
-            android:fragment="" />
-		
-	</PreferenceCategory> -->
-			
-	<!-- <PreferenceCategory
-            android:key="hdmi_cec"
-            android:title="@string/hdmi_cec"
-            android:layout="@layout/preference_category_compact_layout">
-			
-		<SwitchPreference
-            android:key="enable_cec"
-            android:title="@string/enable_cec"/>
-		<SwitchPreference
-            android:key="enable_singlekey_play"
-            android:title="@string/enable_singlekey_play"/>
-		<SwitchPreference
-            android:key="enable_singlekey_poweroff"
-            android:title="@string/enable_singlekey_poweroff"/>
-		
-	</PreferenceCategory> -->
-			
-	<!-- <PreferenceCategory
-            android:key="play_setting"
-            android:title="@string/play_setting"
-            android:layout="@layout/preference_category_compact_layout">
-		<SwitchPreference
-            android:key="hdmi_self_adaption"
-            android:title="@string/hdmi_self_adaption"/>	
-	</PreferenceCategory> -->
-	
-	<!-- <PreferenceCategory
-            android:key="device_sound"
-            android:title="@string/device_sound"
-            android:layout="@layout/preference_category_compact_layout">
-		<Preference
-            android:key="dolby_audio"
-            android:title="@string/dolby_audio"
-            android:fragment="" />
-		<Preference
-            android:key="digital_audio"
-            android:title="@string/digital_audio"
-            android:fragment="" />
-		<Preference
-            android:key="dts_audio"
-            android:title="@string/dts_audio"
-            android:fragment="" />
-	</PreferenceCategory> -->
+
+            <Preference
+            android:key="default_launcher"
+            android:title="@string/default_launcher"
+            android:summary="%s"
+            android:fragment="com.android.tv.settings.advance_settings.DefaultLauncherFragment"/>
+
+      </PreferenceCategory>
 
       <PreferenceCategory
             android:key="device_power_key"

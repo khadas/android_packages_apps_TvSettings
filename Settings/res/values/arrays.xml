@@ -332,7 +332,7 @@
         <item>Unsuccessful</item>
     </string-array>
 
-    <!-- hotpot -->
+    <!-- hotspot -->
     <string-array name="wifi_ap_band_config_2G_only">
         <item>@string/wifi_ap_choose_2G</item>
     </string-array>
@@ -368,4 +368,5 @@
         <item>RF Mode</item>
         <item>Line Mode</item>
     </string-array>
+
 </resources>
