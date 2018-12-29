@@ -22,6 +22,7 @@
     <item msgid="1532366273541603403">"30 分钟"</item>
     <item msgid="2085428169229240524">"1 小时"</item>
     <item msgid="1721833099003792021">"2 小时"</item>
+    <item>"永不"</item>
   </string-array>
   <string-array name="screen_off_timeout_entries">
     <item msgid="2023064540617589294">"15 分钟"</item>
