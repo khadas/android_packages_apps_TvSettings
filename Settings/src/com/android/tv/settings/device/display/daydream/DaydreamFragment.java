@@ -107,6 +107,8 @@ public class DaydreamFragment extends SettingsPreferenceFragment
 
         final ListPreference dreamTimePref = (ListPreference) findPreference(KEY_DREAM_TIME);
         dreamTimePref.setValue(Integer.toString(getDreamTime()));
+        if(getDreamTime() == Integer.MAX_VALUE)
+                 dreamTimePref.setSummary("Never");
         dreamTimePref.setOnPreferenceChangeListener(this);
 
         final ListPreference sleepTimePref = (ListPreference) findPreference(KEY_SLEEP_TIME);
@@ -224,6 +226,8 @@ public class DaydreamFragment extends SettingsPreferenceFragment
         final ListPreference dreamTimePref = (ListPreference) findPreference(KEY_DREAM_TIME);
         if (dreamTimePref != null) {
             dreamTimePref.setValue(Integer.toString(getDreamTime()));
+            if(getDreamTime() == Integer.MAX_VALUE)
+                 dreamTimePref.setSummary("Never");
         }
 
         final ListPreference sleepTimePref = (ListPreference) findPreference(KEY_SLEEP_TIME);
