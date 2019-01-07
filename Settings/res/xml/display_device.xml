@@ -34,6 +34,12 @@
         android:key="zoom"
         android:title="@string/zoom" />
 
+    <ListPreference
+        android:key="rotation"
+        android:title="@string/hdmi_rotation"
+        android:entries="@array/hdmi_rotation_entries"
+        android:entryValues="@array/hdmi_rotation_values"/>
+
     <Preference
         android:key="advanced_settings"
         android:title="@string/advance_settings" />

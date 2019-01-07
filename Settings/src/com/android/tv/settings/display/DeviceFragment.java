@@ -39,6 +39,10 @@ import com.android.tv.settings.data.ConstData;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import android.view.IWindowManager;
+import android.view.WindowManager;
+import android.view.Surface;
+import android.os.ServiceManager;
 
 
 @Keep
@@ -48,6 +52,7 @@ public class DeviceFragment extends LeanbackPreferenceFragment implements Prefer
     public static final String KEY_RESOLUTION = "resolution";
     public static final String KEY_COLOR = "color";
     public static final String KEY_ZOOM = "zoom";
+    public static final String KEY_ROTATION = "rotation";
     public static final String KEY_ADVANCED_SETTINGS = "advanced_settings";
     protected PreferenceScreen mPreferenceScreen;
     /**
@@ -62,6 +67,10 @@ public class DeviceFragment extends LeanbackPreferenceFragment implements Prefer
      * 缩放设置
      */
     protected Preference mZoomPreference;
+    /**
+     * 屏幕旋转设置
+     */
+    protected ListPreference mRotationPreference;
     /**
      * 高级设置
      */
@@ -83,7 +92,12 @@ public class DeviceFragment extends LeanbackPreferenceFragment implements Prefer
      * 显示管理
      */
     protected DisplayManager mDisplayManager;
+    /**
+     * 窗口管理
+     */
+    protected WindowManager mWindowManager;
 
+    private IWindowManager wm;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -108,6 +122,7 @@ public class DeviceFragment extends LeanbackPreferenceFragment implements Prefer
         rebuildView();
         updateResolutionValue();
         updateColorValue();
+        updateRotation();
     }
 
 
@@ -121,12 +136,16 @@ public class DeviceFragment extends LeanbackPreferenceFragment implements Prefer
         mStrPlatform = SystemProperties.get("ro.board.platform");
         mIsUseDisplayd = false;//SystemProperties.getBoolean("ro.rk.displayd.enable", true);
         mDisplayManager = (DisplayManager) getActivity().getSystemService(Context.DISPLAY_SERVICE);
+        mWindowManager = (WindowManager) getActivity().getSystemService(Context.WINDOW_SERVICE);
+        wm = IWindowManager.Stub.asInterface(
+                    ServiceManager.getService(Context.WINDOW_SERVICE));
         mPreferenceScreen = getPreferenceScreen();
         mAdvancedSettingsPreference = findPreference(KEY_ADVANCED_SETTINGS);
         mResolutionPreference = (ListPreference) findPreference(KEY_RESOLUTION);
         mColorPreference = (ListPreference) findPreference(KEY_COLOR);
 
         mZoomPreference = findPreference(KEY_ZOOM);
+        mRotationPreference = (ListPreference) findPreference(KEY_ROTATION);
         mTextTitle = (TextView) getActivity().findViewById(android.support.v7.preference.R.id.decor_title);
         if (!mIsUseDisplayd) {
             mDisplayInfo = getDisplayInfo();
@@ -135,6 +154,9 @@ public class DeviceFragment extends LeanbackPreferenceFragment implements Prefer
         //mPreferenceScreen.removePreference(mAdvancedSettingsPreference);
         //if(mStrPlatform.contains("3328"))
           //  mPreferenceScreen.removePreference(mColorPreference);
+
+        if(!SystemProperties.getBoolean("persist.sys.rotation.enable", false))
+               mPreferenceScreen.removePreference(mRotationPreference);
     }
 
     protected void rebuildView() {
@@ -144,7 +166,8 @@ public class DeviceFragment extends LeanbackPreferenceFragment implements Prefer
         mResolutionPreference.setEntryValues(mDisplayInfo.getModes());
         mColorPreference.setEntries(mDisplayInfo.getColors());
         mColorPreference.setEntryValues(mDisplayInfo.getColors());
-        mTextTitle.setText(mDisplayInfo.getDescription());
+        if(mTextTitle!=null)
+           mTextTitle.setText(mDisplayInfo.getDescription());
     }
 
 
@@ -152,8 +175,36 @@ public class DeviceFragment extends LeanbackPreferenceFragment implements Prefer
         mResolutionPreference.setOnPreferenceChangeListener(this);
         mColorPreference.setOnPreferenceChangeListener(this);
         mZoomPreference.setOnPreferenceClickListener(this);
+        mRotationPreference.setOnPreferenceChangeListener(this);
         mAdvancedSettingsPreference.setOnPreferenceClickListener(this);
     }
+
+    public void updateRotation() {
+        //init hdmi rotation
+                try {
+                int rotation = mWindowManager.getDefaultDisplay().getRotation();
+                switch (rotation) {
+                    case Surface.ROTATION_0:
+                         mRotationPreference.setValue("0");
+                        break;
+                    case Surface.ROTATION_90:
+                         mRotationPreference.setValue("90");
+                        break;
+                    case Surface.ROTATION_180:
+                         mRotationPreference.setValue("180");
+                        break;
+                    case Surface.ROTATION_270:
+                        mRotationPreference.setValue("270");
+                        break;
+                    default:
+                        mRotationPreference.setValue("0");
+                }
+               // wm.freezeRotation(0);
+            } catch (Exception e) {
+                Log.e(TAG, e.toString());
+            }
+    }
+
     public void updateColorValue() {
         if (mDisplayInfo == null)
             return;
@@ -216,6 +267,24 @@ public class DeviceFragment extends LeanbackPreferenceFragment implements Prefer
             }
         } else if (preference == mColorPreference) {
                 DrmDisplaySetting.setColorMode(mDisplayInfo.getDisplayId(), mDisplayInfo.getType(), (String) obj);
+        } else if (preference == mRotationPreference) {
+                   try {
+                                int value = Integer.parseInt((String) obj);
+                                Log.d(TAG,"freezeRotation~~~value:"+(String) obj);
+                                if(value == 0)
+                                    wm.freezeRotation(Surface.ROTATION_0);
+                                else if(value == 90)
+                                    wm.freezeRotation(Surface.ROTATION_90);
+                                else if(value == 180)
+                                    wm.freezeRotation(Surface.ROTATION_180);
+                                else if(value == 270)
+                                    wm.freezeRotation(Surface.ROTATION_270);
+                                else
+                                    return true;
+                                android.os.SystemProperties.set("sys.boot_completed", "1");
+                  } catch (Exception e) {
+                                Log.e(TAG, "freezeRotation error");
+                  }
         }
         return true;
     }

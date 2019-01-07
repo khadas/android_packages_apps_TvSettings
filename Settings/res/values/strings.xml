@@ -1666,6 +1666,7 @@
     <string name="screen_resolution">Screen resolution</string>
     <string name="default_launcher">Default Launcher</string>
     <!-- if not Advance_settings,remove this unuse resource begin by wengtao -->
+    <string name="hdmi_rotation">Rotation</string>
     <string name="hdr2sdr">HDR switch to SDR</string>
     <string name="sdr2sdr">SDR switch to HDR</string>
     <string name="hdmi_cec">HDMI CEC</string>
