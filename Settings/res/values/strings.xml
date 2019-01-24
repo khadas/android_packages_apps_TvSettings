@@ -1457,6 +1457,14 @@
     <string name="device_apps_app_management_clear_cache">Clear cache</string>
     <!-- Application management choice for changing the application's notifications option [CHAR LIMIT=40] -->
     <string name="device_apps_app_management_notifications">Notifications</string>
+    <string name="device_apps_app_management_ui_mode">Ui Mode</string>
+    <string name="device_apps_app_management_ui_mode_normal">NORMAL</string>
+    <string name="device_apps_app_management_ui_mode_desk">DESK</string>
+    <string name="device_apps_app_management_ui_mode_car">CAR</string>
+    <string name="device_apps_app_management_ui_mode_television">TELEVISION</string>
+    <string name="device_apps_app_management_ui_mode_appliance">APPLIANCE</string>
+    <string name="device_apps_app_management_ui_mode_watch">WATCH</string>
+    <string name="device_apps_app_management_ui_mode_vr_headset">VR HEADSET</string>
     <!-- Application management choice for displaying the application's permissions [CHAR LIMIT=40] -->
     <string name="device_apps_app_management_permissions">Permissions</string>
     <!-- Application management toast message when an app cannot be launched [CHAR LIMIT=100]-->

@@ -665,6 +665,14 @@
     <string name="device_apps_app_management_clear_default_none" msgid="196932966641339141">"没有默认操作"</string>
     <string name="device_apps_app_management_clear_cache" msgid="5392413180421013865">"清除缓存"</string>
     <string name="device_apps_app_management_notifications" msgid="7291960671957440729">"通知"</string>
+    <string name="device_apps_app_management_ui_mode">UI模式</string>
+    <string name="device_apps_app_management_ui_mode_normal">标准</string>
+    <string name="device_apps_app_management_ui_mode_desk">桌面</string>
+    <string name="device_apps_app_management_ui_mode_car">汽车</string>
+    <string name="device_apps_app_management_ui_mode_television">电视</string>
+    <string name="device_apps_app_management_ui_mode_appliance">器具</string>
+    <string name="device_apps_app_management_ui_mode_watch">手表</string>
+    <string name="device_apps_app_management_ui_mode_vr_headset">VR头戴设备</string>
     <string name="device_apps_app_management_permissions" msgid="1829808830974726081">"权限"</string>
     <string name="device_apps_app_management_not_available" msgid="1249731776661207047">"无法使用应用"</string>
     <string name="settings_ok" msgid="3321630456511355983">"确定"</string>

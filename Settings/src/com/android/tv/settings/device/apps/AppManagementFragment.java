@@ -18,20 +18,25 @@ package com.android.tv.settings.device.apps;
 
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.app.UiModeManager;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.IPackageDataObserver;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.UserHandle;
+import android.os.SystemProperties;
 import android.support.annotation.NonNull;
+import android.support.v7.preference.ListPreference;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceScreen;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.Xml;
 import android.widget.Toast;
 
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
@@ -39,12 +44,22 @@ import com.android.settingslib.applications.ApplicationsState;
 import com.android.tv.settings.R;
 import com.android.tv.settings.SettingsPreferenceFragment;
 
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Fragment for managing a single app
  */
-public class AppManagementFragment extends SettingsPreferenceFragment {
+public class AppManagementFragment extends SettingsPreferenceFragment
+        implements Preference.OnPreferenceChangeListener {
     private static final String TAG = "AppManagementFragment";
 
     private static final String ARG_PACKAGE_NAME = "packageName";
@@ -60,6 +75,7 @@ public class AppManagementFragment extends SettingsPreferenceFragment {
     private static final String KEY_CLEAR_DEFAULTS = "clearDefaults";
     private static final String KEY_NOTIFICATIONS = "notifications";
     private static final String KEY_PERMISSIONS = "permissions";
+    private static final String KEY_UI_MODE = "uiMode";
 
     // Result code identifiers
     private static final int REQUEST_UNINSTALL = 1;
@@ -81,6 +97,7 @@ public class AppManagementFragment extends SettingsPreferenceFragment {
     private ClearCachePreference mClearCachePreference;
     private ClearDefaultsPreference mClearDefaultsPreference;
     private NotificationsPreference mNotificationsPreference;
+    private ListPreference mUiModePreference;
 
     private final Handler mHandler = new Handler();
     private Runnable mBailoutRunnable = () -> {
@@ -107,6 +124,10 @@ public class AppManagementFragment extends SettingsPreferenceFragment {
         mApplicationsState = ApplicationsState.getInstance(activity.getApplication());
         mSession = mApplicationsState.newSession(mCallbacks, getLifecycle());
         mEntry = mApplicationsState.getEntry(mPackageName, UserHandle.myUserId());
+
+        if (SystemProperties.get("ro.target.product", "unknown").equals("box")) {
+            initUiModeMap();
+        }
 
         super.onCreate(savedInstanceState);
     }
@@ -195,6 +216,17 @@ public class AppManagementFragment extends SettingsPreferenceFragment {
         } else {
             return super.onPreferenceTreeClick(preference);
         }
+    }
+
+    @Override
+    public boolean onPreferenceChange(Preference preference, Object newValue) {
+        if (preference == mUiModePreference) {
+            mUiModePreference.setValue((String) newValue);
+            mUiModePreference.setSummary(modeTypeToStr(Integer.parseInt((String) newValue)));
+            setXmlUiMode(Integer.parseInt((String) newValue));
+            this.uiMode = Integer.parseInt((String) newValue);
+        }
+        return true;
     }
 
     @Override
@@ -330,6 +362,18 @@ public class AppManagementFragment extends SettingsPreferenceFragment {
         } else {
             mNotificationsPreference.setEntry(mEntry);
         }
+
+        // For UiMode
+        if (SystemProperties.get("ro.target.product", "unknown").equals("box")) {
+            if (mUiModePreference == null) {
+                mUiModePreference = iniUiModePreference();
+                mUiModePreference.setKey(KEY_UI_MODE);
+                replacePreference(mUiModePreference);
+            } else {
+                mUiModePreference.setValue(String.valueOf(this.uiMode));
+                mUiModePreference.setSummary(modeTypeToStr(this.uiMode));
+            }
+        }
     }
 
     private void replacePreference(Preference preference) {
@@ -404,7 +448,7 @@ public class AppManagementFragment extends SettingsPreferenceFragment {
 
     private void dataCleared(boolean succeeded) {
         if (succeeded) {
-            final int userId =  UserHandle.getUserId(mEntry.info.uid);
+            final int userId = UserHandle.getUserId(mEntry.info.uid);
             mApplicationsState.requestSize(mPackageName, userId);
         } else {
             Log.w(TAG, "Failed to clear data!");
@@ -418,7 +462,7 @@ public class AppManagementFragment extends SettingsPreferenceFragment {
         mPackageManager.deleteApplicationCacheFiles(mEntry.info.packageName,
                 new IPackageDataObserver.Stub() {
                     public void onRemoveCompleted(final String packageName,
-                            final boolean succeeded) {
+                                                  final boolean succeeded) {
                         mHandler.post(new Runnable() {
                             @Override
                             public void run() {
@@ -433,7 +477,7 @@ public class AppManagementFragment extends SettingsPreferenceFragment {
 
     private void cacheCleared(boolean succeeded) {
         if (succeeded) {
-            final int userId =  UserHandle.getUserId(mEntry.info.uid);
+            final int userId = UserHandle.getUserId(mEntry.info.uid);
             mApplicationsState.requestSize(mPackageName, userId);
         } else {
             Log.w(TAG, "Failed to clear cache!");
@@ -464,10 +508,12 @@ public class AppManagementFragment extends SettingsPreferenceFragment {
         }
 
         @Override
-        public void onRebuildComplete(ArrayList<ApplicationsState.AppEntry> apps) {}
+        public void onRebuildComplete(ArrayList<ApplicationsState.AppEntry> apps) {
+        }
 
         @Override
-        public void onPackageIconChanged() {}
+        public void onPackageIconChanged() {
+        }
 
         @Override
         public void onPackageSizeChanged(String packageName) {
@@ -507,6 +553,151 @@ public class AppManagementFragment extends SettingsPreferenceFragment {
             mAppStoragePreference.refresh();
             mClearDataPreference.refresh();
             mClearCachePreference.refresh();
+        }
+    }
+
+    private static String DATA_CONFIG = "/data/cache/recovery/uimode_app.xml";
+    private int uiMode = -1;
+
+    private void initUiModeMap() {
+        Map<String, Integer> mConfigMap = new HashMap<>();
+        File configFilter = new File(DATA_CONFIG);
+        if (configFilter.exists()) {
+            FileInputStream stream = null;
+            try {
+                stream = new FileInputStream(configFilter);
+                XmlPullParser xmlPullParser = Xml.newPullParser();
+                xmlPullParser.setInput(stream, null);
+                int type;
+                do {
+                    type = xmlPullParser.next();
+                    if (type == XmlPullParser.START_TAG) {
+                        String tag = xmlPullParser.getName();
+                        if ("app".equals(tag)) {
+                            String pkgName = xmlPullParser.getAttributeValue(null, "package");
+                            String uiMode = xmlPullParser.getAttributeValue(null, "uiMode");
+                            if (!TextUtils.isEmpty(pkgName) && !TextUtils.isEmpty(uiMode)) {
+                                int parseUiMode = Integer.parseInt(uiMode);
+                                mConfigMap.put(pkgName, parseUiMode >= 0 ? parseUiMode : -1);
+                            }
+                        } else {
+                            Log.i(TAG, "getConfigMap: , tag != app");
+                        }
+                    }
+                } while (type != XmlPullParser.END_DOCUMENT);
+            } catch (NullPointerException e) {
+                Log.w(TAG, "failed parsing " + configFilter, e);
+            } catch (NumberFormatException e) {
+                Log.w(TAG, "failed parsing " + configFilter, e);
+            } catch (XmlPullParserException e) {
+                Log.w(TAG, "failed parsing " + configFilter, e);
+            } catch (IndexOutOfBoundsException e) {
+                Log.w(TAG, "failed parsing " + configFilter, e);
+            } catch (IOException e) {
+                Log.w(TAG, "failed parsing " + configFilter, e);
+            } finally {
+                try {
+                    if (stream != null) {
+                        stream.close();
+                    }
+                } catch (IOException e) {
+                    Log.w(TAG, "stream.close failed");
+                }
+            }
+        } else {
+            Log.i(TAG, "file is not exists");
+        }
+
+        if (mConfigMap != null && mConfigMap.size() > 0) {
+            if (!TextUtils.isEmpty(mPackageName)) {
+                for (String pkgName : mConfigMap.keySet()) {
+                    if (!TextUtils.isEmpty(pkgName) && mPackageName.equals(pkgName)) {
+                        Integer uiMode = mConfigMap.get(mPackageName);
+                        if (uiMode != null && uiMode >= 0) {
+                            this.uiMode = uiMode;
+                        } else {
+                            continue;
+                        }
+                    } else {
+                        continue;
+                    }
+                }
+            }
+        }
+        if (this.uiMode < 0) {
+            this.uiMode = ((UiModeManager) (getContext().getSystemService(UiModeManager.class))).getCurrentModeType();
+        }
+    }
+
+    private void setXmlUiMode(int uiMode) {
+        RandomAccessFile randomAccessFile = null;
+        try {
+            File configFilter = new File(DATA_CONFIG);
+            randomAccessFile = new RandomAccessFile(configFilter, "rw");
+            String line = null;
+            long lastPoint = 0;
+            StringBuilder totalStr = new StringBuilder();
+            while ((line = randomAccessFile.readLine()) != null) {
+                long point = randomAccessFile.getFilePointer();
+                if (line.contains(mPackageName) && line.contains(String.format("uiMode=\"%d\"", this.uiMode))) {
+                    String str = line.replace(String.format("uiMode=\"%d\"", this.uiMode), String.format("uiMode=\"%d\"", uiMode));
+                    randomAccessFile.seek(lastPoint);
+                    randomAccessFile.writeBytes(str);
+                    totalStr.append(str);
+                    lastPoint = point;
+                    continue;
+                }
+                lastPoint = point;
+                totalStr.append(line);
+            }
+            if (!totalStr.toString().contains(mPackageName)) {
+                randomAccessFile.seek(lastPoint - 26);
+                randomAccessFile.writeBytes(String.format("    <app package=\"%s\" uiMode=\"%d\"/>\n</ui-mode-package-config>\n", mPackageName, uiMode));
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "setXmlUiMode: setXmlUiMode failed", e.getCause());
+        } finally {
+            try {
+                if (randomAccessFile != null) {
+                    randomAccessFile.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private ListPreference iniUiModePreference() {
+        ListPreference uiModePref = new ListPreference(getContext());
+        uiModePref.setLayoutResource(R.layout.leanback_preference);
+        uiModePref.setTitle(getString(R.string.device_apps_app_management_ui_mode));
+        uiModePref.setEntries(R.array.device_apps_app_management_ui_mode_entry);
+        uiModePref.setEntryValues(R.array.device_apps_app_management_ui_mode_entry_value);
+        uiModePref.setValue(String.valueOf(this.uiMode));
+        uiModePref.setSummary(modeTypeToStr(this.uiMode));
+        uiModePref.setOnPreferenceChangeListener(this);
+        return uiModePref;
+    }
+
+    private String modeTypeToStr(int uiMode) {
+        String mode;
+        switch (uiMode) {
+            case Configuration.UI_MODE_TYPE_NORMAL:
+                return getString(R.string.device_apps_app_management_ui_mode_normal);
+            case Configuration.UI_MODE_TYPE_DESK:
+                return getString(R.string.device_apps_app_management_ui_mode_desk);
+            case Configuration.UI_MODE_TYPE_CAR:
+                return getString(R.string.device_apps_app_management_ui_mode_car);
+            case Configuration.UI_MODE_TYPE_TELEVISION:
+                return getString(R.string.device_apps_app_management_ui_mode_television);
+            case Configuration.UI_MODE_TYPE_APPLIANCE:
+                return getString(R.string.device_apps_app_management_ui_mode_appliance);
+            case Configuration.UI_MODE_TYPE_WATCH:
+                return getString(R.string.device_apps_app_management_ui_mode_watch);
+            case Configuration.UI_MODE_TYPE_VR_HEADSET:
+                return getString(R.string.device_apps_app_management_ui_mode_vr_headset);
+            default:
+                return getString(R.string.device_apps_app_management_ui_mode_normal);
         }
     }
 }
