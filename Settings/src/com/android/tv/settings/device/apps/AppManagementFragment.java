@@ -126,7 +126,7 @@ public class AppManagementFragment extends SettingsPreferenceFragment
         mEntry = mApplicationsState.getEntry(mPackageName, UserHandle.myUserId());
 
         if (SystemProperties.get("ro.target.product", "unknown").equals("box")) {
-            initUiModeMap();
+            this.uiMode = getCurrentUiMode();
         }
 
         super.onCreate(savedInstanceState);
@@ -223,7 +223,7 @@ public class AppManagementFragment extends SettingsPreferenceFragment
         if (preference == mUiModePreference) {
             mUiModePreference.setValue((String) newValue);
             mUiModePreference.setSummary(modeTypeToStr(Integer.parseInt((String) newValue)));
-            setXmlUiMode(Integer.parseInt((String) newValue));
+            setXmlUiMode(this.uiMode, Integer.parseInt((String) newValue));
             this.uiMode = Integer.parseInt((String) newValue);
         }
         return true;
@@ -556,115 +556,20 @@ public class AppManagementFragment extends SettingsPreferenceFragment
         }
     }
 
-    private static String DATA_CONFIG = "/data/cache/recovery/uimode_app.xml";
     private int uiMode = -1;
 
-    private void initUiModeMap() {
-        Map<String, Integer> mConfigMap = new HashMap<>();
-        File configFilter = new File(DATA_CONFIG);
-        if (configFilter.exists()) {
-            FileInputStream stream = null;
-            try {
-                stream = new FileInputStream(configFilter);
-                XmlPullParser xmlPullParser = Xml.newPullParser();
-                xmlPullParser.setInput(stream, null);
-                int type;
-                do {
-                    type = xmlPullParser.next();
-                    if (type == XmlPullParser.START_TAG) {
-                        String tag = xmlPullParser.getName();
-                        if ("app".equals(tag)) {
-                            String pkgName = xmlPullParser.getAttributeValue(null, "package");
-                            String uiMode = xmlPullParser.getAttributeValue(null, "uiMode");
-                            if (!TextUtils.isEmpty(pkgName) && !TextUtils.isEmpty(uiMode)) {
-                                int parseUiMode = Integer.parseInt(uiMode);
-                                mConfigMap.put(pkgName, parseUiMode >= 0 ? parseUiMode : -1);
-                            }
-                        } else {
-                            Log.i(TAG, "getConfigMap: , tag != app");
-                        }
-                    }
-                } while (type != XmlPullParser.END_DOCUMENT);
-            } catch (NullPointerException e) {
-                Log.w(TAG, "failed parsing " + configFilter, e);
-            } catch (NumberFormatException e) {
-                Log.w(TAG, "failed parsing " + configFilter, e);
-            } catch (XmlPullParserException e) {
-                Log.w(TAG, "failed parsing " + configFilter, e);
-            } catch (IndexOutOfBoundsException e) {
-                Log.w(TAG, "failed parsing " + configFilter, e);
-            } catch (IOException e) {
-                Log.w(TAG, "failed parsing " + configFilter, e);
-            } finally {
-                try {
-                    if (stream != null) {
-                        stream.close();
-                    }
-                } catch (IOException e) {
-                    Log.w(TAG, "stream.close failed");
-                }
-            }
-        } else {
-            Log.i(TAG, "file is not exists");
+    private int getCurrentUiMode() {
+        int uiMode = mPackageManager.getPackageUiMode(mPackageName);
+        if (uiMode < 0) {
+            uiMode = ((UiModeManager) (getContext().getSystemService(UiModeManager.class))).getCurrentModeType();
         }
-
-        if (mConfigMap != null && mConfigMap.size() > 0) {
-            if (!TextUtils.isEmpty(mPackageName)) {
-                for (String pkgName : mConfigMap.keySet()) {
-                    if (!TextUtils.isEmpty(pkgName) && mPackageName.equals(pkgName)) {
-                        Integer uiMode = mConfigMap.get(mPackageName);
-                        if (uiMode != null && uiMode >= 0) {
-                            this.uiMode = uiMode;
-                        } else {
-                            continue;
-                        }
-                    } else {
-                        continue;
-                    }
-                }
-            }
-        }
-        if (this.uiMode < 0) {
-            this.uiMode = ((UiModeManager) (getContext().getSystemService(UiModeManager.class))).getCurrentModeType();
-        }
+        return uiMode;
     }
 
-    private void setXmlUiMode(int uiMode) {
-        RandomAccessFile randomAccessFile = null;
-        try {
-            File configFilter = new File(DATA_CONFIG);
-            randomAccessFile = new RandomAccessFile(configFilter, "rw");
-            String line = null;
-            long lastPoint = 0;
-            StringBuilder totalStr = new StringBuilder();
-            while ((line = randomAccessFile.readLine()) != null) {
-                long point = randomAccessFile.getFilePointer();
-                if (line.contains(mPackageName) && line.contains(String.format("uiMode=\"%d\"", this.uiMode))) {
-                    String str = line.replace(String.format("uiMode=\"%d\"", this.uiMode), String.format("uiMode=\"%d\"", uiMode));
-                    randomAccessFile.seek(lastPoint);
-                    randomAccessFile.writeBytes(str);
-                    totalStr.append(str);
-                    lastPoint = point;
-                    continue;
-                }
-                lastPoint = point;
-                totalStr.append(line);
-            }
-            if (!totalStr.toString().contains(mPackageName)) {
-                randomAccessFile.seek(lastPoint - 26);
-                randomAccessFile.writeBytes(String.format("    <app package=\"%s\" uiMode=\"%d\"/>\n</ui-mode-package-config>\n", mPackageName, uiMode));
-            }
-        } catch (Exception e) {
-            Log.e(TAG, "setXmlUiMode: setXmlUiMode failed", e.getCause());
-        } finally {
-            try {
-                if (randomAccessFile != null) {
-                    randomAccessFile.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+    private void setXmlUiMode(int oldUiMode, int newUiMode) {
+        mPackageManager.setPackageUiMode(mPackageName, oldUiMode, newUiMode);
+        ActivityManager am = (ActivityManager) getActivity().getSystemService(Context.ACTIVITY_SERVICE);
+        am.forceStopPackage(mPackageName);
     }
 
     private ListPreference iniUiModePreference() {
