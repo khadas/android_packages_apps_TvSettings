@@ -46,7 +46,7 @@ import java.util.List;
  */
 public class AutoPairActivity extends Activity implements BluetoothDevicePairer.EventListener {
 
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = true;
     private static final String TAG = "AutoPairActivity";
 
     private static final String ACTION_CONNECT_INPUT =
@@ -713,7 +713,7 @@ public class AutoPairActivity extends Activity implements BluetoothDevicePairer.
         if(status == 1)
         for (BluetoothDevice target : mBluetoothDevices) {
             Log.d(TAG, "target name :" + target.getName() + " address : " + target.getAddress());
-            if(target.getName().equals(android.os.SystemProperties.get(BLE_REMOTE_NAME, "Hotack_RC"))){
+            if(target.getName().equals(android.os.SystemProperties.get(BLE_REMOTE_NAME, "HiRemote"))){
               //startAutoPairing();
                 mPairDeviceName = target.getName();
                 onActionClicked(target.getAddress());
