@@ -44,7 +44,8 @@ public class DreamTimePreference extends ListPreference {
 
     @Override
     public CharSequence getSummary() {
-        if (TextUtils.equals(getValue(), "-1")) {
+        if (TextUtils.equals(getValue(), "-1")
+            || TextUtils.equals(getValue(), "2147483647")) {
             return getEntry();
         } else {
             return super.getSummary();
