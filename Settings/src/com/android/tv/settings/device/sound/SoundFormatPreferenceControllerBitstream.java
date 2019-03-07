@@ -17,7 +17,9 @@
 package com.android.tv.settings.device.sound;
 
 import android.content.Context;
+import android.media.AudioFormat;
 import android.media.AudioManager;
+import android.media.AudioSetting;
 import android.provider.Settings;
 import android.support.v14.preference.SwitchPreference;
 import android.support.v7.preference.Preference;
@@ -27,6 +29,7 @@ import android.util.Log;
 import com.android.settingslib.core.AbstractPreferenceController;
 
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.HashSet;
 import java.util.Map;
 import android.media.AudioSystem;
@@ -34,19 +37,28 @@ import android.media.AudioSystem;
 /**
  * Controller for the surround sound switch preferences.
  */
-public class SoundFormatPreferenceController extends AbstractPreferenceController {
+public class SoundFormatPreferenceControllerBitstream extends AbstractPreferenceController {
 
-    private static final String TAG = "SoundFormatController";
+    private static final String TAG = "SoundFormatPreferenceControllerBitstream";
 
     private int mFormatId;
     private AudioManager mAudioManager;
     private Map<Integer, Boolean> mReportedFormats;
+    private AudioSetting mAudioSetting;
 
-    public SoundFormatPreferenceController(Context context, int formatId) {
+    public SoundFormatPreferenceControllerBitstream(Context context, int formatId) {
         super(context);
         mFormatId = formatId;
         mAudioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
-        mReportedFormats = mAudioManager.getReportedSurroundFormats();
+        mAudioSetting = BitStreamFragment.mAudioSetting;
+        mReportedFormats = new LinkedHashMap<Integer, Boolean>();
+        mReportedFormats.put(AudioFormat.ENCODING_AC3, mAudioSetting.isEnable(AudioFormat.ENCODING_AC3));
+        mReportedFormats.put(AudioFormat.ENCODING_E_AC3, mAudioSetting.isEnable(AudioFormat.ENCODING_E_AC3));
+        mReportedFormats.put(AudioFormat.ENCODING_DOLBY_TRUEHD, mAudioSetting.isEnable(AudioFormat.ENCODING_DOLBY_TRUEHD));
+        mReportedFormats.put(AudioFormat.ENCODING_E_AC3_JOC, mAudioSetting.isEnable(AudioFormat.ENCODING_E_AC3_JOC));
+//        mReportedFormats.put(AudioFormat.ENCODING_AC4, mAudioSetting.isEnable(AudioFormat.ENCODING_AC4));
+        mReportedFormats.put(AudioFormat.ENCODING_DTS, mAudioSetting.isEnable(AudioFormat.ENCODING_DTS));
+        mReportedFormats.put(AudioFormat.ENCODING_DTS_HD, mAudioSetting.isEnable(AudioFormat.ENCODING_DTS_HD));
     }
 
     @Override
@@ -56,7 +68,7 @@ public class SoundFormatPreferenceController extends AbstractPreferenceControlle
 
     @Override
     public String getPreferenceKey() {
-        return SoundFragment.KEY_SURROUND_SOUND_FORMAT_PREFIX + mFormatId;
+        return BitStreamFragment.KEY_SURROUND_SOUND_FORMAT_PREFIX + mFormatId;
     }
 
     @Override
@@ -81,64 +93,28 @@ public class SoundFormatPreferenceController extends AbstractPreferenceControlle
      *         setting and audio manager state for the format.
      */
     private boolean getFormatPreferenceCheckedState() {
-        switch (SoundFragment.getSurroundPassthroughSetting(mContext)) {
-            case SoundFragment.VAL_SURROUND_SOUND_NEVER:
-                return false;
-            case SoundFragment.VAL_SURROUND_SOUND_ALWAYS:
-                return true;
-            case SoundFragment.VAL_SURROUND_SOUND_AUTO:
-                return isReportedFormat();
-            case SoundFragment.VAL_SURROUND_SOUND_MANUAL:
-                return getFormatsEnabledInManualMode().contains(mFormatId);
-            default: return false;
-        }
+        return mAudioSetting.isEnable(mFormatId);
     }
 
     /**
      * @return true if the format checkboxes should be enabled, i.e. in manual mode.
      */
     private boolean getFormatPreferencesEnabledState() {
-        return SoundFragment.getSurroundPassthroughSetting(mContext)
-                == SoundFragment.VAL_SURROUND_SOUND_MANUAL;
-    }
-
-    /** @return the formats that are enabled in manual mode, from global settings */
-    private HashSet<Integer> getFormatsEnabledInManualMode() {
-        HashSet<Integer> formats = new HashSet<>();
-        String enabledFormats = Settings.Global.getString(mContext.getContentResolver(),
-                Settings.Global.ENCODED_SURROUND_OUTPUT_ENABLED_FORMATS);
-        if (enabledFormats == null) {
-            // Starting with Android P passthrough setting ALWAYS has been replaced with
-            // MANUAL.
-            // In that case all formats will be enabled when in MANUAL mode.
-            formats.addAll(mAudioManager.getSurroundFormats().keySet());
+        Log.i(TAG, "getFormatPreferencesEnabledState device = " + mAudioSetting.getDevice() + ", mode = " + mAudioSetting.getMode());
+        if (mAudioSetting.getDevice() == AudioSystem.DEVICE_OUT_SPDIF) {
+            return true;
+        } else if (mAudioSetting.getDevice() == AudioSystem.DEVICE_OUT_HDMI && mAudioSetting.getMode() == AudioSetting.AUDIO_SETTING_MODE_BITSTREAM_MANUAL) {
+            return true;
         } else {
-            try {
-                Arrays.stream(enabledFormats.split(",")).mapToInt(Integer::parseInt).forEach(formats::add);
-            } catch (NumberFormatException e) {
-                Log.w(TAG, "ENCODED_SURROUND_OUTPUT_ENABLED_FORMATS misformatted.", e);
-            }
+            return false;
         }
-        return formats;
     }
 
     /**
      * Writes enabled/disabled state for a given format to the global settings.
      */
     private void setSurroundManualFormatsSetting(boolean enabled) {
-        HashSet<Integer> formats = getFormatsEnabledInManualMode();
-        if (enabled) {
-            formats.add(mFormatId);
-        } else {
-            formats.remove(mFormatId);
-        }
-        Settings.Global.putString(mContext.getContentResolver(),
-                Settings.Global.ENCODED_SURROUND_OUTPUT_ENABLED_FORMATS,
-                TextUtils.join(",", formats));
+        mAudioSetting.setFormats(mFormatId, enabled);
     }
 
-    /** @return true if the given format is reported by the device. */
-    private boolean isReportedFormat() {
-        return mReportedFormats != null && mReportedFormats.get(mFormatId) != null;
-    }
 }

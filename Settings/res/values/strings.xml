@@ -171,6 +171,8 @@
     <!-- Preference and title which changes system sounds settings. [CHAR LIMIT=50] -->
     <string name="device_sound_effects">System sounds</string>
     <string name="device_sound_bootsafe">Enforce safe volume</string>
+    <string name="device_bit_stream">BitStream</string>
+    <string name="hdmi">HDMI</string>
     <!-- Preference which manages apps. [CHAR LIMIT=50] -->
     <string name="device_apps">Applications</string>
     <!-- Preference which shows storage status. [CHAR LIMIT=50] -->
@@ -1710,6 +1712,7 @@
     <string name="confirm_dialog_message">Will cancel in</string>
     <string name="audio_device">Audio device</string>
     <string name="audio_mode">Audio mode</string>
+    <string name="formats">Formats</string>
 
      <!-- Bluetooth interface -->
     <string name="bluetooth">Bluetooth</string>

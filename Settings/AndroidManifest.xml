@@ -286,6 +286,12 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".device.sound.BitStreamActivity"
+            android:theme="@style/Theme.Settings.Transparent"
+            android:configChanges="keyboard|keyboardHidden|navigation"
+            android:excludeFromRecents="true">
+        </activity>
+        <activity
             android:name=".device.display.daydream.DaydreamActivity"
             android:theme="@style/Theme.Settings.Transparent"
             android:configChanges="keyboard|keyboardHidden|navigation"

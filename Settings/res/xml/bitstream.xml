@@ -16,45 +16,28 @@
   -->
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    android:title="@string/device_sound">
-
-    <SwitchPreference
-        android:key="sound_effects"
-        android:persistent="true"
-        android:title="@string/device_sound_effects"/>
-
-    <SwitchPreference
-        android:key="sound_safe"
-        android:persistent="true"
-        android:title="@string/device_sound_bootsafe"/>
+    android:title="@string/device_bit_stream">
 
     <ListPreference
-        android:key="audio_mode"
-        android:title="@string/audio_mode"
-        android:entries="@array/audio_mode_list"
-        android:entryValues="@array/audio_mode_list_values"
+        android:key="audio_device"
+        android:title="@string/audio_device"
+        android:entries="@array/audio_device_list"
+        android:entryValues="@array/audio_device_list_values"
         android:summary="%s" />
 
-    <Preference
-        android:key="bit_stream"
-        android:title="@string/device_bit_stream"
-        android:fragment="com.android.tv.settings.device.sound.BitStreamFragment"/>
-
     <PreferenceCategory
-        android:key="surround_sound_category"
-        android:title="@string/surround_sound_category_title"
+        android:key="bit_stream_surround_sound_category"
+        android:title="@string/formats"
         android:layout="@layout/preference_category_compact_layout" >
 
         <ListPreference
-            android:key="surround_passthrough"
+            android:key="bit_stream_surround_passthrough"
             android:persistent="true"
-            android:entries="@array/surround_sound_entries"
-            android:entryValues="@array/surround_sound_entry_values"
+            android:entries="@array/audio_device_hdmi"
+            android:entryValues="@array/audio_device_hdmi_entries"
             android:title="@string/surround_sound_select_formats"
             android:summary="%s"
             android:dialogMessage="@string/surround_sound_auto_info"/>
-
-        <!-- Switches for each surround sound format programmatically added here. -->
 
     </PreferenceCategory>
 

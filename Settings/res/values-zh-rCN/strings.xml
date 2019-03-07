@@ -85,6 +85,7 @@
     <string name="device_surround_sound" msgid="6272196310566546860">"环绕声"</string>
     <string name="device_sound_effects" msgid="7793281745920228622">"系统声音"</string>
     <string name="device_sound_bootsafe">开机音量保护</string>
+    <string name="device_bit_stream">解码方式</string>
     <string name="device_apps" msgid="1971794537385509294">"应用"</string>
     <string name="device_storage" msgid="5536683600091277826">"存储空间"</string>
     <string name="device_reset" msgid="1885840356489458285">"重置"</string>

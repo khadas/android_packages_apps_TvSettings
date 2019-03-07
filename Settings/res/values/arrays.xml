@@ -305,13 +305,25 @@
         <item>color3</item>
     </string-array>
 
-     <string-array name="audio_device_list">
+    <string-array name="audio_device_list">
+        <item>Decode</item>
         <item>HDMI Bitstream</item>
         <item>Spdif Passthrough</item>
     </string-array>
     <string-array name="audio_device_list_values">
+        <item>decode</item>
         <item>hdmi</item>
         <item>spdif</item>
+    </string-array>
+
+    <string-array name="audio_device_hdmi_entries">
+        <item>Auto</item>
+        <item>Manual</item>
+    </string-array>
+
+    <string-array name="audio_device_hdmi">
+        <item>@string/surround_sound_auto_summary</item>
+        <item>@string/surround_sound_manual_summary</item>
     </string-array>
 
     <string-array name="surround_sound_entries_spdif" translatable="false">
