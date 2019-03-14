@@ -58,7 +58,7 @@ public class AdvanceSettingsFragment extends SettingsPreferenceFragment
     private static final String DORMANCY = "0";
     private static final String POWER_OFF = "1";
     private static final String REBOOT = "2";
-    private static final String PROPERTY_POWER_KEY = "persist.vendor.power_key";
+    private static final String PROPERTY_POWER_KEY = "persist.sys.power_key";
 
     private PreferenceCategory displayPC;
     private ListPreference powerKeyPref;
