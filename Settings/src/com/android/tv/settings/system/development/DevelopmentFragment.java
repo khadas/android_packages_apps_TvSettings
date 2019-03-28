@@ -161,6 +161,7 @@ public class DevelopmentFragment extends SettingsPreferenceFragment
     private static final String PERSISTENT_DATA_BLOCK_PROP = "ro.frp.pst";
 
     private static final String PERSIST_RK_ABC_SWITCH = "persist.vendor.abc_switch";
+    private static final String PERSIST_RK_ADB_ENABLE = "persist.sys.adb_enable";
     private static String DEFAULT_LOG_RING_BUFFER_SIZE_IN_BYTES = "262144"; // 256K
 
     private static final int[] MOCK_LOCATION_APP_OPS = new int[] {AppOpsManager.OP_MOCK_LOCATION};
@@ -1464,6 +1465,7 @@ public class DevelopmentFragment extends SettingsPreferenceFragment
     @Override
     public void onEnableAdbConfirm() {
         Settings.Global.putInt(mContentResolver, Settings.Global.ADB_ENABLED, 1);
+        SystemProperties.set(PERSIST_RK_ADB_ENABLE, "1");
         mVerifyAppsOverUsb.setEnabled(true);
         updateVerifyAppsOverUsbOptions();
     }
@@ -1517,6 +1519,7 @@ public class DevelopmentFragment extends SettingsPreferenceFragment
                 Settings.Global.putInt(mContentResolver, Settings.Global.ADB_ENABLED, 0);
                 mVerifyAppsOverUsb.setEnabled(false);
                 mVerifyAppsOverUsb.setChecked(false);
+                SystemProperties.set(PERSIST_RK_ADB_ENABLE, "0");
             }
         } else if (preference == mEnableUsb) {
             if (mEnableUsb.isChecked()){
