@@ -1075,4 +1075,6 @@
     <string name="dormancy">休眠</string>
     <string name="power_off">关机</string>
     <string name="reboot">重启</string>
+   <!--performance -->
+    <string name="performance_float">性能浮窗</string>
 </resources>

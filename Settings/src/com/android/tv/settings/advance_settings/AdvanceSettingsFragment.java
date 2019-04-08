@@ -27,6 +27,7 @@ import android.support.v7.preference.ListPreference;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceCategory;
 import android.support.v7.preference.PreferenceGroup;
+import android.support.v14.preference.SwitchPreference;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -39,6 +40,9 @@ import com.android.tv.settings.util.ReflectUtils;
 
 import java.util.Comparator;
 import java.util.List;
+import com.android.tv.settings.advance_settings.performance.PerformanceService;
+import android.app.ActivityManager;
+import android.app.ActivityManager.RunningServiceInfo;
 
 /**
  * The location settings screen in TV settings.
@@ -48,13 +52,14 @@ public class AdvanceSettingsFragment extends SettingsPreferenceFragment
 
     private static final String TAG = "AdvanceSettingsFragment";
 
+    private static final String SERVICE_NAME = "com.android.tv.settings.advance_settings.performance.PerformanceService";
     private static final String LOCATION_MODE_WIFI = "wifi";
     private static final String LOCATION_MODE_OFF = "off";
 
     private static final String KEY_LOCATION_MODE = "locationMode";
     private static final String KEY_POWER_KEY = "power_key";
     private static final String KEY_DEFAULT_LAUNCHER = "default_launcher";
-
+    private static final String KEY_PERFORMANCE = "performance_float";
     private static final String DORMANCY = "0";
     private static final String POWER_OFF = "1";
     private static final String REBOOT = "2";
@@ -62,6 +67,7 @@ public class AdvanceSettingsFragment extends SettingsPreferenceFragment
 
     private PreferenceCategory displayPC;
     private ListPreference powerKeyPref;
+    private SwitchPreference mPerformancePref;
 
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
@@ -83,10 +89,12 @@ public class AdvanceSettingsFragment extends SettingsPreferenceFragment
 
         powerKeyPref = (ListPreference) findPreference(KEY_POWER_KEY);
         initPowerKey();
-
         //Default Launcher
         Preference defaultLauncher = (Preference) findPreference(KEY_DEFAULT_LAUNCHER);
         defaultLauncher.setSummary(getCurrentLauncherString());
+
+        mPerformancePref = (SwitchPreference) findPreference(KEY_PERFORMANCE);
+        updatePerformancePref();
     }
 
     // When selecting the location preference, LeanbackPreferenceFragment
@@ -122,7 +130,40 @@ public class AdvanceSettingsFragment extends SettingsPreferenceFragment
             container.addPreference(entry);
         }
     }
+    private void updatePerformancePref(){
+       if(isServiceRunning()){
+           mPerformancePref.setChecked(true);
+       } else {
+           mPerformancePref.setChecked(false);
 
+       }
+    }
+
+    private boolean isServiceRunning() {
+          ActivityManager manager = (ActivityManager) getContext().getSystemService(Context.ACTIVITY_SERVICE);
+          for (RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+                  if (SERVICE_NAME.equals(service.service.getClassName())) {
+                        return true;
+                  }
+          }
+          return false;
+    }
+
+     @Override
+    public boolean onPreferenceTreeClick(Preference preference) {
+          if (preference == mPerformancePref){
+             Log.d("ROCKCHIP","performance float click!");
+             Intent intent = new Intent(getContext(), PerformanceService.class);
+             if (mPerformancePref.isChecked()) {
+               getContext().startService(intent);
+             } else {
+               if (isServiceRunning()) {
+                    getContext().stopService(intent);
+               }
+             }
+          }
+          return false;
+    }
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         /*

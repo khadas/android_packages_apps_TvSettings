@@ -565,6 +565,8 @@
             </intent-filter>
         </activity>
 
+        <service android:name=".advance_settings.performance.PerformanceService"/>
+
         <service android:name=".users.UserSwitchListenerService"/>
         <receiver android:name=".users.UserSwitchListenerService$BootReceiver">
             <intent-filter>

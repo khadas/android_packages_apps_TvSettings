@@ -2118,4 +2118,17 @@
     <string name="autopait_timeout_error">not find device, continue searching</string>
     <string name="pair_fail">remote pairs fail</string>
     <string name="pair_status_error">pair_status_error</string>
+    <!--performance -->
+    <string name="performance_float">Performance Dialog</string>
+    <string name="cpu_title">CPU:</string>
+    <string name="cpu_model">cpu curFrq:</string>
+    <string name="cpu_usage">cpu usage:</string>
+    <string name="cpu_temp">cpu temperature:</string>
+    <string name="ram_title">RAM:</string>
+    <string name="ram_total">ram total:</string>
+    <string name="ram_usage">sys ram free:</string>
+    <string name="network_title">Network:</string>
+    <string name="network_speed">net speed:</string>
+    <string name="network_mac">wifi mac:</string>
+    <string name="network_mac2">ethernet mac:</string>
 </resources>

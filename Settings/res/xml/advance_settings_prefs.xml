@@ -43,5 +43,9 @@
             android:entries="@array/power_key_choose"
             android:entryValues="@array/power_key_choose_values"/>
       </PreferenceCategory>
+      <SwitchPreference
+        android:key="performance_float"
+        android:persistent="true"
+        android:title="@string/performance_float"/>
 
 </PreferenceScreen>
