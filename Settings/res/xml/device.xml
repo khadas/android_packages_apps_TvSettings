@@ -43,6 +43,11 @@
         android:key="led"
         android:title="@string/device_led"/>
     <Preference
+        android:fragment="com.android.tv.settings.device.wol.WolFragment"
+        android:icon="@drawable/ic_settings_wol"
+        android:key="wol"
+        android:title="@string/device_wol"/>
+    <Preference
         android:fragment="com.android.tv.settings.device.sound.SoundFragment"
         android:icon="@drawable/ic_volume_up"
         android:key="sound_effects"
