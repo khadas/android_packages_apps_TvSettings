@@ -1644,4 +1644,8 @@
     <string name="device_portmode">USB3 OR PCIE</string>
     <string name="portmode_title">USB3 OR PCIE</string>
     <string name="keywords_portmode">usb3, pcie, usb3 or pcie</string>
+
+    <!-- khadas led info -->
+    <string name="device_led">LED</string>
+    <string name="keywords_led">led, hint,led hint</string>
 </resources>

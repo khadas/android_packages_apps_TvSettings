@@ -278,4 +278,11 @@
         <item>USB3.0 mode</item>
         <item>PCIE mode</item>
     </string-array>
+
+    <!-- Khadas led settings -->
+    <string-array name="led_title_list">
+        <item>Heartbeat mode</item>
+        <item>Always on</item>
+        <item>Always off</item>
+    </string-array>
 </resources>
