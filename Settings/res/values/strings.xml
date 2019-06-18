@@ -1639,4 +1639,9 @@
 
     <!-- concat two strings, e.g. "Android Keyboard, My Pass" [CHAR LIMIT=NONE] -->
     <string name="string_concat"><xliff:g id="part1">%1s</xliff:g>, <xliff:g id="part2">%2s</xliff:g></string>
+
+    <!-- khadas port mode info -->
+    <string name="device_portmode">USB3 OR PCIE</string>
+    <string name="portmode_title">USB3 OR PCIE</string>
+    <string name="keywords_portmode">usb3, pcie, usb3 or pcie</string>
 </resources>

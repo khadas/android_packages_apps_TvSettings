@@ -272,4 +272,10 @@
         <!-- Do not translate. -->
         <item>GTC</item>
     </string-array>
+
+    <!-- Khadas port mode settings  -->
+    <string-array name="portmode_title_list">
+        <item>USB3.0 mode</item>
+        <item>PCIE mode</item>
+    </string-array>
 </resources>
