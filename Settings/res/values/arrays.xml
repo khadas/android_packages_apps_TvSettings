@@ -285,4 +285,13 @@
         <item>Always on</item>
         <item>Always off</item>
     </string-array>
+
+    <!-- Khadas fan settings -->
+    <string-array name="fan_title_list" >
+        <item>Automatic speed control(temperature dependent)</item>
+        <item>Low speed</item>
+        <item>Medium speed</item>
+        <item>High speed</item>
+    </string-array>
+
 </resources>

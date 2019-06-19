@@ -1645,6 +1645,13 @@
     <string name="portmode_title">USB3 OR PCIE</string>
     <string name="keywords_portmode">usb3, pcie, usb3 or pcie</string>
 
+    <!-- khadas fan info -->
+    <string name="device_fan">Cooling fan</string>
+    <string name="fan_title">Fan</string>
+    <string name="fan_category_title">Speed Options</string>
+    <string name="keywords_fan">fan, cool, cooling, cooling fan</string>
+    <string name="fan_settings_disabled_prompt">To control cooling fan, turn fan on.</string>
+
     <!-- khadas led info -->
     <string name="device_led">LED</string>
     <string name="keywords_led">led, hint,led hint</string>
