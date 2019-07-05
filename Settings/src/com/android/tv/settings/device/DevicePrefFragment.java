@@ -80,6 +80,14 @@ public class DevicePrefFragment extends SettingsPreferenceFragment {
         if (inputPref != null) {
             inputPref.setVisible(mInputSettingNeeded);
         }
+        final Preference wolPref = findPreference("wol");
+        if (wolPref != null) {
+            wolPref.setVisible(false);
+        }
+        final Preference portmodePref = findPreference("portmode");
+        if (portmodePref != null) {
+            portmodePref.setVisible(false);
+        }
     }
 
     @Override
