@@ -92,9 +92,9 @@ public final class PhysicalKeyboardFragment extends SettingsPreferenceFragment
                 false /* copyOnWrite */);
         mKeyboardAssistanceCategory = Preconditions.checkNotNull(
                 (PreferenceCategory) findPreference(KEYBOARD_ASSISTANCE_CATEGORY));
-        /* mShowVirtualKeyboardSwitch = Preconditions.checkNotNull(
+        mShowVirtualKeyboardSwitch = Preconditions.checkNotNull(
                 (SwitchPreference) mKeyboardAssistanceCategory.findPreference(
-                        SHOW_VIRTUAL_KEYBOARD_SWITCH)); */
+                        SHOW_VIRTUAL_KEYBOARD_SWITCH));
         findPreference(KEYBOARD_SHORTCUTS_HELPER).setOnPreferenceClickListener(
                 new Preference.OnPreferenceClickListener() {
                     @Override
@@ -111,8 +111,8 @@ public final class PhysicalKeyboardFragment extends SettingsPreferenceFragment
         mLastHardKeyboards.clear();
         scheduleUpdateHardKeyboards();
         mIm.registerInputDeviceListener(this, null);
-        /* mShowVirtualKeyboardSwitch.setOnPreferenceChangeListener(
-                mShowVirtualKeyboardSwitchPreferenceChangeListener); */
+        mShowVirtualKeyboardSwitch.setOnPreferenceChangeListener(
+                mShowVirtualKeyboardSwitchPreferenceChangeListener);
         registerShowVirtualKeyboardSettingsObserver();
     }
 
@@ -121,7 +121,7 @@ public final class PhysicalKeyboardFragment extends SettingsPreferenceFragment
         super.onPause();
         mLastHardKeyboards.clear();
         mIm.unregisterInputDeviceListener(this);
-        /* mShowVirtualKeyboardSwitch.setOnPreferenceChangeListener(null); */
+        mShowVirtualKeyboardSwitch.setOnPreferenceChangeListener(null);
         unregisterShowVirtualKeyboardSettingsObserver();
     }
 
@@ -212,7 +212,7 @@ public final class PhysicalKeyboardFragment extends SettingsPreferenceFragment
     }
 
     private void updateShowVirtualKeyboardSwitch() {
-        /* mShowVirtualKeyboardSwitch.setChecked(mSettings.isShowImeWithHardKeyboardEnabled()); */
+        mShowVirtualKeyboardSwitch.setChecked(mSettings.isShowImeWithHardKeyboardEnabled());
     }
 
     private void toggleKeyboardShortcutsMenu() {
