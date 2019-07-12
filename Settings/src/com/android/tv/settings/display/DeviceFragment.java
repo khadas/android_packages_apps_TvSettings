@@ -20,6 +20,8 @@ import android.annotation.SuppressLint;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
+import android.content.BroadcastReceiver;
+import android.content.IntentFilter;
 import android.hardware.display.DisplayManager;
 import android.os.Bundle;
 import android.support.v17.preference.LeanbackPreferenceFragment;
@@ -54,6 +56,7 @@ public class DeviceFragment extends LeanbackPreferenceFragment implements Prefer
     public static final String KEY_ZOOM = "zoom";
     public static final String KEY_ROTATION = "rotation";
     public static final String KEY_ADVANCED_SETTINGS = "advanced_settings";
+    public static final String HDMI_PLUG_ACTION = "android.intent.action.HDMI_PLUGGED";
     protected PreferenceScreen mPreferenceScreen;
     /**
      * 分辨率设置
@@ -99,6 +102,23 @@ public class DeviceFragment extends LeanbackPreferenceFragment implements Prefer
 
     private IWindowManager wm;
 
+    private boolean rebuild = false;
+    private BroadcastReceiver mHdmiReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+               if(rebuild){
+                  Log.i(TAG, "DeviceFragment.java HDMIReceiver->onReceive");
+                  //延时刷新
+                  try {
+                      Thread.sleep(1000);
+                  } catch (InterruptedException e) {
+                  }
+                  updateResolutionValue();
+               }
+               rebuild = true;
+        }
+    };
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -123,12 +143,16 @@ public class DeviceFragment extends LeanbackPreferenceFragment implements Prefer
         updateResolutionValue();
         updateColorValue();
         updateRotation();
+        IntentFilter filter = new IntentFilter(HDMI_PLUG_ACTION);
+        getActivity().registerReceiver(mHdmiReceiver, filter);
     }
 
 
     @Override
     public void onPause() {
         super.onPause();
+        rebuild = false;
+        getActivity().unregisterReceiver(mHdmiReceiver);
     }
 
 
@@ -281,7 +305,6 @@ public class DeviceFragment extends LeanbackPreferenceFragment implements Prefer
                                     wm.freezeRotation(Surface.ROTATION_270);
                                 else
                                     return true;
-                                android.os.SystemProperties.set("sys.boot_completed", "1");
                   } catch (Exception e) {
                                 Log.e(TAG, "freezeRotation error");
                   }
