@@ -31,7 +31,10 @@ public final class LedInitReceiver extends BroadcastReceiver {
             return;
         }
         Log.d("LedInitReceiver","BOOT UPDATE");
-        int mode = LedFragment.getLedModeProp();
-        LedFragment.setLedMode(mode);
+        int mode;
+        mode = LedFragment.getLedModeProp(LedFragment.LED_WHITE);
+        LedFragment.setLedMode(LedFragment.LED_WHITE,mode);
+        mode = LedFragment.getLedModeProp(LedFragment.LED_RED);
+        LedFragment.setLedMode(LedFragment.LED_RED,mode);
     }
 }

@@ -1653,8 +1653,10 @@
     <string name="fan_settings_disabled_prompt">To control cooling fan, turn fan on.</string>
 
     <!-- khadas led info -->
-    <string name="device_led">LED</string>
+    <string name="device_led">LEDs</string>
     <string name="keywords_led">led, hint,led hint</string>
+    <string name="device_led_white">White LED</string>
+    <string name="device_led_red">Red LED</string>
 
     <!-- khadas wol info -->
     <string name="device_wol">WOL</string>
