@@ -57,7 +57,6 @@ public class FanFragment extends SettingsPreferenceFragment {
     private static final String PROP_FAN_ENABLE = "persist.sys.fan.enable";
     private static final String PROP_FAN_MODE  = "persist.sys.fan.mode";
     private static final String PROP_FAN_LEVEL = "persist.sys.fan.level";
-    private static final String PROP_FAN_INDEX = "persist.sys.fna.index";
 
     private static final String SYS_FAN_MODE = "/sys/class/fan/mode";
     private static final String SYS_FAN_LEVEL = "/sys/class/fan/level";
@@ -114,7 +113,7 @@ public class FanFragment extends SettingsPreferenceFragment {
         final Context themedContext = getPreferenceManager().getContext();
 
         String[] list= mContext.getResources().getStringArray(R.array.fan_title_list);
-        int activeIndex = SystemProperties.getInt(PROP_FAN_INDEX, 0);
+        int activeIndex = getFanLevelProp();
         for (int i =0; i < INDEX_FAN.length; i++) {
             final RadioPreference radioPreference = new RadioPreference(themedContext);
             radioPreference.setKey(KEY_FAN_FORMAT_PREFIX + INDEX_FAN[i]);
@@ -243,15 +242,6 @@ public class FanFragment extends SettingsPreferenceFragment {
     public static boolean getFanEnableProp() {
         boolean enable = SystemProperties.getBoolean(PROP_FAN_ENABLE, STATE_DEFAULT);
         return enable;
-    }
-
-    public static void setFanIndexProp(int index) {
-        SystemProperties.set(PROP_FAN_INDEX, String.valueOf(index));
-    }
-
-    public static int getFanIndexProp() {
-        int index = SystemProperties.getInt(PROP_FAN_INDEX, INDEX_AUTO);
-        return index;
     }
 
     @Override
