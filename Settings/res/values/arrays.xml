@@ -275,8 +275,8 @@
 
     <!-- Khadas port mode settings  -->
     <string-array name="portmode_title_list">
-        <item>USB3.0 mode</item>
-        <item>PCIE mode</item>
+        <item>USB-3.0 Mode</item>
+        <item>PCI-E Mode</item>
     </string-array>
 
     <!-- Khadas led settings -->

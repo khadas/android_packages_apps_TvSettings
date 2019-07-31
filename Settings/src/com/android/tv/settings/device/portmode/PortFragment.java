@@ -32,9 +32,12 @@ import com.android.internal.logging.nano.MetricsProto;
 import com.android.tv.settings.R;
 import com.android.tv.settings.SettingsPreferenceFragment;
 import com.android.tv.settings.RadioPreference;
-import android.os.SystemProperties;
 
-import java.io.BufferedWriter;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.RandomAccessFile;
+import java.io.IOException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -44,8 +47,7 @@ public class PortFragment extends SettingsPreferenceFragment {
     private static final String PORT_RADIO_GROUP = "portmode";
     private static final boolean DEBUG = false;
     static final String PORT_FORMAT_PREFIX = "port_format_";
-    private static final String PROP_PORT_MODE = "persist.sys.port.mode";
-    private static final String PORT_UBOOT_ENV = "ubootenv.var.port_mode";
+    private static final String SYS_PORT_MODE = "/sys/class/mcu/portmode";
 
     private Context mContext;
 
@@ -56,11 +58,6 @@ public class PortFragment extends SettingsPreferenceFragment {
     private static final int INDEX_PORT[] = {
             INDEX_USB3,
             INDEX_PCIE,
-    };
-
-    private static final String ModeList[] = {
-            "USB3.0",
-            "PCIE",
     };
 
     public static PortFragment newInstance() {
@@ -81,7 +78,7 @@ public class PortFragment extends SettingsPreferenceFragment {
         screen.setTitle(R.string.device_portmode);
 
         String[] list= mContext.getResources().getStringArray(R.array.portmode_title_list);
-        int activeIndex = getPortModeProp();
+        int activeIndex = getPortMode();
         for (int i =0; i < INDEX_PORT.length; i++) {
             final RadioPreference radioPreference = new RadioPreference(themedContext);
             radioPreference.setKey(PORT_FORMAT_PREFIX + INDEX_PORT[i]);
@@ -92,7 +89,10 @@ public class PortFragment extends SettingsPreferenceFragment {
             radioPreference.setChecked((i == activeIndex) ? true : false);
             screen.addPreference(radioPreference);
         }
-
+        final Preference hintPreference = new Preference(themedContext);
+        hintPreference.setTitle(mContext.getResources().getString(R.string.portmode_describe));
+        hintPreference.setSelectable(false);
+	screen.addPreference(hintPreference);
         setPreferenceScreen(screen);
     }
 
@@ -101,24 +101,36 @@ public class PortFragment extends SettingsPreferenceFragment {
         super.onResume();
     }
 
-    private static void setPortModeProp(int mode) {
-
-        SystemProperties.set(PROP_PORT_MODE, String.valueOf(mode));
-    }
-
-    private static int getPortModeProp() {
-
-        int mode = SystemProperties.getInt(PROP_PORT_MODE, DEFAULT_MODE);
+    private int getPortMode() {
+        int  mode = 0;
+        try {
+            FileReader fread = new FileReader(SYS_PORT_MODE);
+            BufferedReader buffer = new BufferedReader(fread);
+            String str = null;
+            while ((str = buffer.readLine()) != null) {
+                if (str.equals("0")) {
+                    mode = INDEX_USB3;
+                    break;
+                } else {
+                    mode = INDEX_PCIE;
+                }
+            }
+            buffer.close();
+            fread.close();
+        } catch (IOException e) {
+            Log.e(TAG, "IO Exception");
+        }
         return mode;
     }
 
-    private static void setPortModeBootEnv(int mode) {
-        String cmd = String.format("setbootenv %s %s\n", PORT_UBOOT_ENV, mode);
+    private void setPortMode(int mode) {
         try {
-            Process exeCmd = Runtime.getRuntime().exec(cmd);
-            exeCmd.getOutputStream().flush();
-        } catch (IOException e) {
-            Log.e(TAG, "Excute exception: " + e.getMessage());
+            RandomAccessFile rdf = null;
+            rdf = new RandomAccessFile(SYS_PORT_MODE, "rw");
+            rdf.writeBytes(mode==1 ? "1" : "0");
+            rdf.close();
+        } catch (IOException re) {
+            Log.e(TAG, "IO Exception");
         }
     }
 
@@ -135,8 +147,7 @@ public class PortFragment extends SettingsPreferenceFragment {
                         break;
                     }
                 }
-                setPortModeProp(index);
-                setPortModeBootEnv(index);
+                setPortMode(index);
                 radioPreference.setChecked(true);
             } else {
                 radioPreference.setChecked(true);

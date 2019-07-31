@@ -53,15 +53,15 @@
         android:key="wol"
         android:title="@string/device_wol"/>
     <Preference
-        android:fragment="com.android.tv.settings.device.sound.SoundFragment"
-        android:icon="@drawable/ic_volume_up"
-        android:key="sound_effects"
-        android:title="@string/device_sound"/>
-    <Preference
         android:fragment="com.android.tv.settings.device.portmode.PortFragment"
         android:icon="@drawable/ic_settings_portmode"
         android:key="portmode"
         android:title="@string/device_portmode"/>
+    <Preference
+        android:fragment="com.android.tv.settings.device.sound.SoundFragment"
+        android:icon="@drawable/ic_volume_up"
+        android:key="sound_effects"
+        android:title="@string/device_sound"/>
     <Preference
         android:fragment="com.android.tv.settings.device.StorageSummaryFragment"
         android:icon="@drawable/ic_storage"

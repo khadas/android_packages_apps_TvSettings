@@ -23,6 +23,7 @@ import android.content.res.Resources;
 import android.media.tv.TvInputInfo;
 import android.media.tv.TvInputManager;
 import android.os.Bundle;
+import android.os.Build;
 import android.os.UserHandle;
 import android.support.annotation.Keep;
 import android.support.annotation.VisibleForTesting;
@@ -81,9 +82,11 @@ public class DevicePrefFragment extends SettingsPreferenceFragment {
             inputPref.setVisible(mInputSettingNeeded);
         }
 
-        final Preference portmodePref = findPreference("portmode");
-        if (portmodePref != null) {
-            portmodePref.setVisible(false);
+        if (Build.MODEL.equals("VIM1")) {
+            final Preference portmodePref = findPreference("portmode");
+            if (portmodePref != null) {
+               portmodePref.setVisible(false);
+            }
         }
     }
 
