@@ -22,4 +22,9 @@
         android:key="wol_btn"
         android:title="@string/wol_title"/>
 
+    <Preference
+        android:key="eth_mac_addr"
+        android:title="@string/ethernet_mac_addr"
+        android:selectable="false" />
+
 </PreferenceScreen>

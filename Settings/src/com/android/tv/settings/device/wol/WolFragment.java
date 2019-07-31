@@ -41,8 +41,10 @@ import android.util.Log;
 public class WolFragment extends SettingsPreferenceFragment implements
         Preference.OnPreferenceChangeListener {
     private static final String TAG = "WolSettings";
+    private static final String KEY_MAC = "eth_mac_addr";
     static final String KEY_WOL = "wol_btn";
     private static final String WOL_STATE_SYS = "/sys/class/wol/enable";
+    private static final String MAC_ADDR_SYS = "/sys/class/net/eth0/address";
 
     private Context mContext;
 
@@ -63,6 +65,25 @@ public class WolFragment extends SettingsPreferenceFragment implements
         final TwoStatePreference wolPref = (TwoStatePreference) findPreference(KEY_WOL);
         wolPref.setOnPreferenceChangeListener(this);
         wolPref.setChecked(getWolState());
+        final Preference macPref = (Preference) findPreference(KEY_MAC);
+        macPref.setSummary(getMacAddress());
+    }
+
+    private String getMacAddress() {
+        String mac = "";
+        try {
+            FileReader fread = new FileReader(MAC_ADDR_SYS);
+            BufferedReader buffer = new BufferedReader(fread);
+            String str = null;
+            while ((str = buffer.readLine()) != null) {
+                mac = mac + str;
+            }
+            buffer.close();
+            fread.close();
+        } catch (IOException e) {
+            Log.e(TAG, "IO Exception");
+        }
+        return mac;
     }
 
     private boolean getWolState() {
