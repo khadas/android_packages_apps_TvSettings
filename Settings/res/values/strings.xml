@@ -1666,6 +1666,8 @@
     <string name="device_led_white">White LED</string>
     <string name="device_led_red">Red LED</string>
 
+    <string name="start_connect">Start connect</string>
+
     <!-- khadas wol info -->
     <string name="device_wol">WOL</string>
     <string name="wol_title">Wake on LAN</string>

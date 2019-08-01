@@ -27,9 +27,11 @@ import android.support.v17.leanback.widget.GuidedActionsStylist;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.text.InputType;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
@@ -81,6 +83,7 @@ public class EnterPasswordState implements State {
         private StateMachine mStateMachine;
         private EditText mTextInput;
         private CheckBox mCheckBox;
+        private Button mBtn;
 
         @NonNull
         @Override
@@ -111,6 +114,16 @@ public class EnterPasswordState implements State {
                     if (action.getId() == GuidedAction.ACTION_ID_CONTINUE) {
                         PasswordViewHolder viewHolder = (PasswordViewHolder) vh;
                         mTextInput = (EditText) viewHolder.getTitleView();
+                        mBtn = (Button) viewHolder.mButton;
+                        mBtn.setOnClickListener(view -> {
+                            String password = mTextInput.getText().toString();
+                            if (password.length() >= WEP_MIN_LENGTH) {
+                                 mUserChoiceInfo.put(UserChoiceInfo.PASSWORD, password);
+                                 mUserChoiceInfo.setPasswordHidden(mCheckBox.isChecked());
+                                 setWifiConfigurationPassword(password);
+                                 mStateMachine.getListener().onComplete(StateMachine.OPTIONS_OR_CONNECT);
+                             }
+                        });
                         mCheckBox = viewHolder.mCheckbox;
                         mCheckBox.setOnClickListener(view -> {
                             updatePasswordInputObfuscation();
@@ -205,10 +218,12 @@ public class EnterPasswordState implements State {
 
         private static class PasswordViewHolder extends GuidedActionsAlignUtil.SetupViewHolder {
             CheckBox mCheckbox;
+            Button mButton;
 
             PasswordViewHolder(View v) {
                 super(v);
                 mCheckbox = v.findViewById(R.id.password_checkbox);
+                mButton = v.findViewById(R.id.connect_btn);
             }
         }
     }
