@@ -33,6 +33,7 @@ import com.android.internal.logging.nano.MetricsProto;
 import com.android.tv.settings.R;
 import com.android.tv.settings.SettingsPreferenceFragment;
 import com.android.tv.settings.RadioPreference;
+import com.android.tv.settings.boardInfo.BoardInfo;
 import android.os.SystemProperties;
 
 import java.io.BufferedWriter;
@@ -51,6 +52,7 @@ public class LedFragment extends SettingsPreferenceFragment
     private static final String SYS_LED_RED_MODE = "/sys/class/redled/mode";
     private static final String KEY_LED_WHITE = "whiteLed";
     private static final String KEY_LED_RED = "redLed";
+    private BoardInfo mBoardInfo;
 
     private Context mContext;
 
@@ -93,11 +95,19 @@ public class LedFragment extends SettingsPreferenceFragment
         whitePref.setValue(Integer.toString(mode));
         whitePref.setSummary(list[mode]);
         whitePref.setOnPreferenceChangeListener(this);
-        final ListPreference redPref = (ListPreference) findPreference(KEY_LED_RED);
-        mode = getLedModeProp(LED_RED);
-        redPref.setValue(Integer.toString(mode));
-        redPref.setSummary(list[mode]);
-        redPref.setOnPreferenceChangeListener(this);
+        mBoardInfo = new BoardInfo();
+        if(mBoardInfo.isRedLedSupport()) {
+            final ListPreference redPref = (ListPreference) findPreference(KEY_LED_RED);
+            mode = getLedModeProp(LED_RED);
+            redPref.setValue(Integer.toString(mode));
+            redPref.setSummary(list[mode]);
+            redPref.setOnPreferenceChangeListener(this);
+        } else {
+            final ListPreference redPref = (ListPreference) findPreference(KEY_LED_RED);
+            if (redPref != null) {
+                redPref.setVisible(false);
+            }
+        }
     }
 
     @Override
