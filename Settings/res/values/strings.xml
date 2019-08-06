@@ -1651,7 +1651,7 @@
     <string name="device_portmode">Toggle USB-3.0\/PCI-E</string>
     <string name="portmode_title">Toggle USB-3.0\/PCI-E</string>
     <string name="keywords_portmode">usb3, pcie, usb3 or pcie</string>
-    <string name="portmode_describe">System restart required for change to take effect.\n\nUSB-3.0 Mode:\nThe M.2 slot will be deactivated,and the USB ports will function in USB-3.0 mode.\n\nPCI-E Mode:\nThe M.2 slot will be activated,and the USB ports will function in USB-2.0 mode.</string>
+    <string name="portmode_describe">System restart required for change to take effect.\n\nUSB-3.0 Mode:\nThe M.2 slot will be deactivated, and the USB ports will function in USB-3.0 mode.\n\nPCI-E Mode:\nThe M.2 slot will be activated, and the USB ports will function in USB-2.0 mode.</string>
 
     <!-- khadas fan info -->
     <string name="device_fan">Cooling fan</string>
