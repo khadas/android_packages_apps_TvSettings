@@ -22,6 +22,7 @@
     <item msgid="7718735533503035428">"за 30 минута"</item>
     <item msgid="8784595382489738498">"за 1 сат"</item>
     <item msgid="1529312035777735084">"за 2 сата"</item>
+    <item msgid="9898989898989898989">"Никада"</item>
   </string-array>
   <string-array name="screen_off_timeout_entries">
     <item msgid="8244337465472020927">"за 30 минута"</item>
