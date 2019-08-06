@@ -27,7 +27,9 @@
     <!-- System update settings - launches activity -->
     <Preference android:key="system_update_settings"
         android:title="@string/about_system_update">
-        <intent android:action="android.settings.SYSTEM_UPDATE_SETTINGS" />
+        <intent android:action="android.inten.action.MAIN"
+                android:targetPackage="com.droidlogic.otaupgrade"
+                android:targetClass="com.droidlogic.otaupgrade.MainActivity" />
     </Preference>
 
 
