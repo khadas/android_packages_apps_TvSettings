@@ -43,6 +43,7 @@ import com.android.tv.settings.autofill.AutofillHelper;
 import com.android.tv.settings.device.sound.SoundFragment;
 import com.android.tv.settings.inputmethod.InputMethodHelper;
 import com.android.tv.settings.system.SecurityFragment;
+import com.android.tv.settings.boardInfo.BoardInfo;
 
 import java.util.List;
 
@@ -68,6 +69,7 @@ public class DevicePrefFragment extends SettingsPreferenceFragment {
     private Preference mSoundsPref;
     private boolean mInputSettingNeeded;
     private PackageManagerWrapper mPm;
+    private BoardInfo mBoardInfo;
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -86,6 +88,14 @@ public class DevicePrefFragment extends SettingsPreferenceFragment {
             final Preference portmodePref = findPreference("portmode");
             if (portmodePref != null) {
                portmodePref.setVisible(false);
+            }
+        }
+
+        mBoardInfo = new BoardInfo();
+        if(!mBoardInfo.isWolSupport()) {
+            final Preference wolPref = findPreference("wol");
+            if (wolPref != null) {
+                wolPref.setVisible(false);
             }
         }
     }
