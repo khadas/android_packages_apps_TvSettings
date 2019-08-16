@@ -266,6 +266,7 @@ public class FanFragment extends SettingsPreferenceFragment {
                     case INDEX_AUTO:
                         setFanMode(true);
                         setFanModeProp(true);
+                        setFanLevelProp(index);
                         break;
                     case INDEX_LEVEL_1:
                     case INDEX_LEVEL_2:
