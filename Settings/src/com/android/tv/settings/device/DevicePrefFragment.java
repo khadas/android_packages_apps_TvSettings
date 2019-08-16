@@ -98,6 +98,13 @@ public class DevicePrefFragment extends SettingsPreferenceFragment {
                 wolPref.setVisible(false);
             }
         }
+
+        if (!mBoardInfo.isFanSupport()) {
+             final Preference fanPref = findPreference("fan");
+             if (fanPref != null) {
+                fanPref.setVisible(false);
+             }
+        }
     }
 
     @Override
