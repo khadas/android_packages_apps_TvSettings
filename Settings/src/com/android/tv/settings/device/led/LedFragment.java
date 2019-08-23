@@ -53,6 +53,7 @@ public class LedFragment extends SettingsPreferenceFragment
     private static final String KEY_LED_WHITE = "whiteLed";
     private static final String KEY_LED_RED = "redLed";
     private BoardInfo mBoardInfo;
+    private static int mLedType;
 
     private Context mContext;
 
@@ -91,21 +92,34 @@ public class LedFragment extends SettingsPreferenceFragment
         setPreferencesFromResource(R.xml.leds, null);
         String[] list= mContext.getResources().getStringArray(R.array.led_title_entries);
         final ListPreference whitePref = (ListPreference) findPreference(KEY_LED_WHITE);
-        mode = getLedModeProp(LED_WHITE);
-        whitePref.setValue(Integer.toString(mode));
-        whitePref.setSummary(list[mode]);
-        whitePref.setOnPreferenceChangeListener(this);
+        final ListPreference redPref = (ListPreference) findPreference(KEY_LED_RED);
         mBoardInfo = new BoardInfo();
-        if(mBoardInfo.isRedLedSupport()) {
-            final ListPreference redPref = (ListPreference) findPreference(KEY_LED_RED);
+        mLedType = mBoardInfo.getLedType();
+        if(mLedType == BoardInfo.LED_BOTH) {
+            mode = getLedModeProp(LED_WHITE);
+            whitePref.setValue(Integer.toString(mode));
+            whitePref.setSummary(list[mode]);
+            whitePref.setOnPreferenceChangeListener(this);
+
             mode = getLedModeProp(LED_RED);
             redPref.setValue(Integer.toString(mode));
             redPref.setSummary(list[mode]);
             redPref.setOnPreferenceChangeListener(this);
-        } else {
-            final ListPreference redPref = (ListPreference) findPreference(KEY_LED_RED);
+        } else if (mLedType == BoardInfo.LED_WHITE){
+            mode = getLedModeProp(LED_WHITE);
+            whitePref.setValue(Integer.toString(mode));
+            whitePref.setSummary(list[mode]);
+            whitePref.setOnPreferenceChangeListener(this);
             if (redPref != null) {
                 redPref.setVisible(false);
+            }
+        } else {
+            mode = getLedModeProp(LED_RED);
+            redPref.setValue(Integer.toString(mode));
+            redPref.setSummary(list[mode]);
+            redPref.setOnPreferenceChangeListener(this);
+            if (whitePref != null) {
+                whitePref.setVisible(false);
             }
         }
     }
@@ -122,12 +136,17 @@ public class LedFragment extends SettingsPreferenceFragment
 
         try {
             BufferedWriter bufWriter = null;
-            if (type == LED_WHITE) {
+            if (mLedType == BoardInfo.LED_RED) {
                 bufWriter = new BufferedWriter(new FileWriter(SYS_LED_WHITE_TRIGGER));
                 bufWriter.write(ModeList[mode]);
             } else {
-                bufWriter = new BufferedWriter(new FileWriter(SYS_LED_RED_MODE));
-                bufWriter.write(String.valueOf(INDEX_LED[mode]));
+                if (type == LED_WHITE) {
+                   bufWriter = new BufferedWriter(new FileWriter(SYS_LED_WHITE_TRIGGER));
+                   bufWriter.write(ModeList[mode]);
+                } else {
+                   bufWriter = new BufferedWriter(new FileWriter(SYS_LED_RED_MODE));
+                   bufWriter.write(String.valueOf(INDEX_LED[mode]));
+                }
             }
             bufWriter.close();
         } catch (IOException e) {

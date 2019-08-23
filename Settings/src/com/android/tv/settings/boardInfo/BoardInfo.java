@@ -14,6 +14,9 @@ import android.util.Log;
 public class BoardInfo {
     private static String TAG = "BoardInfo";
     private static String HWVER_SYS = "/sys/class/khadas/hwver";
+    public static final int LED_WHITE = 0;
+    public static final int LED_RED = 1;
+    public static final int LED_BOTH = 2;
     public static String model;
 
     public BoardInfo() {
@@ -24,11 +27,18 @@ public class BoardInfo {
         return SystemProperties.get(property, "unknown");
     }
 
-    public boolean isRedLedSupport() {
+    /* return: 0: white red  1: red led 2: both */
+    public int getLedType() {
         if(model.equals("VIM2") || model.equals("VIM3") || model.equals("VIM3L"))
-            return true;
-        else
-            return false;
+            return LED_BOTH;
+        else {
+            String hwver = readFile(HWVER_SYS);
+            if (hwver.equals("VIM1.V13"))
+               return LED_WHITE;
+            else
+               return LED_RED;
+        }
+
     }
 
     public boolean isWolSupport() {
