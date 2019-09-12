@@ -41,6 +41,7 @@ import com.android.tv.settings.SettingsPreferenceFragment;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+import java.io.File;
 
 /**
  * Fragment for controlling network connectivity
@@ -57,11 +58,15 @@ public class NetworkFragment extends SettingsPreferenceFragment implements
     private static final String KEY_WIFI_OTHER = "wifi_other";
     private static final String KEY_WIFI_ADD = "wifi_add";
     private static final String KEY_WIFI_ALWAYS_SCAN = "wifi_always_scan";
+    private static final String KEY_MOBILE_CATEGORY = "mobile_network_category";
+    private static final String KEY_MOBILE_SETTINGS = "mobile_network_settings";
     private static final String KEY_ETHERNET = "ethernet";
     private static final String KEY_ETHERNET_STATUS = "ethernet_status";
     private static final String KEY_ETHERNET_PROXY = "ethernet_proxy";
     private static final String KEY_ETHERNET_DHCP = "ethernet_dhcp";
 
+
+    private static final String MOBILE_NET_SYS = "/sys/class/net/usb0";
     private static final int INITIAL_UPDATE_DELAY = 500;
 
     private static final String BROADCAST_ACTION = "android.action.updateui";
@@ -73,6 +78,8 @@ public class NetworkFragment extends SettingsPreferenceFragment implements
     private CollapsibleCategory mWifiNetworksCategory;
     private Preference mCollapsePref;
     private Preference mAddPref;
+    private Preference mMobilePref;
+    private PreferenceCategory mMobileCategory;
     private TwoStatePreference mAlwaysScan;
     private PreferenceCategory mEthernetCategory;
     private Preference mEthernetStatusPref;
@@ -149,6 +156,8 @@ public class NetworkFragment extends SettingsPreferenceFragment implements
         mWifiNetworksCategory = (CollapsibleCategory) findPreference(KEY_WIFI_LIST);
         mCollapsePref = findPreference(KEY_WIFI_COLLAPSE);
         mAddPref = findPreference(KEY_WIFI_ADD);
+        mMobileCategory = (PreferenceCategory) findPreference(KEY_MOBILE_CATEGORY);
+        mMobilePref = findPreference(KEY_MOBILE_SETTINGS);
         mAlwaysScan = (TwoStatePreference) findPreference(KEY_WIFI_ALWAYS_SCAN);
 
         mEthernetCategory = (PreferenceCategory) findPreference(KEY_ETHERNET);
@@ -197,6 +206,9 @@ public class NetworkFragment extends SettingsPreferenceFragment implements
             case KEY_WIFI_ADD:
                 mMetricsFeatureProvider.action(getActivity(),
                         MetricsProto.MetricsEvent.ACTION_WIFI_ADD_NETWORK);
+            case KEY_MOBILE_SETTINGS:
+                mMetricsFeatureProvider.action(getActivity(),
+                        MetricsProto.MetricsEvent.SETTINGS_MOBILE_NETWORK_CATEGORY);
                 break;
         }
         return super.onPreferenceTreeClick(preference);
@@ -213,6 +225,14 @@ public class NetworkFragment extends SettingsPreferenceFragment implements
         mWifiNetworksCategory.setVisible(wifiEnabled);
         mCollapsePref.setVisible(wifiEnabled && mWifiNetworksCategory.shouldShowCollapsePref());
         mAddPref.setVisible(wifiEnabled);
+        File file = new File(MOBILE_NET_SYS);
+        if (file.exists()) {
+            mMobileCategory.setVisible(true);
+            mMobilePref.setVisible(true);
+        } else {
+            mMobileCategory.setVisible(false);
+            mMobilePref.setVisible(false);
+        }
 
         if (!wifiEnabled) {
             updateWifiList();

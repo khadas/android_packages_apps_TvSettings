@@ -1673,4 +1673,8 @@
     <string name="wol_title">Wake on LAN</string>
     <string name="keywords_wol">wol, wake, lan, wake on lan</string>
     <string name="ethernet_mac_addr">Ethernet MAC address</string>
+
+    <!-- mobile network settings -->
+    <string name="network_category_title">Mobile network</string>
+    <string name="network_settings_title">Mobile settings</string>
 </resources>
