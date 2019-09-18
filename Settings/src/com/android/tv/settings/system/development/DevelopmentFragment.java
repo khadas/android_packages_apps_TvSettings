@@ -164,6 +164,9 @@ public class DevelopmentFragment extends SettingsPreferenceFragment
     private static final String PERSIST_RK_ADB_ENABLE = "persist.sys.adb_enable";
     private static String DEFAULT_LOG_RING_BUFFER_SIZE_IN_BYTES = "262144"; // 256K
 
+    //Go to Loader
+    private static final String KEY_GO_TO_LOADER = "go_to_loader";
+
     private static final int[] MOCK_LOCATION_APP_OPS = new int[] {AppOpsManager.OP_MOCK_LOCATION};
 
     private static final String STATE_SHOWING_DIALOG_KEY = "showing_dialog_key";
@@ -253,6 +256,8 @@ public class DevelopmentFragment extends SettingsPreferenceFragment
     private boolean mUnavailable;
 
     private UsbModeSettings mUsbModeSetting = null;
+
+    private Preference goToLoader;
 
     public static DevelopmentFragment newInstance() {
         return new DevelopmentFragment();
@@ -462,6 +467,8 @@ public class DevelopmentFragment extends SettingsPreferenceFragment
             removePreference(KEY_COLOR_MODE);
             mColorModePreference = null;
         }
+
+        goToLoader = (Preference) findPreference(KEY_GO_TO_LOADER);
     }
 
     private void removePreference(String key) {
@@ -1619,6 +1626,8 @@ public class DevelopmentFragment extends SettingsPreferenceFragment
             writeUSBAudioOptions();
         } else if (preference == mForceResizable) {
             writeForceResizableOptions();
+        } else if (preference == goToLoader) {
+            goToLoader();
         } else {
             return super.onPreferenceTreeClick(preference);
         }
@@ -1743,6 +1752,14 @@ public class DevelopmentFragment extends SettingsPreferenceFragment
             manager.setOemUnlockEnabled(enabled);
         } catch (SecurityException e) {
             Log.e(TAG, "Fail to set oem unlock.", e);
+        }
+    }
+
+    private void goToLoader() {
+        try{
+            java.lang.Runtime.getRuntime().exec("reboot loader");
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

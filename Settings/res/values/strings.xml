@@ -2131,4 +2131,7 @@
     <string name="network_speed">net speed:</string>
     <string name="network_mac">wifi mac:</string>
     <string name="network_mac2">ethernet mac:</string>
+
+    <!--Go To Loader -->
+    <string name="go_to_loader">Go to Loader</string>
 </resources>
