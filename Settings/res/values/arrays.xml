@@ -298,9 +298,11 @@
     <!-- Khadas fan settings -->
     <string-array name="fan_title_list" >
         <item>Automatic speed control(temperature dependent)</item>
-        <item>Low speed</item>
-        <item>Medium speed</item>
-        <item>High speed</item>
+        <item>Level 1</item>
+        <item>Level 2</item>
+        <item>Level 3</item>
+        <item>Level 4</item>
+        <item>Level 5</item>
     </string-array>
 
 </resources>

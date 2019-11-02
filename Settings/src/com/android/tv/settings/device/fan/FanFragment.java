@@ -24,6 +24,7 @@ import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceScreen;
 import com.android.internal.logging.nano.MetricsProto;
 import com.android.tv.settings.R;
+import com.android.tv.settings.boardInfo.BoardInfo;
 import android.support.v7.preference.TwoStatePreference;
 import com.android.tv.settings.SettingsPreferenceFragment;
 import android.support.v7.preference.PreferenceCategory;
@@ -66,12 +67,16 @@ public class FanFragment extends SettingsPreferenceFragment {
     private static final int INDEX_LEVEL_1 = 1;
     private static final int INDEX_LEVEL_2 = 2;
     private static final int INDEX_LEVEL_3 = 3;
+    private static final int INDEX_LEVEL_4 = 4;
+    private static final int INDEX_LEVEL_5 = 5;
 
     private static final int INDEX_FAN[] = {
             INDEX_AUTO,
             INDEX_LEVEL_1,
             INDEX_LEVEL_2,
             INDEX_LEVEL_3,
+            INDEX_LEVEL_4,
+            INDEX_LEVEL_5,
     };
 
     private static final int MANUAL_MODE = 0;
@@ -82,7 +87,9 @@ public class FanFragment extends SettingsPreferenceFragment {
     private static final boolean STATE_ENABLE  = true;
     private static final boolean STATE_DEFAULT = STATE_DISABLE;
 
+    private int INDEX_LENGTH = 6;
     private Context mContext;
+    private BoardInfo mBoardInfo;
     private PreferenceCategory mFanCategoryPref;
     private static boolean fanState = false;
 
@@ -99,7 +106,10 @@ public class FanFragment extends SettingsPreferenceFragment {
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.fan_prefs, null);
-
+        mBoardInfo = new BoardInfo();
+        boolean type = mBoardInfo.isDutyControlVersion();
+        if (!type)
+           INDEX_LENGTH = INDEX_LENGTH - 2;
         final TwoStatePreference fanPref = (TwoStatePreference) findPreference(KEY_FAN);
         fanPref.setChecked(getFanEnableProp());
 
@@ -114,7 +124,7 @@ public class FanFragment extends SettingsPreferenceFragment {
 
         String[] list= mContext.getResources().getStringArray(R.array.fan_title_list);
         int activeIndex = getFanLevelProp();
-        for (int i =0; i < INDEX_FAN.length; i++) {
+        for (int i =0; i < INDEX_LENGTH; i++) {
             final RadioPreference radioPreference = new RadioPreference(themedContext);
             radioPreference.setKey(KEY_FAN_FORMAT_PREFIX + INDEX_FAN[i]);
             radioPreference.setPersistent(false);
@@ -127,7 +137,7 @@ public class FanFragment extends SettingsPreferenceFragment {
     }
 
     private void updateFormatPreferencesStates() {
-        for (int i =0; i < INDEX_FAN.length; i++) {
+        for (int i =0; i < INDEX_LENGTH; i++) {
             Preference preference = mFanCategoryPref.findPreference(KEY_FAN_FORMAT_PREFIX + INDEX_FAN[i]);
             preference.setEnabled(getFanEnableProp());
         }
@@ -256,7 +266,7 @@ public class FanFragment extends SettingsPreferenceFragment {
             radioPreference.clearOtherRadioPreferences(mFanCategoryPref);
             if (radioPreference.isChecked()) {
                 int index = 0;
-                for (int i = 0; i < INDEX_FAN.length; i++) {
+                for (int i = 0; i < INDEX_LENGTH; i++) {
                     if(TextUtils.equals(radioPreference.getKey(), KEY_FAN_FORMAT_PREFIX+INDEX_FAN[i])) {
                         index = i;
                         break;
@@ -271,6 +281,8 @@ public class FanFragment extends SettingsPreferenceFragment {
                     case INDEX_LEVEL_1:
                     case INDEX_LEVEL_2:
                     case INDEX_LEVEL_3:
+                    case INDEX_LEVEL_4:
+                    case INDEX_LEVEL_5:
                         setFanMode(false);
                         setFanLevel(index);
                         setFanModeProp(false);

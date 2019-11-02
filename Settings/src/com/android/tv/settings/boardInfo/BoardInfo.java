@@ -14,6 +14,7 @@ import android.util.Log;
 public class BoardInfo {
     private static String TAG = "BoardInfo";
     private static String HWVER_SYS = "/sys/class/khadas/hwver";
+    private static String MCU_FAN_TYPE_SYS = "/sys/class/fan/type";
     public static final int LED_WHITE = 0;
     public static final int LED_RED = 1;
     public static final int LED_BOTH = 2;
@@ -77,6 +78,14 @@ public class BoardInfo {
         if (hwver.equals("VIM1.V12") || hwver.equals("Unknow"))
 		return false;
 	return true;
+    }
+
+    public boolean isDutyControlVersion() {
+        String str = readFile(MCU_FAN_TYPE_SYS);
+	if (str.equals("1"))
+           return true;
+        else
+	   return false;
     }
 
     private void onInit() {
