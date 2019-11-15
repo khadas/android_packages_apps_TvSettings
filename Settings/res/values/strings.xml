@@ -2002,7 +2002,6 @@
     <string name="pin_toast_wrong">Wrong PIN, try again</string>
     <!-- Toast message when an user couldn't pass the PIN confirmation. [CHAR LIMIT=128] -->
     <string name="pin_toast_not_match">Try again, PIN doesn\'t match</string>
-
     <!-- Message displayed to prompt the user to input the network password, ^1 will be replaced with the name of the network and should be a possive form related to password [CHAR LIMIT=NONE] -->
     <string name="wifi_setup_input_password">Enter password for <xliff:g id="ssid">%1$s</xliff:g></string>
     <!-- Summary displayed to explain next steps for user to submit network password, ^1 be replaced with keyboard icon to be selected [CHAR LIMIT=NONE] -->
@@ -2534,10 +2533,6 @@
     <string name="color">Color</string>
     <string name="confirm_dialog_title">Save Confirm</string>
     <string name="confirm_dialog_message">Will cancel in</string>
-    <string name="audio_device">Audio device</string>
-    <string name="audio_mode">Audio mode</string>
-    <string name="formats">Formats</string>
-    <string name="surround_sound_format_true_hd">Dolby TrueHD</string>
     <string name="fixed_rotation">Fixed rotation</string>
     <string name="hdmi_rotation">Rotation</string>
     <string name="ui_resolutions">Ui Resolutions</string>
@@ -2575,4 +2570,16 @@
     <string name="device_apps_app_management_ui_mode_appliance">APPLIANCE</string>
     <string name="device_apps_app_management_ui_mode_watch">WATCH</string>
     <string name="device_apps_app_management_ui_mode_vr_headset">VR HEADSET</string>
+
+    <!-- Audio -->
+    <string name="device_sound_bootsafe">Enforce safe volume</string>
+    <string name="device_bit_stream">Decode &#038; BitStream</string>
+    <string name="hdmi">HDMI</string>
+    <string name="audio_device">Audio device</string>
+    <string name="audio_mode">Audio mode</string>
+    <string name="formats">Formats</string>
+    <string name="surround_sound_format_true_hd">Dolby TrueHD</string>
+    <string name="audio_device_decode">Decode</string>
+    <string name="audio_device_hdmi">HDMI Bitstream</string>
+    <string name="audio_device_spdif">Spdif Passthrough</string>
 </resources>

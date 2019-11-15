@@ -353,4 +353,90 @@
         <item>7</item>
     </string-array>
 
+    <string-array name="audio_mode_list">
+        <item>RF</item>
+        <item>Line</item>
+    </string-array>
+
+    <string-array name="audio_mode_list_values">
+        <item>RF Mode</item>
+        <item>Line Mode</item>
+    </string-array>
+
+    <string-array name="audio_device_list">
+        <item>@string/audio_device_decode</item>
+        <item>@string/audio_device_hdmi</item>
+        <item>@string/audio_device_spdif</item>
+    </string-array>
+    <string-array name="audio_device_list_values">
+        <item>decode</item>
+        <item>hdmi</item>
+        <item>spdif</item>
+    </string-array>
+
+    <string-array name="audio_device_hdmi_entries">
+        <item>Auto</item>
+        <item>Manual</item>
+    </string-array>
+
+    <string-array name="audio_device_hdmi">
+        <item>@string/surround_sound_auto_summary</item>
+        <item>@string/surround_sound_manual_summary</item>
+    </string-array>
+
+    <string-array name="decode_formats">
+        <item>MP1</item>
+        <item>MP2</item>
+        <item>MP3</item>
+        <item>AAC</item>
+        <item>APE</item>
+        <item>WMALOSSLESS</item>
+        <item>WMAPRO</item>
+        <item>WMAV1</item>
+        <item>WMAV2</item>
+        <item>ADPCM_IMA_QT</item>
+        <item>VORBIS</item>
+        <item>PCM_S16LE</item>
+        <item>PCM_S24LE</item>
+        <item>FLAC</item>
+    </string-array>
+
+    <string-array name="hdmi_formats">
+        <item>AC3</item>
+        <item>DTS</item>
+        <item>EAC3</item>
+        <item>DTSHD</item>
+        <item>TRUEHD</item>
+    </string-array>
+
+    <string-array name="spdif_formats">
+        <item>AC3</item>
+        <item>DTS</item>
+    </string-array>
+
+    <string-array name="surround_sound_entries_spdif" translatable="false">
+        <item>@string/surround_sound_none_title</item>
+        <item>@string/surround_sound_manual_summary</item>
+    </string-array>
+
+
+    <string-array name="surround_sound_entry_values_spdif" translatable="false">
+        <item>never</item>
+        <item>manual</item>
+    </string-array>
+
+    <!-- List entries for controlling surround sound passthrough setting -->
+    <string-array name="surround_sound_entries" translatable="false">
+        <item>@string/surround_sound_auto_summary</item>
+        <item>@string/surround_sound_none_title</item>
+        <item>@string/surround_sound_manual_summary</item>
+    </string-array>
+
+    <!-- Entry values for surround sound preference -->
+    <string-array name="surround_sound_entry_values" translatable="false">
+        <item>auto</item>
+        <item>never</item>
+        <item>manual</item>
+    </string-array>
+
 </resources>

@@ -42,6 +42,11 @@
         android:icon="@drawable/ic_keyboard"
         android:key="keyboard"
         android:title="@string/system_keyboard"/>
+     <Preference
+        android:fragment="com.android.tv.settings.device.sound.BitStreamFragment"
+        android:icon="@drawable/ic_volume_up"
+        android:key="sound_effects"
+        android:title="@string/device_bit_stream"/>
     <Preference
         android:fragment="com.android.tv.settings.device.displaysound.DisplaySoundFragment"
         android:icon="@drawable/ic_display_sound"

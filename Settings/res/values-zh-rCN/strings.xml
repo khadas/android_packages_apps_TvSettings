@@ -1116,4 +1116,11 @@
     <string name="device_apps_app_management_ui_mode_appliance">器具</string>
     <string name="device_apps_app_management_ui_mode_watch">手表</string>
     <string name="device_apps_app_management_ui_mode_vr_headset">VR头戴设备</string>
+
+    <!-- Audio -->
+    <string name="device_sound_bootsafe">开机音量保护</string>
+    <string name="device_bit_stream">解码与源码</string>
+    <string name="audio_device_decode">默认输出</string>
+    <string name="audio_device_hdmi">HDMI源码</string>
+    <string name="audio_device_spdif">SPDIF透传</string>
 </resources>
