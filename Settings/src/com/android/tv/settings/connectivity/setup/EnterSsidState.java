@@ -27,8 +27,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.EditText;
+import android.view.View;
+import android.view.LayoutInflater;
+import android.view.ViewGroup;
 
 import com.android.tv.settings.R;
+import com.android.tv.settings.connectivity.util.GuidedActionsAlignUtil;
 import com.android.tv.settings.connectivity.WifiConfigHelper;
 import com.android.tv.settings.connectivity.util.State;
 import com.android.tv.settings.connectivity.util.StateMachine;
@@ -76,6 +81,7 @@ public class EnterSsidState implements State {
         private UserChoiceInfo mUserChoiceInfo;
         private StateMachine mStateMachine;
         private GuidedAction mAction;
+        private EditText mTextInput;
 
         @NonNull
         @Override
@@ -101,6 +107,22 @@ public class EnterSsidState implements State {
         @Override
         public GuidedActionsStylist onCreateActionsStylist() {
             return new GuidedActionsStylist() {
+                @Override
+                public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+                    LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+                    View v = inflater.inflate(onProvideItemLayoutId(viewType), parent, false);
+                    return new SsidViewHolder(v);
+                }
+                @Override
+                public void onBindViewHolder(ViewHolder vh, GuidedAction action) {
+                     super.onBindViewHolder(vh, action);
+                         SsidViewHolder viewHolder = (SsidViewHolder) vh;
+                         mTextInput = (EditText) viewHolder.getTitleView();
+                         openInEditMode(action);
+                         mTextInput.setFocusable(true);
+                         mTextInput.setFocusableInTouchMode(true);
+                         mTextInput.requestFocus();
+                }
                 @Override
                 public int onProvideItemLayoutId() {
                     return R.layout.setup_text_input_item;
@@ -137,5 +159,12 @@ public class EnterSsidState implements State {
             mStateMachine.getListener().onComplete(StateMachine.CONTINUE);
             return action.getId();
         }
+
+         private static class SsidViewHolder extends GuidedActionsAlignUtil.SetupViewHolder {
+
+            SsidViewHolder(View v) {
+               super(v);
+            }
+         }
     }
 }
