@@ -31,6 +31,7 @@ import android.support.v7.preference.PreferenceManager;
 import android.support.v7.preference.TwoStatePreference;
 import android.util.Log;
 import android.text.TextUtils;
+import android.telephony.TelephonyManager;
 
 import com.android.internal.logging.nano.MetricsProto;
 import com.android.settingslib.wifi.AccessPoint;
@@ -66,7 +67,6 @@ public class NetworkFragment extends SettingsPreferenceFragment implements
     private static final String KEY_ETHERNET_DHCP = "ethernet_dhcp";
 
 
-    private static final String MOBILE_NET_SYS = "/sys/class/net/usb0";
     private static final int INITIAL_UPDATE_DELAY = 500;
 
     private static final String BROADCAST_ACTION = "android.action.updateui";
@@ -214,6 +214,22 @@ public class NetworkFragment extends SettingsPreferenceFragment implements
         return super.onPreferenceTreeClick(preference);
     }
 
+    private boolean hasSimCard() {
+       TelephonyManager telMgr = (TelephonyManager) getContext().getSystemService(Context.TELEPHONY_SERVICE);
+       int simState = telMgr.getSimState();
+       boolean result = true;
+       switch (simState) {
+           case TelephonyManager.SIM_STATE_ABSENT:
+                result = false;
+                break;
+           case TelephonyManager.SIM_STATE_UNKNOWN:
+                result = false;
+                break;
+       }
+       Log.d(TAG, result ? "has sim card" : "no sim card");
+       return result;
+    }
+
     private void updateConnectivity() {
         if (!isAdded()) {
             return;
@@ -225,8 +241,7 @@ public class NetworkFragment extends SettingsPreferenceFragment implements
         mWifiNetworksCategory.setVisible(wifiEnabled);
         mCollapsePref.setVisible(wifiEnabled && mWifiNetworksCategory.shouldShowCollapsePref());
         mAddPref.setVisible(wifiEnabled);
-        File file = new File(MOBILE_NET_SYS);
-        if (file.exists()) {
+        if (hasSimCard()) {
             mMobileCategory.setVisible(true);
             mMobilePref.setVisible(true);
         } else {
