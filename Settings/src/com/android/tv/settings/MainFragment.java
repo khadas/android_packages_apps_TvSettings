@@ -389,6 +389,8 @@ public class MainFragment extends PreferenceControllerFragment implements
         super.onResume();
         updateAccountPref();
         updateAccessoryPref();
+        mConnectivityListener.updateConnectivityStatus();
+        updateWifi();
     }
 
     private boolean isRestricted() {
