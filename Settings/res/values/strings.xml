@@ -1660,6 +1660,13 @@
     <string name="keywords_fan">fan, cool, cooling, cooling fan</string>
     <string name="fan_settings_disabled_prompt">To control cooling fan, turn fan on.</string>
 
+    <!-- khadas status bar control -->
+    <string name="device_statusbar">Status bar control</string>
+    <string name="statusbar_title">Status bar control</string>
+    <string name="keywords_statusbar">statusbar,status,bar</string>
+    <string name="statusbar_bottom_title">Show the bottom status bar</string>
+    <string name="statusbar_upper_title">Show the upper status bar</string>
+
     <!-- khadas led info -->
     <string name="device_led">LEDs</string>
     <string name="keywords_led">led, hint,led hint</string>

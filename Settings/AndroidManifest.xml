@@ -453,6 +453,21 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".device.statusbar.StatusBarActivity"
+            android:theme="@style/Theme.Settings.Transparent"
+            android:configChanges="keyboard|keyboardHidden|navigation"
+            android:excludeFromRecents="true"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.settings.STATUSBAR_SETTINGS" />
+
+                <category android:name="android.intent.category.VOICE_LAUNCH" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
         <receiver android:name=".device.led.LedInitReceiver"
             android:exported="true">
             <intent-filter android:priority="1000">

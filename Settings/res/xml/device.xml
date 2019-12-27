@@ -43,6 +43,11 @@
         android:key="keyboard"
         android:title="@string/system_keyboard"/>
     <Preference
+        android:fragment="com.android.tv.settings.device.statusbar.StatusBarFragment"
+        android:icon="@drawable/ic_settings_statusbar"
+        android:key="statusbar"
+        android:title="@string/device_statusbar"/>
+    <Preference
         android:fragment="com.android.tv.settings.device.fan.FanFragment"
         android:icon="@drawable/ic_settings_fan"
         android:key="fan"
