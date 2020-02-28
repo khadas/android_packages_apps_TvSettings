@@ -67,7 +67,6 @@ public class StatusBarFragment extends SettingsPreferenceFragment
 	mStatusBarManager = (StatusBarManager) mContext.getSystemService(Context.STATUS_BAR_SERVICE);
         mStatusBarBottomPreference = (TwoStatePreference) findPreference(KEY_STATUSBAR_BOTTOM);
         mStatusBarUpperPreference = (TwoStatePreference) findPreference(KEY_STATUSBAR_UPPER);
-        mStatusBarUpperPreference.setVisible(false);
         mStatusBarBottomPreference.setOnPreferenceChangeListener(this);
         mStatusBarUpperPreference.setOnPreferenceChangeListener(this);
     }
