@@ -24,6 +24,7 @@ import android.location.LocationManager;
 import android.os.BatteryManager;
 import android.os.Bundle;
 import android.os.UserManager;
+import android.os.UserHandle;
 import android.provider.Settings;
 import android.support.v7.preference.ListPreference;
 import android.support.v7.preference.Preference;
@@ -38,6 +39,7 @@ import com.android.settingslib.location.RecentLocationApps;
 import com.android.tv.settings.R;
 import com.android.tv.settings.SettingsPreferenceFragment;
 import com.android.tv.settings.device.apps.AppManagementFragment;
+import static com.android.settingslib.Utils.updateLocationEnabled;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -51,7 +53,7 @@ public class LocationFragment extends SettingsPreferenceFragment implements
 
     private static final String TAG = "LocationFragment";
 
-    private static final String LOCATION_MODE_WIFI = "wifi";
+    private static final String LOCATION_MODE_ON = "on";
     private static final String LOCATION_MODE_OFF = "off";
 
     private static final String KEY_LOCATION_MODE = "locationMode";
@@ -69,7 +71,7 @@ public class LocationFragment extends SettingsPreferenceFragment implements
             if (Log.isLoggable(TAG, Log.DEBUG)) {
                 Log.d(TAG, "Received location mode change intent: " + intent);
             }
-            refreshLocationMode();
+            refreshLocationEnabled();
         }
     };
 
@@ -92,11 +94,11 @@ public class LocationFragment extends SettingsPreferenceFragment implements
         mLocationMode.setDialogTitle(R.string.location_status);
         mLocationMode.setSummary("%s");
         mLocationMode.setEntries(new CharSequence[] {
-                getString(R.string.location_mode_wifi_description),
+                getString(R.string.on),
                 getString(R.string.off)
         });
         mLocationMode.setEntryValues(new CharSequence[] {
-                LOCATION_MODE_WIFI,
+                LOCATION_MODE_ON,
                 LOCATION_MODE_OFF
         });
         mLocationMode.setOnPreferenceChangeListener(this);
@@ -156,7 +158,7 @@ public class LocationFragment extends SettingsPreferenceFragment implements
         super.onCreate(savedInstanceState);
         getActivity().registerReceiver(mReceiver,
                 new IntentFilter(LocationManager.MODE_CHANGED_ACTION));
-        refreshLocationMode();
+        refreshLocationEnabled();
     }
 
     @Override
@@ -176,22 +178,26 @@ public class LocationFragment extends SettingsPreferenceFragment implements
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         if (TextUtils.equals(preference.getKey(), KEY_LOCATION_MODE)) {
-            int mode = Settings.Secure.LOCATION_MODE_OFF;
-            if (TextUtils.equals((CharSequence) newValue, LOCATION_MODE_WIFI)) {
-                mode = Settings.Secure.LOCATION_MODE_HIGH_ACCURACY;
+
+            boolean enabled = false;
+            if (TextUtils.equals((CharSequence) newValue, LOCATION_MODE_ON)) {
+                enabled = true;
             } else if (TextUtils.equals((CharSequence) newValue, LOCATION_MODE_OFF)) {
-                mode = Settings.Secure.LOCATION_MODE_OFF;
+                enabled = false;
             } else {
                 Log.wtf(TAG, "Tried to set unknown location mode!");
             }
 
-            writeLocationMode(mode);
-            refreshLocationMode();
+            writeLocationEnabled(enabled);
+            refreshLocationEnabled();
         }
         return true;
     }
 
-    private void writeLocationMode(int mode) {
+    private void writeLocationEnabled(boolean enabled) {
+        updateLocationEnabled(getContext(), enabled, UserHandle.myUserId(),
+                Settings.Secure.LOCATION_CHANGER_SYSTEM_SETTINGS);
+        /*
         int currentMode = Settings.Secure.getInt(getActivity().getContentResolver(),
                 Settings.Secure.LOCATION_MODE, Settings.Secure.LOCATION_MODE_OFF);
         Intent intent = new Intent(MODE_CHANGING_ACTION);
@@ -200,24 +206,21 @@ public class LocationFragment extends SettingsPreferenceFragment implements
         getActivity().sendBroadcast(intent, android.Manifest.permission.WRITE_SECURE_SETTINGS);
         Settings.Secure.putInt(getActivity().getContentResolver(),
                 Settings.Secure.LOCATION_MODE, mode);
+        */
     }
 
-    private void refreshLocationMode() {
+    private void refreshLocationEnabled() {
         if (mLocationMode == null) {
             return;
         }
         final int mode = Settings.Secure.getInt(getActivity().getContentResolver(),
                 Settings.Secure.LOCATION_MODE, Settings.Secure.LOCATION_MODE_OFF);
         if (mode == Settings.Secure.LOCATION_MODE_HIGH_ACCURACY
-                    || mode == Settings.Secure.LOCATION_MODE_BATTERY_SAVING) {
-            mLocationMode.setValue(LOCATION_MODE_WIFI);
-        } else if (mode == Settings.Secure.LOCATION_MODE_OFF) {
-            mLocationMode.setValue(LOCATION_MODE_OFF);
-        } else if (mode == Settings.Secure.LOCATION_MODE_SENSORS_ONLY) {
-            writeLocationMode(Settings.Secure.LOCATION_MODE_OFF);
-            mLocationMode.setValue(LOCATION_MODE_OFF);
+                    || mode == Settings.Secure.LOCATION_MODE_BATTERY_SAVING
+                    || mode == Settings.Secure.LOCATION_MODE_SENSORS_ONLY) {
+            mLocationMode.setValue(LOCATION_MODE_ON);
         } else {
-            Log.d(TAG, "Unknown location mode: " + mode);
+            mLocationMode.setValue(LOCATION_MODE_OFF);
         }
     }
 
