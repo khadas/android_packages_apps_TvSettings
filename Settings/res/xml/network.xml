@@ -78,6 +78,11 @@
         <Preference
             android:key="ethernet_status"
             android:title="@string/not_connected" />
+        <SwitchPreference
+            android:key="ethernet_port"
+            android:persistent="true"
+            android:title="@string/ethernet_port"
+            android:summary="@string/ethernet_active_context" />
         <Preference
             android:key="ethernet_proxy"
             android:title="@string/title_wifi_proxy_settings" />
