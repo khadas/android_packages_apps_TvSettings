@@ -86,6 +86,11 @@ public class StatusFragment extends PreferenceControllerFragment {
         }
 
         @Override
+        public boolean isAvailable() {
+            return false;
+        }
+
+        @Override
         public String getPreferenceKey() {
             return mKey;
         }
