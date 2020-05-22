@@ -130,6 +130,6 @@ public class WolFragment extends SettingsPreferenceFragment implements
 
     @Override
     public int getMetricsCategory() {
-        return MetricsProto.MetricsEvent.DATE_TIME;
+        return MetricsProto.MetricsEvent.KHADAS_WOL;
     }
 }
