@@ -1677,6 +1677,11 @@
 
     <string name="start_connect">Start connect</string>
 
+    <!-- khadas os08a10 mipi camera ircut info -->
+    <string name="device_ircut">Camera ir-cut</string>
+    <string name="ircut_title">Turn on mipi camera ir-cut</string>
+    <string name="keywords_ircut">camera, ir-cut, ircut</string>
+
     <!-- khadas wol info -->
     <string name="device_wol">WOL</string>
     <string name="wol_title">Wake on LAN</string>

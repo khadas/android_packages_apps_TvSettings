@@ -15,6 +15,7 @@ public class BoardInfo {
     private static String TAG = "BoardInfo";
     private static String HWVER_SYS = "/sys/class/khadas/hwver";
     private static String MCU_FAN_TYPE_SYS = "/sys/class/fan/type";
+    private static String MIPI_CAMERA_SYS = "/sys/class/camera/cam_state";
     public static final int LED_WHITE = 0;
     public static final int LED_RED = 1;
     public static final int LED_BOTH = 2;
@@ -93,6 +94,16 @@ public class BoardInfo {
            return true;
        else
            return false;
+    }
+
+    public boolean isIRCutSupport() {
+       if (model.equals("VIM3")) {
+          String str = readFile(MIPI_CAMERA_SYS);
+          if (str.equals("1"))
+              return true;
+          return false;
+       }
+       return false;
     }
 
     private void onInit() {

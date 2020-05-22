@@ -105,6 +105,13 @@ public class DevicePrefFragment extends SettingsPreferenceFragment {
                 fanPref.setVisible(false);
              }
         }
+
+        if (!mBoardInfo.isIRCutSupport()) {
+             final Preference ircutPref = findPreference("ircut");
+             if (ircutPref != null) {
+                ircutPref.setVisible(false);
+             }
+        }
     }
 
     @Override

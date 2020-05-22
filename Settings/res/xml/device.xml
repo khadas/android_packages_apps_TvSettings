@@ -48,6 +48,11 @@
         android:key="statusbar"
         android:title="@string/device_statusbar"/>
     <Preference
+        android:fragment="com.android.tv.settings.device.camera.CameraIRCutFragment"
+        android:icon="@drawable/ic_settings_ircut"
+        android:key="ircut"
+        android:title="@string/device_ircut"/>
+    <Preference
         android:fragment="com.android.tv.settings.device.fan.FanFragment"
         android:icon="@drawable/ic_settings_fan"
         android:key="fan"
