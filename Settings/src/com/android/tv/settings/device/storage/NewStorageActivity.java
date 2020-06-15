@@ -188,10 +188,11 @@ public class NewStorageActivity extends Activity {
                         .id(ACTION_BROWSE)
                         .build());
             }
+	    /*
             actions.add(new GuidedAction.Builder(getContext())
                     .title(R.string.storage_new_action_adopt)
                     .id(ACTION_FORMAT_AS_PRIVATE)
-                    .build());
+                    .build());*/
             actions.add(new GuidedAction.Builder(getContext())
                     .title(R.string.storage_new_action_eject)
                     .id(ACTION_UNMOUNT)

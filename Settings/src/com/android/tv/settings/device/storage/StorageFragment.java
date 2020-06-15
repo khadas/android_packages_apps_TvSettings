@@ -166,15 +166,9 @@ public class StorageFragment extends SettingsPreferenceFragment {
         mEjectPref.setIntent(UnmountActivity.getIntent(getContext(), mVolumeInfo.getId(),
                 description));
         mErasePref.setVisible(!privateInternal);
-        if (isPrivate) {
-            mErasePref.setIntent(
+        mErasePref.setIntent(
                     FormatActivity.getFormatAsPublicIntent(getContext(), mVolumeInfo.getDiskId()));
-            mErasePref.setTitle(R.string.storage_format_as_public);
-        } else {
-            mErasePref.setIntent(
-                    FormatActivity.getFormatAsPrivateIntent(getContext(), mVolumeInfo.getDiskId()));
-            mErasePref.setTitle(R.string.storage_format_as_private);
-        }
+        mErasePref.setTitle(R.string.storage_format_as_public);
 
         mAppsUsagePref.setVisible(isPrivate);
         mAppsUsagePref.setFragment(AppsFragment.class.getName());
