@@ -1692,6 +1692,12 @@
     <string name="network_category_title">Mobile network</string>
     <string name="network_settings_title">Mobile settings</string>
     
+    <!-- Sound settings screen heading -->
+    <string name="sound_settings">Sound control</string>
+    <string name="media_volume">Media volume</string>
+    <string name="alarm_volume">Alarm volume</string>
+    <string name="notification_volume">Notification volume</string>
+
      <!-- Bluetooth interface -->
     <string name="bluetooth">Bluetooth</string>
     <string name="bluetooth_rename">Rename</string>

@@ -19,6 +19,13 @@
     <dimen name="browse_item_height">168dp</dimen>
     <dimen name="browse_item_width">168dp</dimen>
     <dimen name="browse_item_icon_height">112dp</dimen>
+    <dimen name="sound_seekbar_title">16sp</dimen>
+    <dimen name="sound_seekbar_item">14sp</dimen>
+    <dimen name="sound_seekbar_title_marginTop">29dp</dimen>
+    <dimen name="sound_seekbar_item_marginBottom">12dp</dimen>
+    <dimen name="sound_seekbar_item_marginTop">12dp</dimen>
+    <dimen name="sound_seekbar_item_marginLeft">12dp</dimen>
+
     <dimen name="browse_item_icon_width">112dp</dimen>
     <dimen name="browse_item_text_marginHor">12dp</dimen>
     <!-- 12dp below text - 3dp of font padding = 9dp -->
