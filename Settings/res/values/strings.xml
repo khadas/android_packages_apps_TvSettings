@@ -1697,6 +1697,7 @@
     <string name="media_volume">Media volume</string>
     <string name="alarm_volume">Alarm volume</string>
     <string name="notification_volume">Notification volume</string>
+    <string name="timer">Timer</string>
 
      <!-- Bluetooth interface -->
     <string name="bluetooth">Bluetooth</string>

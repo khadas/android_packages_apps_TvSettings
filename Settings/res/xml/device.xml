@@ -58,6 +58,14 @@
         android:key="fan"
         android:title="@string/device_fan"/>
     <Preference
+	android:icon="@drawable/ic_settings_date_time"
+	android:key="timer"
+	android:title="@string/timer" >
+	<intent
+	    android:targetClass="com.khadas.schpwronoff.AlarmClock"
+            android:targetPackage="com.khadas.schpwronoff" />
+    </Preference>
+    <Preference
 	android:fragment="com.android.tv.settings.device.soundsettings.AdjustValueFragment"
 	android:icon="@drawable/ic_volume_up_24dp"
 	android:key="soundset"
