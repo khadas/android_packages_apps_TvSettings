@@ -84,13 +84,6 @@ public class DevicePrefFragment extends SettingsPreferenceFragment {
             inputPref.setVisible(mInputSettingNeeded);
         }
 
-        if (Build.MODEL.equals("VIM1")) {
-            final Preference portmodePref = findPreference("portmode");
-            if (portmodePref != null) {
-               portmodePref.setVisible(false);
-            }
-        }
-
         mBoardInfo = new BoardInfo();
         if(!mBoardInfo.isWolSupport()) {
             final Preference wolPref = findPreference("wol");
@@ -110,6 +103,13 @@ public class DevicePrefFragment extends SettingsPreferenceFragment {
              final Preference ircutPref = findPreference("ircut");
              if (ircutPref != null) {
                 ircutPref.setVisible(false);
+             }
+        }
+
+        if (!mBoardInfo.isPortModeSupport()) {
+             final Preference portmodePref = findPreference("portmode");
+             if (portmodePref != null) {
+                 portmodePref.setVisible(false);
              }
         }
     }

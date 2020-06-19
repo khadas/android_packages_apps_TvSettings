@@ -106,6 +106,13 @@ public class BoardInfo {
        return false;
     }
 
+    public boolean isPortModeSupport() {
+       if (model.equals("VIM3")|| model.equals("VIM3L"))
+          return true;
+       else
+          return false;
+    }
+
     private void onInit() {
         model = Build.MODEL;
     }
