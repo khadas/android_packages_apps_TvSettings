@@ -262,6 +262,7 @@ public class NetworkFragment extends SettingsPreferenceFragment implements
             int mode = getEthernetMode();
             mEthernetSwitch.setChecked(mode==0 ? false:true);
         } else {
+            mEthernetSwitch.setVisible(false);
             getPreferenceScreen().removePreference(mEthernetSwitch);
         }
     }
