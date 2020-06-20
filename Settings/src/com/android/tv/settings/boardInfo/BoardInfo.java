@@ -31,8 +31,10 @@ public class BoardInfo {
 
     /* return: 0: white red  1: red led 2: both */
     public int getLedType() {
-        if(model.equals("VIM2") || model.equals("VIM3") || model.equals("VIM3L"))
+        if(model.equals("VIM3") || model.equals("VIM3L"))
             return LED_BOTH;
+        else if (model.equals("VIM2"))
+            return LED_WHITE;
         else {
             String hwver = readFile(HWVER_SYS);
             if (hwver.equals("VIM1.V13"))
