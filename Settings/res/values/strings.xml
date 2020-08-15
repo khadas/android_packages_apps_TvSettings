@@ -2118,6 +2118,7 @@
 	<string name="wifi_ap_choose_5G">5 GHz Band</string>
 	<string name="usb_tethering_button_text">USB tethering</string>
 	<string name="wifi_tether_checkbox_text">Portable Wi\u2011Fi hotspot</string>
+	<string name="wifi_rsdb_checkbox_text">Portable Wi\u2011Fi hotspot(Source from WLAN/RSDB)</string>
 	<string name="wifi_tether_configure_ap_text">Set up Wi\u2011Fi hotspot</string>
 	<string name="bluetooth_tether_checkbox_text">Bluetooth tethering</string>
     <string name="wifi_tether_configure_subtext"><xliff:g id="network_ssid">%1$s</xliff:g> <xliff:g id="network_security">%2$s</xliff:g> portable Wi\u2011Fi hotspot</string>

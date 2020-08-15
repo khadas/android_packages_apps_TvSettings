@@ -33,6 +33,8 @@ import android.net.wifi.WifiManager;
 import android.net.ConnectivityManager;
 import android.support.v7.preference.Preference;
 import android.os.Handler;
+import java.io.IOException;
+
 
 
 import android.content.Intent;
@@ -82,6 +84,13 @@ public class HotpotDialogActivity extends BaseInputActivity implements View.OnCl
 
     private static final String TAG = "WifiApDialog";
     private static final String WIFI_AP_SSID_AND_SECURITY = "wifi_ap_ssid_and_security";
+    private final String PROP_RSDB_ENABLE = "sys.wifi.rsdb.enable";
+    private final String PROP_WIFIAP_ENABLE = "sys.wifi.wifiap.enable";
+
+    private final String PROP_RSDB_NAME = "persist.sys.wifi.rsdb.name";
+    private final String PROP_RSDB_PASSWD = "persist.sys.wifi.rsdb.passwd";
+    private final String PROP_RSDB_SECURITY_TYPE = "persist.sys.wifi.rsdb.security.type";
+    private final String PROP_RSDB_APBAND = "persist.sys.wifi.rsdb.apband";
 
     @Override
     public void init() {
@@ -200,10 +209,33 @@ public class HotpotDialogActivity extends BaseInputActivity implements View.OnCl
                         }
                         SystemProperties.set("persist.sys.softap.band", String.valueOf(mWifiConfig.apBand));
                         mWifiManager.setWifiApConfiguration(mWifiConfig);
+                        String rsdbenable = SystemProperties.get(PROP_RSDB_ENABLE, "0");
+                        String wifienable = SystemProperties.get(PROP_WIFIAP_ENABLE, "0");
+                        if (rsdbenable.equals("1")){
+                                Log.d("TetheringSettings", "rsdbenable ");
+								SystemProperties.set(PROP_RSDB_NAME, mWifiConfig.SSID);
+                                SystemProperties.set(PROP_RSDB_PASSWD, mWifiConfig.preSharedKey);
+							 if (getSecurityTypeIndex(mWifiConfig) == WPA2_INDEX) {
+                                SystemProperties.set(PROP_RSDB_SECURITY_TYPE, "wpa2-psk");
+                              }else {
+                                SystemProperties.set(PROP_RSDB_SECURITY_TYPE, "open");
+                              }
+                             if(mWifiConfig.apBand == 0){
+                                Log.d("TetheringSettings", "2.4G set");
+                                SystemProperties.set(PROP_RSDB_APBAND, "6");//2.4G
+                             }else{
+								Log.d("TetheringSettings", "5G  set");
+						        SystemProperties.set(PROP_RSDB_APBAND, "48");//5G
+                             }
+						HotPotFragment.mRestartRsdbAfterConfigChange = true;
+                        }
+                        if (wifienable.equals("1")){
+                        Log.d("TetheringSettings", "wifienable ");
                         HotPotFragment.mRestartWifiApAfterConfigChange = true;
                         Intent intent = new Intent();
                         intent.setAction(ConnectivityManager.ACTION_TETHER_STATE_CHANGED);
                         sendBroadcast(intent);
+			            }
                         finish();
                     }
                 }
@@ -266,7 +298,6 @@ public class HotpotDialogActivity extends BaseInputActivity implements View.OnCl
     }
 
     public boolean checkIfSupportDualBand() {
-	
         File file = new File("/sys/bus/mmc/devices/sdio:0001/sdio:0001:1/device");
         BufferedReader reader = null;
 
@@ -275,7 +306,7 @@ public class HotpotDialogActivity extends BaseInputActivity implements View.OnCl
             String tempString = null;
             while ((tempString = reader.readLine()) != null) {
                 Log.d(TAG, "Get wifi chip name: " + tempString);
-                if (tempString.contains("0x4359") || tempString.contains("0x6255") 
+                if (tempString.contains("0x4359") || tempString.contains("0x6255")
                         || tempString.contains("0x4356") || tempString.contains("0x4358")) {
                     reader.close();
                     return true;

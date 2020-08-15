@@ -17,6 +17,8 @@ import android.hardware.usb.UsbManager;
 import android.net.ConnectivityManager;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
+import android.os.SystemProperties;
+
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -28,6 +30,12 @@ import android.util.Log;
 
 import android.app.DialogFragment;
 import android.app.Fragment;
+import java.io.IOException;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+
+
+
 
 
 import com.android.tv.settings.R;
@@ -51,6 +59,7 @@ public class HotPotFragment extends LeanbackPreferenceFragment
 
     private static final String USB_TETHER_SETTINGS = "usb_tether_settings";
     private static final String ENABLE_WIFI_AP = "enable_wifi_ap";
+    private static final String ENABLE_WIFI_RSDB = "enable_wifi_rsdb";
     private static final String ENABLE_BLUETOOTH_TETHERING = "enable_bluetooth_tethering";
     private static final String TETHER_CHOICE = "TETHER_TYPE";
     private static final String DATA_SAVER_FOOTER = "disabled_on_data_saver";
@@ -63,7 +72,7 @@ public class HotPotFragment extends LeanbackPreferenceFragment
 
     private WifiApEnabler mWifiApEnabler;
     private SwitchPreference mEnableWifiAp;
-
+    private SwitchPreference mEnableWifiRsdb;
     private SwitchPreference mBluetoothTether;
 
     private BroadcastReceiver mTetherChangeReceiver;
@@ -90,6 +99,7 @@ public class HotPotFragment extends LeanbackPreferenceFragment
     private ConnectivityManager mCm;
 
     public static boolean mRestartWifiApAfterConfigChange;
+    public static boolean mRestartRsdbAfterConfigChange;
 
     private boolean mUsbConnected;
     private boolean mMassStorageActive;
@@ -105,6 +115,18 @@ public class HotPotFragment extends LeanbackPreferenceFragment
     private boolean mDataSaverEnabled;
     private Preference mDataSaverFooter;
     private int mDelayTimeBeforRestartWifiAp = 1000; // ms
+    private final String PROP_RSDB_NAME = "persist.sys.wifi.rsdb.name";
+    private final String PROP_RSDB_PASSWD = "persist.sys.wifi.rsdb.passwd";
+    private final String PROP_RSDB_SECURITY_TYPE = "persist.sys.wifi.rsdb.security.type";
+    private final String PROP_RSDB_APBAND = "persist.sys.wifi.rsdb.apband";
+    private final String PROP_RSDB_ENABLE = "sys.wifi.rsdb.enable";
+    private final String PROP_WIFIAP_ENABLE = "sys.wifi.wifiap.enable";
+    private final IntentFilter mIntentFilter = new IntentFilter();
+    //private boolean hasRsdb;
+    private boolean mRsdbEnabled;
+    private int mRsdbNetId;
+    public static final int OPEN_INDEX = 0;
+    public static final int WPA2_INDEX = 1;
 
     public static HotPotFragment newInstance() {
         return new HotPotFragment();
@@ -126,12 +148,33 @@ public class HotPotFragment extends LeanbackPreferenceFragment
 
         mEnableWifiAp =
                 (SwitchPreference) findPreference(ENABLE_WIFI_AP);
+        mEnableWifiRsdb = (SwitchPreference) findPreference(ENABLE_WIFI_RSDB);
+        String rsdbenable = SystemProperties.get(PROP_RSDB_ENABLE, "0");
+        String wifienable = SystemProperties.get(PROP_WIFIAP_ENABLE, "0");
+        if(rsdbenable.equals("1")){
+          mEnableWifiRsdb.setChecked(true);
+        }
+        if(wifienable.equals("1")){
+          mEnableWifiAp.setChecked(true);
+        }
         Preference wifiApSettings = findPreference(WIFI_AP_SSID_AND_SECURITY);
         mUsbTether = (SwitchPreference) findPreference(USB_TETHER_SETTINGS);
         mBluetoothTether = (SwitchPreference) findPreference(ENABLE_BLUETOOTH_TETHERING);
 
         mCm = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         mWifiManager = (WifiManager) getActivity().getSystemService(Context.WIFI_SERVICE);
+
+    /*  String model = SystemProperties.get("persist.sys.wifi.model", "6212");
+        if (model.equals("6359")) {
+            hasRsdb = true;
+        } else {
+            hasRsdb = true;
+        }
+        if (hasRsdb) {
+
+        } else {
+            getPreferenceScreen().removePreference(mEnableWifiRsdb);
+        }*/
 
         mUsbRegexs = mCm.getTetherableUsbRegexs();
         mWifiRegexs = mCm.getTetherableWifiRegexs();
@@ -204,9 +247,8 @@ public class HotPotFragment extends LeanbackPreferenceFragment
     @Override
     public void onStart() {
         super.onStart();
-
         final Activity activity = getActivity();
-
+        Log.d("TetheringSettings", "onStart");
         mStartTetheringCallback = new OnStartTetheringCallback(this);
 
         mMassStorageActive = Environment.MEDIA_SHARED.equals(Environment.getExternalStorageState());
@@ -236,8 +278,21 @@ public class HotPotFragment extends LeanbackPreferenceFragment
         }
 
         mEnableWifiAp.setChecked(mRestartWifiApAfterConfigChange);
-
+        //if (hasRsdb)
+        mEnableWifiRsdb.setOnPreferenceChangeListener(this);
+        if(mRestartRsdbAfterConfigChange){
+        try{
+            Log.d("TetheringSettings", "rsdb config change restart softap");
+            Runtime run = Runtime.getRuntime();
+            run.exec("./vendor/bin/start_softap.sh");
+            }catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+           }
+        }
+        mRestartRsdbAfterConfigChange = false;
         updateState();
+        updateCreateNetwork();
     }
 
     @Override
@@ -270,6 +325,7 @@ public class HotPotFragment extends LeanbackPreferenceFragment
         mCreateNetwork = findPreference(WIFI_AP_SSID_AND_SECURITY);
 
         mRestartWifiApAfterConfigChange = false;
+		mRestartRsdbAfterConfigChange = false;
 
         if (mWifiConfig == null) {
             final String s = activity.getString(
@@ -284,6 +340,39 @@ public class HotPotFragment extends LeanbackPreferenceFragment
         }
 
     }
+
+     private void initWifiRsdb() {
+         final Activity activity = getActivity();
+         mWifiConfig = mWifiManager.getWifiApConfiguration();
+         mSecurityType = getResources().getStringArray(R.array.wifi_ap_security);
+         if (mWifiConfig != null) {
+            SystemProperties.set(PROP_RSDB_NAME, mWifiConfig.SSID);
+            SystemProperties.set(PROP_RSDB_PASSWD, mWifiConfig.preSharedKey);
+            if (WifiApDialog.getSecurityTypeIndex(mWifiConfig) == WPA2_INDEX)
+            {
+                SystemProperties.set(PROP_RSDB_SECURITY_TYPE, "wpa2-psk");
+            } else {
+				SystemProperties.set(PROP_RSDB_SECURITY_TYPE, "open");
+            }
+            if(mWifiConfig.apBand == 0)
+            {
+                Log.d("TetheringSettings", "2.4G set");
+                SystemProperties.set(PROP_RSDB_APBAND, "6");//2.4G
+            } else {
+                Log.d("TetheringSettings", "5G  set");
+				SystemProperties.set(PROP_RSDB_APBAND, "48");//5G
+            }
+         }
+     }
+
+	 private void updateCreateNetwork() {
+	     final Activity activity = getActivity();
+	      mWifiConfig = mWifiManager.getWifiApConfiguration();
+	      int index = WifiApDialog.getSecurityTypeIndex(mWifiConfig);
+            mCreateNetwork.setSummary(String.format(activity.getString(CONFIG_SUBTEXT),
+                    mWifiConfig.SSID,
+                    mSecurityType[index]));
+     }
 
     private class TetherChangeReceiver extends BroadcastReceiver {
         @Override
@@ -410,7 +499,7 @@ public class HotPotFragment extends LeanbackPreferenceFragment
 
         return super.onPreferenceTreeClick(preference);
     }
-
+  /*
     @Override
     public boolean onPreferenceChange(Preference preference, Object value) {
         boolean enable = (Boolean) value;
@@ -420,6 +509,66 @@ public class HotPotFragment extends LeanbackPreferenceFragment
         } else {
             mCm.stopTethering(TETHERING_WIFI);
         }
+        return false;
+    }
+   */
+	@Override
+    public boolean onPreferenceChange(Preference preference, Object value) {
+        boolean enable = (Boolean) value;
+		BufferedReader br = null;
+		Runtime runtime = Runtime.getRuntime();
+        final String key = preference.getKey();
+		Log.d(TAG, " onPreferenceChange : " + value);
+        if (ENABLE_WIFI_AP.equals(key)) {
+           if (enable) {
+                Log.d(TAG, " onPreferenceChange stop rsdb" );
+                mEnableWifiRsdb.setChecked(false);
+			try{
+			    Process p = Runtime.getRuntime().exec("ndc netd 6002 softap stopap");
+              }catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+		     startTethering(TETHERING_WIFI);
+			 if(mWifiManager.getWifiApState() == WifiManager.WIFI_AP_STATE_ENABLED){
+			 Log.d(TAG, " onPreferenceChange start wifiap sucess");
+			 SystemProperties.set(PROP_WIFIAP_ENABLE, "1");
+			 }
+
+           } else {
+             mCm.stopTethering(TETHERING_WIFI);
+			 SystemProperties.set(PROP_WIFIAP_ENABLE, "0");
+           }
+         } else if (ENABLE_WIFI_RSDB.equals(key)) {
+            if (enable){
+			 mEnableWifiRsdb.setChecked(true);
+             mEnableWifiAp.setChecked(false);
+			 if(mWifiManager.getWifiApState() == WifiManager.WIFI_AP_STATE_ENABLED){
+			      Log.d(TAG, " onPreferenceChange disable wifiap " );
+			      mCm.stopTethering(TETHERING_WIFI);
+			 }
+			 initWifiRsdb();
+			 Log.d(TAG, " onPreferenceChange start rsdb" );
+			 try{
+			      Runtime run = Runtime.getRuntime();
+			      run.exec("./vendor/bin/start_softap.sh");
+            }catch (IOException e) {
+            // TODO Auto-generated catch block
+                  e.printStackTrace();
+              }
+			SystemProperties.set(PROP_RSDB_ENABLE, "1");
+           } else {
+		          mEnableWifiRsdb.setChecked(false);
+			      Log.d(TAG, " onPreferenceChange stop rsdb" );
+			 try{
+			      Process p = Runtime.getRuntime().exec("ndc netd 6002 softap stopap");
+            }catch (IOException e) {
+                 // TODO Auto-generated catch block
+                  e.printStackTrace();
+              }
+			SystemProperties.set(PROP_RSDB_ENABLE, "0");
+           }
+         }
         return false;
     }
 
