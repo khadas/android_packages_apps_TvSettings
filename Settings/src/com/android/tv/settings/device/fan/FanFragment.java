@@ -240,7 +240,7 @@ public class FanFragment extends SettingsPreferenceFragment {
 
     public static int  getFanLevelProp() {
 
-        int level = SystemProperties.getInt(PROP_FAN_LEVEL, INDEX_LEVEL_1);
+        int level = SystemProperties.getInt(PROP_FAN_LEVEL, INDEX_AUTO);
         return level;
     }
 
