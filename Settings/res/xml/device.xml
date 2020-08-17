@@ -38,6 +38,11 @@
         android:key="language"
         android:title="@string/system_language"/>
     <Preference
+        android:fragment="com.android.tv.settings.device.font.FontFragment"
+        android:icon="@drawable/ic_settings_font"
+        android:key="font"
+        android:title="@string/device_fontsize"/>
+    <Preference
         android:fragment="com.android.tv.settings.inputmethod.KeyboardFragment"
         android:icon="@drawable/ic_keyboard"
         android:key="keyboard"
