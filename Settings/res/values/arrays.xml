@@ -319,6 +319,12 @@
         <item>Level 5</item>
     </string-array>
 
+    <string-array name="rgb_set_list" >
+        <item>default</item>
+        <item>standard</item>
+        <item>warm</item>
+        <item>cold</item>
+    </string-array>
     
     <!-- WengTao resolution list -->
     <string-array name="resolution_list" translatable="false">

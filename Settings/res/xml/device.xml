@@ -62,6 +62,13 @@
         android:icon="@drawable/ic_settings_fan"
         android:key="fan"
         android:title="@string/device_fan"/>
+
+    <Preference
+        android:fragment="com.android.tv.settings.device.rgbsettings.RgbFragment"
+        android:icon="@drawable/ic_settings_rgb"
+        android:key="rgb"
+        android:title="@string/device_rgb"/>
+
     <Preference
 	android:icon="@drawable/ic_settings_date_time"
 	android:key="timer"
