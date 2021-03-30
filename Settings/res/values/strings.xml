@@ -2565,4 +2565,14 @@
     <string name="dormancy">Dormancy</string>
     <string name="power_off">Power Off</string>
     <string name="reboot">Reboot</string>
+
+    <!-- UiMode -->
+    <string name="device_apps_app_management_ui_mode">Ui Mode</string>
+    <string name="device_apps_app_management_ui_mode_normal">NORMAL</string>
+    <string name="device_apps_app_management_ui_mode_desk">DESK</string>
+    <string name="device_apps_app_management_ui_mode_car">CAR</string>
+    <string name="device_apps_app_management_ui_mode_television">TELEVISION</string>
+    <string name="device_apps_app_management_ui_mode_appliance">APPLIANCE</string>
+    <string name="device_apps_app_management_ui_mode_watch">WATCH</string>
+    <string name="device_apps_app_management_ui_mode_vr_headset">VR HEADSET</string>
 </resources>

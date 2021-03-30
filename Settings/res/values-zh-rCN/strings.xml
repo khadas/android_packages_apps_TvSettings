@@ -1106,4 +1106,14 @@
     <string name="dormancy">休眠</string>
     <string name="power_off">关机</string>
     <string name="reboot">重启</string>
+
+    <!-- UiMode -->
+    <string name="device_apps_app_management_ui_mode">UI模式</string>
+    <string name="device_apps_app_management_ui_mode_normal">标准</string>
+    <string name="device_apps_app_management_ui_mode_desk">桌面</string>
+    <string name="device_apps_app_management_ui_mode_car">汽车</string>
+    <string name="device_apps_app_management_ui_mode_television">电视</string>
+    <string name="device_apps_app_management_ui_mode_appliance">器具</string>
+    <string name="device_apps_app_management_ui_mode_watch">手表</string>
+    <string name="device_apps_app_management_ui_mode_vr_headset">VR头戴设备</string>
 </resources>

@@ -24,21 +24,26 @@ import static com.android.tv.settings.util.InstrumentationUtils.logEntrySelected
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.tvsettings.TvSettingsEnums;
+import android.app.UiModeManager;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.IPackageDataObserver;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.UserHandle;
+import android.os.SystemProperties;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.Xml;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceScreen;
 
@@ -47,13 +52,21 @@ import com.android.tv.settings.R;
 import com.android.tv.settings.SettingsPreferenceFragment;
 import com.android.tv.twopanelsettings.TwoPanelSettingsFragment;
 
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Fragment for managing a single app
  */
-public class AppManagementFragment extends SettingsPreferenceFragment {
+public class AppManagementFragment extends SettingsPreferenceFragment
+        implements Preference.OnPreferenceChangeListener {
     private static final String TAG = "AppManagementFragment";
 
     private static final String ARG_PACKAGE_NAME = "packageName";
@@ -73,6 +86,7 @@ public class AppManagementFragment extends SettingsPreferenceFragment {
 
     // Intent action implemented by apps that have open source licenses to display under settings
     private static final String VIEW_LICENSES_ACTION = "com.android.tv.settings.VIEW_LICENSES";
+    private static final String KEY_UI_MODE = "uiMode";
 
     // Result code identifiers
     private static final int REQUEST_UNINSTALL = 1;
@@ -94,6 +108,7 @@ public class AppManagementFragment extends SettingsPreferenceFragment {
     private ClearCachePreference mClearCachePreference;
     private ClearDefaultsPreference mClearDefaultsPreference;
     private NotificationsPreference mNotificationsPreference;
+    private ListPreference mUiModePreference;
 
     private final Handler mHandler = new Handler();
     private Runnable mBailoutRunnable = () -> {
@@ -115,6 +130,10 @@ public class AppManagementFragment extends SettingsPreferenceFragment {
         mApplicationsState = ApplicationsState.getInstance(activity.getApplication());
         mSession = mApplicationsState.newSession(mCallbacks, getLifecycle());
         mEntry = mApplicationsState.getEntry(mPackageName, UserHandle.myUserId());
+
+        if (SystemProperties.get("ro.target.product", "unknown").equals("box")) {
+            this.uiMode = getCurrentUiMode();
+        }
 
         super.onCreate(savedInstanceState);
     }
@@ -215,6 +234,17 @@ public class AppManagementFragment extends SettingsPreferenceFragment {
         } else {
             return super.onPreferenceTreeClick(preference);
         }
+    }
+
+    @Override
+    public boolean onPreferenceChange(Preference preference, Object newValue) {
+        if (preference == mUiModePreference) {
+            mUiModePreference.setValue((String) newValue);
+            mUiModePreference.setSummary(modeTypeToStr(Integer.parseInt((String) newValue)));
+            setXmlUiMode(this.uiMode, Integer.parseInt((String) newValue));
+            this.uiMode = Integer.parseInt((String) newValue);
+        }
+        return true;
     }
 
     @Override
@@ -396,6 +426,17 @@ public class AppManagementFragment extends SettingsPreferenceFragment {
                 });
         permissionsPreference.setIntent(new Intent(Intent.ACTION_MANAGE_APP_PERMISSIONS)
                 .putExtra(Intent.EXTRA_PACKAGE_NAME, mPackageName));
+        // For UiMode
+        if (SystemProperties.get("ro.target.product", "unknown").equals("box")) {
+            if (mUiModePreference == null) {
+                mUiModePreference = iniUiModePreference();
+                mUiModePreference.setKey(KEY_UI_MODE);
+                replacePreference(mUiModePreference);
+            } else {
+                mUiModePreference.setValue(String.valueOf(this.uiMode));
+                mUiModePreference.setSummary(modeTypeToStr(this.uiMode));
+            }
+        }
     }
 
     private void replacePreference(Preference preference) {
@@ -479,7 +520,7 @@ public class AppManagementFragment extends SettingsPreferenceFragment {
 
     private void dataCleared(boolean succeeded) {
         if (succeeded) {
-            final int userId =  UserHandle.getUserId(mEntry.info.uid);
+            final int userId = UserHandle.getUserId(mEntry.info.uid);
             mApplicationsState.requestSize(mPackageName, userId);
         } else {
             Log.w(TAG, "Failed to clear data!");
@@ -492,7 +533,7 @@ public class AppManagementFragment extends SettingsPreferenceFragment {
         mPackageManager.deleteApplicationCacheFiles(mEntry.info.packageName,
                 new IPackageDataObserver.Stub() {
                     public void onRemoveCompleted(final String packageName,
-                            final boolean succeeded) {
+                                                  final boolean succeeded) {
                         mHandler.post(new Runnable() {
                             @Override
                             public void run() {
@@ -507,7 +548,7 @@ public class AppManagementFragment extends SettingsPreferenceFragment {
 
     private void cacheCleared(boolean succeeded) {
         if (succeeded) {
-            final int userId =  UserHandle.getUserId(mEntry.info.uid);
+            final int userId = UserHandle.getUserId(mEntry.info.uid);
             mApplicationsState.requestSize(mPackageName, userId);
         } else {
             Log.w(TAG, "Failed to clear cache!");
@@ -554,10 +595,12 @@ public class AppManagementFragment extends SettingsPreferenceFragment {
         }
 
         @Override
-        public void onRebuildComplete(ArrayList<ApplicationsState.AppEntry> apps) {}
+        public void onRebuildComplete(ArrayList<ApplicationsState.AppEntry> apps) {
+        }
 
         @Override
-        public void onPackageIconChanged() {}
+        public void onPackageIconChanged() {
+        }
 
         @Override
         public void onPackageSizeChanged(String packageName) {
@@ -606,6 +649,56 @@ public class AppManagementFragment extends SettingsPreferenceFragment {
             if (mClearDataPreference != null) {
                 mClearDataPreference.refresh();
             }
+        }
+    }
+
+    private int uiMode = -1;
+
+    private int getCurrentUiMode() {
+        int uiMode = mPackageManager.getPackageUiModeType(mPackageName);
+        if (uiMode < 0) {
+            uiMode = ((UiModeManager) (getContext().getSystemService(UiModeManager.class))).getCurrentModeType();
+        }
+        return uiMode;
+    }
+
+    private void setXmlUiMode(int oldUiMode, int newUiMode) {
+        mPackageManager.setPackageUiModeType(mPackageName, oldUiMode, newUiMode);
+        ActivityManager am = (ActivityManager) getActivity().getSystemService(Context.ACTIVITY_SERVICE);
+        am.forceStopPackage(mPackageName);
+    }
+
+    private ListPreference iniUiModePreference() {
+        ListPreference uiModePref = new ListPreference(getContext());
+        uiModePref.setLayoutResource(R.layout.leanback_preference);
+        uiModePref.setTitle(getString(R.string.device_apps_app_management_ui_mode));
+        uiModePref.setEntries(R.array.device_apps_app_management_ui_mode_entry);
+        uiModePref.setEntryValues(R.array.device_apps_app_management_ui_mode_entry_value);
+        uiModePref.setValue(String.valueOf(this.uiMode));
+        uiModePref.setSummary(modeTypeToStr(this.uiMode));
+        uiModePref.setOnPreferenceChangeListener(this);
+        return uiModePref;
+    }
+
+    private String modeTypeToStr(int uiMode) {
+        String mode;
+        switch (uiMode) {
+            case Configuration.UI_MODE_TYPE_NORMAL:
+                return getString(R.string.device_apps_app_management_ui_mode_normal);
+            case Configuration.UI_MODE_TYPE_DESK:
+                return getString(R.string.device_apps_app_management_ui_mode_desk);
+            case Configuration.UI_MODE_TYPE_CAR:
+                return getString(R.string.device_apps_app_management_ui_mode_car);
+            case Configuration.UI_MODE_TYPE_TELEVISION:
+                return getString(R.string.device_apps_app_management_ui_mode_television);
+            case Configuration.UI_MODE_TYPE_APPLIANCE:
+                return getString(R.string.device_apps_app_management_ui_mode_appliance);
+            case Configuration.UI_MODE_TYPE_WATCH:
+                return getString(R.string.device_apps_app_management_ui_mode_watch);
+            case Configuration.UI_MODE_TYPE_VR_HEADSET:
+                return getString(R.string.device_apps_app_management_ui_mode_vr_headset);
+            default:
+                return getString(R.string.device_apps_app_management_ui_mode_normal);
         }
     }
 }
