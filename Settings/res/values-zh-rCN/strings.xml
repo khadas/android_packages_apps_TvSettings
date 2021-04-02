@@ -1272,4 +1272,18 @@
     <string name="no_button">取消</string>
     <string name="ok_button">保存</string>
     <string name="bluetooth_tethering_off_subtext" product="default">不共享网络连接</string>
+
+    <!-- Internet ADB -->
+    <string name="enable_internet_adb">网络 Adb</string>
+    <string name="enable_internet_adb_summary">打开网络 adb</string>
+    <!-- enable abc -->
+    <string name="enable_abc">"Android日志收集器"</string>
+    <string name="enable_abc_summary">"保存近几次开机log到/data/logs目录"</string>
+    <string name="abc_tip_head">当前data/vendor/logs目录大小为：</string>
+    <string name="abc_tip_end"> MB，请注意清理！</string>
+    <!-- UsbMode -->
+    <string name="enable_usb">USB连接状态</string>
+    <string name="enable_usb_summary">设置USB 连接状态</string>
+    <string name="usb_connect_to_computer">已连接到计算机</string>
+    <string name="usb_disconnect_to_computer">未连接到计算机</string>
 </resources>

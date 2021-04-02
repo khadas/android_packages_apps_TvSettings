@@ -77,7 +77,9 @@ import com.android.tv.settings.overlay.FlavorUtils;
 import com.android.tv.settings.system.development.audio.AudioDebug;
 import com.android.tv.settings.system.development.audio.AudioMetrics;
 import com.android.tv.settings.system.development.audio.AudioReaderException;
+import com.android.tv.settings.dialog.UsbModeSettings;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -174,6 +176,14 @@ public class DevelopmentFragment extends SettingsPreferenceFragment
 
     private static final String STATE_SHOWING_DIALOG_KEY = "showing_dialog_key";
 
+    private static final String ENABLE_ABC = "enable_abc";
+    private static final String ENABLE_USB = "enable_usb";
+    private static final String ENABLE_INTERNET_ADB = "enable_internet_adb";
+
+    private static final String PERSIST_RK_ABC_SWITCH = "persist.abc_switch";
+    private static final String PERSIST_RK_ADB_ENABLE = "persist.sys.adb_enable";
+    private static final String PERSIST_RK_INTERNET_ADB = "persist.internet_adb_enable";
+
     private String mPendingDialogKey;
 
     private IWindowManager mWindowManager;
@@ -188,6 +198,9 @@ public class DevelopmentFragment extends SettingsPreferenceFragment
 
     private SwitchPreference mEnableDeveloper;
     private SwitchPreference mEnableAdb;
+    private SwitchPreference mEnableUsb;
+    private SwitchPreference mEnableInternetAdb;
+    private SwitchPreference mEnableAbc;
     private Preference mClearAdbKeys;
     private SwitchPreference mEnableTerminal;
     private Preference mBugreport;
@@ -264,6 +277,7 @@ public class DevelopmentFragment extends SettingsPreferenceFragment
     private boolean mUnavailable;
 
     private AudioDebug mAudioDebug;
+    private UsbModeSettings mUsbModeSetting = null;
 
     public static DevelopmentFragment newInstance() {
         return new DevelopmentFragment();
@@ -299,6 +313,7 @@ public class DevelopmentFragment extends SettingsPreferenceFragment
         mLogdSizeController = new LogdSizePreferenceController(getActivity());
         mLogpersistController = new LogpersistPreferenceController(getActivity(),
                 getSettingsLifecycle());
+        mUsbModeSetting = new UsbModeSettings(getPreferenceManager().getContext());
 
         if (!mUm.isAdminUser()
                 || mUm.hasUserRestriction(UserManager.DISALLOW_DEBUGGING_FEATURES)
@@ -320,6 +335,23 @@ public class DevelopmentFragment extends SettingsPreferenceFragment
         final PreferenceGroup debugDebuggingCategory = (PreferenceGroup)
                 findPreference(DEBUG_DEBUGGING_CATEGORY_KEY);
         mEnableAdb = findAndInitSwitchPref(ENABLE_ADB);
+        mEnableUsb = findAndInitSwitchPref(ENABLE_USB);
+        mEnableInternetAdb = findAndInitSwitchPref(ENABLE_INTERNET_ADB);
+        mEnableAbc = findAndInitSwitchPref(ENABLE_ABC);
+
+        mEnableUsb.setChecked(mUsbModeSetting.getDefaultValue());
+        if (mEnableUsb.isChecked()){
+            mEnableUsb.setSummary(R.string.usb_connect_to_computer);
+        } else {
+            mEnableUsb.setSummary(R.string.usb_disconnect_to_computer);
+        }
+        String internetADB = SystemProperties.get(PERSIST_RK_INTERNET_ADB, "0");
+        if (internetADB.equals("1")) {
+            mEnableInternetAdb.setChecked(true);
+        } else {
+            mEnableInternetAdb.setChecked(false);
+        }
+
         mClearAdbKeys = findPreference(CLEAR_ADB_KEYS);
         if (!AdbProperties.secure().orElse(false)) {
             if (debugDebuggingCategory != null) {
@@ -360,6 +392,9 @@ public class DevelopmentFragment extends SettingsPreferenceFragment
 
         if (!mUm.isAdminUser()) {
             disableForUser(mEnableAdb);
+            disableForUser(mEnableUsb);
+            disableForUser(mEnableInternetAdb);
+            disableForUser(mEnableAbc);
             disableForUser(mClearAdbKeys);
             disableForUser(mEnableTerminal);
             disableForUser(mPassword);
@@ -652,6 +687,7 @@ public class DevelopmentFragment extends SettingsPreferenceFragment
         updateSwitchPreference(mForceAllowOnExternal, Settings.Global.getInt(cr,
                 Settings.Global.FORCE_ALLOW_ON_EXTERNAL, 0) != 0);
         updateBluetoothHciSnoopLogValues();
+        updateSwitchPreference(mEnableAbc, (SystemProperties.getInt(PERSIST_RK_ABC_SWITCH, 0)) != 0);
         updateHdcpValues();
         updatePasswordSummary();
         updateDebuggerOptions();
@@ -1598,6 +1634,38 @@ public class DevelopmentFragment extends SettingsPreferenceFragment
                 mVerifyAppsOverUsb.setEnabled(false);
                 mVerifyAppsOverUsb.setChecked(false);
             }
+        } else if (preference == mEnableUsb) {
+            if (mEnableUsb.isChecked()){
+                mUsbModeSetting.onUsbModeClick(UsbModeSettings.SLAVE_MODE);
+                mEnableUsb.setSummary(R.string.usb_connect_to_computer);
+            } else {
+                mUsbModeSetting.onUsbModeClick(UsbModeSettings.HOST_MODE);
+                mEnableUsb.setSummary(R.string.usb_disconnect_to_computer);
+            }
+        } else if (preference == mEnableInternetAdb) {
+            if (mEnableInternetAdb.isChecked()) {
+                SystemProperties.set(PERSIST_RK_INTERNET_ADB, "1");
+            } else {
+                SystemProperties.set(PERSIST_RK_INTERNET_ADB, "0");
+            }
+        } else if (preference == mEnableAbc) {
+            if (SystemProperties.getInt(PERSIST_RK_ABC_SWITCH, 0) == 1) {
+                Log.d(TAG, "set modify abc property to persist 0");
+                SystemProperties.set(PERSIST_RK_ABC_SWITCH, "0");
+            } else {
+                Log.d(TAG, "set modify abc property to persist 1");
+                SystemProperties.set(PERSIST_RK_ABC_SWITCH, "1");
+                File dirLogs = new File("data/vendor/logs");
+                Log.i("ROCKCHIP", "file exists = " + dirLogs.exists());
+                if (dirLogs.exists()) {
+                    long dirSize = getDirSize(dirLogs);
+                    dirSize = dirSize / 1024 / 1024;
+                    Log.i("ROCKCHIP", "dirLogs is exists size = " + dirSize);
+                    String tipHead = getResources().getString(R.string.abc_tip_head);
+                    String tipEnd = getResources().getString(R.string.abc_tip_end);
+                    Toast.makeText(getActivity(), tipHead + dirSize + tipEnd, Toast.LENGTH_LONG).show();
+                }
+            }
         } else if (preference == mEnableTerminal) {
             final PackageManager pm = getActivity().getPackageManager();
             pm.setApplicationEnabledSetting(TERMINAL_APP_PACKAGE,
@@ -1781,5 +1849,28 @@ public class DevelopmentFragment extends SettingsPreferenceFragment
         } catch (PackageManager.NameNotFoundException e) {
             return false;
         }
+    }
+
+    private void goToLoader() {
+        try{
+            java.lang.Runtime.getRuntime().exec("reboot loader");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private long getDirSize(File dirOrFile) {
+        long dirSize = 0;
+        if (dirOrFile.exists()) {
+            if (dirOrFile.isDirectory()) {
+                File[] files = dirOrFile.listFiles();
+                for (File file : files) {
+                    dirSize += getDirSize(file);
+                }
+            } else {
+                dirSize += dirOrFile.length();
+            }
+        }
+        return dirSize;
     }
 }
