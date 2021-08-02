@@ -39,7 +39,12 @@
         android:fragment="com.android.tv.settings.inputmethod.AvailableVirtualKeyboardFragment"
         android:key="manageKeyboards"
         android:order="3"
-        android:title="@string/manage_keyboards"/>
+	android:title="@string/manage_keyboards"/>
+    <SwitchPreference
+        android:key="virtualkeyboardenable"
+	android:persistent="true"
+	android:title="@string/virtual_keyboard_enable"
+	android:summary="@string/virtualkeyboard_enable_context" />
 
     <PreferenceCategory
         android:order="4"

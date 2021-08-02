@@ -123,7 +123,9 @@
     <!-- Preference which manages ethernet settings. [CHAR LIMIT=50] -->
     <string name="connectivity_ethernet">Ethernet</string>
     <string name="ethernet_port">Ethernet Port</string>
+    <string name="virtual_keyboard_enable">virtual keyboard enable</string>
     <string name="ethernet_active_context">Active: M2X (Reboot for changes to take effect)</string>
+    <string name="virtualkeyboard_enable_context">enable virtual keyboard when insert physical keyboard</string>
     <!-- Summary for preference which indicates ethernet is connected. [CHAR LIMIT=50] -->
     <string name="connectivity_summary_ethernet_connected">Ethernet connected</string>
     <!-- Summary for preference which indicates no network is connected. [CHAR LIMIT=50] -->

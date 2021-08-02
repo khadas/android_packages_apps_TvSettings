@@ -27,6 +27,8 @@ import android.support.v7.preference.ListPreference;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceCategory;
 import android.support.v7.preference.PreferenceScreen;
+import android.support.v7.preference.TwoStatePreference;
+
 import android.text.TextUtils;
 import android.util.ArraySet;
 import android.view.inputmethod.InputMethodInfo;
@@ -37,6 +39,9 @@ import com.android.settingslib.wrapper.PackageManagerWrapper;
 import com.android.tv.settings.R;
 import com.android.tv.settings.SettingsPreferenceFragment;
 import com.android.tv.settings.autofill.AutofillHelper;
+import android.provider.Settings;
+
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,6 +65,7 @@ public class KeyboardFragment extends SettingsPreferenceFragment {
     static final String KEY_CURRENT_KEYBOARD = "currentKeyboard";
 
     private static final String KEY_KEYBOARD_SETTINGS_PREFIX = "keyboardSettings:";
+	private static final String KEY_VIRTUAL_KEYBOARD_ENABLE = "virtualkeyboardenable";
 
     @VisibleForTesting
     static final String KEY_AUTOFILL_CATEGORY = "autofillCategory";
@@ -70,6 +76,7 @@ public class KeyboardFragment extends SettingsPreferenceFragment {
     private static final String KEY_AUTOFILL_SETTINGS_PREFIX = "autofillSettings:";
 
     private PackageManagerWrapper mPm;
+	private TwoStatePreference mVirtualKeyboardEnable;
 
     /**
      * @return New fragment instance
@@ -94,7 +101,43 @@ public class KeyboardFragment extends SettingsPreferenceFragment {
                     return true;
                 });
 
+		mVirtualKeyboardEnable = (TwoStatePreference) findPreference(KEY_VIRTUAL_KEYBOARD_ENABLE);
+	    if(virtualkeyboardgetstatus()== 1) {
+        mVirtualKeyboardEnable.setChecked(true);
+	    }
         updateUi();
+    }
+
+	private void virtualkeyboardenable() {
+		final Context preferenceContext = getPreferenceContext();
+		Settings.Secure.putInt(preferenceContext.getContentResolver(), Settings.Secure.SHOW_IME_WITH_HARD_KEYBOARD, 1);
+		}
+
+	private void virtualkeyboarddisable() {
+		final Context preferenceContext = getPreferenceContext();
+		Settings.Secure.putInt(preferenceContext.getContentResolver(), Settings.Secure.SHOW_IME_WITH_HARD_KEYBOARD, 0);
+		}
+
+	private int virtualkeyboardgetstatus() {
+		final Context preferenceContext = getPreferenceContext();
+		return Settings.Secure.getInt(preferenceContext.getContentResolver(), Settings.Secure.SHOW_IME_WITH_HARD_KEYBOARD ,0);
+		}
+
+    @Override
+    public boolean onPreferenceTreeClick(Preference preference) {
+        if (preference.getKey() == null) {
+            return super.onPreferenceTreeClick(preference);
+        }
+        switch (preference.getKey()) {
+            case KEY_VIRTUAL_KEYBOARD_ENABLE:
+                 if (mVirtualKeyboardEnable.isChecked()) {
+                      virtualkeyboardenable();
+                 } else {
+                      virtualkeyboarddisable();
+                 }
+                return true;
+        }
+        return super.onPreferenceTreeClick(preference);
     }
 
     @Override
