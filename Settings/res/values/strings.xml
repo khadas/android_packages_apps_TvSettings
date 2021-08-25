@@ -2102,7 +2102,7 @@
     <string name="edit">Edit</string>
 
     <!-- HotPot -->
-    <string name="hotpot_name">HotPot</string>
+    <string name="hotpot_name">Hotspot</string>
     <string name="hotpot_setting_title">Hotpot Setup</string>
     <string name="usb_tethering_active_subtext">Tethered</string>
 	<string name="usb_tethering_available_subtext">USB connected, check to tether</string>
