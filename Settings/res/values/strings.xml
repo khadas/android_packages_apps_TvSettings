@@ -2508,4 +2508,61 @@
     <string name="font_sans_serif_light" translatable="false">sans-serif-light</string>
     <string name="font_sans_serif_thin" translatable="false">sans-serif-thin</string>
     <string name="font_sans_serif_condensed" translatable="false">sans-serif-condensed</string>
+
+    <!-- WengTao add for display -->
+    <string name="resolutions">Resolutions</string>
+    <string name="rk3399_resolutions">RK3399 resolutions</string>
+    <string name="display">Display</string>
+    <string name="resolution">Resolution</string>
+    <string name="display_devices">Display devices</string>
+    <string name="zoom">Zoom</string>
+    <string name="bcsh">BCSH</string>
+    <string name="bcsh_reset">reset</string>
+    <string name="bcsh_cold">cold</string>
+    <string name="bcsh_warm">warm</string>
+    <string name="bcsh_sharp">sharp</string>
+    <string name="hdr">SDR->HDR</string>
+    <string name="sdr">HDR->SDR</string>
+    <string name="brightness">Brightness</string>
+    <string name="current">Current value:</string>
+    <string name="contrast">Contrast</string>
+    <string name="saturation">Saturation</string>
+    <string name="tone">Tone</string>
+    <string name="max_brightness">Max brightness</string>
+    <string name="min_brightness">Min brightness</string>
+    <string name="ok">OK</string>
+    <string name="color">Color</string>
+    <string name="confirm_dialog_title">Save Confirm</string>
+    <string name="confirm_dialog_message">Will cancel in</string>
+    <string name="audio_device">Audio device</string>
+    <string name="audio_mode">Audio mode</string>
+    <string name="formats">Formats</string>
+    <string name="surround_sound_format_true_hd">Dolby TrueHD</string>
+    <string name="fixed_rotation">Fixed rotation</string>
+    <string name="hdmi_rotation">Rotation</string>
+    <string name="ui_resolutions">Ui Resolutions</string>
+
+    <string name="advance_settings">Advanced setting</string>
+    <!--performance -->
+    <string name="performance_float">Performance Dialog</string>
+    <string name="cpu_title">CPU:</string>
+    <string name="cpu_model">cpu curFrq:</string>
+    <string name="cpu_usage">cpu usage:</string>
+    <string name="cpu_temp">cpu temperature:</string>
+    <string name="ram_title">RAM:</string>
+    <string name="ram_total">ram total:</string>
+    <string name="ram_usage">sys ram free:</string>
+    <string name="network_title">Network:</string>
+    <string name="network_speed">net speed:</string>
+    <string name="network_mac">wifi mac:</string>
+    <string name="network_mac2">ethernet mac:</string>
+
+    <string name="default_launcher">Default Launcher</string>
+
+    <!-- power -->
+    <string name="power_key">Power Key</string>
+    <string name="power_key_definition">Power Key Definition</string>
+    <string name="dormancy">Dormancy</string>
+    <string name="power_off">Power Off</string>
+    <string name="reboot">Reboot</string>
 </resources>

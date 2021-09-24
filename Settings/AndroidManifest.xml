@@ -1210,6 +1210,29 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:theme="@style/Transparent"
+            android:name="com.android.tv.settings.display.DisplayActivity"/>
+        <activity
+            android:theme="@style/TvSettingsActivityTheme"
+            android:name="com.android.tv.settings.display.ScreenScaleActivity"/>
+        <activity
+            android:theme="@style/TvSettingsActivityTheme"
+            android:name="com.android.tv.settings.display.AdvancedDisplaySettingsActivity"/>
+        <activity
+            android:name=".advance_settings.AdvanceSettingsActivity"
+            android:theme="@style/TvSettingsActivityTheme"
+            android:excludeFromRecents="true"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.settings.DEVICE_INFO_SETTINGS" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <service android:name=".advance_settings.performance.PerformanceService"/>
+
     </application>
 
 </manifest>

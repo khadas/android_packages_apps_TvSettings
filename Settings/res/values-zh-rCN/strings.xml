@@ -1065,4 +1065,45 @@
     <string name="power_and_energy" msgid="4638182439670702556">"开关和电源"</string>
     <string name="power_on_behavior" msgid="927607372303160716">"开机行为"</string>
     <string name="reset_options_title" msgid="7632580482285108955">"重置"</string>
+
+    <!-- WengTao add for display -->
+    <string name="resolutions">分辨率</string>
+    <string name="display">显示</string>
+    <string name="resolution">分辨率</string>
+    <string name="display_devices">显示设备</string>
+    <string name="zoom">缩放</string>
+    <string name="rk3399_resolutions">RK3399分辨率</string>
+    <string name="bcsh">BCSH</string>
+    <string name="bcsh_reset">重置</string>
+    <string name="bcsh_cold">冷</string>
+    <string name="bcsh_warm">暖</string>
+    <string name="bcsh_sharp">锐利</string>
+    <string name="hdr">HDR</string>
+    <string name="brightness">亮度</string>
+    <string name="current">当前数值:</string>
+    <string name="contrast">对比度</string>
+    <string name="saturation">饱和度</string>
+    <string name="tone">色调</string>
+    <string name="max_brightness">最大亮度</string>
+    <string name="min_brightness">最小亮度</string>
+    <string name="ok">确定</string>
+    <string name="color">色深及颜色空间</string>
+    <string name="confirm_dialog_title">保存确认</string>
+    <string name="confirm_dialog_message">将会取消</string>
+    <string name="audio_device">音频设备</string>
+    <string name="ui_resolutions">Ui分辨率</string>
+
+    <string name="advance_settings">高级设置</string>
+   <!--performance -->
+    <string name="performance_float">性能浮窗</string>
+    <string name="fixed_rotation">锁定屏幕方向</string>
+    <string name="hdmi_rotation">屏幕旋转</string>
+
+    <string name="default_launcher">默认启动器</string>
+    <!-- power -->
+    <string name="power_key">电源键</string>
+    <string name="power_key_definition">电源键定义</string>
+    <string name="dormancy">休眠</string>
+    <string name="power_off">关机</string>
+    <string name="reboot">重启</string>
 </resources>

@@ -294,4 +294,43 @@
     <string-array name="customized_ignored_system_alert_window_packages" translatable="false">
     </string-array>
 
+    <!-- WengTao resolution list -->
+    <string-array name="resolution_list" translatable="false">
+        <item>1920x1080p-60</item>
+        <item>1280x720p-60</item>
+        <item>720x480p-60</item>
+    </string-array>
+
+    <string-array name="color_list" translatable="false">
+        <item>color1</item>
+        <item>color2</item>
+        <item>color3</item>
+    </string-array>
+
+    <string-array name="hdmi_rotation_entries">
+        <item>0</item>
+        <item>90</item>
+        <item>180</item>
+        <item>270</item>
+    </string-array>
+
+    <string-array name="hdmi_rotation_values">
+        <item>0</item>
+        <item>90</item>
+        <item>180</item>
+        <item>270</item>
+    </string-array>
+
+    <string-array name="power_key_choose">
+        <item>@string/dormancy</item>
+        <item>@string/power_off</item>
+        <item>@string/reboot</item>
+    </string-array>
+
+    <string-array name="power_key_choose_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
 </resources>
