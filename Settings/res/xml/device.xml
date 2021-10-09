@@ -76,6 +76,11 @@
 	android:key="soundset"
 	android:title="@string/sound_settings"/>
     <Preference
+	android:fragment="com.android.tv.settings.device.extled.LedAdjustValueFragment"
+	android:icon="@drawable/ic_settings_led"
+	android:key="extledctl"
+	android:title="@string/logoled_control"/>
+    <Preference
         android:fragment="com.android.tv.settings.device.led.LedFragment"
         android:icon="@drawable/ic_settings_led"
         android:key="led"

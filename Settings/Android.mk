@@ -35,7 +35,9 @@ LOCAL_STATIC_ANDROID_LIBRARIES := \
     android-arch-lifecycle-extensions
 
 LOCAL_STATIC_JAVA_LIBRARIES := \
-    android-arch-lifecycle-common-java8
+    android-arch-lifecycle-common-java8 libserial
+
+LOCAL_PREBUILT_JNI_LIBS += libs/arm/libserial_port.so
 
 LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
 
@@ -49,6 +51,10 @@ LOCAL_SRC_FILES := \
 include frameworks/base/packages/SettingsLib/common.mk
 
 include $(BUILD_PACKAGE)
+
+include $(CLEAR_VARS)
+LOCAL_PREBUILT_STATIC_JAVA_LIBRARIES := libserial:libs/libserialcontrol.aar
+include $(BUILD_MULTI_PREBUILT)
 
 # Use the following include to make our test apk.
 ifeq (,$(ONE_SHOT_MAKEFILE))
