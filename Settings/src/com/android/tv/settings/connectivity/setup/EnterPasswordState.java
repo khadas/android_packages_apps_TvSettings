@@ -141,6 +141,12 @@ public class EnterPasswordState implements State {
                     if (action.getId() == ACTION_ID_CHECKBOX) {
                         PasswordViewHolder checkBoxVH = (PasswordViewHolder) vh;
                         mCheckBox = checkBoxVH.mCheckbox;
+                        mCheckBox.setOnCheckedChangeListener((view, isChecked) -> {
+                            if (mPasswordAction != null) {
+                                setSelectedActionPosition(0);
+                            }
+                            mTextInput.setInputType(InputType.TYPE_CLASS_TEXT | (isChecked ? InputType.TYPE_TEXT_VARIATION_PASSWORD : InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD));
+                        });
                         checkBoxVH.itemView.setOnClickListener(view -> {
                             mCheckBox.setChecked(!mCheckBox.isChecked());
                             if (mPasswordAction != null) {

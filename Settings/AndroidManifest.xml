@@ -1233,6 +1233,25 @@
 
         <service android:name=".advance_settings.performance.PerformanceService"/>
 
+        <activity
+            android:name="com.android.tv.settings.vpn.VpnCreateActivity"
+            android:configChanges="keyboard"
+            android:windowSoftInputMode="adjustPan">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+         </activity>
+
+        <activity
+            android:name=".connectivity.HotspotActivity" >
+        </activity>
+        <activity
+            android:name=".connectivity.HotspotDialogActivity">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
     </application>
 
 </manifest>

@@ -229,13 +229,11 @@
     <string name="bluetooth_disconnect_action_title" msgid="1135513009197728480">"断开连接"</string>
     <string name="bluetooth_disconnect_confirm" msgid="1445977623973613581">"断开与%1$s的连接"</string>
     <string name="bluetooth_rename_action_title" msgid="4200419902722729907">"重命名"</string>
-    <string name="bluetooth_rename" msgid="7791922876280337194">"重命名已连接的设备"</string>
     <string name="bluetooth_forget_action_title" msgid="2351140076684719196">"取消保存"</string>
     <string name="bluetooth_forget_confirm" msgid="5175414848391021666">"取消保存%1$s"</string>
     <string name="bluetooth_serial_number_label" msgid="6639294603220209971">"蓝牙地址"</string>
     <string name="bluetooth_connected_status" msgid="8629393539370085418">"已连接"</string>
     <string name="bluetooth_disconnected_status" msgid="7617866963193224775">"已断开连接"</string>
-    <string name="bluetooth_empty_list_user_restricted" msgid="1610743588460010736">"您无权更改蓝牙设置。"</string>
     <string name="send_feedback" msgid="936698637869795473">"发送反馈"</string>
     <string name="launch_help" msgid="2607478763131952469">"帮助中心"</string>
     <string name="system_cast" msgid="6081391679828510058">"Google Cast"</string>
@@ -1123,4 +1121,155 @@
     <string name="audio_device_decode">默认输出</string>
     <string name="audio_device_hdmi">HDMI源码</string>
     <string name="audio_device_spdif">SPDIF透传</string>
+
+    <!-- Bluetooth -->
+    <string name="bluetooth">蓝牙</string>
+    <string name="bluetooth_rename">重命名</string>
+    <string name="bluetooth_refresh">刷新</string>
+    <string name="bluetooth_received">显示收到的文件</string>
+    <string name="avaliable_bluetooth">可用蓝牙</string>
+    <string name="bluetooth_is_discoverable" msgid="8373421452106840526">"附近所有蓝牙设备均可检测到此设备（<xliff:g id="DISCOVERABLE_TIME_PERIOD">%1$s</xliff:g>）"</string>
+    <string name="bluetooth_is_discoverable_always" msgid="2849387702249327748">"附近所有蓝牙设备均可检测到此设备"</string>
+    <string name="bluetooth_not_visible_to_other_devices" msgid="9120274591523391910">"其他蓝牙设备检测不到此设备"</string>
+    <string name="bluetooth_only_visible_to_paired_devices" msgid="2049983392373296028">"已配对的设备可检测到此设备"</string>
+    <string name="bluetooth_devices" msgid="1886018064039454227">"蓝牙设备"</string>
+    <string name="bluetooth_device_details" msgid="4594773497930028085">"设备设置"</string>
+    <string name="bluetooth_rename_device" msgid="4352483834491958740">"重命名此设备"</string>
+    <string name="bluetooth_rename_button" msgid="1648028693822994566">"重命名"</string>
+    <string name="bluetooth_disconnect_title" msgid="6026705382020027966">"要断开连接吗？"</string>
+    <string name="bluetooth_disconnect_all_profiles" msgid="9148530542956217908">"此操作将会断开您与以下设备的连接：&lt;br&gt;&lt;b&gt;<xliff:g id="DEVICE_NAME">%1$s</xliff:g>&lt;/b&gt;"</string>
+    <string name="bluetooth_empty_list_user_restricted" msgid="603521233563983689">"您无权更改蓝牙设置。"</string>
+    <string name="bluetooth_device" msgid="5291950341750186887">"未命名的蓝牙设备"</string>
+    <string name="bluetooth_no_devices_found" msgid="1085232930277181436">"未在附近找到蓝牙设备。"</string>
+    <string name="bluetooth_notif_ticker" msgid="4726721390078512173">"蓝牙配对请求"</string>
+    <string name="bluetooth_notif_title" msgid="2485175521845371514">"配对请求"</string>
+    <string name="bluetooth_notif_message" msgid="5057417127600942904">"点按即可与“<xliff:g id="DEVICE_NAME">%1$s</xliff:g>”配对。"</string>
+    <string name="bluetooth_ask_enablement" msgid="1712443355224737143">"某个应用想要开启此设备的蓝牙功能。"</string>
+    <string name="bluetooth_ask_discovery" product="tablet" msgid="786921566047356213">"某个应用想让其他蓝牙设备在      <xliff:g id="TIMEOUT">%1$d</xliff:g> 秒内可检测到您的平板电脑。"</string>
+    <string name="bluetooth_ask_discovery" product="default" msgid="5510358858113713272">"某个应用想让其他蓝牙设备在      <xliff:g id="TIMEOUT">%1$d</xliff:g> 秒内可检测到您的手机。"</string>
+    <string name="bluetooth_ask_lasting_discovery" product="tablet" msgid="8863617309580598607">"某个应用想让其他蓝牙设备检测到您的平板电脑。之后，您可以在“蓝牙”设置中更改此设置。"</string>
+    <string name="bluetooth_ask_lasting_discovery" product="default" msgid="6487606808683607975">"某个应用想让其他蓝牙设备检测到您的手机。之后，您可以在“蓝牙”设置中更改此设置。"</string>
+    <string name="bluetooth_ask_enablement_and_discovery" product="tablet" msgid="3346529092809011149">"某个应用想要打开蓝牙，以便其他设备在<xliff:g id="TIMEOUT">%1$d</xliff:g> 秒内可检测到您的平板电脑。"</string>
+    <string name="bluetooth_ask_enablement_and_discovery" product="default" msgid="4724094889807196118">"某个应用想要打开蓝牙，以便其他设备在<xliff:g id="TIMEOUT">%1$d</xliff:g> 秒内可检测到您的手机。"</string>
+    <string name="bluetooth_ask_enablement_and_lasting_discovery" product="tablet" msgid="989613204829097159">"某个应用想要打开蓝牙，以便其他设备可检测到您的平板电脑。之后，您可以在“蓝牙”设置中更改此设置。"</string>
+    <string name="bluetooth_ask_enablement_and_lasting_discovery" product="default" msgid="6671615712909139801">"某个应用想要打开蓝牙，以便其他设备可检测到您的手机。之后，您可以在“蓝牙”设置中更改此设置。"</string>
+    <string name="bluetooth_turning_on" msgid="4850574877288036646">"正在打开蓝牙..."</string>
+    <string name="bluetooth_turning_off" msgid="2337747302892025192">"正在关闭蓝牙…"</string>
+    <string name="bluetooth_connection_permission_request" msgid="4747918249032890077">"蓝牙连接请求"</string>
+    <string name="bluetooth_connection_dialog_text" msgid="8455427559949998023">"要连接到“<xliff:g id="DEVICE_NAME">%1$s</xliff:g>”吗？"</string>
+    <string name="bluetooth_phonebook_request" msgid="3951420080540915279">"电话簿权限申请"</string>
+    <string name="bluetooth_pb_acceptance_dialog_text" msgid="6555508756987053866">"%1$s想要使用您的通讯录和通话记录。要向%2$s授予权限吗？"</string>
+    <string name="bluetooth_remember_choice" msgid="6919682671787049800">"不要再询问"</string>
+    <string name="bluetooth_pb_remember_choice" msgid="3622898084442402071">"下次不再询问"</string>
+    <string name="bluetooth_map_request" msgid="4595727689513143902">"消息权限申请"</string>
+    <string name="bluetooth_map_acceptance_dialog_text" msgid="8712508202081143737">"“%1$s”想要查看您的消息。要向“%2$s”授予权限吗？"</string>
+    <string name="bluetooth_sap_request" msgid="2669762224045354417">"SIM 访问权限请求"</string>
+    <string name="bluetooth_sap_acceptance_dialog_text" msgid="4414253873553608690">"<xliff:g id="DEVICE_NAME_0">%1$s</xliff:g>想要访问您的 SIM 卡。如果授权该设备访问 SIM 卡，您设备的数据连接功能在蓝牙连接期间将停用。将访问权限授予<xliff:g id="DEVICE_NAME_1">%2$s?</xliff:g>"</string>
+    <string name="bluetooth_pairing_key_msg" msgid="418124944140102021">"蓝牙配对码"</string>
+    <string name="bluetooth_enable_alphanumeric_pin" msgid="7222713483058171357">"PIN码由字母或符号组成"</string>
+    <string name="bluetooth_pin_values_hint_16_digits" msgid="7849359451584101077">"必须为 16 位数字"</string>
+    <string name="bluetooth_enter_pin_other_device" msgid="4637977124526813470">"您可能还需要在另一设备上输入此PIN码。"</string>
+    <string name="bluetooth_enter_passkey_other_device" msgid="2798719004030279602">"您可能还需要在另一台设备上输入此密钥。"</string>
+    <string name="bluetooth_pairing_shares_phonebook" msgid="2277931851483023208">"允许<xliff:g id="DEVICE_NAME">%1$s</xliff:g>访问您的通讯录和通话记录"</string>
+    <string name="bluetooth_error_title" msgid="6850384073923533096"></string>
+    <string name="bluetooth_connecting_error_message" msgid="1397388344342081090">"无法连接到<xliff:g id="DEVICE_NAME">%1$s</xliff:g>。"</string>
+    <string name="bluetooth_preference_found_devices" msgid="1647983835063249680">"可用设备"</string>
+    <string name="bluetooth_device_context_pair_connect" msgid="7611522504813927727">"配对和连接"</string>
+    <string name="bluetooth_device_advanced_profile_header_title" msgid="102745381968579605">"用于"</string>
+    <string name="bluetooth_tether_checkbox_text" msgid="2379175828878753652">"蓝牙网络共享"</string>
+
+    <string name="bluetooth_talkback_computer" msgid="4875089335641234463">"计算机"</string>
+    <string name="bluetooth_talkback_headset" msgid="5140152177885220949">"耳麦"</string>
+    <string name="bluetooth_talkback_phone" msgid="4260255181240622896">"手机"</string>
+    <string name="bluetooth_talkback_imaging" msgid="551146170554589119">"成像设备"</string>
+    <string name="bluetooth_talkback_headphone" msgid="26580326066627664">"耳机"</string>
+    <string name="bluetooth_talkback_input_peripheral" msgid="5165842622743212268">"外围输入设备"</string>
+    <string name="bluetooth_talkback_bluetooth" msgid="5615463912185280812">"蓝牙"</string>
+    <string name="bluetooth_connect_title">是否需要连接?</string>
+    <string name="bluetooth_connect_all_profiles" msgid="9148530542956217908">"此操作将会连接您与以下设备：&lt;br&gt;&lt;b&gt;<xliff:g id="DEVICE_NAME">%1$s</xliff:g>&lt;/b&gt;"</string>
+    <string name="bluetooth_preference_paired_dialog_name_label">"名称"</string>
+    <string name="bluetooth_disable_profile_title">"要停用配置文件吗？"</string>
+    <string name="bluetooth_disable_profile_message" msgid="2895844842011809904">"此操作将停用：&lt;br&gt;&lt;b&gt;<xliff:g id="PROFILE_NAME">%1$s</xliff:g>&lt;/b&gt;&lt;br&gt;&lt;br&gt;来自：&lt;br&gt;&lt;b&gt;<xliff:g id="DEVICE_NAME">%2$s</xliff:g>&lt;/b&gt;"</string>
+    <string name="forget">忘记</string>
+    <!-- Strings for Dialog allow button -->
+    <string name="allow">允许</string>
+    <!-- Strings for Dialog deny button -->
+    <string name="deny">拒绝</string>
+    <string name="wifi_in_airplane_mode">飞行模式</string>
+    <string name="bluetooth_tethering_available_subtext" product="default">共享网络连接</string>
+
+    <!-- VPN interface -->
+    <string name="create_vpn" >创建VPN</string>
+     <string name="vpn_name" msgid="4689699885361002297">"名称"</string>
+    <string name="vpn_type" msgid="5435733139514388070">"类型"</string>
+    <string name="vpn_server" msgid="2123096727287421913">"服务器地址"</string>
+    <string name="vpn_mppe" msgid="6639001940500288972">"PPP加密(MPPE)"</string>
+    <string name="vpn_l2tp_secret" msgid="529359749677142076">"L2TP 密钥"</string>
+    <string name="vpn_ipsec_identifier" msgid="4098175859460006296">"IPSec 标识符"</string>
+    <string name="vpn_ipsec_secret" msgid="4526453255704888704">"IPSec 预共享密钥"</string>
+    <string name="vpn_ipsec_user_cert" msgid="6880651510020187230">"IPSec 用户证书"</string>
+    <string name="vpn_ipsec_ca_cert" msgid="91338213449148229">"IPSec CA证书"</string>
+    <string name="vpn_ipsec_server_cert" msgid="6599276718456935010">"IPSec 服务器证书"</string>
+    <string name="vpn_show_options" msgid="7182688955890457003">"显示高级选项"</string>
+    <string name="vpn_search_domains" msgid="5391995501541199624">"DNS搜索网域"</string>
+    <string name="vpn_dns_servers" msgid="5570715561245741829">"DNS服务器（例如8.8.8.8）"</string>
+    <string name="vpn_routes" msgid="3818655448226312232">"转发路线（例如10.0.0.0/8）"</string>
+    <string name="vpn_username" msgid="1863901629860867849">"用户名"</string>
+    <string name="vpn_password" msgid="6756043647233596772">"密码"</string>
+    <string name="vpn_save_login" msgid="6350322456427484881">"保存帐号信息"</string>
+    <string name="vpn_not_used" msgid="9094191054524660891">"（未使用）"</string>
+    <string name="vpn_no_ca_cert" msgid="8776029412793353361">"（不验证服务器）"</string>
+    <string name="vpn_no_server_cert" msgid="2167487440231913330">"（来自服务器）"</string>
+    <string name="vpn_cancel" msgid="1979937976123659332">"取消"</string>
+    <string name="vpn_done" msgid="8678655203910995914">"关闭"</string>
+    <string name="vpn_save" msgid="4233484051644764510">"保存"</string>
+    <string name="vpn_connect" msgid="8469608541746132301">"连接"</string>
+    <string name="vpn_replace" msgid="5442836256121957861">"替换"</string>
+    <string name="vpn_edit" msgid="8647191407179996943">"编辑VPN配置文件"</string>
+    <string name="vpn_forget" msgid="3684651372749415446">"取消保存"</string>
+    <string name="vpn_connect_to" msgid="5965299358485793260">"连接到<xliff:g id="PROFILE">%s</xliff:g>"</string>
+    <string name="vpn_disconnect_confirm" msgid="2555877026824771115">"断开此 VPN 连接。"</string>
+    <string name="vpn_disconnect" msgid="7426570492642111171">"断开连接"</string>
+    <string name="vpn_version" msgid="1939804054179766249">"版本 <xliff:g id="VERSION">%s</xliff:g>"</string>
+    <string name="vpn_create" msgid="5628219087569761496">"添加VPN配置文件"</string>
+    <string name="vpn_menu_lockdown" msgid="7863024538064268139">"始终开启的 VPN"</string>
+    <string name="vpn_always_on_active" msgid="2789423425184556882">"始终处于开启状态"</string>
+    <string name="vpn_lockdown_config_error" msgid="3898576754914217248">"始终开启的 VPN 需要服务器和 DNS 的 IP 地址。"</string>
+    <string name="vpn_no_network" msgid="3050233675132726155">"目前没有网络连接。请稍后重试。"</string>
+    <string name="join_two_unrelated_items" msgid="1873827777191260824">"<xliff:g id="FIRST_ITEM">%1$s</xliff:g>、<xliff:g id="SECOND_ITEM">%2$s</xliff:g>"</string>
+    <string name="avaliable_vpns">可用VPN</string>
+    <string name="edit_vpn">编辑VPN</string>
+    <string name="vpn_insecure_summary" msgid="4450920215186742859">"不安全"</string>
+    <string name="vpn_always_on_summary_active" msgid="175877594406330387">"始终开启"</string>
+    <string name="vpn_require_connection_title" msgid="4186758487822779039">"需要连接 VPN？"</string>
+    <string name="vpn_replace_vpn_title" msgid="3994226561866340280">"要替换现有 VPN 吗？"</string>
+    <string name="vpn_set_vpn_title" msgid="1667539483005810682">"要设置始终开启的 VPN 吗？"</string>
+    <string name="vpn_turn_on" msgid="3568307071295211187">"开启"</string>
+    <string name="vpn_replace_always_on_vpn_enable_message" msgid="9154843462740876652">"系统将替换现有 VPN，而且在 VPN 成功连接之前，您将无法连接到互联网"</string>
+    <string name="vpn_first_always_on_vpn_message" msgid="2769478310633047870">"开启这项设置后，在 VPN 成功连接之前，您将无法连接到互联网"</string>
+    <string name="vpn_replace_always_on_vpn_disable_message" msgid="4299175336198481106">"您已连接到某个始终开启的 VPN。如果您要连接到其他 VPN，则系统将替换现有 VPN，并关闭始终开启模式。"</string>
+    <string name="vpn_replace_vpn_message" msgid="1094297700371463386">"您已连接到 VPN。如果您要连接到其他 VPN，则系统将替换现有 VPN。"</string>
+
+    <!-- Hotspot -->
+    <string name="yes">"是"</string>
+    <!-- Strings for Dialog no button -->
+    <string name="no">"否"</string>
+    <string name="hotspot_name">热点</string>
+    <string name="usb_tethering_button_text">USB 网络共享</string>
+    <string name="usb_tethering_available_subtext">USB已连接，点击共享</string>
+    <string name="usb_tethering_active_subtext">已共享</string>
+    <string name="wifi_tether_configure_ssid_default" msgid="1709397571393179300">"Android热点"</string>
+    <string name="wifi_tether_configure_ap_text">设置WLAN热点</string>
+    <string name="wifi_tether_enabled_subtext">便携式热点 <xliff:g id="network_ssid">%1$s</xliff:g> 已激活</string>
+    <string name="wifi_tether_checkbox_text">便携式WLAN热点</string>
+    <string name="wifi_tether_configure_subtext"><xliff:g id="network_ssid">%1$s</xliff:g> <xliff:g id="network_security">%2$s</xliff:g> 便携式WLAN热点</string>
+    <string name="credentials_password_too_short">密码至少应包含8个字符。</string>
+    <string name="wifi_ssid">网络名称</string>
+    <string name="wifi_security">安全性</string>
+    <string name="wifi_show_password">显示密码</string>
+    <string name="wifi_ap_band_config">选择AP频段</string>
+    <string name="wifi_password">密码</string>
+    <string name="no_button">取消</string>
+    <string name="ok_button">保存</string>
+    <string name="bluetooth_tethering_off_subtext" product="default">不共享网络连接</string>
 </resources>

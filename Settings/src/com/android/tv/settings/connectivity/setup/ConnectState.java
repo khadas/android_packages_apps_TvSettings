@@ -222,7 +222,9 @@ public class ConnectState implements State {
                 if (wifiNetworkCapabilities != null) {
                     if (wifiNetworkCapabilities.hasCapability(
                             NetworkCapabilities.NET_CAPABILITY_VALIDATED)) {
-                        notifyListener(StateMachine.RESULT_SUCCESS);
+                        if (isNetworkConnected()) {
+                            notifyListener(StateMachine.RESULT_SUCCESS);
+                        }
                     } else if (wifiNetworkCapabilities.hasCapability(
                             NetworkCapabilities.NET_CAPABILITY_CAPTIVE_PORTAL)) {
                         notifyListener(StateMachine.RESULT_CAPTIVE_PORTAL);

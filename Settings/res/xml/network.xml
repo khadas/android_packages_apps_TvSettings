@@ -23,6 +23,14 @@
         android:persistent="true"
         android:title="@string/wifi_setting_enable_wifi" />
 
+    <Preference
+        android:key="hotspot"
+        android:title="@string/hotspot_name" >
+        <intent
+            android:targetClass="com.android.tv.settings.connectivity.HotspotActivity"
+            android:targetPackage="com.android.tv.settings" />
+    </Preference>
+
     <com.android.tv.settings.connectivity.CollapsibleCategory
         android:key="wifi_list"
         android:title="@string/wifi_setting_available_networks"/>
@@ -84,5 +92,25 @@
         android:key="network_diagnostics"
         android:icon="@drawable/ic_network_check"
         android:title="@string/connectivity_network_diagnostics" />
+
+    <PreferenceCategory
+        android:key="vpn"
+        android:title="@string/vpn" >
+        <Preference
+            android:key="vpn_create"
+            android:title="@string/create_vpn" >
+            <intent
+                android:targetClass="com.android.tv.settings.vpn.VpnCreateActivity"
+                android:targetPackage="com.android.tv.settings" />
+        </Preference>
+    <!-- <Preference
+            android:key="edit_vpn"
+            android:title="@string/edit_vpn"
+            android:fragment="com.android.tv.settings.vpn.VpnEditFragment"/> -->
+    </PreferenceCategory>
+
+     <PreferenceCategory
+            android:key="avaliable_vpns"
+            android:title="@string/avaliable_vpns"/>
 
 </PreferenceScreen>

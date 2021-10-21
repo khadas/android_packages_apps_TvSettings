@@ -2582,4 +2582,232 @@
     <string name="audio_device_decode">Decode</string>
     <string name="audio_device_hdmi">HDMI Bitstream</string>
     <string name="audio_device_spdif">Spdif Passthrough</string>
+
+    <!-- Bluetooth -->
+    <string name="bluetooth">Bluetooth</string>
+    <!-- Bluetooth message permission alert for notification content [CHAR LIMIT=none] -->
+    <string name="bluetooth_message_access_notification_content">Untrusted device wants to access your messages. Tap for details.</string>
+    <!-- Bluetooth phonebook permission alert for notification content [CHAR LIMIT=none] -->
+    <string name="bluetooth_phonebook_access_notification_content">Untrusted device wants to access your contacts and call log. Tap for details.</string>
+    <string name="bluetooth_tethering_devices_connected_subtext" product="tablet">Sharing this tablet\u2019s Internet connection to <xliff:g id="connectedDeviceCount">%1$d</xliff:g> devices</string>
+    <string name="bluetooth_tethering_devices_connected_subtext" product="default">Sharing this phone\u2019s Internet connection to <xliff:g id="connectedDeviceCount">%1$d</xliff:g> devices</string>
+    <string name="bluetooth_tethering_device_connected_subtext" product="tablet">Sharing this tablet\u2019s Internet connection to 1 device</string>
+    <string name="bluetooth_tethering_device_connected_subtext" product="default">Sharing this phone\u2019s Internet connection to 1 device</string>
+    <string name="bluetooth_tethering_errored_subtext">Not tethered</string>
+    <string name="bluetooth_tethering_available_subtext" product="tablet">Sharing this tablet\u2019s Internet connection</string>
+    <!-- Bluetooth available subtext - shown when Bluetooth tethering is turned on but it is not currently tethered to any devices [CHAR LIMIT=50]-->
+    <string name="bluetooth_tethering_available_subtext" product="default">Sharing this phone\u2019s Internet connection</string>
+    <string name="bluetooth_connect_title">Connect?</string>
+    <string name="bluetooth_connect_all_profiles">This will begin your connection with:&lt;br>&lt;b><xliff:g id="device_name">%1$s</xliff:g>&lt;/b></string>
+    <string name="bluetooth_preference_paired_dialog_name_label">Name</string>
+    <string name="bluetooth_disable_profile_title">Disable profile?</string>
+    <string name="bluetooth_disable_profile_message">This will disable:&lt;br>&lt;b><xliff:g id="profile_name">%1$s</xliff:g>&lt;/b>&lt;br>&lt;br>From:&lt;br>&lt;b><xliff:g id="device_name">%2$s</xliff:g>&lt;/b></string>
+    <string name="bluetooth_tethering_off_subtext" product="tablet">Not sharing this tablet\u2019s Internet connection</string>
+    <!-- Bluetooth tethering off subtext - shown when Bluetooth Tethering is turned off [CHAR LIMIT=50]-->
+    <string name="bluetooth_tethering_off_subtext" product="default">Not sharing this phone\u2019s Internet connection</string>
+    <!-- Message when bluetooth is informing the user of the pairing key. [CHAR LIMIT=NONE] -->
+    <string name="bluetooth_pairing_key_msg">Bluetooth pairing code</string>
+    <!-- Message when bluetooth dialog for passkey entry is showing. [CHAR LIMIT=NONE] -->
+    <string name="bluetooth_enable_alphanumeric_pin">PIN contains letters or symbols</string>
+    <!-- Message when bluetooth dialog when passkey or pin needs to be displayed. -->
+    <string name="bluetooth_pairing_shares_phonebook">Allow <xliff:g id="device_name">%1$s</xliff:g> to access your contacts and call history</string>
+    <!-- Bluetooth settings.  Connection options screen.  The title of the header that is above all of the profiles.
+         When a user decides what Bluetooth capabilities to use with the device.  -->
+    <string name="bluetooth_device_advanced_profile_header_title">Use for</string>
+    <string name="bluetooth_device_details">Device settings</string>
+    <string name="bluetooth_paired">Paired devices</string>
+    <string name="avaliable_bluetooth">Available bluetooth</string>
+    <string name="bluetooth_refresh">Refresh</string>
+    <string name="bluetooth_received">Display received files</string>
+    <!-- Strings for Dialog allow button -->
+    <string name="allow">Allow</string>
+    <!-- Strings for Dialog deny button -->
+    <string name="deny">Deny</string>
+    <string name="bluetooth_ask_enablement">An app wants to turn Bluetooth ON for this device.</string>
+    <string name="bluetooth_ask_discovery" product="default">An app wants to make your phone visible to other Bluetooth devices for <xliff:g id="timeout">%1$d</xliff:g> seconds.</string>
+    <string name="bluetooth_ask_enablement_and_discovery">An app wants to turn on Bluetooth and make your tablet visible to other devices for <xliff:g id="timeout">%1$d</xliff:g> seconds.</string>
+    <string name="bluetooth_ask_enablement_and_lasting_discovery" product="default">An app wants to turn on Bluetooth and make your phone visible to other devices. You can change this later in Bluetooth settings.</string>
+    <string name="bluetooth_ask_lasting_discovery" product="default">An app wants to make your phone visible to other Bluetooth devices. You can change this later in Bluetooth settings.</string>
+    <string name="bluetooth_connecting_error_message">Couldn\u2019t connect to <xliff:g id="device_name">%1$s</xliff:g>.</string>
+    <string name="bluetooth_connection_dialog_text">"Do you want to connect to \u0022<xliff:g id="device_name">%1$s</xliff:g>\u0022?"</string>
+    <string name="bluetooth_connection_permission_request">"Bluetooth connection request"</string>
+    <string name="bluetooth_device">Unnamed Bluetooth device</string>
+    <!-- Bluetooth settings.  Context menu item for a device.  Action will first pair, and then connect to all profiles on the device. -->
+    <string name="bluetooth_device_context_pair_connect">Pair &amp; connect</string>
+    <string name="bluetooth_devices">Bluetooth devices</string>
+    <string name="bluetooth_disconnect_all_profiles">This will end your connection with:&lt;br>&lt;b><xliff:g id="device_name">%1$s</xliff:g>&lt;/b></string>
+    <string name="bluetooth_disconnect_title">Disconnect?</string>
+    <string name="bluetooth_enter_passkey_other_device">You may also need to type this passkey on the other device.</string>
+    <string name="bluetooth_error_title"></string>
+    <string name="bluetooth_notif_message">Tap to pair with <xliff:g id="device_name">%1$s</xliff:g>.</string>
+    <string name="bluetooth_notif_ticker">Bluetooth pairing request</string>
+    <string name="bluetooth_enter_pin_other_device">You may also need to type this PIN on the other device.</string>
+    <string name="bluetooth_is_discoverable">Visible to all nearby Bluetooth devices (<xliff:g id="discoverable_time_period">%1$s</xliff:g>)</string>
+    <string name="bluetooth_is_discoverable_always">Visible to all nearby Bluetooth devices</string>
+    <string name="bluetooth_map_acceptance_dialog_text">%1$s wants to access your messages. Give access to %2$s?</string>
+    <string name="bluetooth_map_request">"Message access request"</string>
+    <string name="bluetooth_no_devices_found">No nearby Bluetooth devices were found.</string>
+    <string name="bluetooth_not_visible_to_other_devices">Not visible to other Bluetooth devices</string>
+    <string name="bluetooth_notif_title">Pairing request</string>
+    <string name="bluetooth_only_visible_to_paired_devices">Only visible to paired devices</string>
+    <string name="bluetooth_pb_acceptance_dialog_text">%1$s wants to access your contacts and call history. Give access to %2$s?</string>
+    <string name="bluetooth_pb_remember_choice">Don\u2019t ask again</string>
+    <string name="bluetooth_phonebook_request">"Phone book access request"</string>
+    <string name="bluetooth_pin_values_hint_16_digits">Must be 16 digits</string>
+    <!-- Bluetooth settings: The sub heading for available devices during and after scanning. [CHAR LIMIT=40] -->
+    <string name="bluetooth_preference_found_devices">Available devices</string>
+    <string name="bluetooth_remember_choice">Don\u2019t ask again</string>
+    <string name="bluetooth_rename_button">Rename</string>
+    <string name="bluetooth_rename_device">Rename this device</string>
+    <string name="bluetooth_sap_acceptance_dialog_text"><xliff:g id="device_name">%1$s</xliff:g> wants to access your SIM card. Granting access to the SIM card will disable data connectivity on your device for the duration of the connection. Give access to <xliff:g id="device_name">%2$s?</xliff:g></string>
+    <string name="bluetooth_sap_request">"SIM access request"</string>
+    <string name="bluetooth_turning_off">"Turning Bluetooth off\u2026"</string>
+    <string name="bluetooth_turning_on">"Turning Bluetooth on\u2026"</string>
+    <string name="forget">Forget</string>
+    <string name="wifi_in_airplane_mode">In Airplane mode</string>
+    <string name="bluetooth_talkback_computer">Computer</string>
+    <string name="bluetooth_talkback_headset">Headset</string>
+    <string name="bluetooth_talkback_phone">Phone</string>
+    <string name="bluetooth_talkback_imaging">Imaging</string>
+    <string name="bluetooth_talkback_headphone">Headphone</string>
+    <string name="bluetooth_talkback_input_peripheral">Input Peripheral</string>
+    <string name="bluetooth_talkback_bluetooth">Bluetooth</string>
+    <!-- Bluetooth settings: The sub heading for devices which have already been paired with this device. [CHAR LIMIT=40] -->
+    <string name="bluetooth_preference_paired_devices">Paired devices</string>
+    <string name="device_picker">Choose Bluetooth device</string>
+
+    <!-- VPN interface -->
+    <string name="vpn" >VPN</string>
+    <string name="create_vpn" >Create VPN</string>
+        <!-- Input label for the name of a VPN profile. [CHAR LIMIT=40] -->
+    <string name="vpn_name">Name</string>
+    <!-- Input label for the type of a VPN profile. [CHAR LIMIT=40] -->
+    <string name="vpn_type">Type</string>
+    <!-- Input label for the server address of a VPN profile. [CHAR LIMIT=40] -->
+    <string name="vpn_server">Server address</string>
+    <!-- Checkbox label to enable PPP encryption for a VPN profile. [CHAR LIMIT=40] -->
+    <string name="vpn_mppe">PPP encryption (MPPE)</string>
+    <!-- Input label for the L2TP secret of a VPN profile. [CHAR LIMIT=40] -->
+    <string name="vpn_l2tp_secret">L2TP secret</string>
+    <!-- Input label for the IPSec identifier of a VPN profile. [CHAR LIMIT=40] -->
+    <string name="vpn_ipsec_identifier">IPSec identifier</string>
+    <!-- Input label for the IPSec pre-shared key of a VPN profile. [CHAR LIMIT=40] -->
+    <string name="vpn_ipsec_secret">IPSec pre-shared key</string>
+    <!-- Selection label for the IPSec user certificate of a VPN profile. [CHAR LIMIT=40] -->
+    <string name="vpn_ipsec_user_cert">IPSec user certificate</string>
+    <!-- Selection label for the IPSec CA certificate of a VPN profile. [CHAR LIMIT=40] -->
+    <string name="vpn_ipsec_ca_cert">IPSec CA certificate</string>
+    <!-- Selection label for the IPSec server certificate of a VPN profile. [CHAR LIMIT=40] -->
+    <string name="vpn_ipsec_server_cert">IPSec server certificate</string>
+    <!-- Checkbox label to show advanced options of a VPN profile. [CHAR LIMIT=40] -->
+    <string name="vpn_show_options">Show advanced options</string>
+    <!-- Input label for the DNS search domains of a VPN profile. [CHAR LIMIT=40] -->
+    <string name="vpn_search_domains">DNS search domains</string>
+    <!-- Input label for the DNS servers of a VPN profile. [CHAR LIMIT=40] -->
+    <string name="vpn_dns_servers">DNS servers (e.g. 8.8.8.8)</string>
+    <!-- Input label for the forwarding routes of a VPN profile. [CHAR LIMIT=40] -->
+    <string name="vpn_routes">Forwarding routes (e.g. 10.0.0.0/8)</string>
+    <!-- Input label for the username of a VPN profile. [CHAR LIMIT=40] -->
+    <string name="vpn_username">Username</string>
+    <!-- Input label for the password of a VPN profile. [CHAR LIMIT=40] -->
+    <string name="vpn_password">Password</string>
+    <!-- Checkbox label to save the username and the password in a VPN profile. [CHAR LIMIT=40] -->
+    <string name="vpn_save_login">Save account information</string>
+    <!-- Hint for not using an optional feature in a VPN profile. [CHAR LIMIT=40] -->
+    <string name="vpn_not_used">(not used)</string>
+    <!-- Option to not use a CA certificate to verify the VPN server. [CHAR LIMIT=40] -->
+    <string name="vpn_no_ca_cert">(don\u2019t verify server)</string>
+    <!-- Option to use the server certificate received from the VPN server. [CHAR LIMIT=40] -->
+    <string name="vpn_no_server_cert">(received from server)</string>
+
+    <!-- Button label to cancel changing a VPN profile. [CHAR LIMIT=40] -->
+    <string name="vpn_cancel">Cancel</string>
+    <!-- Button label to finish editing a VPN profile. [CHAR LIMIT=40] -->
+    <string name="vpn_done">Dismiss</string>
+    <!-- Button label to save a VPN profile. [CHAR LIMIT=40] -->
+    <string name="vpn_save">Save</string>
+    <!-- Button label to connect to a VPN profile. [CHAR LIMIT=40] -->
+    <string name="vpn_connect">Connect</string>
+    <!-- Button label to connect a VPN profile, replacing the current one. [CHAR LIMIT=40] -->
+    <string name="vpn_replace">Replace</string>
+    <!-- Dialog title to edit a VPN profile. [CHAR LIMIT=40] -->
+    <string name="vpn_edit">Edit VPN profile</string>
+    <!-- Button label to forget a VPN profile. [CHAR LIMIT=40] -->
+    <string name="vpn_forget">Forget</string>
+    <!-- Dialog title to connect to a VPN profile. [CHAR LIMIT=40] -->
+    <string name="vpn_connect_to">Connect to <xliff:g id="profile" example="School">%s</xliff:g></string>
+    <!-- Dialog message body to disconnect from a VPN profile. -->
+    <string name="vpn_disconnect_confirm">Disconnect this VPN.</string>
+    <!-- Button label to disconnect from a VPN profile. [CHAR LIMIT=40] -->
+    <string name="vpn_disconnect">Disconnect</string>
+    <!-- Field label to show the version number for a VPN app. [CHAR LIMIT=40] -->
+    <string name="vpn_version">Version <xliff:g id="version" example="3.3.0">%s</xliff:g></string>
+    <!-- Preference title to create a new VPN profile. [CHAR LIMIT=40] -->
+    <string name="vpn_create">Add VPN profile</string>
+    <!-- Menu item to select always-on VPN profile. [CHAR LIMIT=40] -->
+    <string name="vpn_menu_lockdown">Always-on VPN</string>
+    <!-- Preference summary for active always-on vpn [CHAR LIMIT=40] -->
+    <string name="vpn_always_on_active">Always-on active</string>
+    <!-- Error indicating that the selected VPN doesn't meet requirements. [CHAR LIMIT=NONE] -->
+    <string name="vpn_lockdown_config_error">Always-on VPN requires an IP address for both server and DNS.</string>
+
+    <!-- Toast message when there is no network connection to start VPN. [CHAR LIMIT=100] -->
+    <string name="vpn_no_network">There is no network connection. Please try again later.</string>
+    <string name="join_two_unrelated_items"><xliff:g id="first_item">%1$s</xliff:g>, <xliff:g id="second_item">%2$s</xliff:g></string>
+    <string name="avaliable_vpns">Available vpns</string>
+    <string name="edit_vpn">Edit vpn</string>
+    <string name="edit">Edit</string>
+    <string name="vpn_insecure_summary">Not secure</string>
+    <string name="vpn_always_on_summary_active">Always on</string>
+    <!-- Dialog message title to confirm forcing all network connections to go through VPN.
+        [CHAR LIMIT=40] -->
+    <string name="vpn_require_connection_title">Require VPN connection?</string>
+    <!-- Dialog message title to set another VPN app to be always-on [CHAR LIMIT=40] -->
+    <string name="vpn_replace_vpn_title">Replace existing VPN?</string>
+    <!-- Dialog message title to set always-on VPN when another app was not already set. -->
+    <string name="vpn_set_vpn_title">Set always-on VPN?</string>
+    <!-- Dialog action button to turn on a VPN. -->
+    <string name="vpn_turn_on">Turn on</string>
+    <!-- Dialog message body to explain that always-on VPN will disable network traffic while the VPN is connecting, and that this will replace the current VPN. -->
+    <string name="vpn_replace_always_on_vpn_enable_message">Your existing VPN will be replaced, and you won\'t have an internet connection until the VPN successfully connects</string>
+    <!-- Dialog message body to explain that always-on VPN will disable network traffic while the VPN is connecting. -->
+    <string name="vpn_first_always_on_vpn_message">When this setting is on, you won\'t have an internet connection until the VPN successfully connects</string>
+    <!-- Dialog message body to connect a VPN app, replacing another VPN app that is already always-on [CHAR LIMIT=NONE] -->
+    <string name="vpn_replace_always_on_vpn_disable_message">You\'re already connected to an always-on VPN. If you connect to a different one, your existing VPN will be replaced, and always-on mode will turn off.</string>
+    <!-- Dialog message body to set another VPN app to be always-on [CHAR LIMIT=NONE] -->
+    <string name="vpn_replace_vpn_message">You\'re already connected to a VPN. If you connect to a different one, your existing VPN will be replaced.</string>
+
+    <!-- Hotspot -->
+    <string name="wifi_ap_choose_2G">2.4 GHz Band</string>
+    <string name="wifi_ap_choose_5G">5 GHz Band</string>
+    <string name="yes">"Yes"</string>
+    <!-- Strings for Dialog no button -->
+    <string name="no">"No"</string>
+    <string name="wifi_tether_configure_ssid_default">AndroidHotspot</string>
+    <string name="usb_tethering_active_subtext">Tethered</string>
+    <string name="usb_tethering_available_subtext">USB connected, check to tether</string>
+    <string name="usb_tethering_errored_subtext">USB tethering error</string>
+    <string name="usb_tethering_storage_active_subtext">Can\u2019t tether when USB storage is in use</string>
+    <string name="usb_tethering_unavailable_subtext">USB not connected</string>
+    <string name="wifi_tether_enabled_subtext">Portable hotspot <xliff:g id="network_ssid">%1$s</xliff:g> active</string>
+    <string name="wifi_error">Error</string>
+    <string name="wifi_tether_starting">Turning hotspot on\u2026</string>
+    <string name="wifi_tether_stopping">Turning off hotspot\u2026</string>
+    <string name="wifi_sap_no_channel_error">5 GHz band not available in this country</string>
+    <string name="hotspot_name">Hotspot</string>
+    <string name="usb_tethering_button_text">USB tethering</string>
+    <string name="wifi_tether_checkbox_text">Portable Wi\u2011Fi hotspot</string>
+    <string name="wifi_tether_configure_ap_text">Set up Wi\u2011Fi hotspot</string>
+    <string name="bluetooth_tether_checkbox_text">Bluetooth tethering</string>
+    <string name="wifi_tether_configure_subtext"><xliff:g id="network_ssid">%1$s</xliff:g> <xliff:g id="network_security">%2$s</xliff:g> portable Wi\u2011Fi hotspot</string>
+    <string name="credentials_password_too_short">The password must have at least 8 characters.</string>
+    <string name="wifi_ssid">Network name</string>
+    <string name="wifi_ssid_hint">Enter the SSID</string>
+    <string name="wifi_security">Security</string>
+    <string name="wifi_password">Password</string>
+    <string name="wifi_show_password">Show password</string>
+    <string name="wifi_ap_band_config">Select AP Band</string>
+    <string name="no_button">Cancel</string>
+    <string name="ok_button">Save</string>
+
 </resources>
