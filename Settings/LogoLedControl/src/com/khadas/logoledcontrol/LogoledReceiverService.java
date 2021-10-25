@@ -46,8 +46,10 @@ public class LogoledReceiverService extends IntentService {
   Log.d(TAG, "action= " + broadcastAction);
         if (Intent.ACTION_BOOT_COMPLETED.equals(broadcastAction)) {
             // ALPS00448092.
+	    if(SystemProperties.get("sys.extboard.exist", "unknown").equals("1")) {
 	    String brightness = SystemProperties.get("persist.sys.logoled.brightness", "unknown");
 	    khadasLedLogoControl.Ledbrigthnessplus(Integer.parseInt(brightness));
+	    }
             Log.d(TAG, "revieve ACTION_BOOT_COMPLETED" );
         }
     }

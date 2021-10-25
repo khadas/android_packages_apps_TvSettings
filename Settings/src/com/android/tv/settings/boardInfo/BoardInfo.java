@@ -115,6 +115,13 @@ public class BoardInfo {
           return false;
     }
 
+    public boolean isExtboardexist() {
+       if (getString("sys.extboard.exist").equals("1"))
+	  return true;
+       else
+	  return false;
+   }
+
     private void onInit() {
         model = Build.MODEL;
     }
