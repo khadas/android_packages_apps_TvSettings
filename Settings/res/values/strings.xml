@@ -1702,6 +1702,10 @@
     <string name="media_volume">Media volume</string>
     <string name="alarm_volume">Alarm volume</string>
     <string name="notification_volume">Notification volume</string>
+
+    <string name="logoled_control">Logoled control</string>
+    <string name="led_brightness">Change brightness</string>
+
     <string name="timer">Timer</string>
 
      <!-- Bluetooth interface -->
