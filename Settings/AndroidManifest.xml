@@ -1212,13 +1212,16 @@
 
         <activity
             android:theme="@style/Transparent"
-            android:name="com.android.tv.settings.display.DisplayActivity"/>
+            android:name="com.android.tv.settings.display.DisplayActivity"
+            android:exported="true" />
         <activity
             android:theme="@style/TvSettingsActivityTheme"
-            android:name="com.android.tv.settings.display.ScreenScaleActivity"/>
+            android:name="com.android.tv.settings.display.ScreenScaleActivity"
+            android:exported="false" />
         <activity
             android:theme="@style/TvSettingsActivityTheme"
-            android:name="com.android.tv.settings.display.AdvancedDisplaySettingsActivity"/>
+            android:name="com.android.tv.settings.display.AdvancedDisplaySettingsActivity"
+            android:exported="false" />
         <activity
             android:name=".advance_settings.AdvanceSettingsActivity"
             android:theme="@style/TvSettingsActivityTheme"
@@ -1231,27 +1234,40 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".advance_settings.performance.PerformanceService"/>
+        <service android:name=".advance_settings.performance.PerformanceService" android:exported="true"/>
 
         <activity
             android:name="com.android.tv.settings.vpn.VpnCreateActivity"
             android:configChanges="keyboard"
-            android:windowSoftInputMode="adjustPan">
-            <intent-filter>
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-         </activity>
-
-        <activity
-            android:name=".connectivity.HotspotActivity" >
-        </activity>
-        <activity
-            android:name=".connectivity.HotspotDialogActivity">
+            android:windowSoftInputMode="adjustPan"
+            android:exported="false" >
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".connectivity.HotspotActivity"
+            android:exported="false" >
+        </activity>
+        <activity
+            android:name=".connectivity.HotspotDialogActivity"
+            android:exported="false" >
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".inputmethod.KeyboardLayoutPickerActivity"
+            android:label="@string/keyboard_layout_picker_title"
+            android:exported="false" >
+              <intent-filter>
+                  <category android:name="android.intent.category.DEFAULT" />
+              </intent-filter>
+              <meta-data android:name="com.android.tv.settings.FRAGMENT_CLASS"
+                  android:value="com.android.tv.settings.inputmethod.KeyboardLayoutPickerFragment" />
+        </activity>
     </application>
 
 </manifest>
