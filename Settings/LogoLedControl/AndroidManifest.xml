@@ -1,0 +1,20 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+        package="com.khadas.logoledcontrol"
+	android:sharedUserId="android.uid.system">
+
+        <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+        <application android:label="Logo led control"
+            android:taskAffinity=""
+			android:theme="@android:style/Theme.Material.Settings"
+            android:uiOptions="splitActionBarWhenNarrow"
+            android:supportsRtl="true">
+
+        <service android:name="com.khadas.logoledcontrol.LogoledReceiverService"/>
+        <receiver android:name="com.khadas.logoledcontrol.LogoledInitReceiver">
+            <intent-filter android:priority="1000">
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+    </application>
+</manifest>
