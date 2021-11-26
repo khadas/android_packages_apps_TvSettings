@@ -1,11 +1,13 @@
 package com.khadas.logoledcontrol;
 
-import android.app.IntentService;
+import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.SystemProperties;
 import android.os.UserHandle;
 import android.util.Log;
+import android.os.IBinder;
+
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -14,44 +16,42 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import android_serialport_api.KhadasLedLogoControl;
 
-public class LogoledReceiverService extends IntentService {
-    private static final String TAG = "LogoledReceiverService";
-    private static final String ACTION_BROADCAST = "broadcast_receiver";
+public class LogoledReceiverService extends Service {
     private KhadasLedLogoControl khadasLedLogoControl;
-    public LogoledReceiverService() {
-        super("LogoledReceiverService");
-	khadasLedLogoControl = new KhadasLedLogoControl();
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        khadasLedLogoControl = new KhadasLedLogoControl();
+
+        if(SystemProperties.get("sys.extboard.exist", "unknown").equals("1")) {
+		new Thread(){
+		    @Override
+		    public void run() {
+			super.run();
+			while(true){
+			    try {
+				String mode = SystemProperties.get("persist.sys.logo.led.trigger","unknown");
+				khadasLedLogoControl.LogoLedModeControl(Integer.parseInt(mode));
+			        Thread.sleep(1000);
+			    } catch (InterruptedException e) {
+			        e.printStackTrace();
+			    }
+
+			}
+		    }
+		}.start();
+
+      }
     }
 
-    public static void processBroadcastIntent(Context context, Intent broadcastIntent) {
-        // Launch the Service
-        Intent i = new Intent(context, LogoledReceiverService.class);
-        i.setAction(ACTION_BROADCAST);
-        i.putExtra(Intent.EXTRA_INTENT, broadcastIntent);
-  Log.d(TAG, "startService");
-        context.startService(i);
+   @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 
     @Override
-    protected void onHandleIntent(Intent intent) {
-        int userId = UserHandle.myUserId();
-  Log.d(TAG, "onHandleIntent, User Id = " + userId);
-        final String action = intent.getAction();
-        if (!ACTION_BROADCAST.equals(action)) {
-            return;
-        }
-
-        final Intent broadcastIntent = intent.getParcelableExtra(Intent.EXTRA_INTENT);
-        final String broadcastAction = broadcastIntent.getAction();
-  Log.d(TAG, "action= " + broadcastAction);
-        if (Intent.ACTION_BOOT_COMPLETED.equals(broadcastAction)) {
-            // ALPS00448092.
-	    if(SystemProperties.get("sys.extboard.exist", "unknown").equals("1")) {
-	    String brightness = SystemProperties.get("persist.sys.logoled.brightness", "unknown");
-	    khadasLedLogoControl.Ledbrigthnessplus(Integer.parseInt(brightness));
-	    }
-            Log.d(TAG, "revieve ACTION_BOOT_COMPLETED" );
-        }
+    public IBinder onBind(Intent intent) {
+        return null;
     }
-
 }

@@ -34,5 +34,12 @@
         android:summary="%s"
         android:entries="@array/led_title_entries"
         android:entryValues="@array/led_title_values" />
+    <ListPreference
+        android:key="logoLed"
+        android:persistent="true"
+        android:title="@string/device_led_logo"
+        android:summary="%s"
+        android:entries="@array/logoled_title_entries"
+        android:entryValues="@array/logoled_title_values" />
 
 </PreferenceScreen>
