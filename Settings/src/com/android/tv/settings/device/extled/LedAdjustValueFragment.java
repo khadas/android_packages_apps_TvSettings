@@ -51,7 +51,6 @@ public class LedAdjustValueFragment extends LeanbackPreferenceFragment implement
 
     private boolean isSeekBarInited = false;
 
-    private KhadasLedLogoControl khadasLedLogoControl;
 
     public static LedAdjustValueFragment newInstance() {
         return new LedAdjustValueFragment();
@@ -81,7 +80,6 @@ public class LedAdjustValueFragment extends LeanbackPreferenceFragment implement
     private void initSeekBar(View view) {
         int status = -1;
         boolean hasfocused = false;
-        khadasLedLogoControl = new KhadasLedLogoControl();
         seekbar_logoled = (SeekBar) view.findViewById(R.id.seekbar_logoled);
         text_logoled = (TextView) view.findViewById(R.id.text_logoled);
         image_logoled = (ImageView) view.findViewById(R.id.logoled_icon);
@@ -91,7 +89,6 @@ public class LedAdjustValueFragment extends LeanbackPreferenceFragment implement
         Log.d(TAG," persist.sys.logoled.brightness: " + brightness);
         seekbar_logoled.setProgress(Integer.parseInt(brightness));
         seekbar_logoled.requestFocus();
-        khadasLedLogoControl.Ledbrigthnessplus(Integer.parseInt(brightness));
         hasfocused = true;
         isSeekBarInited = true;
     }
@@ -104,7 +101,6 @@ public class LedAdjustValueFragment extends LeanbackPreferenceFragment implement
         switch (seekBar.getId()) {
             case R.id.seekbar_logoled:{
                 Log.d(TAG," progress seekbar_media: " + progress);
-                khadasLedLogoControl.Ledbrigthnessplus(progress);
 		SystemProperties.set("persist.sys.logoled.brightness", Integer.toString(progress));
                 break;
             }
