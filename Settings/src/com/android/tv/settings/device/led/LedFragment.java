@@ -115,7 +115,11 @@ public class LedFragment extends SettingsPreferenceFragment
 		logoPref.setValue(Integer.toString(mode));
 		logoPref.setSummary(list_logo[mode]);
 		logoPref.setOnPreferenceChangeListener(this);
-	   }
+	   }else {
+		   if (logoPref != null) {
+                     logoPref.setVisible(false);
+		 }
+	     }
         } else if (mLedType == BoardInfo.LED_WHITE){
             mode = getLedModeProp(LED_WHITE);
             whitePref.setValue(Integer.toString(mode));
