@@ -258,13 +258,9 @@ public class NetworkFragment extends SettingsPreferenceFragment implements
             getPreferenceScreen().removePreference(mHotsPot);
         }
 
-        if (mBoardInfo.isM2xNetSupport()) {
-            int mode = getEthernetMode();
-            mEthernetSwitch.setChecked(mode==0 ? false:true);
-        } else {
-            mEthernetSwitch.setVisible(false);
-            getPreferenceScreen().removePreference(mEthernetSwitch);
-        }
+        mEthernetSwitch.setVisible(false);
+        getPreferenceScreen().removePreference(mEthernetSwitch);
+        
     }
 
     private void setEthernetMode(int mode) {
