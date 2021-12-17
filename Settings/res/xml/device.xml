@@ -86,6 +86,11 @@
         android:key="wol"
         android:title="@string/device_wol"/>
     <Preference
+        android:fragment="com.android.tv.settings.device.m2x.M2xFragment"
+        android:icon="@drawable/ic_ethernet_white"
+        android:key="m2x"
+        android:title="@string/device_m2x"/>
+    <Preference
         android:fragment="com.android.tv.settings.device.portmode.PortFragment"
         android:icon="@drawable/ic_settings_portmode"
         android:key="portmode"
