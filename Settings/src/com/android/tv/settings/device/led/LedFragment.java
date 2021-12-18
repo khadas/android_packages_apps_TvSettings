@@ -188,7 +188,7 @@ public class LedFragment extends SettingsPreferenceFragment
         if (type == LED_WHITE)
             mode = SystemProperties.getInt(PROP_LED_WHITE_TRIGGER, DEFAULT_MODE);
 	if (type == LED_LOGO)
-            mode = SystemProperties.getInt(PROP_LED_LOGO_TRIGGER, 2);
+            mode = SystemProperties.getInt(PROP_LED_LOGO_TRIGGER, 1);
         else
             mode = SystemProperties.getInt(PROP_LED_RED_MODE, DEFAULT_MODE);
         return mode;

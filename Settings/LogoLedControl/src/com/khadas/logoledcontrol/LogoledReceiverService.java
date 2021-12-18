@@ -31,7 +31,7 @@ public class LogoledReceiverService extends Service {
 			super.run();
 			while(true){
 			    try {
-				String mode = SystemProperties.get("persist.sys.logo.led.trigger","unknown");
+				String mode = SystemProperties.get("persist.sys.logo.led.trigger","1");
 				khadasLedLogoControl.LogoLedModeControl(Integer.parseInt(mode));
 			        Thread.sleep(1000);
 			    } catch (InterruptedException e) {
