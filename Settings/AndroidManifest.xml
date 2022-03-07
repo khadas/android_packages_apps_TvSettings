@@ -1223,6 +1223,12 @@
             android:name="com.android.tv.settings.display.AdvancedDisplaySettingsActivity"
             android:exported="false" />
         <activity
+            android:theme="@style/TvSettingsActivityTheme"
+            android:name="com.android.tv.settings.display.AIDisplayActivity"
+            android:launchMode="singleTop"
+            android:excludeFromRecents="true"
+            android:exported="true" />
+        <activity
             android:name=".advance_settings.AdvanceSettingsActivity"
             android:theme="@style/TvSettingsActivityTheme"
             android:excludeFromRecents="true"
@@ -1268,6 +1274,12 @@
               <meta-data android:name="com.android.tv.settings.FRAGMENT_CLASS"
                   android:value="com.android.tv.settings.inputmethod.KeyboardLayoutPickerFragment" />
         </activity>
+
+        <service
+            android:name=".ShowDialogService"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="android.permission.GET_TASKS" />
     </application>
 
 </manifest>

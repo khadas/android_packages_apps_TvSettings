@@ -48,4 +48,8 @@
         android:key="advanced_settings"
         android:title="@string/advance_settings" />
 
+    <Preference
+        android:key="ai_display_settings"
+        android:title="@string/ai_display_settings" />
+
 </PreferenceScreen>

@@ -36,6 +36,7 @@ import androidx.fragment.app.DialogFragment;
 import com.android.tv.settings.R;
 import com.android.tv.settings.data.ConstData;
 import com.android.tv.settings.SettingsPreferenceFragment;
+import com.android.tv.settings.ShowDialogService;
 import com.android.settingslib.core.AbstractPreferenceController;
 
 import java.io.BufferedReader;
@@ -59,6 +60,10 @@ public class DeviceFragment extends SettingsPreferenceFragment implements Prefer
     public static final String KEY_FIXED_ROTATION = "fixed_rotation";
     public static final String KEY_ROTATION = "rotation";
     public static final String KEY_ADVANCED_SETTINGS = "advanced_settings";
+    public static final String KEY_AI_DISPLAY_SETTINGS = "ai_display_settings";
+
+    public static final String KEY_AI_DISPLAY_DIM = "dim";
+
     protected PreferenceScreen mPreferenceScreen;
     /**
      * 分辨率设置
@@ -84,6 +89,12 @@ public class DeviceFragment extends SettingsPreferenceFragment implements Prefer
      * 高级设置
      */
     protected Preference mAdvancedSettingsPreference;
+
+    /**
+     * AI显示设置
+     */
+    protected Preference mAiDisplaySettingsPreference;
+
     /**
      * 当前显示设备对应的信息
      */
@@ -150,6 +161,7 @@ public class DeviceFragment extends SettingsPreferenceFragment implements Prefer
                     ServiceManager.getService(Context.WINDOW_SERVICE));
         mPreferenceScreen = getPreferenceScreen();
         mAdvancedSettingsPreference = findPreference(KEY_ADVANCED_SETTINGS);
+        mAiDisplaySettingsPreference = findPreference(KEY_AI_DISPLAY_SETTINGS);
         mResolutionPreference = (ListPreference) findPreference(KEY_RESOLUTION);
         mColorPreference = (ListPreference) findPreference(KEY_COLOR);
 
@@ -202,6 +214,7 @@ public class DeviceFragment extends SettingsPreferenceFragment implements Prefer
         mRotationPreference.setOnPreferenceChangeListener(this);
         mFixedRotationPreference.setOnPreferenceClickListener(this);
         mAdvancedSettingsPreference.setOnPreferenceClickListener(this);
+        mAiDisplaySettingsPreference.setOnPreferenceClickListener(this);
     }
 
     public void updateRotation() {
@@ -341,6 +354,13 @@ public class DeviceFragment extends SettingsPreferenceFragment implements Prefer
             Intent advancedIntent = new Intent(getActivity(), AdvancedDisplaySettingsActivity.class);
             advancedIntent.putExtra(ConstData.IntentKey.DISPLAY_ID, mDisplayInfo.getDisplayId());
             startActivity(advancedIntent);
+        } else if (preference == mAiDisplaySettingsPreference) {
+            // Intent aiDisplaySettingsIntent = new Intent(getActivity(), ShowDialogService.class);
+            // aiDisplaySettingsIntent.putExtra(ShowDialogService.KEY_DIALOG, ShowDialogService.VALUE_AI_LAB);
+            // getActivity().startService(aiDisplaySettingsIntent);
+            Intent aiDisplaySettingsIntent = new Intent(getActivity(), AIDisplayActivity.class);
+            aiDisplaySettingsIntent.putExtra(KEY_AI_DISPLAY_DIM, true);
+            startActivity(aiDisplaySettingsIntent);
         } else if (preference == mFixedRotationPreference) {
             boolean checked = mFixedRotationPreference.isChecked();
             int displayId = android.view.Display.DEFAULT_DISPLAY;

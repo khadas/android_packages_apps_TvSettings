@@ -122,7 +122,7 @@ public class PerformanceService extends Service {
             mEthnetMac.setText(getString(R.string.network_mac2) + getEthnetMac());
     }
 
-//cpu
+    //cpu
     private long[] mCpuInfo = new long[2];
     private Runnable mUpdateCpuAction = new Runnable(){
                 public void run() {

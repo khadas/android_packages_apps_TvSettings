@@ -62,7 +62,7 @@ public class AdvanceSettingsFragment extends SettingsPreferenceFragment implemen
 
     private static final String SERVICE_NAME = "com.android.tv.settings.advance_settings.performance.PerformanceService";
     private static final String LOCATION_MODE_WIFI = "wifi";
-    private static final String LOCATION_MODE_OFF = "off";
+    private static final String LOCATION_MODE_OFF  = "off";
 
     private static final String KEY_LOCATION_MODE = "locationMode";
     private static final String KEY_POWER_KEY = "power_key";

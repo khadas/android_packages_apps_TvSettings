@@ -2537,7 +2537,17 @@
     <string name="hdmi_rotation">Rotation</string>
     <string name="ui_resolutions">Ui Resolutions</string>
 
+    <!-- added for AI Advanced Display -->
+    <string name="ai_display_settings">AI Advanced Display</string>
+    <string name="ai_svep_mode">SVEP Mode(1/0)</string>
+    <string name="ai_svep_global_ui">Global UI Mode(2/1) </string>
+    <string name="ai_svep_contrast_mode">SVEP Contrast Mode </string>
+    <string name="ai_svep_contrast_mode_summary">Long press MENU to enable SVEP left right split screen debug mode</string>
+    <string name="ai_svep_contrast_ratio">AI Contrast Ratio</string>
+    <string name="ai_svep_enhance_rate">AI Enhancement"</string>
+
     <string name="advance_settings">Advanced setting</string>
+
     <!--performance -->
     <string name="performance_float">Performance Dialog</string>
     <string name="cpu_title">CPU:</string>

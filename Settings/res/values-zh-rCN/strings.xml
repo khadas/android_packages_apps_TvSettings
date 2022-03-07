@@ -1092,6 +1092,16 @@
     <string name="ui_resolutions">Ui分辨率</string>
 
     <string name="advance_settings">高级设置</string>
+
+    <!-- added for AI Advanced Display -->
+    <string name="ai_display_settings">AI高级显示</string>
+    <string name="ai_svep_mode">SEVEP分辨率</string>
+    <string name="ai_svep_global_ui">SVEP全局超分(UI)</string>
+    <string name="ai_svep_contrast_mode">SVEP对比调试模式</string>
+    <string name="ai_svep_contrast_mode_summary">长按菜单键使能AI-SR左右分屏调试模式</string>
+    <string name="ai_svep_contrast_ratio">AI左右分割比例</string>
+    <string name="ai_svep_enhance_rate">AI增强"</string>
+
    <!--performance -->
     <string name="performance_float">性能浮窗</string>
     <string name="fixed_rotation">锁定屏幕方向</string>
