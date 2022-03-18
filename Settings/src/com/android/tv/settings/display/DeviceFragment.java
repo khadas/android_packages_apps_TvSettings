@@ -218,18 +218,23 @@ public class DeviceFragment extends SettingsPreferenceFragment implements Prefer
                 switch (rotation) {
                     case Surface.ROTATION_0:
                         mRotationPreference.setValue("0");
+                        mRotationPreference.setSummary("0");
                         break;
                     case Surface.ROTATION_90:
                         mRotationPreference.setValue("90");
+                        mRotationPreference.setSummary("90");
                         break;
                     case Surface.ROTATION_180:
                         mRotationPreference.setValue("180");
+                        mRotationPreference.setSummary("180");
                         break;
                     case Surface.ROTATION_270:
                         mRotationPreference.setValue("270");
+                        mRotationPreference.setSummary("270");
                         break;
                     default:
                         mRotationPreference.setValue("0");
+                        mRotationPreference.setSummary("0");
                 }
                // wm.freezeRotation(0);
             } catch (Exception e) {
@@ -253,6 +258,7 @@ public class DeviceFragment extends SettingsPreferenceFragment implements Prefer
             }
             Log.i(TAG, "updateColorValue setValueIndex index= " + index);
             mColorPreference.setValueIndex(index);
+            mColorPreference.setSummary(curColorMode);
 
         }
 
@@ -285,6 +291,7 @@ public class DeviceFragment extends SettingsPreferenceFragment implements Prefer
             }
             Log.i(TAG, "mResolutionPreference setValueIndex index= " + index);
             mResolutionPreference.setValueIndex(index);
+            mResolutionPreference.setSummary(resolutionValue);
 
     }
 
