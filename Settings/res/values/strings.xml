@@ -1646,4 +1646,9 @@
 
     <!-- concat two strings, e.g. "Android Keyboard, My Pass" [CHAR LIMIT=NONE] -->
     <string name="string_concat"><xliff:g id="part1">%1s</xliff:g>, <xliff:g id="part2">%2s</xliff:g></string>
+    <!-- khadas led info -->
+    <string name="device_led">LEDs</string>
+    <string name="keywords_led">led, hint,led hint</string>
+    <string name="device_led_white">White LED</string>
+    <string name="device_led_red">Red LED</string>
 </resources>

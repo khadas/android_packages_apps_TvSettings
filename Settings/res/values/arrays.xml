@@ -272,4 +272,16 @@
         <!-- Do not translate. -->
         <item>GTC</item>
     </string-array>
+    <!-- Khadas led settings -->
+    <string-array name="led_title_entries">
+        <item>Heartbeat mode</item>
+        <item>Always on</item>
+        <item>Always off</item>
+    </string-array>
+
+    <string-array name="led_title_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
 </resources>
