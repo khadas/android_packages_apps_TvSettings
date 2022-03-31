@@ -122,6 +122,8 @@
     <string name="connectivity_wifi">Wi-Fi</string>
     <!-- Preference which manages ethernet settings. [CHAR LIMIT=50] -->
     <string name="connectivity_ethernet">Ethernet</string>
+    <string name="ethernet_port">Ethernet Port</string>
+    <string name="ethernet_active_context">Active: M2X (Reboot for changes to take effect)</string>
     <!-- Summary for preference which indicates ethernet is connected. [CHAR LIMIT=50] -->
     <string name="connectivity_summary_ethernet_connected">Ethernet connected</string>
     <!-- Summary for preference which indicates no network is connected. [CHAR LIMIT=50] -->

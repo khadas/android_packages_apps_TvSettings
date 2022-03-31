@@ -38,7 +38,16 @@ import com.android.settingslib.wifi.AccessPoint;
 import com.android.settingslib.wifi.AccessPointPreference;
 import com.android.tv.settings.R;
 import com.android.tv.settings.SettingsPreferenceFragment;
+import com.android.tv.settings.boardInfo.BoardInfo;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.RandomAccessFile;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -63,6 +72,7 @@ public class NetworkFragment extends SettingsPreferenceFragment implements
     private static final String KEY_MOBILE_SETTINGS = "mobile_network_settings";
     private static final String KEY_ETHERNET = "ethernet";
     private static final String KEY_ETHERNET_STATUS = "ethernet_status";
+    private static final String KEY_ETHERNET_PORT = "ethernet_port";
     private static final String KEY_ETHERNET_PROXY = "ethernet_proxy";
     private static final String KEY_ETHERNET_DHCP = "ethernet_dhcp";
 
@@ -70,10 +80,12 @@ public class NetworkFragment extends SettingsPreferenceFragment implements
 
     private static final String BROADCAST_ACTION = "android.action.updateui";
 
+    private static final String SYS_ETHERNET_MODE ="/sys/class/mcu/ethernet_mode";
     private ConnectivityListener mConnectivityListener;
     private AccessPointPreference.UserBadgeCache mUserBadgeCache;
 
     private TwoStatePreference mEnableWifiPref;
+    private TwoStatePreference mEthernetSwitch;
     private CollapsibleCategory mWifiNetworksCategory;
     private Preference mCollapsePref;
     private Preference mAddPref;
@@ -87,6 +99,7 @@ public class NetworkFragment extends SettingsPreferenceFragment implements
 
     private final Handler mHandler = new Handler();
     private long mNoWifiUpdateBeforeMillis;
+    private BoardInfo mBoardInfo;
     private Runnable mInitialUpdateWifiListRunnable = new Runnable() {
         @Override
         public void run() {
@@ -151,6 +164,7 @@ public class NetworkFragment extends SettingsPreferenceFragment implements
                 new PreferenceManager.SimplePreferenceComparisonCallback());
         setPreferencesFromResource(R.xml.network, null);
 
+        mBoardInfo = new BoardInfo();
         mEnableWifiPref = (TwoStatePreference) findPreference(KEY_WIFI_ENABLE);
         mWifiNetworksCategory = (CollapsibleCategory) findPreference(KEY_WIFI_LIST);
         mCollapsePref = findPreference(KEY_WIFI_COLLAPSE);
@@ -160,6 +174,7 @@ public class NetworkFragment extends SettingsPreferenceFragment implements
         mAlwaysScan = (TwoStatePreference) findPreference(KEY_WIFI_ALWAYS_SCAN);
 
         mEthernetCategory = (PreferenceCategory) findPreference(KEY_ETHERNET);
+        mEthernetSwitch = (TwoStatePreference) findPreference(KEY_ETHERNET_PORT);
         mEthernetStatusPref = findPreference(KEY_ETHERNET_STATUS);
         mEthernetProxyPref = findPreference(KEY_ETHERNET_PROXY);
         mEthernetProxyPref.setIntent(EditProxySettingsActivity.createIntent(getContext(),
@@ -167,6 +182,44 @@ public class NetworkFragment extends SettingsPreferenceFragment implements
         mEthernetDhcpPref = findPreference(KEY_ETHERNET_DHCP);
         mEthernetDhcpPref.setIntent(EditIpSettingsActivity.createIntent(getContext(),
                 WifiConfiguration.INVALID_NETWORK_ID));
+        if (mBoardInfo.isM2xNetSupport()) {
+            int mode = getEthernetMode();
+            mEthernetSwitch.setChecked(mode==0 ? false:true);
+        } else {
+            mEthernetSwitch.setVisible(false);
+            getPreferenceScreen().removePreference(mEthernetSwitch);
+        }
+    }
+
+    private void setEthernetMode(int mode) {
+         try {
+             BufferedWriter bufWriter = null;
+             bufWriter = new BufferedWriter(new FileWriter(SYS_ETHERNET_MODE));
+             bufWriter.write(String.valueOf(mode));
+             bufWriter.close();
+         } catch (IOException e) {
+             e.printStackTrace();
+         }
+    }
+
+    private int getEthernetMode() {
+          int mode = 0;
+          try {
+             FileReader fread = new FileReader(SYS_ETHERNET_MODE);
+             BufferedReader buffer = new BufferedReader(fread);
+             String str = null;
+             while ((str = buffer.readLine()) != null) {
+                  if (str.equals("1"))
+                     mode = 1;
+                  else
+                     mode = 0;
+             }
+             buffer.close();
+             fread.close();
+          } catch (IOException e) {
+             Log.e(TAG, "IO Exception");
+          }
+          return mode;
     }
 
     @Override
@@ -201,6 +254,13 @@ public class NetworkFragment extends SettingsPreferenceFragment implements
                         mAlwaysScan.isChecked() ? 1 : 0);
                 return true;
             case KEY_ETHERNET_STATUS:
+                return true;
+            case KEY_ETHERNET_PORT:
+                 if (mEthernetSwitch.isChecked()) {
+                      setEthernetMode(1);
+                 } else {
+                      setEthernetMode(0);
+                 }
                 return true;
             case KEY_WIFI_ADD:
                 mMetricsFeatureProvider.action(getActivity(),
