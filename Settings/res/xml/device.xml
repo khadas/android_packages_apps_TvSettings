@@ -38,6 +38,11 @@
         android:key="language"
         android:title="@string/system_language"/>
     <Preference
+        android:fragment="com.android.tv.settings.device.statusbar.StatusBarFragment"
+        android:icon="@drawable/ic_settings_statusbar"
+        android:key="statusbar"
+        android:title="@string/device_statusbar"/>
+    <Preference
         android:fragment="com.android.tv.settings.inputmethod.KeyboardFragment"
         android:icon="@drawable/ic_keyboard"
         android:key="keyboard"
