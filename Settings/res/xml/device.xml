@@ -48,6 +48,11 @@
         android:key="ircut"
         android:title="@string/device_ircut"/>
     <Preference
+	android:fragment="com.android.tv.settings.device.soundsettings.AdjustValueFragment"
+	android:icon="@drawable/ic_volume_up_24dp"
+	android:key="soundset"
+	android:title="@string/sound_settings"/>
+    <Preference
         android:fragment="com.android.tv.settings.inputmethod.KeyboardFragment"
         android:icon="@drawable/ic_keyboard"
         android:key="keyboard"
