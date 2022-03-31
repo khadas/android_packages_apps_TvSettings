@@ -23,6 +23,7 @@ import android.content.res.Resources;
 import android.media.tv.TvInputInfo;
 import android.media.tv.TvInputManager;
 import android.os.Bundle;
+import android.os.Build;
 import android.os.UserHandle;
 import android.support.annotation.Keep;
 import android.support.annotation.VisibleForTesting;
@@ -42,6 +43,7 @@ import com.android.tv.settings.autofill.AutofillHelper;
 import com.android.tv.settings.device.sound.SoundFragment;
 import com.android.tv.settings.inputmethod.InputMethodHelper;
 import com.android.tv.settings.system.SecurityFragment;
+import com.android.tv.settings.boardInfo.BoardInfo;
 
 import java.util.List;
 
@@ -67,6 +69,7 @@ public class DevicePrefFragment extends SettingsPreferenceFragment {
     private Preference mSoundsPref;
     private boolean mInputSettingNeeded;
     private PackageManagerWrapper mPm;
+    private BoardInfo mBoardInfo;
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -79,12 +82,35 @@ public class DevicePrefFragment extends SettingsPreferenceFragment {
         final Preference inputPref = findPreference(KEY_INPUTS);
         if (inputPref != null) {
             inputPref.setVisible(mInputSettingNeeded);
+        }
+
+        mBoardInfo = new BoardInfo();
+        if(!mBoardInfo.isWolSupport()) {
+            final Preference wolPref = findPreference("wol");
+            if (wolPref != null) {
+                wolPref.setVisible(false);
+            }
+        }
+
+        if (!mBoardInfo.isFanSupport()) {
+             final Preference fanPref = findPreference("fan");
+             if (fanPref != null) {
+                fanPref.setVisible(false);
+             }
+        }
+
         if (!mBoardInfo.isIRCutSupport()) {
              final Preference ircutPref = findPreference("ircut");
              if (ircutPref != null) {
                 ircutPref.setVisible(false);
              }
         }
+
+        if (!mBoardInfo.isPortModeSupport()) {
+             final Preference portmodePref = findPreference("portmode");
+             if (portmodePref != null) {
+                 portmodePref.setVisible(false);
+             }
         }
     }
 
