@@ -1646,6 +1646,12 @@
 
     <!-- concat two strings, e.g. "Android Keyboard, My Pass" [CHAR LIMIT=NONE] -->
     <string name="string_concat"><xliff:g id="part1">%1s</xliff:g>, <xliff:g id="part2">%2s</xliff:g></string>
+    <!-- khadas fan info -->
+    <string name="device_fan">Cooling fan</string>
+    <string name="fan_title">Fan</string>
+    <string name="fan_category_title">Speed Options</string>
+    <string name="keywords_fan">fan, cool, cooling, cooling fan</string>
+    <string name="fan_settings_disabled_prompt">To control cooling fan, turn fan on.</string>
     <!-- khadas led info -->
     <string name="device_led">LEDs</string>
     <string name="keywords_led">led, hint,led hint</string>

@@ -38,6 +38,11 @@
         android:key="keyboard"
         android:title="@string/system_keyboard"/>
     <Preference
+        android:fragment="com.android.tv.settings.device.fan.FanFragment"
+        android:icon="@drawable/ic_settings_fan"
+        android:key="fan"
+        android:title="@string/device_fan"/>
+    <Preference
         android:fragment="com.android.tv.settings.device.led.LedFragment"
         android:icon="@drawable/ic_settings_led"
         android:key="led"
