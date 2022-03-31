@@ -56,6 +56,11 @@
             android:targetPackage="com.khadas.schpwronoff" />
     </Preference>
     <Preference
+        android:fragment="com.android.tv.settings.device.font.FontFragment"
+        android:icon="@drawable/ic_settings_font"
+        android:key="font"
+        android:title="@string/device_fontsize"/>
+    <Preference
 	android:fragment="com.android.tv.settings.device.soundsettings.AdjustValueFragment"
 	android:icon="@drawable/ic_volume_up_24dp"
 	android:key="soundset"
