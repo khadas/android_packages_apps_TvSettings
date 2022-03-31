@@ -79,6 +79,12 @@ public class DevicePrefFragment extends SettingsPreferenceFragment {
         final Preference inputPref = findPreference(KEY_INPUTS);
         if (inputPref != null) {
             inputPref.setVisible(mInputSettingNeeded);
+        if (!mBoardInfo.isIRCutSupport()) {
+             final Preference ircutPref = findPreference("ircut");
+             if (ircutPref != null) {
+                ircutPref.setVisible(false);
+             }
+        }
         }
     }
 
