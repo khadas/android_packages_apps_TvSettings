@@ -119,6 +119,9 @@ public class EnterPasswordState implements State {
                         mCheckBox.setChecked(mUserChoiceInfo.isPasswordHidden());
                         updatePasswordInputObfuscation();
                         openInEditMode(action);
+                        mTextInput.setFocusable(true);
+                        mTextInput.setFocusableInTouchMode(true);
+                        mTextInput.requestFocus();
                     }
                 }
 
