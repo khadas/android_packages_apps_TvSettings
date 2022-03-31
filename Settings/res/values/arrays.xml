@@ -272,6 +272,13 @@
         <!-- Do not translate. -->
         <item>GTC</item>
     </string-array>
+
+    <!-- Khadas port mode settings  -->
+    <string-array name="portmode_title_list">
+        <item>USB-3.0 Mode</item>
+        <item>PCI-E Mode</item>
+    </string-array>
+
     <!-- Khadas led settings -->
     <string-array name="led_title_entries">
         <item>Heartbeat mode</item>
