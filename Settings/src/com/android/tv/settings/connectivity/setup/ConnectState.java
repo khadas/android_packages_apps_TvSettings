@@ -112,6 +112,7 @@ public class ConnectState implements State {
         private boolean mWasAssociated;
         private boolean mWasHandshaking;
         private boolean mConnected;
+	private boolean WifiConnected;
 
         /**
          * Obtain a new instance of ConnectToWifiFragment.
@@ -164,6 +165,7 @@ public class ConnectState implements State {
                             case COMPLETED:
                                 // this just means the supplicant has connected, now
                                 // we wait for the rest of the framework to catch up
+				WifiConnected = true;
                                 break;
                             case DISCONNECTED:
                             case DORMANT:
@@ -287,6 +289,8 @@ public class ConnectState implements State {
                         && currentConnection.getSSID().equals(mWifiConfiguration.SSID)) {
                     return true;
                 }
+            } else if (netInfo.isConnected() && netInfo.getType() == ConnectivityManager.TYPE_ETHERNET && WifiConnected) {
+                return true;
             } else {
                 if (DEBUG) Log.d(TAG, "Network is not connected");
             }
