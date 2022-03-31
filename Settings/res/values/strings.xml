@@ -1651,4 +1651,9 @@
     <string name="keywords_led">led, hint,led hint</string>
     <string name="device_led_white">White LED</string>
     <string name="device_led_red">Red LED</string>
+    <!-- khadas wol info -->
+    <string name="device_wol">WOL</string>
+    <string name="wol_title">Wake on LAN</string>
+    <string name="keywords_wol">wol, wake, lan, wake on lan</string>
+    <string name="ethernet_mac_addr">Ethernet MAC address</string>
 </resources>
