@@ -48,6 +48,10 @@ public class DrmDisplaySetting {
     public final static int DISPLAY_TYPE_HDMI = 0;
     public final static int DISPLAY_TYPE_DP = 1;
 
+    public final static int SDR = 0;
+    public final static int HDR10 = 1;
+    public final static int DOLBY_VISION = 2;
+
 
     private static void logd(String text) {
         Log.d(TAG, SUB_TAG + " - " + text);
@@ -88,12 +92,13 @@ public class DrmDisplaySetting {
             displayInfos.add(displayInfo);
         }
         if (externalTypes != null && externalTypes.length > 0) {
-	   logd(" getDisplayInfoList 7");
+            logd(" getDisplayInfoList 7");
             int currExternalType = (Integer) ReflectUtils.invokeMethod(rkDisplayOutputManager, "getCurrentInterface", new Class[]{int.class}, new Object[]{1});
             //副屏只能有一个
             DisplayInfo displayInfo = new DisplayInfo();
+            displayInfo.setDisplayId(1);
             displayInfo.setType(currExternalType);
-	   logd(" getDisplayInfoList 8");
+            logd(" getDisplayInfoList 8");
             String[] orginModes = (String[]) ReflectUtils.invokeMethod(rkDisplayOutputManager, "getModeList", new Class[]{int.class, int.class}, new Object[]{1, currExternalType});
             orginModes = filterOrginModes(orginModes);
             displayInfo.setOrginModes(orginModes);
@@ -102,7 +107,6 @@ public class DrmDisplaySetting {
             //displayInfo.setModes(getFilterModeList((String[])ReflectUtils.invokeMethod(rkDisplayOutputManager, "getModeList", new Class[]{int.class, int.class}, new Object[]{1, externalTypes})));
             displayInfo.setDescription((String) ReflectUtils.invokeMethod(rkDisplayOutputManager, "typetoface", new Class[]{int.class}, new Integer[]{currExternalType}));
             logd(" getDisplayInfoList 10");
-            displayInfo.setDisplayId(1);
             displayInfos.add(displayInfo);
         }
         return displayInfos;
@@ -645,6 +649,54 @@ public class DrmDisplaySetting {
                     mode.getPhysicalHeight(), mode.getRefreshRate());
         }
         return modeStr;
+    }
+
+    public static int getHdrResolutionSupport(int displayId, String mode) {
+        Object rkDisplayOutputManager = null;
+        try {
+            rkDisplayOutputManager = Class.forName("android.os.RkDisplayOutputManager").newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (rkDisplayOutputManager == null)
+            return 0;
+
+        int ret = (int) ReflectUtils.invokeMethod(rkDisplayOutputManager, "getResolutionSupported",
+                new Class[] { int.class, String.class }, new Object[] { displayId, mode });
+        logd("getHdrResolutionSupport->res:" + ret);
+        return ret;
+    }
+
+    public static boolean isHDR10Status() {
+        Object rkDisplayOutputManager = null;
+        try {
+            rkDisplayOutputManager = Class.forName("android.os.RkDisplayOutputManager").newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (rkDisplayOutputManager == null)
+            return false;
+
+        boolean ret = (boolean) ReflectUtils.invokeMethod(rkDisplayOutputManager, "isHDR10Status",
+                new Class[] { }, new Object[] { });
+        logd("getHdrResolutionSupport->res:" + ret);
+        return ret;
+    }
+
+    public static boolean setHDR10Enabled(boolean enable) {
+        Object rkDisplayOutputManager = null;
+        try {
+            rkDisplayOutputManager = Class.forName("android.os.RkDisplayOutputManager").newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (rkDisplayOutputManager == null)
+            return false;
+
+        boolean ret = (boolean) ReflectUtils.invokeMethod(rkDisplayOutputManager, "setHDR10Enabled",
+                new Class[] { boolean.class }, new Object[] { enable });
+        logd("getHdrResolutionSupport->res:" + ret);
+        return ret;
     }
 
 }

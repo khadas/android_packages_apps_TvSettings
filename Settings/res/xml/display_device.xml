@@ -30,6 +30,10 @@
         android:entries="@array/color_list"
         android:entryValues="@array/color_list"/>
 
+    <CheckBoxPreference
+        android:key="hdr10"
+        android:title="@string/hdr_format_hdr10" />
+
     <Preference
         android:key="zoom"
         android:title="@string/zoom" />

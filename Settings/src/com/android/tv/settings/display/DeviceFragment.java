@@ -56,6 +56,7 @@ public class DeviceFragment extends SettingsPreferenceFragment implements Prefer
     protected static final String TAG = "DeviceFragment";
     public static final String KEY_RESOLUTION = "resolution";
     public static final String KEY_COLOR = "color";
+    public static final String KEY_HDR10 = "hdr10";
     public static final String KEY_ZOOM = "zoom";
     public static final String KEY_FIXED_ROTATION = "fixed_rotation";
     public static final String KEY_ROTATION = "rotation";
@@ -73,6 +74,10 @@ public class DeviceFragment extends SettingsPreferenceFragment implements Prefer
      * 屏幕颜色率设置
      */
     protected ListPreference mColorPreference;
+    /**
+     * HDR10支持能力
+     */
+    protected CheckBoxPreference mHDR10Preference;
     /**
      * 缩放设置
      */
@@ -164,6 +169,7 @@ public class DeviceFragment extends SettingsPreferenceFragment implements Prefer
         mAiDisplaySettingsPreference = findPreference(KEY_AI_DISPLAY_SETTINGS);
         mResolutionPreference = (ListPreference) findPreference(KEY_RESOLUTION);
         mColorPreference = (ListPreference) findPreference(KEY_COLOR);
+        mHDR10Preference = (CheckBoxPreference)findPreference(KEY_HDR10);
 
         if ("false".equals(SystemProperties.get("persist.sys.show_color_option", "false"))) {
             getPreferenceScreen().removePreference(mColorPreference);
@@ -191,6 +197,17 @@ public class DeviceFragment extends SettingsPreferenceFragment implements Prefer
         } else {
             mFixedRotationPreference.setChecked(true);
         }
+
+        if (isSupportedHDR10()) {
+            mHDR10Preference.setEnabled(true);
+            if (DrmDisplaySetting.isHDR10Status()) {
+                mHDR10Preference.setChecked(true);
+            } else {
+                mHDR10Preference.setChecked(true);
+            }
+        } else {
+            mHDR10Preference.setEnabled(false);
+        }
     }
 
     protected void rebuildView() {
@@ -215,6 +232,7 @@ public class DeviceFragment extends SettingsPreferenceFragment implements Prefer
         mFixedRotationPreference.setOnPreferenceClickListener(this);
         mAdvancedSettingsPreference.setOnPreferenceClickListener(this);
         mAiDisplaySettingsPreference.setOnPreferenceClickListener(this);
+        mHDR10Preference.setOnPreferenceClickListener(this);
     }
 
     public void updateRotation() {
@@ -392,6 +410,9 @@ public class DeviceFragment extends SettingsPreferenceFragment implements Prefer
                 Log.e(TAG,"process Runtime error!!");
                 e.printStackTrace();
             }
+        } else if (preference == mHDR10Preference) {
+            Log.d(TAG, "mHDR10Preference onPreferenceClick value = " + mHDR10Preference.isChecked());
+            DrmDisplaySetting.setHDR10Enabled(mHDR10Preference.isChecked());
         }
         return true;
     }
@@ -437,6 +458,11 @@ public class DeviceFragment extends SettingsPreferenceFragment implements Prefer
             e.printStackTrace();
         }
         return IWindowManager.FIXED_TO_USER_ROTATION_DEFAULT;
+    }
+
+    private boolean isSupportedHDR10() {
+        int isSupported = DrmDisplaySetting.getHdrResolutionSupport(mDisplayInfo.getDisplayId(), DrmDisplaySetting.getCurDisplayMode(mDisplayInfo));
+        return isSupported >= 0 && (isSupported & DrmDisplaySetting.HDR10) > 0;
     }
 
 }
