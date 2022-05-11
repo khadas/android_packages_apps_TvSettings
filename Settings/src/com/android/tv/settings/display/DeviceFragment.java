@@ -30,6 +30,7 @@ import android.view.Display.Mode;
 import android.view.View;
 import android.widget.TextView;
 import android.os.SystemProperties;
+import android.text.TextUtils;
 import androidx.annotation.Keep;
 import androidx.fragment.app.DialogFragment;
 
@@ -183,10 +184,6 @@ public class DeviceFragment extends SettingsPreferenceFragment implements Prefer
         if (!mIsUseDisplayd) {
             mDisplayInfo = getDisplayInfo();
         }
-        //if(!mStrPlatform.contains("3328"))
-        //mPreferenceScreen.removePreference(mAdvancedSettingsPreference);
-        //if(mStrPlatform.contains("3328"))
-          //  mPreferenceScreen.removePreference(mColorPreference);
 
         int fixedToUserRotationMode = getFixedToUserRotation(mDisplayInfo.getDisplayId());
 
@@ -196,6 +193,10 @@ public class DeviceFragment extends SettingsPreferenceFragment implements Prefer
             mFixedRotationPreference.setChecked(false);
         } else {
             mFixedRotationPreference.setChecked(true);
+        }
+        if (mDisplayInfo.getDisplayId() != 0) {
+            getPreferenceScreen().removePreference(mFixedRotationPreference);
+            getPreferenceScreen().removePreference(mRotationPreference);
         }
 
         if (isSupportedHDR10()) {
@@ -236,51 +237,43 @@ public class DeviceFragment extends SettingsPreferenceFragment implements Prefer
     }
 
     public void updateRotation() {
-        //init fixed rotation status
-        /* int mFixedRotation = SystemProperties.getInt("persist.sys.forced_orient", 0);
-        if(mFixedRotation == 2)
-            mFixedRotationPreference.setChecked(true);
-        else
-            mFixedRotationPreference.setChecked(false); */
-
-        //init hdmi rotation status
-                try {
-                int rotation = mWindowManager.getDefaultDisplay().getRotation();
-                switch (rotation) {
-                    case Surface.ROTATION_0:
-                        mRotationPreference.setValue("0");
-                        mRotationPreference.setSummary("0");
-                        break;
-                    case Surface.ROTATION_90:
-                        mRotationPreference.setValue("90");
-                        mRotationPreference.setSummary("90");
-                        break;
-                    case Surface.ROTATION_180:
-                        mRotationPreference.setValue("180");
-                        mRotationPreference.setSummary("180");
-                        break;
-                    case Surface.ROTATION_270:
-                        mRotationPreference.setValue("270");
-                        mRotationPreference.setSummary("270");
-                        break;
-                    default:
-                        mRotationPreference.setValue("0");
-                        mRotationPreference.setSummary("0");
-                }
-               // wm.freezeRotation(0);
-            } catch (Exception e) {
-                Log.e(TAG, e.toString());
+        try {
+            int rotation = mDisplayManager.getDisplay(mDisplayInfo.getDisplayId()).getRotation();
+            switch (rotation) {
+                case Surface.ROTATION_0:
+                    mRotationPreference.setValue("0");
+                    mRotationPreference.setSummary("0");
+                    break;
+                case Surface.ROTATION_90:
+                    mRotationPreference.setValue("90");
+                    mRotationPreference.setSummary("90");
+                    break;
+                case Surface.ROTATION_180:
+                    mRotationPreference.setValue("180");
+                    mRotationPreference.setSummary("180");
+                    break;
+                case Surface.ROTATION_270:
+                    mRotationPreference.setValue("270");
+                    mRotationPreference.setSummary("270");
+                    break;
+                default:
+                    mRotationPreference.setValue("0");
+                    mRotationPreference.setSummary("0");
             }
+            // wm.freezeRotation(0);
+        } catch (Exception e) {
+            Log.e(TAG, e.toString());
+        }
     }
 
     public void updateColorValue() {
         if (mDisplayInfo == null || mColorPreference == null)
             return;
-        String curColorMode = DrmDisplaySetting.getColorMode();
+        String curColorMode = DrmDisplaySetting.getColorMode(mDisplayInfo);
         Log.i(TAG, "curColorMode:" + curColorMode);
-        if (curColorMode != null)
-            mColorPreference. setValue(curColorMode);
-            List<String> colors = DrmDisplaySetting.getColorModeList();
+        if (!TextUtils.isEmpty(curColorMode))
+            mColorPreference.setValue(curColorMode);
+            List<String> colors = DrmDisplaySetting.getColorModeList(mDisplayInfo);
             Log.i(TAG, "setValueIndex colors.toString()= " + colors.toString());
             int index = colors.indexOf(curColorMode);
             if (index < 0) {
@@ -301,28 +294,28 @@ public class DeviceFragment extends SettingsPreferenceFragment implements Prefer
             return;
         String resolutionValue = null;
 
-            resolutionValue = DrmDisplaySetting.getCurDisplayMode(mDisplayInfo);
-            /*防止读值不同步导致的UI值与实际设置的值不相符
-            1.如DrmDisplaySetting.curSetHdmiMode 已赋值，且tmpSetHdmiMode为空，则从DrmDisplaySetting.curSetHdmiMode取上一次设置的值
-            2.如DrmDisplaySetting.curSetHdmiMode 未赋值，且tmpSetHdmiMode为空，则getCurDisplayMode直接获取
-            */
-            if(DrmDisplaySetting.curSetHdmiMode !=null && DrmDisplaySetting.tmpSetHdmiMode == null)
-                resolutionValue = DrmDisplaySetting.curSetHdmiMode;
-            Log.i(TAG, "drm resolutionValue:" + resolutionValue);
+        resolutionValue = DrmDisplaySetting.getCurDisplayMode(mDisplayInfo);
+        /*防止读值不同步导致的UI值与实际设置的值不相符
+        1.如DrmDisplaySetting.curSetHdmiMode 已赋值，且tmpSetHdmiMode为空，则从DrmDisplaySetting.curSetHdmiMode取上一次设置的值
+        2.如DrmDisplaySetting.curSetHdmiMode 未赋值，且tmpSetHdmiMode为空，则getCurDisplayMode直接获取
+        */
+        if(DrmDisplaySetting.curSetDisplayMode !=null && DrmDisplaySetting.tmpSetDisplayMode == null)
+            resolutionValue = DrmDisplaySetting.curSetDisplayMode;
+        Log.i(TAG, "drm resolutionValue:" + resolutionValue);
 
-            if (resolutionValue != null)
-                mResolutionPreference.setValue(resolutionValue);
-            /*show mResolutionPreference current item*/
-            List<String> modes = DrmDisplaySetting.getDisplayModes(mDisplayInfo);
-            Log.i(TAG, "setValueIndex modes.toString()= " + modes.toString());
-            int index = modes.indexOf(resolutionValue);
-            if (index < 0) {
-                Log.w(TAG, "DeviceFragment - updateResolutionValue - warning index(" + index + ") < 0, set index = 0");
-                index = 0;
-            }
-            Log.i(TAG, "mResolutionPreference setValueIndex index= " + index);
-            mResolutionPreference.setValueIndex(index);
-            mResolutionPreference.setSummary(resolutionValue);
+        if (resolutionValue != null)
+            mResolutionPreference.setValue(resolutionValue);
+        /*show mResolutionPreference current item*/
+        List<String> modes = DrmDisplaySetting.getDisplayModes(mDisplayInfo);
+        Log.i(TAG, "setValueIndex modes.toString()= " + modes.toString());
+        int index = modes.indexOf(resolutionValue);
+        if (index < 0) {
+            Log.w(TAG, "DeviceFragment - updateResolutionValue - warning index(" + index + ") < 0, set index = 0");
+            index = 0;
+        }
+        Log.i(TAG, "mResolutionPreference setValueIndex index= " + index);
+        mResolutionPreference.setValueIndex(index);
+        mResolutionPreference.setSummary(mResolutionPreference.getEntry());
 
     }
 
@@ -431,7 +424,12 @@ public class DeviceFragment extends SettingsPreferenceFragment implements Prefer
     }
 
     protected DisplayInfo getDisplayInfo() {
-        return null;
+        Intent mIntent = getActivity().getIntent();
+        if(mIntent != null) {
+            mDisplayInfo = (DisplayInfo) mIntent.getSerializableExtra(ConstData.IntentKey.DISPLAY_INFO);
+            Log.d(TAG, "getDisplayInfo mDisplayInfo = " + mDisplayInfo);
+        }
+        return mDisplayInfo;
     }
 
     private int getFixedToUserRotation(int displayId) {

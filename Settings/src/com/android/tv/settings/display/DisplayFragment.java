@@ -45,8 +45,6 @@ import java.util.ArrayList;
 public class DisplayFragment extends LeanbackPreferenceFragmentCompat
         implements Preference.OnPreferenceChangeListener, Preference.OnPreferenceClickListener {
     private static final String TAG = "DisplayFragment";
-    public static final String KEY_MAIN_DISPLAY = "main_display";
-    public static final String KEY_SECOND_DISPLAY = "second_display";
     private static final String KEY_UI_RESOLUTIONS = "ui_resolutions";
     private static final String KEY_PFC_UI_RESOLUTIONS = "pfc_ui_resolutions";
     public static final String KEY_DISPLAY_DEVICE_CATEGORY = "display_device_category";
@@ -82,14 +80,6 @@ public class DisplayFragment extends LeanbackPreferenceFragmentCompat
             updateResolutionValue();
         }
     };
-    /**
-     * 主显示
-     */
-    private Preference mMainDisplayPreference;
-    /**
-     * 次显示
-     */
-    private Preference mSecondDisPreference;
 
     private ListPreference mUiResolutions;
     private PreferenceCategory mPfcUiResolutions;
@@ -146,8 +136,6 @@ public class DisplayFragment extends LeanbackPreferenceFragmentCompat
     private void initData() {
         mDisplayManager = (DisplayManager) getActivity().getSystemService(Context.DISPLAY_SERVICE);
         mPreferenceScreen = getPreferenceScreen();
-        mMainDisplayPreference = findPreference(KEY_MAIN_DISPLAY);
-        mSecondDisPreference = findPreference(KEY_SECOND_DISPLAY);
         mPfcUiResolutions = findPreference(KEY_PFC_UI_RESOLUTIONS);
         mDisplayDeviceCategory = (PreferenceCategory) findPreference(KEY_DISPLAY_DEVICE_CATEGORY);
         mDisplayManager = (DisplayManager) getActivity().getSystemService(Context.DISPLAY_SERVICE);
@@ -224,16 +212,7 @@ public class DisplayFragment extends LeanbackPreferenceFragmentCompat
         }
         if (displayInfos.size() > 0) {
             for (DisplayInfo displayInfo : displayInfos) {
-                Intent intent = new Intent();
-                intent.putExtra(ConstData.IntentKey.DISPLAY_INFO, displayInfo);
-                getActivity().setIntent(intent);
-                if (displayInfo.getDisplayId() == 0) {
-                    mMainDisplayPreference.setTitle(displayInfo.getDescription());
-                    mDisplayDeviceCategory.addPreference(mMainDisplayPreference);
-                } else {
-                    mSecondDisPreference.setTitle(displayInfo.getDescription());
-                    mDisplayDeviceCategory.addPreference(mSecondDisPreference);
-                }
+                mDisplayDeviceCategory.addPreference(createDisplayDevicePreference(displayInfo));
             }
         }
         for (String modeStr : DrmDisplaySetting.getAndroidModes(mDisplayManager)) {
@@ -252,6 +231,20 @@ public class DisplayFragment extends LeanbackPreferenceFragmentCompat
                 Log.i("ROCKCHIP", "source mode = " + mode.toString());
             }
         }
+    }
+
+    /*
+    * 获取显示设备信息
+    */
+    private Preference createDisplayDevicePreference(DisplayInfo mDisplayInfo) {
+        Preference mDisplayPreference = new Preference(getPreferenceManager().getContext());
+        mDisplayPreference.setKey(mDisplayInfo.getDescription());
+        mDisplayPreference.setTitle(mDisplayInfo.getDescription());
+        mDisplayPreference.setFragment(DeviceFragment.class.getName());
+        mDisplayPreference.setOnPreferenceClickListener(this);
+        mDisplayPreference.setEnabled(true);
+        mDisplayPreference.setSelectable(true);
+        return mDisplayPreference;
     }
 
     /**
@@ -395,6 +388,16 @@ public class DisplayFragment extends LeanbackPreferenceFragmentCompat
 
     @Override
     public boolean onPreferenceClick(Preference preference) {
+        Log.d(TAG, "onPreferenceClick preference = " + preference);
+        List<DisplayInfo> mDisplayInfos = getDisplayInfos();
+        for (DisplayInfo displayInfo : mDisplayInfos) {
+            if (displayInfo.getDescription().equals(preference.getKey())) {
+                Intent intent = new Intent();
+                intent.putExtra(ConstData.IntentKey.DISPLAY_INFO, displayInfo);
+                getActivity().setIntent(intent);
+                return false;
+            }
+        }
         return true;
     }
 }

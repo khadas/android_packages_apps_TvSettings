@@ -21,14 +21,6 @@
     <PreferenceCategory
         android:key="display_device_category"
         android:title="@string/display_devices">
-        <Preference
-            android:key="main_display"
-            android:title="HDMI"
-            android:fragment="com.android.tv.settings.display.HdmiDeviceFragment" />
-        <Preference
-            android:key="second_display"
-            android:title="DP"
-            android:fragment="com.android.tv.settings.display.DpDeviceFragment"/>
     </PreferenceCategory>
 
     <PreferenceCategory

@@ -51,4 +51,17 @@ public class ReflectUtils {
         }
         return null;
     }
+
+    public static Object invokeMethodNoParameter(Object object, String methodName) {
+        try {
+            Method method = object.getClass().getDeclaredMethod(methodName);
+            method.setAccessible(true);
+            return method.invoke(object);
+            // return method.invoke(object, paramTypes);
+        } catch (Exception e) {
+            Log.e(TAG, "invokeMethod->methodName:" + methodName);
+            Log.e(TAG, "invokeMethod->exception:" + e);
+        }
+        return null;
+    }
 }

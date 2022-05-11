@@ -14,8 +14,6 @@ public abstract class DisplaySetting {
 
     public abstract String getCurDisplayMode(DisplayInfo di);
 
-    public abstract String getCurHdmiMode();
-
     public abstract void setDisplayModeTemp(DisplayInfo di, int index);
 
     public abstract void setDisplayModeTemp(DisplayInfo di, String mode);
