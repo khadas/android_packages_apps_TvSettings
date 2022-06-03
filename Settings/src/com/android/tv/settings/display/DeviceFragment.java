@@ -203,7 +203,7 @@ public class DeviceFragment extends SettingsPreferenceFragment implements Prefer
             if (DrmDisplaySetting.isHDR10Status()) {
                 mHDR10Preference.setChecked(true);
             } else {
-                mHDR10Preference.setChecked(true);
+                mHDR10Preference.setChecked(false);
             }
         } else {
             mHDR10Preference.setEnabled(false);
