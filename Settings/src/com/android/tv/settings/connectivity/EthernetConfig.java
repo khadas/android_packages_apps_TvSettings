@@ -64,9 +64,12 @@ class EthernetConfig implements NetworkConfiguration {
      */
     public void load() {
         String[] ifaces = mEthernetManager.getAvailableInterfaces();
-        if (ifaces.length > 0) {
-            mInterfaceName = ifaces[0];
-            mIpConfiguration = mEthernetManager.getConfiguration(mInterfaceName);
+        for (int i = 0; i < ifaces.length; i++) {
+            if (mEthernetManager.isInterfaceup(ifaces[i])) {
+                mInterfaceName = ifaces[i];
+                mIpConfiguration = mEthernetManager.getConfiguration(mInterfaceName);
+                return ;
+            }
         }
     }
 
