@@ -217,8 +217,38 @@ public class DeviceFragment extends SettingsPreferenceFragment implements Prefer
         mResolutionPreference.setEntries(mDisplayInfo.getModes());
         mResolutionPreference.setEntryValues(mDisplayInfo.getModes());
         if (mColorPreference != null) {
-            mColorPreference.setEntries(mDisplayInfo.getColors());
-            mColorPreference.setEntryValues(mDisplayInfo.getColors());
+            String currentResolution = DrmDisplaySetting.getCurDisplayMode(mDisplayInfo);
+            int width = 0;
+            int height = 0;
+            float refreshRate = 0f;
+            if (currentResolution.equals("Auto")) {
+                currentResolution = mDisplayInfo.getModes()[1];
+            }
+            try {
+                width = Integer.parseInt(currentResolution.split("x")[0]);
+                if (currentResolution.contains("p")) {
+                    height = Integer.parseInt(currentResolution.split("x")[1].split("p")[0]);
+                    refreshRate = Float.parseFloat(currentResolution.split("p")[1].split("-")[0]);
+                } else {
+                    height = Integer.parseInt(currentResolution.split("x")[1].split("i")[0]);
+                    refreshRate = Float.parseFloat(currentResolution.split("i")[1].split("-")[0]);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            Log.i(TAG, "width = " + width + ", height = " + height + ", refreshRate = " + refreshRate);
+            List<String> colorList = new ArrayList<>();
+            for (String string : mDisplayInfo.getColors()) {
+                if (width < 3840 || height < 2160 || refreshRate < 49.00f) {
+                    if (string.equals("YCBCR420-8bit") || string.equals("YCBCR420-10bit")) {
+                        continue;
+                    }
+                }
+                colorList.add(string);
+            }
+            Log.i(TAG, "colorList = " + colorList.toString());
+            mColorPreference.setEntries(colorList.toArray(new String[colorList.size()]));
+            mColorPreference.setEntryValues(colorList.toArray(new String[colorList.size()]));
         }
         mTextTitle.setText(mDisplayInfo.getDescription());
     }
@@ -271,20 +301,24 @@ public class DeviceFragment extends SettingsPreferenceFragment implements Prefer
             return;
         String curColorMode = DrmDisplaySetting.getColorMode(mDisplayInfo);
         Log.i(TAG, "curColorMode:" + curColorMode);
-        if (!TextUtils.isEmpty(curColorMode))
-            mColorPreference.setValue(curColorMode);
+        if (!TextUtils.isEmpty(curColorMode)) {
             List<String> colors = DrmDisplaySetting.getColorModeList(mDisplayInfo);
-            Log.i(TAG, "setValueIndex colors.toString()= " + colors.toString());
+            Log.i(TAG, "setValueIndex colors.toString()= " + colors.toString() + ", mColorPreference.getEntryValues().length = " + mColorPreference.getEntryValues().length + ", value = " + mColorPreference.getValue());
             int index = colors.indexOf(curColorMode);
-            if (index < 0) {
-                Log.w(TAG, "DeviceFragment - updateColorValue - warning index(" + index + ") < 0, set index = 0");
+            if (index < 0 || index >= mColorPreference.getEntryValues().length) {
+                Log.i(TAG, "DeviceFragment - updateColorValue - warning index(" + index + ") < 0 || index > color.lenght(" + colors.size() + ") , set index = 0");
                 index = 0;
+                DrmDisplaySetting.setColorMode(mDisplayInfo.getDisplayId(), mDisplayInfo.getType(), colors.get(index));
             }
             Log.i(TAG, "updateColorValue setValueIndex index= " + index);
             mColorPreference.setValueIndex(index);
+            mColorPreference.setValue(curColorMode);
             mColorPreference.setSummary(curColorMode);
-
+        } else {
+            Log.i(TAG, "curColorMode = null");
         }
+
+    }
 
     /**
      * 还原分辨率值
@@ -417,7 +451,9 @@ public class DeviceFragment extends SettingsPreferenceFragment implements Prefer
             @Override
             public void onDismiss(boolean isok) {
                 Log.i(TAG, "showConfirmSetModeDialog->onDismiss->isok:" + isok);
-                    updateResolutionValue();
+                rebuildView();
+                updateResolutionValue();
+                updateColorValue();
             }
         });
         df.show(getFragmentManager(), "ConfirmDialog");
