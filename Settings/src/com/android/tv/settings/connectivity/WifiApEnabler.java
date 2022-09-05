@@ -140,9 +140,11 @@ public class WifiApEnabler {
         }
 
         if (wifiTethered) {
+            mSwitch.setChecked(true);
             WifiConfiguration wifiConfig = mWifiManager.getWifiApConfiguration();
             updateConfigSummary(wifiConfig);
         } else if (wifiErrored) {
+            mSwitch.setChecked(false);
             mSwitch.setSummary(R.string.wifi_error);
         }
     }
