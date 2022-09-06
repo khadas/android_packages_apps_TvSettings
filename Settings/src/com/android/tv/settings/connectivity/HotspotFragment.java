@@ -229,6 +229,11 @@ public class HotspotFragment extends SettingsPreferenceFragment
             mWifiApEnabler.resume();
         }
 
+        if (mRestartWifiApAfterConfigChange) {
+            updateState();
+            startTethering(TETHERING_WIFI);
+        }
+
         mEnableWifiAp.setChecked(mRestartWifiApAfterConfigChange);
 
         updateState();
