@@ -220,8 +220,8 @@ public class ConnectState implements State {
                     == NETWORK_SELECTION_ENABLED) {
                 NetworkCapabilities wifiNetworkCapabilities = getActiveWifiNetworkCapabilities();
                 if (wifiNetworkCapabilities != null) {
-                    if (wifiNetworkCapabilities.hasCapability(
-                            NetworkCapabilities.NET_CAPABILITY_VALIDATED)) {
+                    if (true/*wifiNetworkCapabilities.hasCapability(
+                            NetworkCapabilities.NET_CAPABILITY_VALIDATED)*/) {
                         if (isNetworkConnected()) {
                             notifyListener(StateMachine.RESULT_SUCCESS);
                         }
