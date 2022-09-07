@@ -275,8 +275,8 @@ public class NetworkFragment extends SettingsPreferenceFragment implements
             }
         }
         mVpnCategory = (PreferenceCategory) findPreference(KEY_VPN);
-        /* getPreferenceScreen().removePreference(mVpnCategory);
-        getPreferenceScreen().removePreference((PreferenceCategory) findPreference("vpn")); */
+        getPreferenceScreen().removePreference(mVpnCategory);
+        getPreferenceScreen().removePreference((PreferenceCategory) findPreference("vpn"));
         if (!SystemProperties.get("ro.target.product","box").equals("box")) {
             getPreferenceScreen().removePreference(mHotsPot);
         }
