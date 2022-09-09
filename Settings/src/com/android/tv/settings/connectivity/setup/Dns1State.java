@@ -128,7 +128,7 @@ public class Dns1State implements State {
 
         @Override
         public void onViewCreated(View view, Bundle savedInstanceState) {
-            openInEditMode(mAction);
+            // openInEditMode(mAction);
         }
 
         @Override
