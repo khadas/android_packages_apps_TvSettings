@@ -121,7 +121,7 @@ public class EnterSsidState implements State {
 
         @Override
         public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-            openInEditMode(mAction);
+            // openInEditMode(mAction);
         }
 
         @Override

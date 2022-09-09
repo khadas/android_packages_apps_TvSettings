@@ -159,7 +159,7 @@ public class EnterPasswordState implements State {
                                 R.id.guidedactions_item_title);
                         mTextInput.setImeOptions(
                                 EditorInfo.IME_ACTION_DONE | EditorInfo.IME_FLAG_NO_EXTRACT_UI);
-                        openInEditMode(action);
+                        // openInEditMode(action);
                     }
                 }
 
@@ -264,7 +264,7 @@ public class EnterPasswordState implements State {
         public void onGuidedActionFocused(GuidedAction action) {
             boolean newEditFocused = action == mPasswordAction;
             if (!mEditFocused && newEditFocused) {
-                openInEditMode(action);
+                // openInEditMode(action);
             }
             mEditFocused = newEditFocused;
         }
