@@ -41,6 +41,7 @@ import com.android.tv.settings.R;
 import com.android.tv.settings.data.ConstData;
 import java.util.Arrays;
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class DisplayFragment extends LeanbackPreferenceFragmentCompat
         implements Preference.OnPreferenceChangeListener, Preference.OnPreferenceClickListener {
@@ -257,8 +258,23 @@ public class DisplayFragment extends LeanbackPreferenceFragmentCompat
         List<DisplayInfo> displayInfos = new ArrayList<DisplayInfo>();
         mIsUseDisplayd = false;//SystemProperties.getBoolean("ro.rk.displayd.enable", true);
         Display[] displays = mDisplayManager.getDisplays();
+
+        //filter DisplayInfo for rk3328
+        List<DisplayInfo> tempDisplayInfo = DrmDisplaySetting.getDisplayInfoList();
+        switch(SystemProperties.get("ro.board.platform", "")) {
+            case "rk3328":
+                Optional<DisplayInfo> hdmiDisplayInfo = tempDisplayInfo.stream().filter(display -> display.getType() == DrmDisplaySetting.DRM_MODE_CONNECTOR_HDMIA).findFirst();
+                Optional<DisplayInfo> tvDisplayInfo = tempDisplayInfo.stream().filter(display -> display.getType() == DrmDisplaySetting.DRM_MODE_CONNECTOR_TV).findFirst();
+                if (hdmiDisplayInfo.isPresent() && tvDisplayInfo.isPresent() ) {
+                    tempDisplayInfo.remove(tvDisplayInfo.get());
+                }
+                break;
+            default:
+                break;
+        }
+
         if (!mIsUseDisplayd) {
-            displayInfos.addAll(DrmDisplaySetting.getDisplayInfoList());
+            displayInfos.addAll(tempDisplayInfo);
         }
         return displayInfos;
     }
@@ -342,6 +358,7 @@ public class DisplayFragment extends LeanbackPreferenceFragmentCompat
             boolean state = intent.getBooleanExtra("state", true);
             //changeDisplayInterface(state);
             Log.i(TAG, "DisplayFragment.java HDMIReceiver->onReceive");
+            DrmDisplaySetting.updateDisplayInfos();
             rebuildView();
         }
 
