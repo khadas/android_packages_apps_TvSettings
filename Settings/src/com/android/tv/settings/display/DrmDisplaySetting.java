@@ -397,6 +397,14 @@ public class DrmDisplaySetting {
         return res;
     }
 
+    public static void updateDisplayInfos() {
+        if (!initRkDisplayOutputManager()) {
+            return;
+        }
+        int res = (int) ReflectUtils.invokeMethod(rkDisplayOutputManager, "updateDisplayInfos", new Class[]{}, new Object[]{});
+        logd("updateDisplayInfos res = " + res);
+    }
+
     public static String[] getAndroidModes(DisplayManager mDisplayManager) {
         List<String> modes = new ArrayList();
         Display mDisplay = mDisplayManager.getDisplays()[0];
