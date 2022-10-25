@@ -22,6 +22,7 @@
     <item msgid="7718735533503035428">"za 30 minuta"</item>
     <item msgid="8784595382489738498">"za 1 sat"</item>
     <item msgid="1529312035777735084">"za 2 sata"</item>
+    <item msgid="9898989898989898989">"Nikada"</item>
   </string-array>
   <string-array name="screen_off_timeout_entries">
     <item msgid="8244337465472020927">"za 30 minuta"</item>
