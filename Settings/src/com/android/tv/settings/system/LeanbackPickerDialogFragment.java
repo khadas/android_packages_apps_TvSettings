@@ -19,8 +19,8 @@ package com.android.tv.settings.system;
 import android.app.AlarmManager;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v17.leanback.widget.picker.DatePicker;
-import android.support.v17.leanback.widget.picker.TimePicker;
+import android.widget.DatePicker;
+import android.widget.TimePicker;
 import android.support.v17.preference.LeanbackPreferenceDialogFragment;
 import android.support.v7.preference.DialogPreference;
 import android.text.TextUtils;
@@ -32,6 +32,7 @@ import android.widget.TextView;
 import com.android.tv.settings.R;
 
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * A DialogFragment started for either setting date or setting time purposes. The type of
@@ -108,35 +109,34 @@ public class LeanbackPickerDialogFragment extends LeanbackPreferenceDialogFragme
         if (pickerType.equals(TYPE_DATE)) {
             inflater.inflate(R.layout.date_picker_widget, pickerContainer, true);
             DatePicker datePicker = pickerContainer.findViewById(R.id.date_picker);
-            datePicker.setActivated(true);
-            datePicker.setOnClickListener(v -> {
+            datePicker.setOnDateChangedListener((view1, year, monthOfYear, dayOfMonth) -> {
                 // Setting the new system date
+	            mCalendar.set(Calendar.YEAR, year);
+                mCalendar.set(Calendar.MONTH, monthOfYear);
+                mCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
                 ((AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE)).setTime(
-                        datePicker.getDate()
+                        mCalendar.getTimeInMillis()
                 );
                 // Finish the fragment/activity when clicked.
-                if (!getFragmentManager().popBackStackImmediate()) {
-                    getActivity().finish();
-                }
+                /*if (!getFragmentManager().popBackStackImmediate()) {
+                   getActivity().finish();
+                }*/
             });
 
         } else {
             inflater.inflate(R.layout.time_picker_widget, pickerContainer, true);
             TimePicker timePicker = pickerContainer.findViewById(R.id.time_picker);
-            timePicker.setActivated(true);
-            timePicker.setOnClickListener(v -> {
+            timePicker.setOnTimeChangedListener((view1, hourOfDay, minute) -> {
                 // Setting the new system time
-                mCalendar.set(Calendar.HOUR_OF_DAY, timePicker.getHour());
-                mCalendar.set(Calendar.MINUTE, timePicker.getMinute());
-                mCalendar.set(Calendar.SECOND, 0);
-                mCalendar.set(Calendar.MILLISECOND, 0);
+                mCalendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                mCalendar.set(Calendar.MINUTE, minute);
                 ((AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE)).setTime(
                         mCalendar.getTimeInMillis()
                 );
                 // Finish the fragment/activity when clicked.
-                if (!getFragmentManager().popBackStackImmediate()) {
+                /*if (!getFragmentManager().popBackStackImmediate()) {
                     getActivity().finish();
-                }
+                }*/
             });
         }
 
