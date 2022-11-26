@@ -32,6 +32,7 @@ public class UsbModeSettings {
     private static final String FILE_NAME_RK3229 = "/sys/devices/platform/11000000.syscon/11000000.syscon:usb2-phy@760/otg_mode";
     private static final String FILE_NAME_RK356X = "/sys/devices/platform/fe8a0000.usb2-phy/otg_mode";
     private static final String FILE_NAME_RK3588 = "/sys/devices/platform/fd5d0000.syscon/fd5d0000.syscon:usb2-phy@0/otg_mode";
+    private static final String FILE_NAME_RK3528 = "/sys/devices/platform/ffdf0000.usb2-phy/otg_mode";
 
     private File file = null;
 
@@ -68,6 +69,8 @@ public class UsbModeSettings {
         String fileName = FILE_NAME_RK3328;
         if (!TextUtils.isEmpty(mSocName) && mSocName.contains("rk3399")) {
             fileName = FILE_NAME_RK3399;
+        } else if (!TextUtils.isEmpty(mSocName) && mSocName.contains("rk3528")) {
+            fileName = FILE_NAME_RK3528;
         } else if (!TextUtils.isEmpty(mSocName) && (mSocName.contains("rk322x") || mSocName.contains("rk3128h"))) {
             fileName = FILE_NAME_RK3229;
         } else if (!TextUtils.isEmpty(mSocName) && mSocName.contains("rk356x")) {
