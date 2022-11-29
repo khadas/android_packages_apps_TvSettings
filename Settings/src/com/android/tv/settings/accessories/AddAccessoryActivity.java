@@ -182,7 +182,7 @@ public class AddAccessoryActivity extends Activity implements BluetoothDevicePai
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.lb_dialog_fragment);
 
         mMsgHandler.setActivity(this);
