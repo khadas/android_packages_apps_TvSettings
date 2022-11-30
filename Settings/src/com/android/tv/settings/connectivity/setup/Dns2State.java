@@ -25,8 +25,12 @@ import android.support.v17.leanback.widget.GuidedActionsStylist;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
+import android.widget.EditText;
+import android.view.LayoutInflater;
+import android.view.ViewGroup;
 
 import com.android.tv.settings.R;
+import com.android.tv.settings.connectivity.util.GuidedActionsAlignUtil;
 import com.android.tv.settings.connectivity.util.AdvancedOptionsFlowUtil;
 import com.android.tv.settings.connectivity.util.State;
 import com.android.tv.settings.connectivity.util.StateMachine;
@@ -74,6 +78,7 @@ public class Dns2State implements State {
         private StateMachine mStateMachine;
         private AdvancedOptionsFlowInfo mAdvancedOptionsFlowInfo;
         private GuidedAction mAction;
+        private EditText mTextInput;
 
         @Override
         public GuidanceStylist.Guidance onCreateGuidance(Bundle savedInstanceState) {
@@ -99,6 +104,24 @@ public class Dns2State implements State {
         @Override
         public GuidedActionsStylist onCreateActionsStylist() {
             return new GuidedActionsStylist() {
+                @Override
+                public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+                    LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+                    View v = inflater.inflate(onProvideItemLayoutId(viewType), parent, false);
+                    return new Dns2ViewHolder(v);
+                }
+                @Override
+                public void onBindViewHolder(ViewHolder vh, GuidedAction action) {
+                     super.onBindViewHolder(vh, action);
+                     if (action.getId() == GuidedAction.ACTION_ID_CONTINUE) {
+                        Dns2ViewHolder viewHolder = (Dns2ViewHolder) vh;
+                         mTextInput = (EditText) viewHolder.getTitleView();
+                         openInEditMode(action);
+                         mTextInput.setFocusable(true);
+                         mTextInput.setFocusableInTouchMode(true);
+                         mTextInput.requestFocus();
+                     }
+                }
                 @Override
                 public int onProvideItemLayoutId() {
                     return R.layout.setup_text_input_item;
@@ -143,6 +166,13 @@ public class Dns2State implements State {
                 }
             }
             return action.getId();
+        }
+
+        private static class Dns2ViewHolder extends GuidedActionsAlignUtil.SetupViewHolder {
+
+            Dns2ViewHolder(View v) {
+               super(v);
+            }
         }
     }
 }
