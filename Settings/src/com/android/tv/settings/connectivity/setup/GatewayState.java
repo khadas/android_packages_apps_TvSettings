@@ -26,8 +26,12 @@ import android.support.v17.leanback.widget.GuidedActionsStylist;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
+import android.widget.EditText;
+import android.view.LayoutInflater;
+import android.view.ViewGroup;
 
 import com.android.tv.settings.R;
+import com.android.tv.settings.connectivity.util.GuidedActionsAlignUtil;
 import com.android.tv.settings.connectivity.util.State;
 import com.android.tv.settings.connectivity.util.StateMachine;
 
@@ -74,6 +78,7 @@ public class GatewayState implements State {
         private StateMachine mStateMachine;
         private AdvancedOptionsFlowInfo mAdvancedOptionsFlowInfo;
         private GuidedAction mAction;
+        private EditText mTextInput;
 
         @NonNull
         @Override
@@ -100,6 +105,24 @@ public class GatewayState implements State {
         @Override
         public GuidedActionsStylist onCreateActionsStylist() {
             return new GuidedActionsStylist() {
+                @Override
+                public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+                    LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+                    View v = inflater.inflate(onProvideItemLayoutId(viewType), parent, false);
+                    return new GatewayViewHolder(v);
+                }
+                @Override
+                public void onBindViewHolder(ViewHolder vh, GuidedAction action) {
+                     super.onBindViewHolder(vh, action);
+                     if (action.getId() == GuidedAction.ACTION_ID_CONTINUE) {
+                        GatewayViewHolder viewHolder = (GatewayViewHolder) vh;
+                         mTextInput = (EditText) viewHolder.getTitleView();
+                         openInEditMode(action);
+                         mTextInput.setFocusable(true);
+                         mTextInput.setFocusableInTouchMode(true);
+                         mTextInput.requestFocus();
+                     }
+                }
                 @Override
                 public int onProvideItemLayoutId() {
                     return R.layout.setup_text_input_item;
@@ -139,6 +162,13 @@ public class GatewayState implements State {
                 mStateMachine.getListener().onComplete(StateMachine.CONTINUE);
             }
             return action.getId();
+        }
+
+        private static class GatewayViewHolder extends GuidedActionsAlignUtil.SetupViewHolder {
+
+            GatewayViewHolder(View v) {
+               super(v);
+            }
         }
     }
 }
