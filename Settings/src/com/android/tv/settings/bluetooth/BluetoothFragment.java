@@ -231,7 +231,7 @@ public class BluetoothFragment extends LeanbackPreferenceFragment implements Pre
         removeAllDevices();
         mLocalManager.setForegroundActivity(null);
         mLocalManager.getEventManager().unregisterCallback(this);
-        mLocalAdapter.setScanMode(BluetoothAdapter.SCAN_MODE_CONNECTABLE);
+        //mLocalAdapter.setScanMode(BluetoothAdapter.SCAN_MODE_CONNECTABLE);
     }
 
     @Override
