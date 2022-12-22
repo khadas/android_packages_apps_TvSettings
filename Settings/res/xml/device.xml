@@ -27,6 +27,11 @@
         android:key="bluetooth"
         android:title="@string/bluetooth"
         android:fragment="com.android.tv.settings.bluetooth.BluetoothFragment" />
+     <Preference
+	android:icon="@drawable/ic_settings_more"
+	android:key="funkey"
+	android:title="@string/device_functionkey"
+	android:fragment="com.android.tv.settings.funkey.FunkeyFragment" />
     <Preference
         android:fragment="com.android.tv.settings.system.DateTimeFragment"
         android:icon="@drawable/ic_access_time"

@@ -1659,6 +1659,8 @@
 
     <!-- khadas font size -->
     <string name="device_fontsize">Font size</string>
+    <string name="funkey_select">function key select</string>
+
     <!-- khadas fan info -->
     <string name="device_fan">Cooling fan</string>
     <string name="fan_title">Fan</string>
@@ -1689,6 +1691,9 @@
     <string name="ethernet_mac_addr">Ethernet MAC address</string>
     <string name="device_m2x">M2x Ethernet</string>
     <string name="m2x_title">Active: M2X (Reboot for changes to take effect)</string>
+
+    <string name="device_functionkey">function key customize</string>
+
     <!-- mobile network settings -->
     <string name="network_category_title">Mobile network</string>
     <string name="network_settings_title">Mobile settings</string>

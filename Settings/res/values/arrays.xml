@@ -302,6 +302,13 @@
         <item>Largest</item>
     </string-array>
 
+    <string-array name="entries_funkey_value">
+	<item>home key</item>
+	<item>back key</item>
+	<item>volume up key</item>
+	<item>volume down key</item>
+    </string-array>
+
     <string-array name="entryvalues_font_size">
         <item>0.85</item>
         <item>1.0</item>

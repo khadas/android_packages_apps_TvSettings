@@ -1,0 +1,30 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+        package="com.khadas.khadascontrol"
+        android:sharedUserId="android.uid.system">
+
+        <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+	<uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+
+
+        <application android:label="Khadas control"
+            android:taskAffinity=""
+	    android:theme="@android:style/Theme.Material.Settings"
+            android:uiOptions="splitActionBarWhenNarrow"
+            android:supportsRtl="true">
+
+        <service android:name="com.khadas.khadascontrol.KhadasControlReceiverService"/>
+        <receiver android:name="com.khadas.khadascontrol.KhadasControlInitReceiver">
+            <intent-filter android:priority="1000">
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+            <intent-filter android:priority="1000">
+                <action android:name="android.intent.action.MEDIA_MOUNTED" />
+                <data android:scheme="file" />
+            </intent-filter>
+            <intent-filter android:priority="1000">
+                <action android:name="android.intent.action.MEDIA_UNMOUNTED" />
+                <data android:scheme="file" />
+            </intent-filter>
+        </receiver>
+    </application>
+</manifest>
