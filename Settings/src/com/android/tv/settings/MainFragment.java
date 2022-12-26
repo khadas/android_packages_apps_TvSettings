@@ -621,6 +621,7 @@ public class MainFragment extends PreferenceControllerFragment implements
     @Override
     public void onStart() {
         super.onStart();
+        updateConnectivity();
         updateAccountPref();
         updateAccessoryPref();
         IntentFilter btChangeFilter = new IntentFilter();
