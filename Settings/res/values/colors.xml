@@ -135,6 +135,7 @@
     <color name="toast_notification_background">#881F1F1F</color>
     <color name="toast_notification_text_color">#FFF0F0F0</color>
     <color name="tv_white">#FFCCCCCC</color>
+    <color name="tv_black">#FF0F0F0F</color>
 
     <item name="list_item_selected_description_text_alpha" format="float" type="dimen">0.50</item>
     <item name="list_item_selected_title_text_alpha" format="float" type="dimen">1.00</item>
@@ -169,4 +170,5 @@
     <color name="sensor_physical_privacy_enabled_info_background">#2BD93025</color>
     <!-- Background color of physical privacy enabled info box when focused -->
     <color name="sensor_physical_privacy_enabled_info_background_focused">#4FFF5C5C</color>
+    <color name="green">#FF00FF00</color>
 </resources>

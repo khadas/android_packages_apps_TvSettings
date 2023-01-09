@@ -19,6 +19,11 @@
                   xmlns:custom="http://schemas.android.com/apk/res-auto"
                   android:title="@string/device_pref_category_title">
     <Preference
+        android:fragment="com.android.tv.settings.display.DisplayFragment"
+        android:icon="@drawable/icon_display"
+        android:key="displaies"
+        android:title="@string/display_category_title"/>
+    <Preference
         android:fragment="com.android.tv.settings.accessibility.AccessibilityFragment"
         android:icon="@drawable/ic_accessibility_new"
         android:key="accessibility"
@@ -101,4 +106,9 @@
         android:icon="@drawable/ic_restart_alt"
         android:key="reboot"
         android:title="@string/restart_button_label"/>
+    <Preference
+        android:fragment="com.android.tv.settings.advance_settings.AdvanceSettingsFragment"
+        android:icon="@drawable/logo_settings_color_48dp"
+        android:key="advance_settings"
+        android:title="@string/advance_settings"/>
 </PreferenceScreen>

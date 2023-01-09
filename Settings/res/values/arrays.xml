@@ -22,6 +22,7 @@
         <item>30 minutes</item>
         <item>1 hour</item>
         <item>2 hours</item>
+        <item>Never</item>
     </string-array>
 
     <!-- Do not translate. -->
@@ -37,6 +38,8 @@
         <item>3600000</item>
         <!-- Do not translate. -->
         <item>7200000</item>
+       <!-- Do not translate. -->
+        <item>2147483647</item>
     </string-array>
 
     <!-- Display settings.  The delay after the daydream starts when the screen goes off. -->
@@ -286,6 +289,201 @@
 
     <!-- customized ignored packages for system alert window-->
     <string-array name="customized_ignored_system_alert_window_packages" translatable="false">
+    </string-array>
+
+    <!-- WengTao resolution list -->
+    <string-array name="resolution_list" translatable="false">
+        <item>1920x1080p-60</item>
+        <item>1280x720p-60</item>
+        <item>720x480p-60</item>
+    </string-array>
+
+    <string-array name="color_list" translatable="false">
+        <item>color1</item>
+        <item>color2</item>
+        <item>color3</item>
+    </string-array>
+
+    <string-array name="hdmi_rotation_entries">
+        <item>0</item>
+        <item>90</item>
+        <item>180</item>
+        <item>270</item>
+    </string-array>
+
+    <string-array name="hdmi_rotation_values">
+        <item>0</item>
+        <item>90</item>
+        <item>180</item>
+        <item>270</item>
+    </string-array>
+
+    <string-array name="power_key_choose">
+        <item>@string/dormancy</item>
+        <item>@string/power_off</item>
+        <item>@string/reboot</item>
+    </string-array>
+
+    <string-array name="power_key_choose_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
+    <string-array name="device_apps_app_management_ui_mode_entry">
+        <item>@string/device_apps_app_management_ui_mode_normal</item>
+        <item>@string/device_apps_app_management_ui_mode_desk</item>
+        <item>@string/device_apps_app_management_ui_mode_car</item>
+        <item>@string/device_apps_app_management_ui_mode_television</item>
+        <item>@string/device_apps_app_management_ui_mode_appliance</item>
+        <item>@string/device_apps_app_management_ui_mode_watch</item>
+        <item>@string/device_apps_app_management_ui_mode_vr_headset</item>
+    </string-array>
+
+    <string-array name="device_apps_app_management_ui_mode_entry_value">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+    </string-array>
+
+    <string-array name="audio_mode_list">
+        <item>RF</item>
+        <item>Line</item>
+    </string-array>
+
+    <string-array name="audio_mode_list_values">
+        <item>RF Mode</item>
+        <item>Line Mode</item>
+    </string-array>
+
+    <string-array name="audio_device_list">
+        <item>@string/audio_device_decode</item>
+        <item>@string/audio_device_hdmi</item>
+        <item>@string/audio_device_spdif</item>
+    </string-array>
+    <string-array name="audio_device_list_values">
+        <item>decode</item>
+        <item>hdmi</item>
+        <item>spdif</item>
+    </string-array>
+
+    <string-array name="audio_device_hdmi_entries">
+        <item>Auto</item>
+        <item>Manual</item>
+    </string-array>
+
+    <string-array name="audio_device_hdmi">
+        <item>@string/surround_sound_auto_summary</item>
+        <item>@string/surround_sound_manual_summary</item>
+    </string-array>
+
+    <string-array name="decode_formats">
+        <item>MP1</item>
+        <item>MP2</item>
+        <item>MP3</item>
+        <item>AAC</item>
+        <item>APE</item>
+        <item>WMALOSSLESS</item>
+        <item>WMAPRO</item>
+        <item>WMAV1</item>
+        <item>WMAV2</item>
+        <item>ADPCM_IMA_QT</item>
+        <item>VORBIS</item>
+        <item>PCM_S16LE</item>
+        <item>PCM_S24LE</item>
+        <item>FLAC</item>
+    </string-array>
+
+    <string-array name="hdmi_formats">
+        <item>AC3</item>
+        <item>DTS</item>
+        <item>EAC3</item>
+        <item>DTSHD</item>
+        <item>TRUEHD</item>
+    </string-array>
+
+    <string-array name="spdif_formats">
+        <item>AC3</item>
+        <item>DTS</item>
+    </string-array>
+
+    <string-array name="surround_sound_entries_spdif" translatable="false">
+        <item>@string/surround_sound_none_title</item>
+        <item>@string/surround_sound_manual_summary</item>
+    </string-array>
+
+
+    <string-array name="surround_sound_entry_values_spdif" translatable="false">
+        <item>never</item>
+        <item>manual</item>
+    </string-array>
+
+    <!-- List entries for controlling surround sound passthrough setting -->
+    <string-array name="surround_sound_entries" translatable="false">
+        <item>@string/surround_sound_auto_summary</item>
+        <item>@string/surround_sound_none_title</item>
+        <item>@string/surround_sound_manual_summary</item>
+    </string-array>
+
+    <!-- Entry values for surround sound preference -->
+    <string-array name="surround_sound_entry_values" translatable="false">
+        <item>auto</item>
+        <item>never</item>
+        <item>manual</item>
+    </string-array>
+
+    <!-- vpn interface -->
+    <string-array name="vpn_types" translatable="false">
+        <item>PPTP</item>
+        <item>L2TP/IPSec PSK</item>
+        <item>L2TP/IPSec RSA</item>
+        <item>IPSec Xauth PSK</item>
+        <item>IPSec Xauth RSA</item>
+        <item>IPSec Hybrid RSA</item>
+    </string-array>
+    <string-array name="vpn_states">
+        <!-- Status message when VPN is disconnected. -->
+        <item>Disconnected</item>
+        <!-- Status message when VPN is initializing. -->
+        <item>Initializing\u2026</item>
+        <!-- Status message when VPN is connecting. -->
+        <item>Connecting\u2026</item>
+        <!-- Status message when VPN is connected. -->
+        <item>Connected</item>
+        <!-- Status message when VPN is timeout. -->
+        <item>Timeout</item>
+        <!-- Status message when VPN is failed. -->
+        <item>Unsuccessful</item>
+    </string-array>
+
+    <string-array name="wifi_ap_band_config_2G_only">
+        <item>@string/wifi_ap_choose_2G</item>
+    </string-array>
+
+    <string-array name="wifi_ap_security">
+        <item>@string/wifi_security_wpa2</item>
+        <item>@string/wifi_security_none</item>
+    </string-array>
+
+    <string-array name="wifi_ap_band_config_full">
+        <item>@string/wifi_ap_choose_2G</item>
+        <item>@string/wifi_ap_choose_5G</item>
+    </string-array>
+
+    <string-array name="hdr_mode_entries">
+        <item>@string/hdr_mode_auto</item>
+        <item>@string/hdr_mode_hdr</item>
+        <item>@string/hdr_mode_sdr</item>
+    </string-array>
+
+    <string-array name="hdr_mode_values">
+        <item>2</item>
+        <item>1</item>
+        <item>0</item>
     </string-array>
 
 </resources>

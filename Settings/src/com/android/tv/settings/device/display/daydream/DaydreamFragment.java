@@ -138,6 +138,9 @@ public class DaydreamFragment extends SettingsPreferenceFragment
         final ListPreference dreamTimePref = (ListPreference) findPreference(KEY_DREAM_TIME);
         if (dreamTimePref != null) {
             dreamTimePref.setValue(Integer.toString(getDreamTime()));
+            if (getDreamTime() == Integer.MAX_VALUE) {
+                dreamTimePref.setSummary("Never");
+            }
             dreamTimePref.setOnPreferenceChangeListener(this);
             mDreamTimePref = RestrictedPreferenceAdapter.adapt(dreamTimePref, userRestriction);
         }
@@ -248,7 +251,13 @@ public class DaydreamFragment extends SettingsPreferenceFragment
         refreshActiveDreamPref();
         if (mDreamTimePref != null) {
             mDreamTimePref.updatePreference(
-                    dreamTimePref -> dreamTimePref.setValue(Integer.toString(getDreamTime())));
+                    dreamTimePref -> {
+                        dreamTimePref.setValue(Integer.toString(getDreamTime()));
+                        if (getDreamTime() == Integer.MAX_VALUE) {
+                            dreamTimePref.setSummary("Never");
+                        }
+                    });
+
         }
 
         final Preference dreamNowPref = findPreference(KEY_DREAM_NOW);

@@ -27,6 +27,7 @@ import androidx.leanback.widget.GuidedAction;
 import androidx.leanback.widget.GuidedActionsStylist;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.util.Log;
 import com.android.tv.settings.R;
 import com.android.tv.settings.connectivity.util.State;
 import com.android.tv.settings.connectivity.util.StateMachine;
@@ -127,7 +128,7 @@ public class IpAddressState implements State {
 
         @Override
         public void onViewCreated(View view, Bundle savedInstanceState) {
-            openInEditMode(mAction);
+            // openInEditMode(mAction);
         }
 
         @Override
