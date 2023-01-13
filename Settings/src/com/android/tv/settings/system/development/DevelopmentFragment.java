@@ -129,7 +129,7 @@ public class DevelopmentFragment extends SettingsPreferenceFragment
 
     private static final String WIFI_DISPLAY_CERTIFICATION_KEY = "wifi_display_certification";
     private static final String WIFI_VERBOSE_LOGGING_KEY = "wifi_verbose_logging";
-    private static final String USB_CONFIGURATION_KEY = "select_usb_configuration";
+    //private static final String USB_CONFIGURATION_KEY = "select_usb_configuration";
     private static final String MOBILE_DATA_ALWAYS_ON = "mobile_data_always_on";
     private static final String KEY_COLOR_MODE = "color_mode";
     private static final String FORCE_RESIZABLE_KEY = "force_resizable_activities";
@@ -373,7 +373,7 @@ public class DevelopmentFragment extends SettingsPreferenceFragment
         mWifiDisplayCertification = findAndInitSwitchPref(WIFI_DISPLAY_CERTIFICATION_KEY);
         mWifiVerboseLogging = findAndInitSwitchPref(WIFI_VERBOSE_LOGGING_KEY);
         mMobileDataAlwaysOn = findAndInitSwitchPref(MOBILE_DATA_ALWAYS_ON);
-        mUsbConfiguration = addListPreference(USB_CONFIGURATION_KEY);
+        //mUsbConfiguration = addListPreference(USB_CONFIGURATION_KEY);
 
         mWindowAnimationScale = addListPreference(WINDOW_ANIMATION_SCALE_KEY);
         mTransitionAnimationScale = addListPreference(TRANSITION_ANIMATION_SCALE_KEY);
