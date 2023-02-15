@@ -17,7 +17,12 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string-array name="sleep_timeout_entries">
+    <item >"15 Sekunden"</item>
+    <item >"30 Sekunden"</item>
+    <item >"1 Minuten"</item>
+    <item >"2 Minuten"</item>
     <item msgid="1213527366819650274">"5 Minuten"</item>
+    <item >"10 Minuten"</item>
     <item msgid="6561800022721381078">"15 Minuten"</item>
     <item msgid="7718735533503035428">"30 Minuten"</item>
     <item msgid="8784595382489738498">"1 Stunde"</item>
@@ -25,6 +30,13 @@
     <item msgid="9898989898989898989">"Nie"</item>
   </string-array>
   <string-array name="screen_off_timeout_entries">
+    <item >"15 Sekunden"</item>
+    <item >"30 Sekunden"</item>
+    <item >"1 Minuten"</item>
+    <item >"2 Minuten"</item>
+    <item >"5 Minuten"</item>
+    <item >"10 Minuten"</item>
+    <item >"15 Minuten"</item>
     <item msgid="8244337465472020927">"30 Minuten"</item>
     <item msgid="1001586019759702505">"1 Stunde"</item>
     <item msgid="5216959047515554188">"3 Stunden"</item>

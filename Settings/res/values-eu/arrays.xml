@@ -17,7 +17,12 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string-array name="sleep_timeout_entries">
+    <item >"15 segundoak"</item>
+    <item >"30 segundoak"</item>
+    <item >"1 minutu"</item>
+    <item >"2 minutu"</item>
     <item msgid="1213527366819650274">"5 minutu"</item>
+    <item >"10 minutu"</item>
     <item msgid="6561800022721381078">"15 minutu"</item>
     <item msgid="7718735533503035428">"30 minutu"</item>
     <item msgid="8784595382489738498">"Ordubete"</item>
@@ -25,6 +30,13 @@
     <item msgid="9898989898989898989">"Inoiz ez"</item>
   </string-array>
   <string-array name="screen_off_timeout_entries">
+    <item >"15 segundoak"</item>
+    <item >"30 segundoak"</item>
+    <item >"1 minutu"</item>
+    <item >"2 minutu"</item>
+    <item >"5 minutu"</item>
+    <item >"10 minutu"</item>
+    <item >"15 minutu"</item>
     <item msgid="8244337465472020927">"30 minutu"</item>
     <item msgid="1001586019759702505">"1 ordu"</item>
     <item msgid="5216959047515554188">"3 ordu"</item>

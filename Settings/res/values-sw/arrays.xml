@@ -17,7 +17,12 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string-array name="sleep_timeout_entries">
+    <item >"sekunde 15"</item>
+    <item >"sekunde 30"</item>
+    <item >"Dakika 1"</item>
+    <item >"Dakika 2"</item>
     <item msgid="1213527366819650274">"Dakika 5"</item>
+    <item >"Dakika 10"</item>
     <item msgid="6561800022721381078">"Dakika 15"</item>
     <item msgid="7718735533503035428">"Dakika 30"</item>
     <item msgid="8784595382489738498">"Saa 1"</item>
@@ -25,6 +30,13 @@
     <item msgid="9898989898989898989">"Isiwahi"</item>
   </string-array>
   <string-array name="screen_off_timeout_entries">
+    <item >"sekunde 15"</item>
+    <item >"sekunde 30"</item>
+    <item >"Dakika 1"</item>
+    <item >"Dakika 2"</item>
+    <item >"Dakika 5"</item>
+    <item >"Dakika 10"</item>
+    <item >"1Dakika 5"</item>
     <item msgid="8244337465472020927">"Dakika 30"</item>
     <item msgid="1001586019759702505">"Saa 1"</item>
     <item msgid="5216959047515554188">"Saa 3"</item>

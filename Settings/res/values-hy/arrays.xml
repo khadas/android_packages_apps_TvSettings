@@ -17,7 +17,12 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string-array name="sleep_timeout_entries">
+    <item >"15 վայրկյան"</item>
+    <item >"30 վայրկյան"</item>
+    <item >"1 րոպե"</item>
+    <item >"2 րոպե"</item>
     <item msgid="1213527366819650274">"5 րոպե"</item>
+    <item >"10 րոպե"</item>
     <item msgid="6561800022721381078">"15 րոպե"</item>
     <item msgid="7718735533503035428">"30 րոպե"</item>
     <item msgid="8784595382489738498">"1 ժամ"</item>
@@ -25,6 +30,13 @@
     <item msgid="9898989898989898989">"Երբեք"</item>
   </string-array>
   <string-array name="screen_off_timeout_entries">
+    <item >"15 վայրկյան"</item>
+    <item >"30 վայրկյան"</item>
+    <item >"1 րոպե"</item>
+    <item >"2 րոպե"</item>
+    <item >"5 րոպե"</item>
+    <item >"10 րոպե"</item>
+    <item >"15 րոպե"</item>
     <item msgid="8244337465472020927">"30 րոպե"</item>
     <item msgid="1001586019759702505">"1 ժամ"</item>
     <item msgid="5216959047515554188">"3 ժամ"</item>

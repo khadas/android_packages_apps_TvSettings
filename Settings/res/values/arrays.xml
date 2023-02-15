@@ -17,7 +17,12 @@
 
     <!-- Display settings.  The delay in inactivity before the daydream starts. -->
     <string-array name="sleep_timeout_entries">
+        <item>15 seconds</item>
+        <item>30 seconds</item>
+        <item>1 minutes</item>
+        <item>2 minutes</item>
         <item>5 minutes</item>
+        <item>10 minutes</item>
         <item>15 minutes</item>
         <item>30 minutes</item>
         <item>1 hour</item>
@@ -29,7 +34,17 @@
     <string-array name="sleep_timeout_values" translatable="false">
 
         <!-- Do not translate. -->
+        <item>15000</item>
+        <!-- Do not translate. -->
+        <item>30000</item>
+        <!-- Do not translate. -->
+        <item>60000</item>
+        <!-- Do not translate. -->
+        <item>120000</item>
+        <!-- Do not translate. -->
         <item>300000</item>
+        <!-- Do not translate. -->
+        <item>600000</item>
         <!-- Do not translate. -->
         <item>900000</item>
         <!-- Do not translate. -->
@@ -39,11 +54,18 @@
         <!-- Do not translate. -->
         <item>7200000</item>
         <!-- Do not translate. -->
-	<item>2147483647</item>
+	    <item>2147483647</item>
     </string-array>
 
     <!-- Display settings.  The delay after the daydream starts when the screen goes off. -->
     <string-array name="screen_off_timeout_entries">
+        <item>15 seconds</item>
+        <item>30 seconds</item>
+        <item>1 minutes</item>
+        <item>2 minutes</item>
+        <item>5 minutes</item>
+        <item>10 minutes</item>
+        <item>15 minutes</item>
         <item>30 minutes</item>
         <item>1 hour</item>
         <item>3 hours</item>
@@ -54,6 +76,20 @@
 
     <!-- Do not translate. -->
     <string-array name="screen_off_timeout_values" translatable="false">
+        <!-- Do not translate. -->
+        <item>15000</item>
+        <!-- Do not translate. -->
+        <item>30000</item>
+        <!-- Do not translate. -->
+        <item>60000</item>
+        <!-- Do not translate. -->
+        <item>120000</item>
+        <!-- Do not translate. -->
+        <item>300000</item>
+        <!-- Do not translate. -->
+        <item>600000</item>
+        <!-- Do not translate. -->
+        <item>900000</item>
         <!-- Do not translate. -->
         <item>1800000</item>
         <!-- Do not translate. -->
