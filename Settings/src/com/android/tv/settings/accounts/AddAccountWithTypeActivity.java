@@ -46,7 +46,7 @@ public class AddAccountWithTypeActivity extends FragmentActivity {
     private static final int REQUEST_CHOOSE_ACCOUNT_TYPE = 0;
     private static final int REQUEST_ADD_ACCOUNT = 1;
     private static final String CHOOSE_ACCOUNT_TYPE_ACTION =
-            "com.google.android.gms.common.account.CHOOSE_ACCOUNT_TYPE";
+            "com.google.android.gms.common.account.CHOOSE_ACCOUNT";
 
     private final AccountManagerCallback<Bundle> mCallback = new AccountManagerCallback<Bundle>() {
         @Override
