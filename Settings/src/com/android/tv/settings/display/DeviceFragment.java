@@ -62,6 +62,7 @@ public class DeviceFragment extends SettingsPreferenceFragment implements Prefer
     public static final String KEY_HDR10 = "hdr10";
     public static final String KEY_ZOOM = "zoom";
     public static final String KEY_FIXED_ROTATION = "fixed_rotation";
+    public static final boolean FIXROTATION = false;
     public static final String KEY_ROTATION = "rotation";
     public static final String KEY_ADVANCED_SETTINGS = "advanced_settings";
     public static final String KEY_AI_DISPLAY_SETTINGS = "ai_display_settings";
@@ -140,7 +141,8 @@ public class DeviceFragment extends SettingsPreferenceFragment implements Prefer
                 rebuildView();
                 updateResolutionValue();
                 updateColorValue();
-                updateRotation();
+                if (FIXROTATION)
+                    updateRotation();
             } else if (action.equals(Intent.ACTION_SCREEN_OFF)) {
 
             }
@@ -173,7 +175,8 @@ public class DeviceFragment extends SettingsPreferenceFragment implements Prefer
         rebuildView();
         updateResolutionValue();
         updateColorValue();
-        updateRotation();
+        if (FIXROTATION)
+            updateRotation();
     }
 
 
@@ -208,25 +211,29 @@ public class DeviceFragment extends SettingsPreferenceFragment implements Prefer
         }
 
         mZoomPreference = findPreference(KEY_ZOOM);
-        mFixedRotationPreference = (CheckBoxPreference) findPreference(KEY_FIXED_ROTATION);
-        mRotationPreference = (ListPreference) findPreference(KEY_ROTATION);
+        if (FIXROTATION) {
+            mFixedRotationPreference = (CheckBoxPreference) findPreference(KEY_FIXED_ROTATION);
+            mRotationPreference = (ListPreference) findPreference(KEY_ROTATION);
+        }
         mTextTitle = (TextView) getActivity().findViewById(androidx.preference.R.id.decor_title);
         if (!mIsUseDisplayd) {
             mDisplayInfo = getDisplayInfo();
         }
 
-        int fixedToUserRotationMode = getFixedToUserRotation(mDisplayInfo.getDisplayId());
+        if (FIXROTATION) {
+            int fixedToUserRotationMode = getFixedToUserRotation(mDisplayInfo.getDisplayId());
 
-        if(fixedToUserRotationMode != IWindowManager.FIXED_TO_USER_ROTATION_ENABLED
-           /* || !("2".equals(SystemProperties.get("persist.sys.forced_orient", "0"))) */) {
-            mPreferenceScreen.removePreference(mRotationPreference);
-            mFixedRotationPreference.setChecked(false);
-        } else {
-            mFixedRotationPreference.setChecked(true);
-        }
-        if (mDisplayInfo.getDisplayId() != 0) {
-            getPreferenceScreen().removePreference(mFixedRotationPreference);
-            getPreferenceScreen().removePreference(mRotationPreference);
+            if (fixedToUserRotationMode != IWindowManager.FIXED_TO_USER_ROTATION_ENABLED
+                /* || !("2".equals(SystemProperties.get("persist.sys.forced_orient", "0"))) */) {
+                mPreferenceScreen.removePreference(mRotationPreference);
+                mFixedRotationPreference.setChecked(false);
+            } else {
+                mFixedRotationPreference.setChecked(true);
+            }
+            if (mDisplayInfo.getDisplayId() != 0) {
+                getPreferenceScreen().removePreference(mFixedRotationPreference);
+                getPreferenceScreen().removePreference(mRotationPreference);
+            }
         }
 
         if ("rk3588".equals(SystemProperties.get("ro.board.platform", ""))) {
@@ -267,8 +274,10 @@ public class DeviceFragment extends SettingsPreferenceFragment implements Prefer
             mColorPreference.setOnPreferenceChangeListener(this);
 
         mZoomPreference.setOnPreferenceClickListener(this);
-        mRotationPreference.setOnPreferenceChangeListener(this);
-        mFixedRotationPreference.setOnPreferenceClickListener(this);
+        if (FIXROTATION) {
+            mRotationPreference.setOnPreferenceChangeListener(this);
+            mFixedRotationPreference.setOnPreferenceClickListener(this);
+        }
         mAdvancedSettingsPreference.setOnPreferenceClickListener(this);
         mAiDisplaySettingsPreference.setOnPreferenceClickListener(this);
         mHDR10Preference.setOnPreferenceClickListener(this);
@@ -374,7 +383,7 @@ public class DeviceFragment extends SettingsPreferenceFragment implements Prefer
             }
         } else if (preference == mColorPreference) {
             DrmDisplaySetting.setColorMode(mDisplayInfo.getDisplayId(), mDisplayInfo.getType(), (String) obj);
-        } else if (preference == mRotationPreference) {
+        } else if (FIXROTATION && preference == mRotationPreference) {
             try {
                 int value = Integer.parseInt((String) obj);
                 Log.d(TAG,"freezeDisplayRotation~~~value:"+(String) obj);
@@ -416,7 +425,7 @@ public class DeviceFragment extends SettingsPreferenceFragment implements Prefer
             Intent aiDisplaySettingsIntent = new Intent(getActivity(), AIDisplayActivity.class);
             aiDisplaySettingsIntent.putExtra(KEY_AI_DISPLAY_DIM, true);
             startActivity(aiDisplaySettingsIntent);
-        } else if (preference == mFixedRotationPreference) {
+        } else if (FIXROTATION && preference == mFixedRotationPreference) {
             boolean checked = mFixedRotationPreference.isChecked();
             int displayId = android.view.Display.DEFAULT_DISPLAY;
             try{
