@@ -44,6 +44,10 @@ import com.android.tv.settings.SettingsPreferenceFragment;
 
 import java.util.Calendar;
 import java.util.Date;
+import android.app.time.TimeManager;
+import android.app.time.TimeZoneCapabilities;
+import android.app.time.TimeZoneCapabilitiesAndConfig;
+import static android.app.time.Capabilities.CAPABILITY_POSSESSED;
 
 /**
  * The date and time screen in TV settings.
@@ -66,6 +70,7 @@ public class DateTimeFragment extends SettingsPreferenceFragment implements
     private static final String HOURS_24 = "24";
 
     //    private TvInputManager mTvInputManager;
+    private TimeManager mTimeManager;
     private final Calendar mDummyDate = Calendar.getInstance();
 
     private RestrictedPreferenceAdapter<Preference> mDatePref;
@@ -177,6 +182,12 @@ public class DateTimeFragment extends SettingsPreferenceFragment implements
 
         mDatePref.updatePreference(pref -> pref.setEnabled(enable));
         mTimePref.updatePreference(pref -> pref.setEnabled(enable));
+
+        mTimeManager = (TimeManager) getActivity().getSystemService(Context.TIME_MANAGER);
+        TimeZoneCapabilitiesAndConfig capabilitiesAndConfig = mTimeManager.getTimeZoneCapabilitiesAndConfig();
+        TimeZoneCapabilities capabilities = capabilitiesAndConfig.getCapabilities();
+        final boolean setTimeZoneEnable = capabilities.getSuggestManualTimeZoneCapability() == CAPABILITY_POSSESSED;
+        mTimeZone.updatePreference(pref -> pref.setEnabled(setTimeZoneEnable));
     }
 
     @Override
