@@ -1680,6 +1680,10 @@
     <string name="keywords_led">led, hint,led hint</string>
     <string name="device_led_white">White LED</string>
     <string name="device_led_red">Red LED</string>
+
+    <!-- khadas connect button for wifi menu -->
+    <string name="start_connect">Start connect</string>
+
     <!-- khadas os08a10 mipi camera ircut info -->
     <string name="device_ircut">Camera ir-cut</string>
     <string name="ircut_title">Turn on mipi camera ir-cut</string>
