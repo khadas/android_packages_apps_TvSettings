@@ -110,16 +110,17 @@ public class LedFragment extends SettingsPreferenceFragment
             redPref.setValue(Integer.toString(mode));
             redPref.setSummary(list[mode]);
             redPref.setOnPreferenceChangeListener(this);
-	    if(SystemProperties.get("sys.extboard.exist", "unknown").equals("1")) {
-		mode = getLedModeProp(LED_LOGO);
-		logoPref.setValue(Integer.toString(mode));
-		logoPref.setSummary(list_logo[mode]);
-		logoPref.setOnPreferenceChangeListener(this);
-	   }else {
-		   if (logoPref != null) {
-                     logoPref.setVisible(false);
-		 }
-	     }
+
+	        if(SystemProperties.get("sys.extboard.exist", "unknown").equals("1")) {
+		        mode = getLedModeProp(LED_LOGO);
+		        logoPref.setValue(Integer.toString(mode));
+		        logoPref.setSummary(list_logo[mode]);
+		        logoPref.setOnPreferenceChangeListener(this);
+	        } else {
+                if (logoPref != null) {
+                    logoPref.setVisible(false);
+                }
+            }
         } else if (mLedType == BoardInfo.LED_WHITE){
             mode = getLedModeProp(LED_WHITE);
             whitePref.setValue(Integer.toString(mode));
@@ -128,7 +129,7 @@ public class LedFragment extends SettingsPreferenceFragment
             if (redPref != null) {
                 redPref.setVisible(false);
             }
-        } else {
+        } else if (mLedType == BoardInfo.LED_RED){
             mode = getLedModeProp(LED_RED);
             redPref.setValue(Integer.toString(mode));
             redPref.setSummary(list[mode]);
@@ -176,21 +177,21 @@ public class LedFragment extends SettingsPreferenceFragment
 
         if (type == LED_WHITE)
             SystemProperties.set(PROP_LED_WHITE_TRIGGER, String.valueOf(mode));
-		if (type == LED_LOGO)
-            SystemProperties.set(PROP_LED_LOGO_TRIGGER, String.valueOf(mode));
-        else
+        if (type == LED_RED)
             SystemProperties.set(PROP_LED_RED_MODE, String.valueOf(mode));
+        if (type == LED_LOGO)
+            SystemProperties.set(PROP_LED_LOGO_TRIGGER, String.valueOf(mode));
     }
 
     public static int getLedModeProp(int type) {
 
-        int mode;
+        int mode = 0;
         if (type == LED_WHITE)
             mode = SystemProperties.getInt(PROP_LED_WHITE_TRIGGER, DEFAULT_MODE);
-	if (type == LED_LOGO)
-            mode = SystemProperties.getInt(PROP_LED_LOGO_TRIGGER, 1);
-        else
+        if (type == LED_RED)
             mode = SystemProperties.getInt(PROP_LED_RED_MODE, DEFAULT_MODE);
+        if (type == LED_LOGO)
+            mode = SystemProperties.getInt(PROP_LED_LOGO_TRIGGER, 1);
         return mode;
     }
 
@@ -206,7 +207,7 @@ public class LedFragment extends SettingsPreferenceFragment
                   setLedMode(LED_RED, mode);
                   setLedModeProp(LED_RED, mode);
                   break;
-	     case KEY_LED_LOGO:
+             case KEY_LED_LOGO:
                   setLedModeProp(LED_LOGO, mode);
                   break;
         }
@@ -225,7 +226,7 @@ public class LedFragment extends SettingsPreferenceFragment
             return;
         }
         String[] list= mContext.getResources().getStringArray(R.array.led_title_entries);
-	String[] list_logo= mContext.getResources().getStringArray(R.array.logoled_title_entries);
+	    String[] list_logo= mContext.getResources().getStringArray(R.array.logoled_title_entries);
         final ListPreference whitePref = (ListPreference) findPreference(KEY_LED_WHITE);
         if (whitePref != null) {
             mode = getLedModeProp(LED_WHITE);
@@ -238,7 +239,7 @@ public class LedFragment extends SettingsPreferenceFragment
             redPref.setValue(Integer.toString(mode));
             redPref.setSummary(list[mode]);
         }
-	final ListPreference logoledPref = (ListPreference) findPreference(KEY_LED_LOGO);
+	    final ListPreference logoledPref = (ListPreference) findPreference(KEY_LED_LOGO);
         if (logoledPref != null) {
             mode = getLedModeProp(LED_LOGO);
             logoledPref.setValue(Integer.toString(mode));
