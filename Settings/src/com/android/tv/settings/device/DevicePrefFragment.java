@@ -112,6 +112,13 @@ public class DevicePrefFragment extends SettingsPreferenceFragment {
                  portmodePref.setVisible(false);
              }
         }
+        if (!mBoardInfo.isExtboardexist()) {
+             final Preference extledctlPref = findPreference("extledctl");
+             if (extledctlPref != null) {
+		 Log.d(TAG, "mBoardInfo.isExtboardexist false");
+                 extledctlPref.setVisible(false);
+             }
+        }
     }
 
     @Override

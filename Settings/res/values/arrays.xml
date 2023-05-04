@@ -331,6 +331,20 @@
         <item>2</item>
     </string-array>
 
+    <!-- Khadas logoled setting -->
+    <string-array name="logoled_title_entries">
+        <item>Breathe mode</item>
+        <item>Always on</item>
+        <item>Always off</item>
+        <item>Twinkle mode</item>
+    </string-array>
+    <string-array name="logoled_title_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
     <string-array name="entries_font_size">
         <item>Small</item>
         <item>Default</item>
@@ -338,11 +352,12 @@
         <item>Largest</item>
     </string-array>
 
+    <!-- Khadas adc function key customize setting -->
     <string-array name="entries_funkey_value">
-	<item>home key</item>
-	<item>back key</item>
-	<item>volume up key</item>
-	<item>volume down key</item>
+        <item>home key</item>
+        <item>back key</item>
+        <item>volume up key</item>
+        <item>volume down key</item>
     </string-array>
 
     <string-array name="entryvalues_font_size">

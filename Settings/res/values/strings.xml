@@ -1659,6 +1659,8 @@
 
     <!-- khadas font size -->
     <string name="device_fontsize">Font size</string>
+
+    <!-- Khadas adc function key customize setting -->
     <string name="funkey_select">function key select</string>
 
     <!-- khadas fan info -->
@@ -1680,6 +1682,7 @@
     <string name="keywords_led">led, hint,led hint</string>
     <string name="device_led_white">White LED</string>
     <string name="device_led_red">Red LED</string>
+    <string name="device_led_logo">Logo LED</string>
 
     <!-- khadas connect button for wifi menu -->
     <string name="start_connect">Start connect</string>
@@ -1688,6 +1691,7 @@
     <string name="device_ircut">Camera ir-cut</string>
     <string name="ircut_title">Turn on mipi camera ir-cut</string>
     <string name="keywords_ircut">camera, ir-cut, ircut</string>
+
     <!-- khadas wol info -->
     <string name="device_wol">WOL</string>
     <string name="wol_title">Wake on LAN</string>
@@ -1696,6 +1700,7 @@
     <string name="device_m2x">M2x Ethernet</string>
     <string name="m2x_title">Active: M2X (Reboot for changes to take effect)</string>
 
+    <!-- Khadas adc function key customize setting -->
     <string name="device_functionkey">function key customize</string>
 
     <!-- mobile network settings -->
@@ -1706,6 +1711,9 @@
     <string name="media_volume">Media volume</string>
     <string name="alarm_volume">Alarm volume</string>
     <string name="notification_volume">Notification volume</string>
+    <!-- Khadas logoled setting -->
+    <string name="logoled_control">Logoled control</string>
+    <string name="led_brightness">Change brightness</string>
     <string name="timer">Timer</string>
 
      <!-- Bluetooth interface -->
