@@ -159,6 +159,13 @@ public class EnterPasswordState implements State {
                                 R.id.guidedactions_item_title);
                         mTextInput.setImeOptions(
                                 EditorInfo.IME_ACTION_DONE | EditorInfo.IME_FLAG_NO_EXTRACT_UI);
+                        mTextInput.setClickable(true);
+                        mTextInput.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                openInEditMode(action);
+                            }
+                        });
                         // openInEditMode(action);
                     }
                 }
