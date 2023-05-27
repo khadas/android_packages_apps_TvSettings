@@ -56,7 +56,7 @@ class EthernetConfig implements NetworkConfiguration {
         if (mInterfaceName != null) {
             // TODO: Remove below NetworkCapabilities list once EthernetNetworkUpdateRequest
             // supports the default standard NetworkCapabilities built for Ethernet transport.
-            final NetworkCapabilities nc = new NetworkCapabilities.Builder()
+/*            final NetworkCapabilities nc = new NetworkCapabilities.Builder()
                     .addTransportType(NetworkCapabilities.TRANSPORT_ETHERNET)
                     .addCapability(NetworkCapabilities.NET_CAPABILITY_NOT_ROAMING)
                     .addCapability(NetworkCapabilities.NET_CAPABILITY_NOT_CONGESTED)
@@ -66,10 +66,11 @@ class EthernetConfig implements NetworkConfiguration {
                     .setLinkUpstreamBandwidthKbps(100 * 1000)
                     .setLinkDownstreamBandwidthKbps(100 * 1000)
                     .build();
+*/
             final EthernetNetworkUpdateRequest request =
                     new EthernetNetworkUpdateRequest.Builder()
                             .setIpConfiguration(mIpConfiguration)
-                            .setNetworkCapabilities(nc)
+ //                           .setNetworkCapabilities(nc)
                             .build();
             mEthernetManager.updateConfiguration(mInterfaceName, request, r -> r.run(),
                     null /* network listener */);
