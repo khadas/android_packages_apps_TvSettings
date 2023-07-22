@@ -19,6 +19,7 @@ package com.android.tv.settings.inputmethod;
 import android.annotation.DrawableRes;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.UserIdInt;
 import android.app.Activity;
 import android.app.admin.DevicePolicyManager;
 import android.app.tvsettings.TvSettingsEnums;
@@ -34,9 +35,12 @@ import android.os.Bundle;
 import android.os.UserHandle;
 import android.view.inputmethod.InputMethodInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Switch;
 
 import androidx.annotation.Keep;
 import androidx.preference.PreferenceScreen;
+import androidx.preference.Preference;
+import androidx.preference.PreferenceViewHolder;
 
 import com.android.settingslib.inputmethod.InputMethodAndSubtypeUtilCompat;
 import com.android.settingslib.inputmethod.InputMethodPreference;
@@ -152,7 +156,7 @@ public final class AvailableVirtualKeyboardFragment extends SettingsPreferenceFr
             final InputMethodInfo imi = imis.get(i);
             final boolean isAllowedByOrganization = permittedList == null
                     || permittedList.contains(imi.getPackageName());
-            final InputMethodPreference pref = new InputMethodPreference(
+            final InputMethodPreference pref = new TvInputMethodPreference(
                     context, imi, isAllowedByOrganization, this, UserHandle.myUserId());
             // TODO: Update the icon container in leanback_preference.xml to use LinearLayout.
             // This is a workaround to avoid the crash. b/146654624
@@ -175,5 +179,34 @@ public final class AvailableVirtualKeyboardFragment extends SettingsPreferenceFr
     @Override
     protected int getPageId() {
         return TvSettingsEnums.SYSTEM_KEYBOARD_MANAGE_KEYBOARDS;
+    }
+
+
+    private class TvInputMethodPreference extends InputMethodPreference {
+
+        private Switch mSwitch;
+
+        public TvInputMethodPreference(final Context prefContext, final InputMethodInfo imi,
+                                     final boolean isAllowedByOrganization, final OnSavePreferenceListener onSaveListener,
+                                     final @UserIdInt int userId) {
+            super(prefContext, imi, isAllowedByOrganization,
+                    onSaveListener, userId);
+        }
+
+        @Override
+        public boolean onPreferenceClick(final Preference preference) {
+            final boolean newValue = !isChecked();
+            if (callChangeListener(newValue)) {
+                setChecked(newValue);
+            }
+            return true;
+        }
+
+        @Override
+        public void onBindViewHolder(PreferenceViewHolder holder) {
+            super.onBindViewHolder(holder);
+            mSwitch = getSwitch();
+
+        }
     }
 }
