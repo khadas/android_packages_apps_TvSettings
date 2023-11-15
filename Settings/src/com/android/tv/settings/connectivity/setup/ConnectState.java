@@ -25,6 +25,7 @@ import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiConfiguration;
+import android.net.wifi.WifiConfiguration.KeyMgmt; // DroidLogic modify SWPL-65140
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
@@ -198,6 +199,45 @@ public class ConnectState implements State {
             super.onDestroy();
         }
 
+        // DroidLogic modify SWPL-65140
+        private int getSecurity() {
+            if (mWifiConfiguration.allowedKeyManagement.get(KeyMgmt.SAE)) {
+                return AccessPoint.SECURITY_SAE;
+            }
+            if (mWifiConfiguration.allowedKeyManagement.get(KeyMgmt.WPA_PSK)) {
+                return AccessPoint.SECURITY_PSK;
+            }
+            if (mWifiConfiguration.allowedKeyManagement.get(KeyMgmt.SUITE_B_192)) {
+                return AccessPoint.SECURITY_EAP_SUITE_B;
+            }
+            if (mWifiConfiguration.allowedKeyManagement.get(KeyMgmt.WPA_EAP) ||
+                    mWifiConfiguration.allowedKeyManagement.get(KeyMgmt.IEEE8021X)) {
+                return AccessPoint.SECURITY_EAP;
+            }
+            if (mWifiConfiguration.allowedKeyManagement.get(KeyMgmt.OWE)) {
+                return AccessPoint.SECURITY_OWE;
+            }
+            return (mWifiConfiguration.wepTxKeyIndex >= 0
+                    && mWifiConfiguration.wepTxKeyIndex < mWifiConfiguration.wepKeys.length
+                    && mWifiConfiguration.wepKeys[mWifiConfiguration.wepTxKeyIndex] != null)
+                    ? AccessPoint.SECURITY_WEP : AccessPoint.SECURITY_NONE;
+        }
+
+        private void updateConfigForHidden(AccessPoint accessPoint) {
+            if (-1 != mUserChoiceInfo.getEasyConnectNetworkId()
+                    || accessPoint.getSecurity() == getSecurity()) {
+                Log.d(TAG, "updateConfigForHidden; Encryption method is the same as expected. Ignore it");
+                inferConnectionStatus(accessPoint);
+                return;
+            }
+            Log.d(TAG, "updateConfigForHidden; psk/sae mix mode, update configer");
+            mWifiManager.disconnect();
+            mWifiConfiguration.requirePmf = false;
+            mWifiConfiguration.setSecurityParams(accessPoint.getSecurity());
+            mWifiManager.addNetwork(mWifiConfiguration);
+            mWifiManager.connect(mWifiConfiguration, null);
+        }
+
         @Override
         public void onWifiListChanged() {
             List<AccessPoint> accessPointList = mConnectivityListener.getAvailableNetworks();
@@ -205,7 +245,12 @@ public class ConnectState implements State {
                 for (AccessPoint accessPoint : accessPointList) {
                     if (accessPoint != null && AccessPoint.convertToQuotedString(
                             accessPoint.getSsidStr()).equals(mWifiConfiguration.SSID)) {
-                        inferConnectionStatus(accessPoint);
+                        if (!mWifiConfiguration.hiddenSSID) {// DroidLogic modify SWPL-65140
+                            inferConnectionStatus(accessPoint);
+                        }
+                        else {
+                            updateConfigForHidden(accessPoint);
+                        }
                     }
                 }
             }

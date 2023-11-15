@@ -64,6 +64,11 @@ public class WifiSecurityHelper {
                     .title(context.getString(R.string.wifi_security_sae))
                     .id(AccessPoint.SECURITY_SAE)
                     .build());
+          // DroidLogic modify SWPL-65140
+            securityTypes.add(new GuidedAction.Builder(context)
+                    .title(context.getString(R.string.wifitrackerlib_wifi_security_wpa_wpa2_wpa3))
+                    .id(AccessPoint.SECURITY_SAE)
+                    .build());
         }
         return securityTypes;
     }
