@@ -23,6 +23,8 @@ import android.media.tv.TvInputInfo;
 import android.media.tv.TvInputManager;
 import android.os.Bundle;
 import android.os.UserHandle;
+import android.os.SystemProperties;
+import android.provider.Settings;
 import android.text.TextUtils;
 
 import androidx.annotation.Keep;
@@ -52,6 +54,12 @@ public class InputsFragment extends SettingsPreferenceFragment {
     private static final String KEY_TV_AUTO_ON = "tv_auto_on";
     private static final String ICU_PLURAL_COUNT = "count";
 
+    private static final String KEY_CEC_AUDIO_CONTROL_FOR_TV = "cec_audio_control";
+    private static final String KEY_CEC_AUDIO_CONTROL_FOR_AMPLIFIER = "cec_audio_amplifier_control";
+
+    private static final String PROP_CEC_AUDIO_CONTROL_FOR_TV = "persist.sys.cec_audio_control_for_tv";
+    private static final String PROP_CEC_AUDIO_AMPLIFIER_CONTROL_FOR_TV = "persist.sys.cec_audio_control_for_amplifier";
+
     private PreferenceGroup mConnectedGroup;
     private PreferenceGroup mStandbyGroup;
     private PreferenceGroup mDisconnectedGroup;
@@ -59,6 +67,8 @@ public class InputsFragment extends SettingsPreferenceFragment {
     private TwoStatePreference mHdmiControlPref;
     private TwoStatePreference mDeviceAutoOffPref;
     private TwoStatePreference mTvAutoOnPref;
+    private TwoStatePreference mCecAudioControlPref;
+    private TwoStatePreference mCecAudioAmplifierControlPref;
 
     private TvInputManager mTvInputManager;
     private HdmiControlManager mHdmiControlManager;
@@ -98,6 +108,8 @@ public class InputsFragment extends SettingsPreferenceFragment {
         mHdmiControlPref = (TwoStatePreference) findPreference(KEY_HDMI_CONTROL);
         mDeviceAutoOffPref = (TwoStatePreference) findPreference(KEY_DEVICE_AUTO_OFF);
         mTvAutoOnPref = (TwoStatePreference) findPreference(KEY_TV_AUTO_ON);
+        mCecAudioControlPref = (TwoStatePreference) findPreference(KEY_CEC_AUDIO_CONTROL_FOR_TV);
+        mCecAudioAmplifierControlPref = (TwoStatePreference) findPreference(KEY_CEC_AUDIO_CONTROL_FOR_AMPLIFIER);
     }
 
     private void refresh() {
@@ -107,6 +119,8 @@ public class InputsFragment extends SettingsPreferenceFragment {
                 == HdmiControlManager.TV_SEND_STANDBY_ON_SLEEP_ENABLED);
         mTvAutoOnPref.setChecked(mHdmiControlManager.getTvWakeOnOneTouchPlay()
                 == HdmiControlManager.TV_WAKE_ON_ONE_TOUCH_PLAY_ENABLED);
+        mCecAudioControlPref.setChecked(Boolean.parseBoolean(SystemProperties.get(PROP_CEC_AUDIO_CONTROL_FOR_TV, "false")));
+        mCecAudioAmplifierControlPref.setChecked(Boolean.parseBoolean(SystemProperties.get(PROP_CEC_AUDIO_AMPLIFIER_CONTROL_FOR_TV, "false")));
 
         for (TvInputInfo info : mTvInputManager.getTvInputList()) {
             if (info.getType() == TvInputInfo.TYPE_TUNER
@@ -198,6 +212,11 @@ public class InputsFragment extends SettingsPreferenceFragment {
                         ? HdmiControlManager.TV_WAKE_ON_ONE_TOUCH_PLAY_ENABLED
                         : HdmiControlManager.TV_WAKE_ON_ONE_TOUCH_PLAY_DISABLED);
                 return true;
+            case KEY_CEC_AUDIO_CONTROL_FOR_TV:
+                SystemProperties.set(PROP_CEC_AUDIO_CONTROL_FOR_TV, String.valueOf(mCecAudioControlPref.isChecked()));
+                return true;
+            case KEY_CEC_AUDIO_CONTROL_FOR_AMPLIFIER:
+                SystemProperties.set(PROP_CEC_AUDIO_AMPLIFIER_CONTROL_FOR_TV, String.valueOf(mCecAudioAmplifierControlPref.isChecked()));
         }
         return super.onPreferenceTreeClick(preference);
     }

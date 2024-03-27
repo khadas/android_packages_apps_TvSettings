@@ -141,6 +141,12 @@ public class EnterPasswordState implements State {
                     if (action.getId() == ACTION_ID_CHECKBOX) {
                         PasswordViewHolder checkBoxVH = (PasswordViewHolder) vh;
                         mCheckBox = checkBoxVH.mCheckbox;
+                        mCheckBox.setOnCheckedChangeListener((view, isChecked) -> {
+                            if (mPasswordAction != null) {
+                                setSelectedActionPosition(0);
+                            }
+                            mTextInput.setInputType(InputType.TYPE_CLASS_TEXT | (isChecked ? InputType.TYPE_TEXT_VARIATION_PASSWORD : InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD));
+                        });
                         checkBoxVH.itemView.setOnClickListener(view -> {
                             mCheckBox.setChecked(!mCheckBox.isChecked());
                             if (mPasswordAction != null) {
@@ -153,7 +159,14 @@ public class EnterPasswordState implements State {
                                 R.id.guidedactions_item_title);
                         mTextInput.setImeOptions(
                                 EditorInfo.IME_ACTION_DONE | EditorInfo.IME_FLAG_NO_EXTRACT_UI);
-                        openInEditMode(action);
+                        mTextInput.setClickable(true);
+                        mTextInput.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                openInEditMode(action);
+                            }
+                        });
+                        // openInEditMode(action);
                     }
                 }
 
@@ -258,7 +271,7 @@ public class EnterPasswordState implements State {
         public void onGuidedActionFocused(GuidedAction action) {
             boolean newEditFocused = action == mPasswordAction;
             if (!mEditFocused && newEditFocused) {
-                openInEditMode(action);
+                // openInEditMode(action);
             }
             mEditFocused = newEditFocused;
         }

@@ -155,4 +155,10 @@ public abstract class PreferenceControllerFragment extends SettingsPreferenceFra
      */
     protected abstract List<AbstractPreferenceController> onCreatePreferenceControllers(
             Context context);
+
+    protected void clearPreferenceControllers() {
+        if (mPreferenceControllers != null && mPreferenceControllers.size() > 0) {
+            mPreferenceControllers.clear();
+        }
+    }
 }

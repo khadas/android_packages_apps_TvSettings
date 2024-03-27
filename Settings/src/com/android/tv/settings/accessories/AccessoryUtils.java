@@ -161,8 +161,11 @@ final class AccessoryUtils {
 
     @Nullable
     static String getHtmlEscapedDeviceName(@Nullable BluetoothDevice bluetoothDevice) {
-        if (bluetoothDevice == null || bluetoothDevice.getName() == null) {
+        if (bluetoothDevice == null) {
             return null;
+        }
+        else if(bluetoothDevice.getName() == null ) {
+           return Html.escapeHtml(bluetoothDevice.getAddress());
         }
         return Html.escapeHtml(bluetoothDevice.getName());
     }

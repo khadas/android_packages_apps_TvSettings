@@ -99,7 +99,7 @@ public class DeviceNameSetCustomFragment extends GuidedStepSupportFragment {
     @Override
     public void onResume() {
         super.onResume();
-        openInEditMode(mEditAction);
+        // openInEditMode(mEditAction);
     }
 
     // Overriding this method removes the unpreferable enter transition animation of this fragment.

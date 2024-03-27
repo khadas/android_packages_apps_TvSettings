@@ -127,6 +127,11 @@ public class ProxyPortState implements State {
         }
 
         @Override
+        public void onViewCreated(View view, Bundle savedInstanceState) {
+            // openInEditMode(mAction);
+        }
+
+        @Override
         public long onGuidedActionEditedAndProceed(GuidedAction action) {
             mAdvancedOptionsFlowInfo.put(AdvancedOptionsFlowInfo.PROXY_PORT,
                     action.getTitle());

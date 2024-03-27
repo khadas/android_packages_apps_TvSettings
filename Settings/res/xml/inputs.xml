@@ -47,5 +47,15 @@
             android:persistent="true"
             android:title="@string/inputs_tv_auto_on"
             android:summary="@string/inputs_tv_auto_on_desc" />
+        <com.android.tv.settings.widget.SwitchWithSoundPreference
+            android:key="cec_audio_control"
+            android:persistent="true"
+            android:title="@string/inputs_cec_audio_control"
+            android:summary="@string/inputs_cec_audio_control_desc" />
+        <com.android.tv.settings.widget.SwitchWithSoundPreference
+            android:key="cec_audio_amplifier_control"
+            android:persistent="true"
+            android:title="@string/inputs_cec_audio_amplifier_control"
+            android:summary="@string/inputs_cec_audio_amplifier_control_desc" />
     </PreferenceCategory>
 </PreferenceScreen>

@@ -133,6 +133,11 @@ public class ProxyBypassState implements State {
         }
 
         @Override
+        public void onViewCreated(View view, Bundle savedInstanceState) {
+            // openInEditMode(mAction);
+        }
+
+        @Override
         public long onGuidedActionEditedAndProceed(GuidedAction action) {
             if (action.getId() == GuidedAction.ACTION_ID_CONTINUE) {
                 mAdvancedOptionsFlowInfo.put(AdvancedOptionsFlowInfo.PROXY_BYPASS,

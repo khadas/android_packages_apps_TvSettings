@@ -127,6 +127,11 @@ public class EnterSsidState implements State {
         }
 
         @Override
+        public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+            // openInEditMode(mAction);
+        }
+
+        @Override
         public long onGuidedActionEditedAndProceed(GuidedAction action) {
             final String ssid = action.getTitle().toString();
             if (TextUtils.isEmpty(ssid)) {
