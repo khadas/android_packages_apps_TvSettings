@@ -163,15 +163,25 @@ public class AdvancedDisplaySettingsActivity extends BaseInputActivity
             mSeekBarBcshContrast.setKeyProgressIncrement(1);
             mSeekBarBcshSaturation.setKeyProgressIncrement(1);
             mSeekBarBcshTone.setKeyProgressIncrement(1);
-            mOldBcshBrightness = (Integer) ReflectUtils.invokeMethod(mRkDisplayManager, "getBrightness",
-                    new Class[] { int.class }, new Object[] { mDisplayId });
-            mOldBcshContrast = (Integer) ReflectUtils.invokeMethod(mRkDisplayManager, "getContrast",
-                    new Class[] { int.class }, new Object[] { mDisplayId });
-            mOldBcshStauration = (Integer) ReflectUtils.invokeMethod(mRkDisplayManager, "getSaturation",
-                    new Class[] { int.class }, new Object[] { mDisplayId });
-            mOldBcshTone = (Integer) ReflectUtils.invokeMethod(mRkDisplayManager, "getHue", new Class[] { int.class },
-                    new Object[] { mDisplayId });
-        }
+            if ("rk3576".equals(mStrPlatform)) {
+                mOldBcshBrightness = (Integer) ReflectUtils.invokeMethod(mRkDisplayManager, "getSWBrightness",
+                        new Class[] { int.class }, new Object[] { mDisplayId });
+                mOldBcshContrast = (Integer) ReflectUtils.invokeMethod(mRkDisplayManager, "getSWContrast",
+                        new Class[] { int.class }, new Object[] { mDisplayId });
+                mOldBcshStauration = (Integer) ReflectUtils.invokeMethod(mRkDisplayManager, "getSWSaturation",
+                        new Class[] { int.class }, new Object[] { mDisplayId });
+                mOldBcshTone = (Integer) ReflectUtils.invokeMethod(mRkDisplayManager, "getSWHue", new Class[] { int.class },
+                        new Object[] { mDisplayId });
+            } else {
+                mOldBcshBrightness = (Integer) ReflectUtils.invokeMethod(mRkDisplayManager, "getBrightness",
+                        new Class[] { int.class }, new Object[] { mDisplayId });
+                mOldBcshContrast = (Integer) ReflectUtils.invokeMethod(mRkDisplayManager, "getContrast",
+                        new Class[] { int.class }, new Object[] { mDisplayId });
+                mOldBcshStauration = (Integer) ReflectUtils.invokeMethod(mRkDisplayManager, "getSaturation",
+                        new Class[] { int.class }, new Object[] { mDisplayId });
+                mOldBcshTone = (Integer) ReflectUtils.invokeMethod(mRkDisplayManager, "getHue", new Class[] { int.class },
+                        new Object[] { mDisplayId });
+            }        }
         mSeekBarBcshBrightness.setOnSeekBarChangeListener(this);
         mSeekBarBcshContrast.setOnSeekBarChangeListener(this);
         mSeekBarBcshSaturation.setOnSeekBarChangeListener(this);
@@ -233,14 +243,25 @@ public class AdvancedDisplaySettingsActivity extends BaseInputActivity
         if (mIsSupportDRM && mRkDisplayManager != null) {
             Log.d(TAG, "b:" + mSeekBarBcshBrightness.getProgress() + " c:" + mSeekBarBcshContrast.getProgress() + " s:"
                     + mSeekBarBcshSaturation.getProgress() + " h:" + mSeekBarBcshTone.getProgress());
-            ReflectUtils.invokeMethod(mRkDisplayManager, "setBrightness", new Class[] { int.class, int.class },
-                    new Object[] { mDisplayId, mSeekBarBcshBrightness.getProgress() });
-            ReflectUtils.invokeMethod(mRkDisplayManager, "setContrast", new Class[] { int.class, int.class },
-                    new Object[] { mDisplayId, mSeekBarBcshContrast.getProgress() });
-            ReflectUtils.invokeMethod(mRkDisplayManager, "setSaturation", new Class[] { int.class, int.class },
-                    new Object[] { mDisplayId, mSeekBarBcshSaturation.getProgress() });
-            ReflectUtils.invokeMethod(mRkDisplayManager, "setHue", new Class[] { int.class, int.class },
-                    new Object[] { mDisplayId, mSeekBarBcshTone.getProgress() });
+            if ("rk3576".equals(mStrPlatform)) {
+                ReflectUtils.invokeMethod(mRkDisplayManager, "setSWBrightness", new Class[] { int.class, int.class },
+                        new Object[] { mDisplayId, mSeekBarBcshBrightness.getProgress() });
+                ReflectUtils.invokeMethod(mRkDisplayManager, "setSWContrast", new Class[] { int.class, int.class },
+                        new Object[] { mDisplayId, mSeekBarBcshContrast.getProgress() });
+                ReflectUtils.invokeMethod(mRkDisplayManager, "setSWSaturation", new Class[] { int.class, int.class },
+                        new Object[] { mDisplayId, mSeekBarBcshSaturation.getProgress() });
+                ReflectUtils.invokeMethod(mRkDisplayManager, "setSWHue", new Class[] { int.class, int.class },
+                        new Object[] { mDisplayId, mSeekBarBcshTone.getProgress() });
+            } else {
+                ReflectUtils.invokeMethod(mRkDisplayManager, "setBrightness", new Class[] { int.class, int.class },
+                        new Object[] { mDisplayId, mSeekBarBcshBrightness.getProgress() });
+                ReflectUtils.invokeMethod(mRkDisplayManager, "setContrast", new Class[] { int.class, int.class },
+                        new Object[] { mDisplayId, mSeekBarBcshContrast.getProgress() });
+                ReflectUtils.invokeMethod(mRkDisplayManager, "setSaturation", new Class[] { int.class, int.class },
+                        new Object[] { mDisplayId, mSeekBarBcshSaturation.getProgress() });
+                ReflectUtils.invokeMethod(mRkDisplayManager, "setHue", new Class[] { int.class, int.class },
+                        new Object[] { mDisplayId, mSeekBarBcshTone.getProgress() });
+            }
 
             return;
         }
@@ -256,14 +277,25 @@ public class AdvancedDisplaySettingsActivity extends BaseInputActivity
 
     private void recoveryOldValue() {
         if (mIsSupportDRM && mRkDisplayManager != null) {
-            ReflectUtils.invokeMethod(mRkDisplayManager, "setBrightness", new Class[] { int.class, int.class },
-                    new Object[] { mDisplayId, mOldBcshBrightness });
-            ReflectUtils.invokeMethod(mRkDisplayManager, "setContrast", new Class[] { int.class, int.class },
-                    new Object[] { mDisplayId, mOldBcshContrast });
-            ReflectUtils.invokeMethod(mRkDisplayManager, "setSaturation", new Class[] { int.class, int.class },
-                    new Object[] { mDisplayId, mOldBcshStauration });
-            ReflectUtils.invokeMethod(mRkDisplayManager, "setHue", new Class[] { int.class, int.class },
-                    new Object[] { mDisplayId, mOldBcshTone });
+            if ("rk3576".equals(mStrPlatform)) {
+                ReflectUtils.invokeMethod(mRkDisplayManager, "setSWBrightness", new Class[] { int.class, int.class },
+                        new Object[] { mDisplayId, mOldBcshBrightness });
+                ReflectUtils.invokeMethod(mRkDisplayManager, "setSWContrast", new Class[] { int.class, int.class },
+                        new Object[] { mDisplayId, mOldBcshContrast });
+                ReflectUtils.invokeMethod(mRkDisplayManager, "setSWSaturation", new Class[] { int.class, int.class },
+                        new Object[] { mDisplayId, mOldBcshStauration });
+                ReflectUtils.invokeMethod(mRkDisplayManager, "setSWHue", new Class[] { int.class, int.class },
+                        new Object[] { mDisplayId, mOldBcshTone });
+            } else {
+                ReflectUtils.invokeMethod(mRkDisplayManager, "setBrightness", new Class[] { int.class, int.class },
+                        new Object[] { mDisplayId, mOldBcshBrightness });
+                ReflectUtils.invokeMethod(mRkDisplayManager, "setContrast", new Class[] { int.class, int.class },
+                        new Object[] { mDisplayId, mOldBcshContrast });
+                ReflectUtils.invokeMethod(mRkDisplayManager, "setSaturation", new Class[] { int.class, int.class },
+                        new Object[] { mDisplayId, mOldBcshStauration });
+                ReflectUtils.invokeMethod(mRkDisplayManager, "setHue", new Class[] { int.class, int.class },
+                        new Object[] { mDisplayId, mOldBcshTone });
+            }
             return;
         }
     }
