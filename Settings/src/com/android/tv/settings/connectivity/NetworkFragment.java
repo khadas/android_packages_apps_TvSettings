@@ -103,6 +103,10 @@ public class NetworkFragment extends SettingsPreferenceFragment implements
     private static final String KEY_MOBILE_CATEGORY = "mobile_network_category";
     private static final String KEY_MOBILE_SETTINGS = "mobile_network_settings";
     private static final String KEY_ETHERNET = "ethernet";
+    private static final String ETH_KEY_MAC = "eth_mac_addr";
+    private static final String WLAN_KEY_MAC = "wlan_mac_addr";
+    private static final String ETH_MAC_ADDR_SYS = "/sys/class/net/eth0/address";
+    private static final String WLAN_MAC_ADDR_SYS = "/sys/class/net/wlan0/address";
     private static final String KEY_ETHERNET_STATUS = "ethernet_status";
     private static final String KEY_ETHERNET_PORT = "ethernet_port";
     private static final String KEY_ETHERNET_PROXY = "ethernet_proxy";
@@ -132,6 +136,8 @@ public class NetworkFragment extends SettingsPreferenceFragment implements
     private PreferenceCategory mMobileCategory;
     private TwoStatePreference mAlwaysScan;
     private PreferenceCategory mEthernetCategory;
+    private Preference ethMacPref;
+    private Preference wlanMacPref;
     private PreferenceCategory mVpnCategory;
     private Preference mEthernetStatusPref;
     private Preference mEthernetProxyPref;
@@ -243,6 +249,12 @@ public class NetworkFragment extends SettingsPreferenceFragment implements
         mHotsPot = findPreference(KEY_HOTPOT);
 
         mEthernetCategory = (PreferenceCategory) findPreference(KEY_ETHERNET);
+
+        ethMacPref = findPreference(ETH_KEY_MAC);
+        ethMacPref.setSummary(getMacAddress(ETH_MAC_ADDR_SYS));
+        wlanMacPref = findPreference(WLAN_KEY_MAC);
+        wlanMacPref.setSummary(getMacAddress(WLAN_MAC_ADDR_SYS));
+
         mEthernetSwitch = (TwoStatePreference) findPreference(KEY_ETHERNET_PORT);
         mEthernetStatusPref = findPreference(KEY_ETHERNET_STATUS);
         mEthernetProxyPref = findPreference(KEY_ETHERNET_PROXY);
@@ -260,6 +272,23 @@ public class NetworkFragment extends SettingsPreferenceFragment implements
 
         mEthernetSwitch.setVisible(false);
         getPreferenceScreen().removePreference(mEthernetSwitch);
+    }
+
+    private String getMacAddress(String filePath) {
+        String mac = "";
+        try {
+            FileReader fread = new FileReader(filePath);
+            BufferedReader buffer = new BufferedReader(fread);
+            String str = null;
+            while ((str = buffer.readLine()) != null) {
+                mac = mac + str;
+            }
+            buffer.close();
+            fread.close();
+        } catch (IOException e) {
+            //Log.e(TAG, "IO Exception");
+        }
+        return mac;
     }
 
     private void setEthernetMode(int mode) {
@@ -394,6 +423,8 @@ public class NetworkFragment extends SettingsPreferenceFragment implements
 
         final boolean ethernetAvailable = mConnectivityListener.isEthernetAvailable();
         mEthernetCategory.setVisible(ethernetAvailable);
+        ethMacPref.setVisible(ethernetAvailable);
+        wlanMacPref.setVisible(ethernetAvailable);
         mEthernetStatusPref.setVisible(ethernetAvailable);
         mEthernetProxyPref.setVisible(ethernetAvailable);
         mEthernetDhcpPref.setVisible(ethernetAvailable);

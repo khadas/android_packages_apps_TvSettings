@@ -1700,6 +1700,10 @@
     <string name="device_m2x">M2x Ethernet</string>
     <string name="m2x_title">Active: M2X (Reboot for changes to take effect)</string>
 
+    <!-- khadas MAC address info -->
+    <string name="eth_mac_address">Eth MAC address</string>
+    <string name="wlan_mac_address">Wlan MAC address</string>
+
     <!-- Khadas adc function key customize setting -->
     <string name="device_functionkey">function key customize</string>
 

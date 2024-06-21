@@ -76,6 +76,12 @@
         android:title="@string/connectivity_ethernet"
         android:layout="@layout/preference_category_compact_layout" >
         <Preference
+            android:key="eth_mac_addr"
+            android:title="@string/eth_mac_address"/>
+        <Preference
+            android:key="wlan_mac_addr"
+            android:title="@string/wlan_mac_address"/>
+        <Preference
             android:key="ethernet_status"
             android:title="@string/not_connected" />
         <SwitchPreference
