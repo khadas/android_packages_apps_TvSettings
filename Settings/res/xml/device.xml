@@ -27,11 +27,22 @@
         android:key="bluetooth"
         android:title="@string/bluetooth"
         android:fragment="com.android.tv.settings.bluetooth.BluetoothFragment" />
+
      <Preference
-	android:icon="@drawable/ic_settings_more"
-	android:key="funkey"
-	android:title="@string/device_functionkey"
-	android:fragment="com.android.tv.settings.funkey.FunkeyFragment" />
+         android:icon="@drawable/ic_settings_more"
+         android:key="funkey"
+         android:title="@string/device_functionkey"
+         android:fragment="com.android.tv.settings.funkey.FunkeyFragment" />
+
+     <Preference
+        android:icon="@drawable/ic_remotes_and_accessories"
+        android:key="remotecontroller"
+        android:title="@string/device_remote">
+        <intent
+            android:targetClass="com.wesion.remotesettings.RemoteMainActivity"
+            android:targetPackage="com.wesion.remotesettings"/>
+    </Preference>
+
     <Preference
         android:fragment="com.android.tv.settings.system.DateTimeFragment"
         android:icon="@drawable/ic_access_time"
@@ -100,6 +111,7 @@
         android:icon="@drawable/ic_settings_portmode"
         android:key="portmode"
         android:title="@string/device_portmode"/>
+
     <Preference
         android:fragment="com.android.tv.settings.device.sound.SoundFragment"
         android:icon="@drawable/ic_volume_up"

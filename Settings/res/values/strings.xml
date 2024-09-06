@@ -1661,7 +1661,7 @@
     <string name="device_fontsize">Font size</string>
 
     <!-- Khadas adc function key customize setting -->
-    <string name="funkey_select">function key select</string>
+    <string name="funkey_select">Function key select</string>
 
     <!-- khadas fan info -->
     <string name="device_fan">Cooling fan</string>
@@ -1669,6 +1669,8 @@
     <string name="fan_category_title">Speed Options</string>
     <string name="keywords_fan">fan, cool, cooling, cooling fan</string>
     <string name="fan_settings_disabled_prompt">To control cooling fan, turn fan on.</string>
+
+    <string name="device_remote">Remote controller customize</string>
 
     <!-- khadas status bar control -->
     <string name="device_statusbar">Status bar control</string>
@@ -1705,7 +1707,7 @@
     <string name="wlan_mac_address">Wlan MAC address</string>
 
     <!-- Khadas adc function key customize setting -->
-    <string name="device_functionkey">function key customize</string>
+    <string name="device_functionkey">Function key customize</string>
 
     <!-- mobile network settings -->
     <string name="network_category_title">Mobile network</string>

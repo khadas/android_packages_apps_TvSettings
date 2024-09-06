@@ -1002,6 +1002,8 @@
     <string name="avaliable_vpns">可用VPN</string>
     <string name="edit_vpn">编辑VPN</string>
 
+    <string name="device_remote">遥控器定制</string>
+
     <!-- Hotpot -->
     <string name="hotpot_name">热点</string>
     <string name="hotpot_setting_title">设置WLAN热点</string>
