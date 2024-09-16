@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright (C) 2015 The Android Open Source Project
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License
+  -->
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:title="@string/ai_lab_settings">
+
+    <PreferenceCategory
+        android:title="@string/ai_lab_display_settings"
+        android:layout="@layout/preference_category_compact_layout">
+        <ListPreference
+            android:key="ai_lab_sr_mode"
+            android:title="@string/ai_lab_sr_mode"
+            android:persistent="true"
+            android:summary="%s"
+            android:entries="@array/ai_lab_key_choose"
+            android:entryValues="@array/ai_lab_key_choose_values"/>
+
+        <SwitchPreference
+            android:key="ai_lab_sd_mode"
+            android:title="@string/ai_lab_sd_mode"
+            android:persistent="true"/>
+
+        <ListPreference
+            android:key="ai_lab_memc_mode"
+            android:title="@string/ai_lab_memc_mode"
+            android:persistent="true"
+            android:summary="%s"
+            android:entries="@array/ai_lab_key_choose"
+            android:entryValues="@array/ai_lab_key_choose_values"/>
+
+        <ListPreference
+            android:key="ai_lab_slider_mode"
+            android:title="@string/ai_lab_slider_mode"
+            android:persistent="true"
+            android:summary="%s"
+            android:entries="@array/ai_lab_slider_choose"
+            android:entryValues="@array/ai_lab_slider_choose_values"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="ai_lab_audio_settings"
+        android:title="@string/ai_lab_audio_settings"
+        android:layout="@layout/preference_category_compact_layout">
+        <ListPreference
+            android:key="ai_lab_vocal"
+            android:title="@string/ai_lab_vocal"
+            android:persistent="true"
+            android:summary="%s"
+            android:entries="@array/ai_lab_vocal_choose"
+            android:entryValues="@array/ai_lab_vocal_choose_values"/>
+
+        <ListPreference
+            android:key="ai_lab_kalaok"
+            android:title="@string/ai_lab_kalaok"
+            android:persistent="true"
+            android:summary="%s"
+            android:entries="@array/ai_lab_kalaok_choose"
+            android:entryValues="@array/ai_lab_kalaok_choose_values"/>
+      </PreferenceCategory>
+      <SwitchPreference
+        android:key="ai_lab_asr"
+        android:persistent="true"
+        android:title="@string/ai_lab_asr"/>
+
+      <SwitchPreference
+        android:key="ai_lab_llm"
+        android:persistent="true"
+        android:title="@string/ai_lab_llm"/>
+
+</PreferenceScreen>

@@ -2870,6 +2870,34 @@
     <string name="ai_svep_contrast_ratio">AI Contrast Ratio</string>
     <string name="ai_svep_enhance_rate">AI Enhancement"</string>
 
+    <!-- added for AI Lab -->
+    <string name="ai_lab_settings">AI Lab</string>
+    <string name="ai_lab_display_settings">Vision PQ</string>
+    <string name="ai_lab_sr_mode">SR Mode</string>
+    <string name="ai_lab_sd_mode">SD Mode</string>
+    <string name="ai_lab_memc_mode">MEMC</string>
+    <string name="ai_lab_slider_mode">Slider Demo</string>
+    <string name="ai_lab_audio_settings">AI Audio</string>
+    <string name="ai_lab_vocal">Spleeter</string>
+    <string name="ai_lab_kalaok">kalaok Mode</string>
+    <string name="ai_lab_kalaok_close">close</string>
+    <string name="ai_lab_kalaok_agc">open AGC</string>
+    <string name="ai_lab_kalaok_agc_close">close AGC</string>
+    <string name="ai_lab_asr">ASR</string>
+    <string name="ai_lab_llm">LLM Assistant</string>
+    <string name="ai_lab_close">close</string>
+    <string name="ai_lab_weak">weak</string>
+    <string name="ai_lab_medium">medium</string>
+    <string name="ai_lab_strong">strong</string>
+    <string name="ai_lab_vocal_close">close</string>
+    <string name="ai_lab_vocal_max">vocal only</string>
+    <string name="ai_lab_vocal_min">vocal miss</string>
+    <string name="ai_lab_slider_close">close</string>
+    <string name="ai_lab_slider_enable">Slider Enable</string>
+    <string name="ai_lab_slider_dynamic">Slider Dynamic</string>
+    <string name="ai_lab_switch_visionpq">"AI model switched,<xliff:g id="NAME">%1$s</xliff:g> ready"</string>
+    <string name="ai_lab_close_visionpq">"AI model switched,<xliff:g id="NAME">%1$s</xliff:g> must be close"</string>
+
     <string name="advance_settings">Advanced setting</string>
 
     <!--performance -->

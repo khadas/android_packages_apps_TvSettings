@@ -427,6 +427,56 @@
         <item>2</item>
     </string-array>
 
+    <string-array name="ai_lab_key_choose">
+        <item>@string/ai_lab_close</item>
+        <item>@string/ai_lab_weak</item>
+        <item>@string/ai_lab_medium</item>
+        <item>@string/ai_lab_strong</item>
+    </string-array>
+
+    <string-array name="ai_lab_key_choose_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
+    <string-array name="ai_lab_vocal_choose">
+        <item>@string/ai_lab_vocal_close</item>
+        <item>@string/ai_lab_vocal_max</item>
+        <item>@string/ai_lab_vocal_min</item>
+    </string-array>
+
+    <string-array name="ai_lab_vocal_choose_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
+    <string-array name="ai_lab_kalaok_choose">
+        <item>@string/ai_lab_kalaok_close</item>
+        <item>@string/ai_lab_kalaok_agc</item>
+        <item>@string/ai_lab_kalaok_agc_close</item>
+    </string-array>
+
+    <string-array name="ai_lab_kalaok_choose_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
+    <string-array name="ai_lab_slider_choose">
+        <item>@string/ai_lab_slider_close</item>
+        <item>@string/ai_lab_slider_enable</item>
+        <item>@string/ai_lab_slider_dynamic</item>
+    </string-array>
+
+    <string-array name="ai_lab_slider_choose_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
     <string-array name="device_apps_app_management_ui_mode_entry">
         <item>@string/device_apps_app_management_ui_mode_normal</item>
         <item>@string/device_apps_app_management_ui_mode_desk</item>

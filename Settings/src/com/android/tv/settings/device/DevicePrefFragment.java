@@ -95,6 +95,7 @@ public class DevicePrefFragment extends SettingsPreferenceFragment implements
     private static final String KEY_REBOOT = "reboot";
     private static final String KEY_MIC = "microphone";
     private static final String KEY_CAMERA = "camera";
+    private static final String KEY_AI_LAB = "ai_lab_settings";
     private static final String KEY_FASTPAIR_SETTINGS_SLICE = "fastpair_slice";
     private static final String KEY_OVERLAY_INTERNAL_SETTINGS_SLICE = "overlay_internal";
     private static final String KEY_ASSISTANT_BROADCAST = "assistant_broadcast";
@@ -163,6 +164,11 @@ public class DevicePrefFragment extends SettingsPreferenceFragment implements
                 ((SlicePreference) assistantBroadcastPreference).getUri(),
                 RES_TOP_LEVEL_ASSISTANT_SLICE_URI)) {
             assistantBroadcastPreference.setVisible(true);
+        }
+
+        final Preference AiLabPref = findPreference(KEY_AI_LAB);
+        if (AiLabPref != null) {
+            AiLabPref.setVisible("true".equals(android.os.SystemProperties.get("persist.sys.settings.ai_lab" ,"false")));
         }
     }
 

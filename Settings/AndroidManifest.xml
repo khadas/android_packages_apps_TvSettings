@@ -1374,6 +1374,17 @@
         <service android:name=".advance_settings.performance.PerformanceService" android:exported="true"/>
 
         <activity
+            android:name=".ai_lab.AiLabActivity"
+            android:theme="@style/TvSettingsActivityTheme"
+            android:excludeFromRecents="true"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
             android:name="com.android.tv.settings.vpn.VpnCreateActivity"
             android:configChanges="keyboard"
             android:windowSoftInputMode="adjustPan"

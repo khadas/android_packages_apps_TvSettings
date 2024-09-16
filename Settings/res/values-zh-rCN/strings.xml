@@ -1160,6 +1160,34 @@
     <string name="ai_svep_contrast_ratio">AI左右分割比例</string>
     <string name="ai_svep_enhance_rate">AI增强"</string>
 
+    <!-- added for AI Lab -->
+    <string name="ai_lab_settings">AI实验室</string>
+    <string name="ai_lab_display_settings">AI高级显示</string>
+    <string name="ai_lab_sr_mode">超分模式</string>
+    <string name="ai_lab_sd_mode">场景检测</string>
+    <string name="ai_lab_memc_mode">运动补偿</string>
+    <string name="ai_lab_slider_mode">演示对比模式</string>
+    <string name="ai_lab_audio_settings">AI音频</string>
+    <string name="ai_lab_vocal">人声分离</string>
+    <string name="ai_lab_kalaok">卡拉OK模式</string>
+    <string name="ai_lab_kalaok_close">关闭</string>
+    <string name="ai_lab_kalaok_agc">开启智能防啸叫</string>
+    <string name="ai_lab_kalaok_agc_close">关闭智能防啸叫</string>
+    <string name="ai_lab_asr">AI自动字幕</string>
+    <string name="ai_lab_llm">大模型助手</string>
+    <string name="ai_lab_close">关闭</string>
+    <string name="ai_lab_weak">弱</string>
+    <string name="ai_lab_medium">中</string>
+    <string name="ai_lab_strong">强</string>
+    <string name="ai_lab_vocal_close">关闭</string>
+    <string name="ai_lab_vocal_max">仅人声</string>
+    <string name="ai_lab_vocal_min">人声消除</string>
+    <string name="ai_lab_slider_close">关闭</string>
+    <string name="ai_lab_slider_enable">对比模式</string>
+    <string name="ai_lab_slider_dynamic">扫线模式</string>
+    <string name="ai_lab_switch_visionpq">"AI模型切换完成,<xliff:g id="NAME">%1$s</xliff:g>可用"</string>
+    <string name="ai_lab_close_visionpq">"AI模型切换完成,<xliff:g id="NAME">%1$s</xliff:g>已关闭"</string>
+
    <!--performance -->
     <string name="performance_float">性能浮窗</string>
     <string name="fixed_rotation">锁定屏幕方向</string>
