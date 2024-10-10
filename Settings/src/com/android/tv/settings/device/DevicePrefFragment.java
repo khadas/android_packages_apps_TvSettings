@@ -23,6 +23,7 @@ import static com.android.tv.settings.overlay.FlavorUtils.FLAVOR_X;
 import static com.android.tv.settings.util.InstrumentationUtils.logEntrySelected;
 import static com.android.tv.settings.util.InstrumentationUtils.logToggleInteracted;
 
+import android.app.Activity;
 import android.app.tvsettings.TvSettingsEnums;
 import android.content.Context;
 import android.content.Intent;
@@ -56,6 +57,7 @@ import com.android.tv.settings.MainFragment;
 import com.android.tv.settings.R;
 import com.android.tv.settings.SettingsPreferenceFragment;
 import com.android.tv.settings.about.RebootConfirmFragment;
+import com.android.tv.settings.ai_lab.AiLabActivity;
 import com.android.tv.settings.autofill.AutofillHelper;
 import com.android.tv.settings.customization.CustomizationConstants;
 import com.android.tv.settings.customization.Partner;
@@ -102,6 +104,9 @@ public class DevicePrefFragment extends SettingsPreferenceFragment implements
     private static final String KEY_AMBIENT_SETTINGS = "ambient_settings";
     private static final String KEY_ENERGY_SAVER = "energysaver";
     private static final String KEY_POWER_AND_ENERGY = "power_and_energy";
+    // rk code
+    private static final String KEY_AI_LAB_SETTINGS = "ai_lab_settings";
+    // -------
     private static final String RES_TOP_LEVEL_ASSISTANT_SLICE_URI = "top_level_assistant_slice_uri";
 
     private Preference mSoundsPref;
@@ -206,6 +211,9 @@ public class DevicePrefFragment extends SettingsPreferenceFragment implements
         updateKeyboardAutofillSettings();
         updateAmbientSettings();
         updatePowerAndEnergySettings();
+        // rk code
+        updateAiLabSettings();
+        // -------
         hideIfIntentUnhandled(findPreference(KEY_HOME_SETTINGS));
         hideIfIntentUnhandled(findPreference(KEY_CAST_SETTINGS));
         hideIfIntentUnhandled(findPreference(KEY_USAGE));
@@ -436,4 +444,20 @@ public class DevicePrefFragment extends SettingsPreferenceFragment implements
     protected int getPageId() {
         return TvSettingsEnums.SYSTEM;
     }
+
+    // rk code
+    private void updateAiLabSettings() {
+        final Preference aiLabPref = findPreference(KEY_AI_LAB_SETTINGS);
+        if (aiLabPref != null) {
+            aiLabPref.setOnPreferenceClickListener(preference -> {
+                Activity activity = requireActivity();
+                Intent intent = new Intent(activity, AiLabActivity.class);
+                activity.startActivity(intent);
+                activity.finish();
+                return true;
+            });
+        }
+    }
+    // -------
+
 }

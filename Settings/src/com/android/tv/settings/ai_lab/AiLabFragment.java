@@ -16,6 +16,7 @@
 
 package com.android.tv.settings.ai_lab;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.SystemProperties;
@@ -28,12 +29,18 @@ import androidx.preference.PreferenceCategory;
 import androidx.preference.PreferenceGroup;
 import androidx.preference.PreferenceScreen;
 import androidx.preference.SwitchPreference;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.android.tv.settings.R;
 import com.android.tv.settings.SettingsPreferenceFragment;
+import com.android.tv.settings.dialog.AIIndepSwitchDialog;
+import com.android.tv.settings.dialog.AIIndepSwitchDialog.AlgoType;
 
 /**
  * The AI settings screen in TV settings.
@@ -427,5 +434,46 @@ public class AiLabFragment extends SettingsPreferenceFragment implements
         updateVocalStatus();
         updateVisionPqStatus();
         return true;
+    }
+
+    private AlgoType[] mAlgoTypes = {AlgoType.NONE, AlgoType.SR, AlgoType.SD, AlgoType.MEMC, AlgoType.SLIDER,
+            AlgoType.NONE, AlgoType.VOCAL, AlgoType.KALAOK, AlgoType.ASR, AlgoType.LLM};
+
+    public boolean onKey(int keyCode, KeyEvent event) {
+
+        if (keyCode == KeyEvent.KEYCODE_DPAD_LEFT) {
+            if (getTitle() == null) return false;
+
+            RecyclerView recyclerView = getListView();
+            View focusedChild = recyclerView.getFocusedChild();
+            if (focusedChild != null) {
+                RecyclerView.ViewHolder viewHolder = recyclerView.getChildViewHolder(focusedChild);
+                int position = viewHolder.getAdapterPosition();
+                if (position >= 0 && position < mAlgoTypes.length) {
+                    AlgoType type = mAlgoTypes[position];
+                    if (type != AlgoType.NONE) {
+                        Dialog dialog = new AIIndepSwitchDialog(requireActivity().getApplication(), R.style.transparent_dialog,
+                                type);
+                        dialog.show();
+
+                        requireActivity().finish();
+                    }
+                }
+            }
+
+            return true;
+        }
+        return false;
+    }
+
+    public String getTitle() {
+        final View view = getView();
+        final TextView decorTitle = view == null
+                ? null : (TextView) view.findViewById(R.id.decor_title);
+        if (decorTitle != null) {
+            return decorTitle.getText().toString();
+        } else {
+            return null;
+        }
     }
 }

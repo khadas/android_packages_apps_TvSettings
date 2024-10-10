@@ -149,7 +149,6 @@
         android:title="@string/restart_button_label"
         android:fragment="com.android.tv.settings.about.RebootConfirmFragment" />
     <Preference
-        android:fragment="com.android.tv.settings.ai_lab.AiLabFragment"
         android:icon="@drawable/ic_settings_restricted_profile_launcher"
         android:key="ai_lab_settings"
         android:title="@string/ai_lab_settings"/>

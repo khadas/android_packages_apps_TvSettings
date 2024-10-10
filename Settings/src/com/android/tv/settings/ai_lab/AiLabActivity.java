@@ -16,6 +16,8 @@
 
 package com.android.tv.settings.ai_lab;
 
+import android.view.KeyEvent;
+
 import androidx.fragment.app.Fragment;
 
 import com.android.tv.settings.BaseSettingsFragment;
@@ -26,6 +28,7 @@ import com.android.tv.settings.TvSettingsActivity;
  */
 public class AiLabActivity extends TvSettingsActivity {
 
+    static AiLabFragment mFragment;
     @Override
     protected Fragment createSettingsFragment() {
         return SettingsFragment.newInstance();
@@ -39,8 +42,16 @@ public class AiLabActivity extends TvSettingsActivity {
 
         @Override
         public void onPreferenceStartInitialScreen() {
-			final AiLabFragment fragment = AiLabFragment.newInstance();
-            startPreferenceFragment(fragment);
+            mFragment = AiLabFragment.newInstance();
+            startPreferenceFragment(mFragment);
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_DPAD_LEFT) {
+            return mFragment.onKey(keyCode, event);
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

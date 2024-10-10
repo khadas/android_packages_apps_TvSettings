@@ -533,7 +533,7 @@
         <item name="android:textAlignment">viewStart</item>
     </style>
 
-    <style name="transparent_dialog" parent="@style/Theme.AppCompat.Dialog.Alert">
+    <style name="transparent_dialog" parent="@style/Theme.AppCompat.Light.Dialog">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:backgroundDimEnabled">false</item>
