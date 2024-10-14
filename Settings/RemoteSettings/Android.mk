@@ -1,23 +1,32 @@
 LOCAL_PATH:= $(call my-dir)
-include $(CLEAR_VARS)
 
+include $(CLEAR_VARS)
 LOCAL_MODULE_TAGS := optional
-LOCAL_SRC_FILES := $(call all-subdir-java-files)
+LOCAL_STATIC_JAVA_LIBRARIES := gson
+LOCAL_JAVA_LIBRARIES := droidlogic
+LOCAL_SRC_FILES := $(call all-java-files-under, src)
 LOCAL_PACKAGE_NAME := RemoteSettings
 LOCAL_CERTIFICATE := platform
 LOCAL_PROGUARD_ENABLED := disabled
-LOCAL_PRIVILEGED_MODULE := true
 
-LOCAL_STATIC_JAVA_LIBRARIES := \
-    zxing \
-    gson \
-
-LOCAL_PREBUILT_STATIC_JAVA_LIBRARIES += zxing:libs/zxing.jar gson:libs/gson.jar 
-
-ifeq ($(shell test $(PLATFORM_SDK_VERSION) -ge 28 && echo OK),OK)
-LOCAL_PRIVATE_PLATFORM_APIS := true
-else
+ifeq (($(shell test $(PLATFORM_SDK_VERSION) -ge 26 ) && ($(shell test $(PLATFORM_SDK_VERSION) -lt 28)  && echo OK),OK)
+LOCAL_PROPRIETARY_MODULE := true
 LOCAL_SDK_VERSION := current
+else ifeq ($(shell test $(PLATFORM_SDK_VERSION) -lt 27)  && echo OK),OK)
+LOCAL_PRIVILEGED_MODULE := true
+else
+LOCAL_PRIVATE_PLATFORM_APIS := true
+LOCAL_PRODUCT_MODULE := true
 endif
 
 include $(BUILD_PACKAGE)
+
+##############################################
+
+include $(CLEAR_VARS)
+LOCAL_PREBUILT_STATIC_JAVA_LIBRARIES := gson:libs/gson.jar
+
+ifeq (($(shell test $(PLATFORM_SDK_VERSION) -ge 26 ) && ($(shell test $(PLATFORM_SDK_VERSION) -lt 28)  && echo OK),OK)
+LOCAL_PROPRIETARY_MODULE := true
+endif
+include $(BUILD_MULTI_PREBUILT)
