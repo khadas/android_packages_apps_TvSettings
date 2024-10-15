@@ -162,4 +162,7 @@
     <color name="setup_primary_text_color">#FFEEEEEE</color>
 
     <color name="activity_progress_text">#FFEEEEEE</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
 </resources>

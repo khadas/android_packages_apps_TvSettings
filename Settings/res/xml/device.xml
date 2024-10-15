@@ -106,6 +106,16 @@
         android:icon="@drawable/ic_ethernet_white"
         android:key="m2x"
         android:title="@string/device_m2x"/>
+
+    <Preference
+        android:icon="@drawable/ic_settings_pin"
+        android:key="pinmultiple"
+        android:title="@string/pin_multiple">
+        <intent
+            android:targetClass="com.android.tv.settings.device.pin.PinMultipleActivity"
+            android:targetPackage="com.android.tv.settings"/>
+    </Preference>
+
     <Preference
         android:fragment="com.android.tv.settings.device.portmode.PortFragment"
         android:icon="@drawable/ic_settings_portmode"

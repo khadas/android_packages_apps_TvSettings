@@ -227,4 +227,7 @@
 
     <dimen name="lb_preference_item_icon_size">24dp</dimen>
     <dimen name="lb_preference_button_size">32dp</dimen>
+    <dimen name="sw_width">180dp</dimen>
+    <dimen name="sw_height">10dp</dimen>
+    <dimen name="sw_margin">0dp</dimen>
 </resources>

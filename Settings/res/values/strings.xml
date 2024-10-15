@@ -1671,6 +1671,7 @@
     <string name="fan_settings_disabled_prompt">To control cooling fan, turn fan on.</string>
 
     <string name="device_remote">Remote controller customize</string>
+    <string name="pin_multiple">Pin Multiple</string>
 
     <!-- khadas status bar control -->
     <string name="device_statusbar">Status bar control</string>
