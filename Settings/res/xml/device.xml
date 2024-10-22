@@ -42,7 +42,22 @@
             android:targetClass="com.wesion.remotesettings.RemoteMainActivity"
             android:targetPackage="com.wesion.remotesettings"/>
     </Preference>
-
+    <Preference
+        android:icon="@drawable/ic_applications"
+        android:key="bootupappsetting"
+        android:title="@string/bootup_app_setting">
+        <intent
+            android:targetClass="com.android.tv.settings.device.apps.BootupAppSettingActivity"
+            android:targetPackage="com.android.tv.settings"/>
+    </Preference>
+    <Preference
+        android:icon="@drawable/ic_applications"
+        android:key="keepaliveapps"
+        android:title="@string/keep_alive_app_setting">
+        <intent
+            android:targetClass="com.android.tv.settings.device.apps.KeepAliveAppsSettingActivity"
+            android:targetPackage="com.android.tv.settings"/>
+    </Preference>
     <Preference
         android:fragment="com.android.tv.settings.system.DateTimeFragment"
         android:icon="@drawable/ic_access_time"

@@ -182,6 +182,12 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".device.apps.BootupAppSettingActivity"/>
+
+        <activity
+            android:name=".device.apps.KeepAliveAppsSettingActivity"/>
+
         <activity android:name=".device.apps.specialaccess.DirectoryAccessActivity"
                   android:theme="@style/Theme.Settings.Transparent"
                   android:taskAffinity=""

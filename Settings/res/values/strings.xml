@@ -1670,6 +1670,9 @@
     <string name="keywords_fan">fan, cool, cooling, cooling fan</string>
     <string name="fan_settings_disabled_prompt">To control cooling fan, turn fan on.</string>
 
+    <string name="keep_alive_app_setting">Keep alive app setting</string>
+    <string name="bootup_app_setting">Bootup app setting</string>
+
     <string name="device_remote">Remote controller customize</string>
     <string name="pin_multiple">Pin Multiple</string>
 
