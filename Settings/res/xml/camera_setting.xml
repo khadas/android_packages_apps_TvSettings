@@ -1,0 +1,15 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="@string/camera_settings" >
+
+    <PreferenceCategory
+        android:key="camera_settings_faceback_category"
+        android:title="@string/camera_faceback"
+        android:layout="@layout/preference_category_compact_layout" >
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:key="camera_settings_orientation_category"
+        android:title="@string/camera_orientation"
+        android:layout="@layout/preference_category_compact_layout" >
+    </PreferenceCategory>
+
+</PreferenceScreen>

@@ -1024,4 +1024,9 @@
    <string name="no_button">取消</string>
    <string name="ok_button">保存</string>
    <string name="bluetooth_tethering_off_subtext" product="default">不共享网络连接</string>
+
+    <string name="camera_settings">摄像头设置</string>
+    <string name="camera_faceback">摄像头朝向</string>
+    <string name="camera_orientation">摄像头角度</string>
+    <string name="reboot_take_effect">你需要重启设备激活设置.</string>
 </resources>

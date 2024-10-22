@@ -79,6 +79,11 @@
         android:key="ircut"
         android:title="@string/device_ircut"/>
     <Preference
+        android:icon="@drawable/ic_settings_ircut"
+        android:key="camerapreference"
+        android:title="@string/camera_settings"
+        android:fragment="com.android.tv.settings.device.camerasettings.CameraPreferenceFragment" />
+    <Preference
 	android:icon="@drawable/ic_settings_date_time"
 	android:key="timer"
 	android:title="@string/timer" >

@@ -1698,6 +1698,12 @@
     <string name="ircut_title">Turn on mipi camera ir-cut</string>
     <string name="keywords_ircut">camera, ir-cut, ircut</string>
 
+    <!-- khadas camera settings -->
+    <string name="camera_settings">Camera setting</string>
+    <string name="camera_faceback">Camera faceback</string>
+    <string name="camera_orientation">Camera orientation</string>
+    <string name="reboot_take_effect">You need to restart the device to activate the settings</string>
+
     <!-- khadas wol info -->
     <string name="device_wol">WOL</string>
     <string name="wol_title">Wake on LAN</string>
