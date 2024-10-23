@@ -210,6 +210,10 @@ public class DeviceFragment extends SettingsPreferenceFragment implements Prefer
             mColorPreference = null;
         }
 
+        if ("false".equals(SystemProperties.get("persist.sys.show_bcsh_settings", "true"))) {
+            getPreferenceScreen().removePreference(mAdvancedSettingsPreference);
+        }
+
         mZoomPreference = findPreference(KEY_ZOOM);
         if (FIXROTATION) {
             mFixedRotationPreference = (CheckBoxPreference) findPreference(KEY_FIXED_ROTATION);
