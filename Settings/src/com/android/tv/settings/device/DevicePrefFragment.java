@@ -453,7 +453,7 @@ public class DevicePrefFragment extends SettingsPreferenceFragment implements
                 Activity activity = requireActivity();
                 Intent intent = new Intent(activity, AiLabActivity.class);
                 activity.startActivity(intent);
-                activity.finish();
+
                 return true;
             });
         }

@@ -456,7 +456,7 @@ public class AiLabFragment extends SettingsPreferenceFragment implements
                                 type);
                         dialog.show();
 
-                        requireActivity().finish();
+                        requireActivity().finishAffinity();
                     }
                 }
             }
