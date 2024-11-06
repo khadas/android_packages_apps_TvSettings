@@ -149,6 +149,18 @@ public class DeviceFragment extends SettingsPreferenceFragment implements Prefer
         }
     }
 
+    private boolean rebuild = false;
+    private BroadcastReceiver mHdmiReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if(rebuild){
+                Log.i(TAG, "HDMIReceiver->onReceive");
+                getParentFragmentManager().popBackStackImmediate();
+            }
+            rebuild = true;
+        }
+    };
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -177,12 +189,16 @@ public class DeviceFragment extends SettingsPreferenceFragment implements Prefer
         updateColorValue();
         if (FIXROTATION)
             updateRotation();
+        IntentFilter filter = new IntentFilter(HDMI_PLUG_ACTION);
+        requireActivity().registerReceiver(mHdmiReceiver, filter);
     }
 
 
     @Override
     public void onPause() {
         super.onPause();
+        rebuild = false;
+        requireActivity().unregisterReceiver(mHdmiReceiver);
     }
 
     @Override
