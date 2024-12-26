@@ -221,7 +221,7 @@ public class DeviceFragment extends SettingsPreferenceFragment implements Prefer
         mColorPreference = (ListPreference) findPreference(KEY_COLOR);
         mHDR10Preference = (CheckBoxPreference)findPreference(KEY_HDR10);
 
-        if ("false".equals(SystemProperties.get("persist.sys.show_color_option", "false"))) {
+        if ("false".equals(SystemProperties.get("persist.sys.show_color_option", "true"))) {
             getPreferenceScreen().removePreference(mColorPreference);
             mColorPreference = null;
         }
