@@ -3200,12 +3200,6 @@
     <string name="keyboard_layout_dialog_title">Choose keyboard layout</string>
     <string name="keyboard_layout_dialog_switch_hint">To switch, press Control-Spacebar</string>
 
-    <!-- cec-->
-    <string name="inputs_cec_audio_control">Audio Control</string>
-    <string name="inputs_cec_audio_control_desc">Allow HDMI devices to control TV\' Audio</string>
-    <string name="inputs_cec_audio_amplifier_control">Audio Amplifier Control</string>
-    <string name="inputs_cec_audio_amplifier_control_desc">Allow sending volume command to power amplifier</string>
-
     <string name="hdr_mode">HDR Mode</string>
     <string name="hdr_vivid_max_brightness">Vivid Max Brightness</string>
     <string name="hdr_mode_sdr">SDR</string>
